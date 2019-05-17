@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>设备管理</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_372409_pw5imf7xc4a8xgvi.css">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/common.css" rel="stylesheet">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/style.js"></script>
+</head>
+
+<body class="bgf2">
+    <div class="container-fluid hp100">
+        <div class="main-header">
+            <div class="fl white pd-left f-14"><i class="iconfont icon-back"></i>返回</div>
+            <h2>设备管理</h2>
+        </div>
+        <div class="main-content hp100">
+            <div class="main-left pd0 left_relative">
+                <div class="left_box">
+                    <h3>设备信息列表</h3>
+                    <ul class="equipment_list">
+                        <li class="clearfix">
+                            <div class="fl">打印机</div>
+                            <div class="fr">型号：SPRT58</div>
+                        </li>
+                       
+                    </ul>
+                     <div class="left-bottom-btn"><a href="javascript:;" class="">添加设备</a></div>
+                </div>
+            </div>
+            <div class="bore5 main-right">
+                <div class="auto">
+                   <ul class="equipment-ul">
+                      <li class="clearfix">
+                        <strong class="fl">打印机</strong>
+                        <em class="fl">型号：SPRT58</em>
+                        <a href="javascript:;">自动检测</a>
+                        <span class="active fr"><i class="iconfont icon-connect"></i><b>已连接</b></span>
+                      </li>
+                      <li class="clearfix">
+                        <strong class="fl">小票机</strong>
+                        <em class="fl">型号：SPRT20</em>
+                        <a href="javascript:;">自动检测</a>
+                        <span class="fr"><i class="iconfont icon-inconnect"></i><b>未连接</b></span>
+                      </li>
+                    </ul>                 
+                </div>
+                <!-- 暂无设备 -->
+              <!--   <div class="no-equip w-table tc">
+                  <div class="w-table-cell">
+                    <span></span>
+                    <p>暂无设备</p>
+                  </div>
+                </div> -->
+
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹框提示 -->
+    <div class="prompt tc">
+      <div class="prompt-cont">
+        <div class="add-input">
+          <dl>
+            <dt>设备名称</dt>
+            <dd><input type="text" placeholder="请输入设备名称"></dd>
+          </dl>
+          <dl>
+            <dt>设备型号</dt>
+            <dd><input type="text" placeholder="请输入设备型号"></dd>
+          </dl>
+        </div>
+        <div>
+          <a href="javascript:;" class="prompt-btn sure">确定</a><a href="javascript:;" class="prompt-btn cancel">取消</a>
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+[03-May-2017 19:26:20 Asia/Shanghai] PHP Warning:  file_put_contents(/web/shop/shop_admin/configs/db.ini.php): failed to open stream: No such file or directory in /web/shop/libraries/Yf/Utils/File.php on line 77

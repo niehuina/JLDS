@@ -1,0 +1,589 @@
+/* user-myjd/alwaysbuy freqt-buy.css Date:2017-05-25 20:02:05 */
+@charset "UTF-8";
+
+.category-box {
+	position: relative;
+	margin-bottom: 20px;
+	padding: 19px 50px 9px 20px;
+	border-bottom: 1px solid #eee;
+}
+
+.category-box .s-main {
+	overflow: hidden;
+	width: 95%;
+}
+
+.category-box .s-ext {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	display: none;
+	width: 64px;
+	height: 24px;
+	border: 1px solid #cecbce;
+	background-color: #f6f6f6;
+	text-align: center;
+	line-height: 24px;
+	cursor: pointer;
+}
+
+.category-box .s-ext span {
+	display: inline-block;
+	height: 24px;
+	color: #333;
+	line-height: 24px;
+}
+
+.category-box .s-ext s {
+	display: inline-block;
+	width: 14px;
+	height: 7px;
+	background: url(//misc.360buyimg.com/user/myjd/alwaysbuy/css/i/order-icons.png) -52px -207px;
+	vertical-align: middle;
+}
+
+.category-box .category-list {
+	overflow: hidden;
+	height: 36px;
+}
+
+.category-box .category-list.show {
+	height: auto;
+}
+
+.category-box .category-list li {
+	float: left;
+	margin-right: 15px;
+	margin-bottom: 10px;
+	padding: 5px 8px;
+}
+
+.category-box .category-list li.selected {
+	background-color: #D13030;
+}
+
+.category-box .category-list li.selected a {
+	color: #FFF;
+}
+
+.freqt-buy {
+	padding-bottom: 20px;
+	padding-left: 20px;
+	width: 100%;
+	background: #fff;
+}
+
+.freqt-buy .ui-page-wrap {
+	margin: 20px 20px 0 0;
+}
+
+.root61 .freqt-buy {
+	width: 1088px;
+}
+
+#yList-pager .ui-page a.ui-pager-cur {
+	border: 0;
+	background: 0 0;
+}
+
+#yList-pager .ui-page a.ui-pager-cur:hover {
+	box-shadow: none;
+}
+
+div.mod-comm {
+	padding: 0;
+}
+
+div.mod-comm .mt {
+	padding: 20px 0;
+}
+
+.mod-alwaysbuy {
+	padding: 10px 20px;
+}
+
+.mod-alwaysbuy .mt s {
+	display: inline-block;
+	margin-left: 10px;
+	width: 70px;
+	height: 18px;
+	/* background: url(//misc.360buyimg.com/user/myjd/alwaysbuy/css/i/order-icons.png) 0 -241px no-repeat; */
+	vertical-align: top;
+}
+
+.freqt-items {
+	display: inline-block;
+	display: block;
+	width: 100%;
+}
+
+.freqt-items:after {
+	clear: both;
+	display: block;
+	visibility: hidden;
+	height: 0;
+	content: ".";
+}
+
+* html .freqt-items {
+	height: 1%;
+}
+
+*+html .freqt-items {
+	min-height: 1%;
+}
+
+div.ui-tips-gift {
+	padding: 0;
+	border: 1px solid #e2393c;
+	background: #fff;
+}
+
+div.ui-tips-gift.ui-tips-bottom-left .ui-tips-arrow,div.ui-tips-gift.ui-tips-bottom-right .ui-tips-arrow {
+	/* background: url(//misc.360buyimg.com/user/myjd/alwaysbuy/css/i/order-icons.png) -63px -133px no-repeat; */
+}
+
+div.ui-tips-info {
+	padding: 0;
+	border: 1px solid #e2393c;
+	background: #fff;
+}
+
+div.ui-tips-info.ui-tips-bottom-left .ui-tips-arrow,div.ui-tips-info.ui-tips-bottom-right .ui-tips-arrow {
+	/* background: url(//misc.360buyimg.com/user/myjd/alwaysbuy/css/i/order-icons.png) -63px -133px no-repeat; */
+}
+
+div.ui-tips-bottom .ui-tips-arrow {
+	background-position: -63px -138px;
+}
+
+.goods-slide-trigger {
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	overflow: hidden;
+	width: 100%;
+	height: 8px;
+	text-align: center;
+}
+
+.goods-slide-trigger li {
+	display: inline-block;
+	overflow: hidden;
+	margin-right: 10px;
+	width: 8px;
+	height: 8px;
+	vertical-align: top;
+	cursor: pointer;
+	*display: inline;
+	*zoom: 1;
+}
+
+.goods-slide-trigger li b {
+	display: inline-block;
+	overflow: hidden;
+	width: 8px;
+	height: 8px;
+	border-radius: 4px;
+	background: #aaa;
+	vertical-align: top;
+}
+
+.goods-slide-trigger li.trig-curr {
+	width: 26px;
+}
+
+.goods-slide-trigger li.trig-curr b {
+	width: 26px;
+	background: #D13030;
+}
+
+.promo-gift-list {
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 331px;
+	max-height: 306px;
+}
+
+.promo-gift-list li {
+	overflow: hidden;
+	margin-top: -1px;
+	padding: 10px 20px 10px 112px;
+	border-top: 1px solid #e0e0e0;
+}
+
+.promo-gift-list .g-img {
+	float: left;
+	margin-right: 10px;
+	margin-left: -92px;
+	width: 80px;
+	height: 80px;
+	border: 1px solid #f1f1f1;
+}
+
+.promo-gift-list .g-name {
+	overflow: hidden;
+	height: 36px;
+	line-height: 18px;
+}
+
+.promo-gift-list .g-name a {
+	line-height: 18px;
+}
+
+.promo-gift-list .g-name .gift-num {
+	margin-left: 5px;
+	color: #999;
+}
+
+.promo-gift-list .g-price {
+	line-height: 18px;
+}
+
+.promo-gift-list .g-price em {
+	color: #D13030;
+	font: 700 14px/18px verdana;
+}
+
+.promo-info-list {
+	padding: 5px 20px;
+	width: 160px;
+}
+
+.promo-info-list li {
+	overflow: hidden;
+	height: 22px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	line-height: 22px;
+}
+
+.tips-coupon {
+	width: 420px;
+}
+
+.tips-coupon .coupon-summary {
+	padding: 7px 20px 15px;
+	color: #999;
+	line-height: 18px;
+}
+
+.freqt-goods {
+	position: relative;
+	padding: 20px 5px;
+	height: 100px;
+	line-height: 20px;
+}
+
+.freqt-goods .p-img {
+	float: left;
+	margin-right: 5px;
+	padding: 0;
+	width: 100px;
+	height: 100px;
+	text-align: center;
+}
+
+.freqt-goods .p-msg {
+	float: left;
+	margin: 0;
+	width: 122px;
+}
+
+.freqt-goods .p-name {
+	float: left;
+	overflow: hidden;
+	margin-bottom: 2px;
+	width: 100%;
+	height: 56px;
+	line-height: 18px;
+}
+
+.freqt-goods .price-box {
+	float: left;
+	margin-bottom: 2px;
+	width: 100%;
+}
+
+.freqt-goods .p-price {
+	display: inline-block;
+	color: #D13030;
+	vertical-align: top;
+	font-size: 14px;
+	font-family: verdana;
+	line-height: 18px;
+	*display: inline;
+	*zoom: 1;
+}
+
+.freqt-goods .p-price strong {
+	font-weight: 400;
+	font-size: 18px;
+}
+
+.freqt-goods .p-reduce {
+	display: none;
+	margin-left: 3px;
+	color: #0079b6;
+	font-size: 12px;
+}
+
+.freqt-goods .p-reduce a {
+	color: #0079b6;
+}
+
+.freqt-goods .p-act {
+	display: inline-block;
+	overflow: hidden;
+	margin-bottom: 5px;
+	height: 18px;
+	vertical-align: top;
+	*display: inline;
+	*zoom: 1;
+}
+
+.freqt-goods .p-act .act-plus {
+	display: none;
+	margin-right: 3px;
+	color: #2e3244;
+	font-size: 14px;
+	font-family: verdana;
+}
+
+.freqt-goods .p-act .act-plus s {
+	display: inline-block;
+	margin-left: 2px;
+	width: 40px;
+	height: 12px;
+	background: url(//misc.360buyimg.com/user/myjd/alwaysbuy/css/i/order-icons.png) -40px -222px no-repeat;
+}
+
+.freqt-goods .act-tag {
+	position: relative;
+	display: none;
+	margin-right: 3px;
+	padding: 1px 5px;
+	height: 16px;
+	background: #D13030;
+	color: #fff;
+	vertical-align: top;
+	font-size: 12px;
+	line-height: 16px;
+	cursor: pointer;
+}
+
+.freqt-goods .promo-gift-list,.freqt-goods .promo-info-list {
+	position: absolute;
+	top: 18px;
+	left: 0;
+	z-index: 2;
+}
+
+.freqt-goods .freqt-num {
+	float: left;
+	width: 100%;
+	height: 18px;
+	color: #999;
+	line-height: 18px;
+}
+
+.freqt-goods .p-reduce2 {
+	position: static;
+	bottom: -1px;
+	left: -1px;
+	display: none;
+	overflow: hidden;
+	padding: 0 1px;
+	width: 100%;
+	height: 24px;
+	background: 0 0;
+	color: #64bf3e;
+	text-align: left;
+	line-height: 24px;
+}
+
+.freqt-goods .p-btnbox {
+	float: left;
+	padding-top: 5px;
+	width: 100%;
+	height: 27px;
+}
+
+.freqt-goods .p-btnbox .i-buy,.freqt-goods .p-btnbox .i-cart {
+	display: inline-block;
+	width: 12px;
+	height: 17px;
+	background: url(//misc.360buyimg.com/user/myjd/alwaysbuy/css/i/order-icons.png) 0 -180px no-repeat;
+	vertical-align: middle;
+}
+
+.freqt-goods .p-btnbox .i-cart {
+	width: 18px;
+	height: 16px;
+	background-position: 0 -88px;
+}
+
+.freqt-goods .p-btnbox .btn-buy,.freqt-goods .p-btnbox .btn-cart {
+	display: inline-block;
+	padding: 0 8px;
+	width: 30px;
+	height: 25px;
+	border: 1px solid #ddd;
+	background: #f5f5f5;
+	color: #666;
+	text-align: center;
+	line-height: 25px;
+}
+
+.freqt-goods .p-btnbox .btn-buy .text,.freqt-goods .p-btnbox .btn-cart .text {
+	display: none;
+}
+
+.freqt-goods .p-btnbox .btn-buy {
+	margin-right: 5px;
+	color: #D13030;
+}
+
+.freqt-item {
+	position: relative;
+	float: left;
+	margin: 0 11px 11px 0;
+	width: 237px;
+	height: 176px;
+	border: 1px solid #eee;
+}
+
+.freqt-item .freqt-opbtns {
+	position: relative;
+	top: 1px;
+	margin: 0 -1px;
+	width: 240px;
+	height: 36px;
+	background: #f5f5f5;
+}
+
+.freqt-item .freqt-opbtns a {
+	position: relative;
+	float: left;
+	padding: 8px 0;
+	width: 118px;
+	height: 18px;
+	border: 1px solid #ddd;
+	text-align: center;
+	line-height: 18px;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#f3f2f2', GradientType='0');
+	-ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#f3f2f2');
+}
+
+.freqt-item .freqt-opbtns a b {
+	display: inline-block;
+	margin-right: 5px;
+	width: 12px;
+	height: 17px;
+	background: url(//misc.360buyimg.com/user/myjd/alwaysbuy/css/i/order-icons.png) -22px -180px no-repeat;
+	vertical-align: middle;
+	*display: inline;
+	*zoom: 1;
+}
+
+.freqt-item .freqt-opbtns .buy-btn-only{
+	border-right: 0;
+	color: #D13030;
+	text-align: center;
+	width:100%;
+}
+
+.freqt-item .freqt-opbtns .buy-btn,.freqt-item .freqt-opbtns .regular-buy-btn {
+	//padding-left: 30px;
+	//width: 103px;
+	border-right: 0;
+	color: #D13030;
+	text-align: center;
+}
+
+.freqt-item .freqt-opbtns .buy-btn b,.freqt-item .freqt-opbtns .regular-buy-btn b {
+	background-position: 0 -180px;
+}
+
+.freqt-item .freqt-operate {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 11;
+	display: none;
+}
+
+.freqt-item .freqt-operate .operations {
+	display: none;
+}
+
+.freqt-item .freqt-operate .del,.freqt-item .freqt-operate .up {
+	position: absolute;
+	width: 61px;
+	height: 24px;
+	background-color: #7f7f7f;
+	color: #fff;
+	text-align: center;
+	line-height: 24px;
+	cursor: pointer;
+}
+
+.freqt-item .freqt-operate .uped {
+	position: absolute;
+	right: 200px;
+	width: 60px;
+	height: 24px;
+	color: #999;
+	line-height: 24px;
+	cursor: pointer;
+}
+
+.freqt-item .freqt-operate .uped s {
+	display: inline-block;
+	width: 14px;
+	height: 15px;
+	background: url(//misc.360buyimg.com/user/myjd/alwaysbuy/css/i/order-icons.png) -44px -132px no-repeat;
+	vertical-align: middle;
+}
+
+.freqt-item .freqt-operate .up {
+	right: 63px;
+}
+
+.freqt-item .freqt-operate .del {
+	right: 0;
+}
+
+.freqt-item .freqt-operate:hover {
+	display: inline-block;
+}
+
+.freqt-item .off-container {
+	position: absolute;
+	z-index: 10;
+	display: none;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	opacity: .7;
+}
+
+.freqt-item .off-container .tip {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 36px;
+	background: #333;
+	color: #fff;
+	text-align: center;
+	font-size: 14px;
+	line-height: 36px;
+}
+
+.freqt-item-hover .freqt-operate,.freqt-item-hover .freqt-operate .operations {
+	display: block;
+}
+
+.freqt-item-hover .freqt-operate .up,.freqt-item-hover .freqt-operate .uped {
+	display: none;
+}

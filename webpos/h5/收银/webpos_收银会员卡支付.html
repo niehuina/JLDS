@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>webpos_收银支付宝微信支付</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <!--<link rel="stylesheet" href="../css/index.css">-->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_372409_qfbxvuifotc07ldi.css">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/common.css" rel="stylesheet">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/style.js"></script>
+</head>
+
+<body class="bgf2">
+    <div class="container-fluid hp100">
+        <div class="main-header">
+            <div class="fl white pd-left f-14"><i class="iconfont icon-back"></i>返回</div>
+            <div class="fr white pd-right f-16">作废</div>
+            <h2>收款</h2>
+        </div>
+        <div class="hp100 main-content">
+            <div class="main-left bore5">
+                <h3 class="f-18 c6">请选择支付方式</h3>
+                <div class="cp-way">
+                    <ul>
+                        <li>
+                            <a class="cp1" href="javascript:;"><span>现金</span><input class="style-input" type="radio"
+                                                                                 name="cpway"></a>
+                        </li>
+                        <li>
+                            <a class="cp2" href="javascript:;"><span>支付宝支付</span><input class="style-input" type="radio"
+                                                                                    name="cpway"></a>
+                        </li>
+                        <li>
+                            <a class="cp3" href="javascript:;"><span>微信支付</span><input class="style-input" type="radio"
+                                                                                   name="cpway"></a>
+                        </li>
+                        <li>
+                            <a class="cp4" href="javascript:;"><span>银联POS</span><input class="style-input" type="radio"
+                                                                                    name="cpway"></a>
+                        </li>
+                        <li>
+                            <a class="cp5" href="javascript:;"><span>会员卡余额</span><input class="style-input" type="radio"
+                                                                                    name="cpway" checked></a>
+                        </li>
+                        <li>
+                            <a class="cp6" href="javascript:;"><span>小票扫码支付</span><input class="style-input" type="radio"
+                                                                                     name="cpway"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main-right bore5">
+                <div class="top-content">
+                    <div class="tc-left">
+                        <ul>
+                            <li><span>商品数量</span><em>2</em></li>
+                            <li><span>合计金额</span><em>￥60.00</em></li>
+                            <li><span>优惠方式</span><em>会员8.0折、优惠券</em></li>
+                            <li><span>优惠金额</span><em>￥6.00</em></li>
+                        </ul>
+                    </div>
+                    <div class="tc-middle"></div>
+                    <div class="tc-right">
+                        <div class="w-table">
+                            <ul class="w-table-cell">
+                                <li><span>应收金额</span><em>￥42.00</em></li>
+                                <li class="common-col"><span class="f-20">实收金额</span><em class="f-20"><input type="text" value="￥42.00"></em></li>
+                                <li><span>找零</span><em>￥0.00</em></li>
+                            </ul>
+                            <script>
+                                $(function(){
+                                    $(".top-content input").focus(function(){
+                                        $(this).addClass("active");
+                                    })
+                                })
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-content">
+                    <div class="sk-content">
+                        <h3><i class="iconfont icon-pay-card"></i>刷卡支付</h3>
+                        <div class="get-smcode">
+                            <input type="text" placeholder="输入手机号">
+                            <span>获取验证码</span>
+                        </div>
+                        <button class="op-btn lr-linear" type="button">完成结算</button>
+                    </div>
+                    <!--<div class="hyk-content">-->
+                    <!--<div class="get-smcode">-->
+                    <!--<input type="text" placeholder="输入会员手机号码">-->
+                    <!--<span>发送验证码</span>-->
+                    <!--</div>-->
+                    <!--<button type="button">完成结算</button>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

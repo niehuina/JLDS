@@ -1,0 +1,175 @@
+17:07:36 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] $tmp_str:admin_account=admin&app_id=102&config_type%5B0%5D=plugin&rtime=1558084056&sub_site_id=0&key=aaaaaabbb
+17:07:36 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] $url:http://localhost:8001/?ctl=Api_Config&met=plugin&typ=json
+17:07:36 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] array (
+  'admin_account' => 'admin',
+  'app_id' => 102,
+  'config_type' => 
+  array (
+    0 => 'plugin',
+  ),
+  'rtime' => 1558084056,
+  'sub_site_id' => '0',
+  'key' => 'aaaaaabbb',
+)
+17:07:36 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] array (
+  'config_type' => 
+  array (
+    0 => 'plugin',
+  ),
+  'app_id' => 102,
+  'admin_account' => 'admin',
+  'sub_site_id' => '0',
+  'rtime' => 1558084056,
+  'token' => '54af75488b66388edfe31f406098c31d',
+)
+17:07:37 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] $res : {"cmd_id":-140,"status":200,"msg":"success","data":{"Plugin_Analytics":{"config_key":"Plugin_Analytics","config_value":"0","config_type":"plugin","config_enable":"1","config_comment":"","config_datatype":"string","id":"Plugin_Analytics"},"Plugin_Cron":{"config_key":"Plugin_Cron","config_value":"1","config_type":"plugin","config_enable":"1","config_comment":"","config_datatype":"string","id":"Plugin_Cron"},"Plugin_Directseller":{"config_key":"Plugin_Directseller","config_value":"0","config_type":"plugin","config_enable":"1","config_comment":"","config_datatype":"string","id":"Plugin_Directseller"},"Plugin_Distribution":{"config_key":"Plugin_Distribution","config_value":"1","config_type":"plugin","config_enable":"1","config_comment":"","config_datatype":"string","id":"Plugin_Distribution"},"Plugin_Log":{"config_key":"Plugin_Log","config_value":"1","config_type":"plugin","config_enable":"1","config_comment":"","config_datatype":"string","id":"Plugin_Log"},"Plugin_Perm":{"config_key":"Plugin_Perm","config_value":"1","config_type":"plugin","config_enable":"1","config_comment":"","config_datatype":"string","id":"Plugin_Perm"},"Plugin_Xhprof":{"config_key":"Plugin_Xhprof","config_value":"1","config_type":"plugin","config_enable":"1","config_comment":"","config_datatype":"string","id":"Plugin_Xhprof"},"plugin_rows":[{"plugin_id":"Plugin_Analytics","plugin_name":"Plugin_Analytics","plugin_desc":"\u7edf\u8ba1\u529f\u80fd."},{"plugin_id":"Plugin_Cron","plugin_name":"Plugin_Cron","plugin_desc":"\u8ba1\u5212\u4efb\u52a1\u529f\u80fd, \u7528\u6cd5\u53c2\u8003Linux crontab."},{"plugin_id":"Plugin_Directseller","plugin_name":"Plugin_Directseller","plugin_desc":"\u5206\u9500\u5458\u7cfb\u7edf\uff0c\u4f7f\u7528\u5206\u9500\u5458\u5206\u4f63\u65f6\uff0c\u8bf7\u52ff\u5173\u95ed\uff01"},{"plugin_id":"Plugin_Distribution","plugin_name":"Plugin_Distribution","plugin_desc":"\u5206\u9500\u7cfb\u7edf\uff0c\u6279\u53d1\u5e02\u573a"},{"plugin_id":"Plugin_Log","plugin_name":"Plugin_Log","plugin_desc":"this is a log plugin! \u5f00\u542f\u65e5\u5fd7,\u5219\u4f1a\u8bb0\u5f55\u767b\u5f55\u7528\u6237\u7684\u64cd\u4f5c\u8bb0\u5f55,\u4f46\u4f1a\u8f7b\u5fae\u52a0\u91cd\u7cfb\u7edf\u8d1f\u62c5."},{"plugin_id":"Plugin_Xhprof","plugin_name":"Plugin_Xhprof","plugin_desc":"XHProf\u662ffacebook \u5f00\u53d1\u7684\u4e00\u4e2a\u6d4b\u8bd5php\u6027\u80fd\u7684\u6269\u5c55\uff0c\u672c\u6587\u8bb0\u5f55\u4e86\u5728PHP\u5e94\u7528\u4e2d\u4f7f\u7528XHProf\u5bf9PHP\u8fdb\u884c\u6027\u80fd\u4f18\u5316\uff0c\u67e5\u627e\u6027\u80fd\u74f6\u9888\u7684\u65b9\u6cd5\u3002"}]}}
+17:07:37 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] array (
+  'cmd_id' => -140,
+  'status' => 200,
+  'msg' => 'success',
+  'data' => 
+  array (
+    'Plugin_Analytics' => 
+    array (
+      'config_key' => 'Plugin_Analytics',
+      'config_value' => '0',
+      'config_type' => 'plugin',
+      'config_enable' => '1',
+      'config_comment' => '',
+      'config_datatype' => 'string',
+      'id' => 'Plugin_Analytics',
+    ),
+    'Plugin_Cron' => 
+    array (
+      'config_key' => 'Plugin_Cron',
+      'config_value' => '1',
+      'config_type' => 'plugin',
+      'config_enable' => '1',
+      'config_comment' => '',
+      'config_datatype' => 'string',
+      'id' => 'Plugin_Cron',
+    ),
+    'Plugin_Directseller' => 
+    array (
+      'config_key' => 'Plugin_Directseller',
+      'config_value' => '0',
+      'config_type' => 'plugin',
+      'config_enable' => '1',
+      'config_comment' => '',
+      'config_datatype' => 'string',
+      'id' => 'Plugin_Directseller',
+    ),
+    'Plugin_Distribution' => 
+    array (
+      'config_key' => 'Plugin_Distribution',
+      'config_value' => '1',
+      'config_type' => 'plugin',
+      'config_enable' => '1',
+      'config_comment' => '',
+      'config_datatype' => 'string',
+      'id' => 'Plugin_Distribution',
+    ),
+    'Plugin_Log' => 
+    array (
+      'config_key' => 'Plugin_Log',
+      'config_value' => '1',
+      'config_type' => 'plugin',
+      'config_enable' => '1',
+      'config_comment' => '',
+      'config_datatype' => 'string',
+      'id' => 'Plugin_Log',
+    ),
+    'Plugin_Perm' => 
+    array (
+      'config_key' => 'Plugin_Perm',
+      'config_value' => '1',
+      'config_type' => 'plugin',
+      'config_enable' => '1',
+      'config_comment' => '',
+      'config_datatype' => 'string',
+      'id' => 'Plugin_Perm',
+    ),
+    'Plugin_Xhprof' => 
+    array (
+      'config_key' => 'Plugin_Xhprof',
+      'config_value' => '1',
+      'config_type' => 'plugin',
+      'config_enable' => '1',
+      'config_comment' => '',
+      'config_datatype' => 'string',
+      'id' => 'Plugin_Xhprof',
+    ),
+    'plugin_rows' => 
+    array (
+      0 => 
+      array (
+        'plugin_id' => 'Plugin_Analytics',
+        'plugin_name' => 'Plugin_Analytics',
+        'plugin_desc' => '统计功能.',
+      ),
+      1 => 
+      array (
+        'plugin_id' => 'Plugin_Cron',
+        'plugin_name' => 'Plugin_Cron',
+        'plugin_desc' => '计划任务功能, 用法参考Linux crontab.',
+      ),
+      2 => 
+      array (
+        'plugin_id' => 'Plugin_Directseller',
+        'plugin_name' => 'Plugin_Directseller',
+        'plugin_desc' => '分销员系统，使用分销员分佣时，请勿关闭！',
+      ),
+      3 => 
+      array (
+        'plugin_id' => 'Plugin_Distribution',
+        'plugin_name' => 'Plugin_Distribution',
+        'plugin_desc' => '分销系统，批发市场',
+      ),
+      4 => 
+      array (
+        'plugin_id' => 'Plugin_Log',
+        'plugin_name' => 'Plugin_Log',
+        'plugin_desc' => 'this is a log plugin! 开启日志,则会记录登录用户的操作记录,但会轻微加重系统负担.',
+      ),
+      5 => 
+      array (
+        'plugin_id' => 'Plugin_Xhprof',
+        'plugin_name' => 'Plugin_Xhprof',
+        'plugin_desc' => 'XHProf是facebook 开发的一个测试php性能的扩展，本文记录了在PHP应用中使用XHProf对PHP进行性能优化，查找性能瓶颈的方法。',
+      ),
+    ),
+  ),
+)
+17:07:39 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] $tmp_str:admin_account=admin&app_id=102&rtime=1558084059&sub_site_id=0&key=aaaaaabbb
+17:07:39 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] $url:http://localhost:8001/?ctl=Api_Config&met=cache&typ=json
+17:07:39 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] array (
+  'admin_account' => 'admin',
+  'app_id' => 102,
+  'rtime' => 1558084059,
+  'sub_site_id' => '0',
+  'key' => 'aaaaaabbb',
+)
+17:07:39 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] array (
+  'app_id' => 102,
+  'admin_account' => 'admin',
+  'sub_site_id' => '0',
+  'rtime' => 1558084059,
+  'token' => '29086b0b3b0dfcf26f0f9c0a5e5dda1b',
+)
+17:07:40 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] $res : {"cmd_id":-140,"status":200,"msg":"success","data":["D:\/Project\/JLDS\/web\/shop\/shop\/data\/cache\/default_cache\/","null","D:\/Project\/JLDS\/web\/shop\/shop\/data\/cache\/base_cache\/","[{\"139.196.6.92\":\"11211\"}]","D:\/Project\/JLDS\/web\/shop\/shop\/data\/cache\/data_cache\/","[{\"139.196.6.92\":\"11211\"}]","D:\/Project\/JLDS\/web\/shop\/shop\/data\/cache\/verify_code_cache\/","null"]}
+17:07:40 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [info] array (
+  'cmd_id' => -140,
+  'status' => 200,
+  'msg' => 'success',
+  'data' => 
+  array (
+    0 => 'D:/Project/JLDS/web/shop/shop/data/cache/default_cache/',
+    1 => 'null',
+    2 => 'D:/Project/JLDS/web/shop/shop/data/cache/base_cache/',
+    3 => '[{"139.196.6.92":"11211"}]',
+    4 => 'D:/Project/JLDS/web/shop/shop/data/cache/data_cache/',
+    5 => '[{"139.196.6.92":"11211"}]',
+    6 => 'D:/Project/JLDS/web/shop/shop/data/cache/verify_code_cache/',
+    7 => 'null',
+  ),
+)

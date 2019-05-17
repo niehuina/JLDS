@@ -1,0 +1,8 @@
+17:07:37 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] INSERT INTO yf_log_action SET action_id='', log_param='{\"config_type\":{\"0\":\"plugin\"},\"app_id\":\"102\",\"admin_account\":\"admin\",\"sub_site_id\":\"0\",\"rtime\":\"1558084056\",\"token\":\"54af75488b66388edfe31f406098c31d\",\"ctl\":\"Api_Config\",\"met\":\"plugin\",\"typ\":\"json\"}', log_ip='127.0.0.1'
+17:07:37 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] effect_rows=1
+17:07:38 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] INSERT INTO yf_log_action SET action_id='', log_param='{\"ctl\":\"Api_Version\",\"met\":\"index\",\"typ\":\"e\"}', log_ip='127.0.0.1'
+17:07:38 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] effect_rows=1
+17:07:39 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] INSERT INTO yf_log_action SET action_id='', log_param='{\"ctl\":\"Api_Version\",\"met\":\"index\",\"typ\":\"e\"}', log_ip='127.0.0.1'
+17:07:39 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] effect_rows=1
+17:07:40 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] INSERT INTO yf_log_action SET action_id='', log_param='{\"app_id\":\"102\",\"admin_account\":\"admin\",\"sub_site_id\":\"0\",\"rtime\":\"1558084059\",\"token\":\"29086b0b3b0dfcf26f0f9c0a5e5dda1b\",\"ctl\":\"Api_Config\",\"met\":\"cache\",\"typ\":\"json\"}', log_ip='127.0.0.1'
+17:07:40 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] effect_rows=1

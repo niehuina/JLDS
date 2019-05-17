@@ -1,0 +1,487 @@
+@charset "utf-8";
+*, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+html{
+    overflow-x: hidden;
+}
+body{
+    background-color: #eceaea;
+}
+
+.hide {
+    display: none;
+}
+
+.page-loading{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: url(toolbar/i/loading.gif) no-repeat center center;
+    z-index: 1;
+}
+
+#J-coupon-tips .tip-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -46px;
+    margin-left: -82px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 18px;
+    color: #666;
+    font-family:"Microsoft Yahei";
+}
+
+.tip-wrap .common-face,
+.tip-wrap .error-face {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    background: url(toolbar/i/jdm-toolbar-face.png) no-repeat;
+    _background: url(toolbar/i/jdm-toolbar-face-png8.png) no-repeat;
+    overflow: hidden;
+    text-align: left;
+    width: 112px;
+    height: 30px;
+    background-position: 0 0;
+}
+.tip-wrap i.error-face {
+    background-position: 0 -50px;
+}
+
+.tip-wrap span {
+    display: block;
+    color: #4b291d;
+    margin-top: 5px;
+}
+
+.tip-wrap a {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 52px;
+    height: 26px;
+    line-height: 26px;
+    background: #E60111;
+    border-radius: 3px;
+    font-family: "microsoft yahei";
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    margin: 14px 3px 0 0;
+}
+
+#J-coupon-items .coupon-wrap {
+    width: 250px;
+    font-size: 12px;
+    text-align: left;
+    color: #fff;
+    margin: 0 auto;
+}
+
+.coupon-wrap .coupon-type, .coupon-wrap .coupon-item, .coupon-item .btn-get,.coupon-item .btn-get.usable,  .coupon-item .sold-out-token, .coupon-item .success-info .info {
+    /*background: url(/css/toolbar/i/jdm-toolbar-coupon.png) no-repeat;
+    _background: url(/css/toolbar/i/jdm-toolbar-coupon-png8.png) no-repeat;*/
+    overflow: hidden;
+    /*background: #fff;*/
+}
+
+.coupon-wrap .coupon-type {
+    width: 250px;
+    height: 19px;
+    line-height: 19px;
+    font-family: "microsoft yahei";
+    font-size: 14px;
+    color: #666;
+    margin-top: 12px;
+    text-align: center;
+    background: url("../images/jdm-toolbar-coupon.png") no-repeat;
+    _background: url("../images/jdm-toolbar-coupon.png") no-repeat;
+    background-position: 0 0;
+}
+
+.coupon-wrap .coupon-empty{
+    padding: 30px;
+    text-align: center;
+}
+.coupon-wrap .coupon-empty span{
+    display: inline-block;
+    width: 93px;
+    height: 59px;
+    background: url(toolbar/i/coupon-empty.png) no-repeat;
+}
+.coupon-wrap .coupon-empty p{
+    font-size: 14px;
+    color: #666;
+}
+
+.coupon-wrap .coupon-item {
+    margin: 20px 0 0 2px;
+    width: 240px;
+    min-height: 106px;
+    background-color: #fff;
+    position: relative;
+}
+
+.coupon-wrap .coupon-item.sm {
+
+}
+.coupon-wrap .coupon-item .item-wrap {
+    min-height: 113px;
+    padding: 0 10px 5px 15px;
+    position: relative;
+}
+.coupon-wrap .coupon-item .coupon-term{
+    position: absolute;
+    left: 0;
+    top:0;
+    z-index: 2;
+    width: 55px;
+    height: 55px;
+    background: url("../images/coupon-new.png") no-repeat 0 -53px;
+    _background: url("../images/coupon-new.png") no-repeat 0 -53px;
+}
+.coupon-wrap .coupon-item .coupon-price {
+    float: left;
+    width: 180px;
+    font-family: Arial;
+    font-size: 0;
+    font-weight: 700;
+    display: inline;
+    padding-top: 12px;
+    color: #74d2d4;
+}
+.coupon-wrap .coupon-item .coupon-price span.coupon-val {
+    font-size:28px
+}
+.coupon-wrap .coupon-item .coupon-price span.coupon-movein {
+    padding-left:10px
+}
+.coupon-item .coupon-price .token {
+    position: relative;
+    font-size: 16px;
+    font-family: "microsoft yahei";
+    top: -8px;
+    _top:-8px;
+    left: 2px;
+    font-weight: 400;
+}
+.coupon-item .coupon-price .token2 {
+    position:relative;
+    font-size:14px;
+    font-family:"microsoft yahei";
+    left:2px;
+    bottom:2px;
+    font-weight:600
+}
+.coupon-wrap .coupon-item .coupon-info {
+    float: left;
+    display: inline;
+    width: 180px;
+    margin:0 2px 0 0;
+    height: auto;
+    line-height: 18px;
+    color: #666;
+    font-family: "Microsoft Yahei";
+    position:relative
+}
+.coupon-wrap .coupon-item .coupon-info p {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    color:#999
+}
+
+.coupon-info .condition {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    height: 18px;
+    color: #777;
+    margin: 0 auto;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    width:180px;
+    vertical-align:middle;
+}
+.coupon-info.coupon-info-more .condition {
+    width:130px
+}
+.coupon-info .tag{
+    position: relative;
+    display: inline-block;
+    padding: 0 3px;
+    border-radius: 3px;
+    line-height: 18px;
+    border:1px solid #333;
+    vertical-align:middle;
+}
+.coupon-info .tagTips{
+    display: none;
+    position: absolute;
+    left: -65px;
+    top: 22px;
+    width: 140px;
+    line-height: 24px;
+    padding: 0 5px;
+    border: 1px solid #cdcbd0;
+    box-shadow: 0 0 3px #eee;
+    background: #fff;
+    color: #444;
+}
+.coupon-info .tagTips .arrow{
+    position: absolute;
+    top: -5px;
+    left: 85px;
+    width: 9px;
+    height: 5px;
+    background: url("../images/coupon-new.png") no-repeat;
+}
+.coupon-info .tag:hover .tagTips{
+    display: block;
+    left:0;
+}
+
+.coupon-item .btn-get {
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0 auto;
+    width: 12px;
+    line-height: 19px;
+    font-family: "microsoft yahei";
+    color: #fff;
+    clear: both;
+    position: absolute;
+    right: 0;
+    top:0;
+    bottom: 0;
+    background: url("../images/coupon-new.png") no-repeat;
+    _background: url("../images/coupon-new.png") no-repeat;
+    padding: 16px 10px 0;
+}
+.coupon-item .btn-get:hover{
+    color: #007f82;
+}
+.jing .btn-get:hover {
+    color:#D13030;
+}
+.coupon-item .btn-get.usable{
+    width: 189px;
+    background-position: 0 -200px;
+    cursor: default;
+}
+
+.coupon-item .coupon-time {
+    clear: both;
+    color: #999;
+    font-family: 'Microsoft Yahei';
+}
+.coupon-item .coupon-seal{
+    position: absolute;
+    right: 37px;
+    bottom: 5px;
+    width: 47px;
+    height: 47px;
+    background: url("../images/coupon-new.png") no-repeat;
+    _background: url("../images/coupon-new.png") no-repeat;
+}
+.coupon-item .coupon-sold-out{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    _height:95px;
+    top: 0;
+    left: 0;
+}
+
+.coupon-item .sold-out-bg{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(236,234,234);
+    filter:alpha(opacity=60);
+    opacity: 0.6;
+}
+
+.coupon-item .sold-out-token {
+    position: absolute;
+    left: 120px;
+    top: 8px;
+    width: 94px;
+    height: 82px;
+    background-position: 0 -260px;
+}
+.coupon-item .coupon-name {
+    font-size: 12px;
+    font-family: "Microsoft Yahei";
+    font-weight: normal;
+    padding-left: 8px;
+}
+.coupon-item .authcode-info {
+    padding: 0 5px 10px 5px;
+    background: #fff;
+    margin-top: 5px;
+    border-top:#e7e5e5 1px solid;
+}
+.coupon-item .divider {
+    _display:none;
+    height: 1px;
+    margin: 0 2px;
+}
+.authcode-info input,.authcode-info img,.authcode-info a{
+    margin-top: 10px;
+    vertical-align: middle;
+}
+.authcode-info input {
+    width: 96px;
+    height: 14px;
+    border: 1px solid #b5b5b5;
+    background: #f4f4f4;
+    float: left;
+    margin-left: 4px;
+    margin-right: 10px;
+    padding: 7px ;
+}
+
+.authcode-info img {
+    border: 1px solid #cdcdcc;
+}
+
+.authcode-info a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.authcode-info .change-pic {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 36px;
+    height: 30px;
+    line-height: 15px;
+    color: #005ea7;
+    text-align: left;
+}
+
+.authcode-info p {
+    color: #E60111;
+    text-align: left;
+    line-height: 20px;
+    margin-left: 4px;
+}
+
+.authcode-info .btn-get-withcode {
+    text-align: center;
+    display: block;
+    width: 89px;
+    height: 22px;
+    line-height: 22px;
+    font-family: "microsoft yahei";
+    color: #fff;
+    margin: 4px auto 0;
+    background: #e04343;
+    border-radius: 3px;
+}
+
+.coupon-item .sold-out-info {
+    background: #fff3e2;
+    padding: 0 5px;
+    line-height: 41px;
+    font-family: "microsoft yahei";
+    color: #E60111;
+}
+
+.coupon-item .success-info {
+    background: #fff3e2;
+    padding: 0 5px 10px ;
+}
+
+.coupon-item .success-info .info {
+    display: block;
+    margin: 15px auto 12px auto;
+    font-family: "microsoft yahei";
+    font-size: 16px;
+    text-align: left;
+    color: #E60111;
+    background-position: 0 -345px;
+    width: 156px;
+    height: 19px;
+    line-height: 19px;
+    padding-left: 40px;
+}
+.coupon-item .success-info p{
+    color: #8a5f20;
+    line-height: 14px;
+    padding:0 12px;
+}
+::-webkit-scrollbar{
+    width: 5px;
+}
+::-webkit-scrollbar-thumb{
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    background: rgba(0,0,0,0.5);
+}
+/*京券*/
+.coupon-wrap .coupon-item.jing {
+
+}
+.coupon-wrap .jing .coupon-price{
+    color: #D13030;
+}
+.jing .btn-get{
+    background-color: #D13030;
+    background-position: -236px 0;
+}
+.jing .coupon-seal{
+    background-position:0 0 ;
+}
+/*东券*/
+.coupon-wrap .coupon-item.dong{
+
+}
+.coupon-wrap .dong .coupon-price{
+    color: #74d2d4;
+}
+.dong .btn-get{
+    background-color: #74d2d4;
+    background-position: -236px -124px;
+}
+.dong .coupon-seal{
+    background-position:-59px 0 ;
+}
+/*过期券*/
+.coupon-wrap .coupon-item.unusable{
+
+}
+.coupon-wrap .unusable .coupon-term{
+    background-position: -60px -53px;
+}
+.coupon-wrap .unusable .coupon-price{
+    color: #c3c3c3;
+}
+.unusable .btn-get{
+    background-position: -236px -247px;
+    background-color: #c3c3c3;
+    height: 86px;
+    padding-top: 21px;
+}
+.unusable .btn-get:hover{
+    color: #fff;
+}
+.unusable .coupon-seal{
+    background-position:-118px 0 ;
+}
+.used .coupon-seal{
+    background-position:-177px 0 ;
+}
+.used .btn-get:hover{
+    color: #fff;
+}

@@ -1,0 +1,3 @@
+19:23:38 05/03/17 FILE=/web/ucenter_admin/install/index.php [debug] SELECT 1;
+19:23:38 05/03/17 FILE=/web/ucenter_admin/install/index.php [debug] SELECT table_name FROM information_schema.tables WHERE table_schema="ucenter_admin" AND table_type="BASE TABLE"
+19:23:58 05/03/17 FILE=/web/ucenter_admin/install/index.php [debug] SELECT SQL_CALC_FOUND_ROWS * FROM ucenter_admin_user_base WHERE 1   AND user_id=10001 LIMIT 500 

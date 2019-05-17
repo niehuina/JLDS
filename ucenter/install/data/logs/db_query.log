@@ -1,0 +1,2 @@
+19:22:49 05/03/17 FILE=/web/ucenter/install/index.php [debug] SELECT 1;
+19:22:49 05/03/17 FILE=/web/ucenter/install/index.php [debug] SELECT table_name FROM information_schema.tables WHERE table_schema="ucenter" AND table_type="BASE TABLE"

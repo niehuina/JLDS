@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>地理位置</title>
+</head>
+<body>
+    <script>
+        navigator.geolocation.getCurrentPosition(
+            function(position){
+            var cords = position.coords;
+                alert("当前经度："+cords.longtitude +", 纬度："+cords.latitude);
+            },
+            function(error){
+                var errorTypes={1:"位置服务被拒绝", 2:"获取不到位置信息", 3:"获取位置信息超时"};
+                alert( errorTypes[error.code] +":,不能确定当前地理位置");
+            }
+        );
+    </script>
+</body>
+</html>

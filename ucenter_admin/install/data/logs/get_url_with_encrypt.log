@@ -1,0 +1,38 @@
+19:23:58 05/03/17 FILE=/web/ucenter_admin/install/index.php [info] $tmp_str:app_id=103&ctl=Api&is_install=1&met=addUserAndBindAppServer&password=admin&rtime=1493810638&server_id=f199bea4f27bcd4914b9ac29b7ce690e&typ=json&user_name=admin&key=aaaaaabbb
+19:23:58 05/03/17 FILE=/web/ucenter_admin/install/index.php [info] $url:http://42.123.124.28:8081/ucenter/
+19:23:58 05/03/17 FILE=/web/ucenter_admin/install/index.php [info] array (
+  'app_id' => '103',
+  'ctl' => 'Api',
+  'is_install' => 1,
+  'met' => 'addUserAndBindAppServer',
+  'password' => 'admin',
+  'rtime' => 1493810638,
+  'server_id' => 'f199bea4f27bcd4914b9ac29b7ce690e',
+  'typ' => 'json',
+  'user_name' => 'admin',
+  'key' => 'aaaaaabbb',
+)
+19:23:58 05/03/17 FILE=/web/ucenter_admin/install/index.php [info] array (
+  'user_name' => 'admin',
+  'password' => 'admin',
+  'app_id' => '103',
+  'server_id' => 'f199bea4f27bcd4914b9ac29b7ce690e',
+  'is_install' => 1,
+  'ctl' => 'Api',
+  'met' => 'addUserAndBindAppServer',
+  'typ' => 'json',
+  'rtime' => 1493810638,
+  'token' => '0690930a110a59e1e091eeef88853c8d',
+)
+19:23:58 05/03/17 FILE=/web/ucenter_admin/install/index.php [info] $res : {"cmd_id":100,"status":200,"msg":"success","data":{"user_name":"admin","server_id":"f199bea4f27bcd4914b9ac29b7ce690e","user_id":10001}}
+19:23:58 05/03/17 FILE=/web/ucenter_admin/install/index.php [info] array (
+  'cmd_id' => 100,
+  'status' => 200,
+  'msg' => 'success',
+  'data' => 
+  array (
+    'user_name' => 'admin',
+    'server_id' => 'f199bea4f27bcd4914b9ac29b7ce690e',
+    'user_id' => 10001,
+  ),
+)

@@ -1,0 +1,6 @@
+17:07:37 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [debug] INSERT INTO yf_admin_log_action SET user_id='10001', user_account='admin', log_date='2019-05-17', action_id='', action_type_id='', log_param='{\"ctl\":\"Config\",\"met\":\"plugin\",\"config_type\":[\"plugin\"],\"typ\":\"e\"}', log_ip='127.0.0.1'
+17:07:37 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [debug] effect_rows=1
+17:07:38 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [debug] INSERT INTO yf_admin_log_action SET user_id='10001', user_account='admin', log_date='2019-05-17', action_id='', action_type_id='', log_param='{\"ctl\":\"Config\",\"met\":\"cacheManage\",\"typ\":\"e\"}', log_ip='127.0.0.1'
+17:07:38 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [debug] effect_rows=1
+17:07:40 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [debug] INSERT INTO yf_admin_log_action SET user_id='10001', user_account='admin', log_date='2019-05-17', action_id='', action_type_id='', log_param='{\"ctl\":\"Config\",\"met\":\"cache\",\"typ\":\"json\"}', log_ip='127.0.0.1'
+17:07:40 05/17/19 FILE=D:/Project/JLDS/web/shop_admin/index.php [debug] effect_rows=1

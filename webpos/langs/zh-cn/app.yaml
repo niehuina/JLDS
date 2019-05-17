@@ -1,0 +1,50 @@
+domain: null
+messages:
+  '':
+    Menu: 菜单
+    Parent: 上一层
+    List: 列表
+    Content: 内容
+    Create: 创建
+    Save: 保存
+    Admin MENU: 管理员菜单
+    Search: 搜索
+    Title: 门店名称
+    Address: 地址
+    Phone: 联系方式
+    Shop_num: 店员数
+    User_id: 授权账号
+    Service_start_time: 服务开始时间
+    Service_end_time: 服务结束时间
+    Max_stores: 最大门店数
+    Max_nums: 最大店员数
+    Authorization_module: 授权模块
+    User: 账号
+    Pwd: 密码
+    Cat_name: 分类名称
+    Ucenter_name: 账号
+    Ucenter_name must be between 1 and 20 characters: 账号名必须介于1到20个字符之间
+    Slug: 角色编号
+    Type_id: 类型
+    Common_code must be between 8 and 13 characters: 商品条码必须介于8到13个字符之间
+    Common_name: 商品名称
+    Cat_id: 商品分类
+    Shop_id: 所属门店
+    Common_cubage: 商品重量
+    Common_price: 商品售价
+    Common_market_price: 市场价格
+    Common_stock: 商品库存
+    Common_spec: 商品规格
+    No data available in table: 表中没有数据
+    Num: 编号
+    Id_card: 身份证号码
+    Realname: 真实姓名
+    Sex: 性别
+    Email: 邮箱
+    Nickname: 姓名
+    Yf_shop_base_id: 所属门店
+    Role_id: 角色
+    Code: 验证码
+    File: 商品主图
+    Common_code: 商品条码
+

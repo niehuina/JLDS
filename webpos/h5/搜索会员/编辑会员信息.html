@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>会员管理</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_372409_swvab0rkypue4s4i.css">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/common.css" rel="stylesheet">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/style.js"></script>
+</head>
+
+<body class="bgf2">
+    <div class="container-fluid hp100">
+        <div class="main-header">
+            <div class="fl white pd-left f-14"><i class="iconfont icon-back"></i>返回</div>
+            <h2>会员管理</h2>
+        </div>
+        <div class="main-content hp100">
+            <div class="main-left pd0 left_relative">
+                <div class="left_box">
+                    <h3>会员信息列表</h3>
+                    <ul class="mem_list">
+                        <li class="mem_row clearfix active">
+                            <div class="fl"><img src="../img/tx.png"></div>
+                            <div class="tel fl">飞龙在天</div>
+                            <div class="tel fl">15900805456</div>
+                        </li>
+                        <li class="mem_row clearfix">
+                            <div class="fl"><img src="../img/tx.png"></div>
+                            <div class="tel fl">飞龙在天</div>
+                            <div class="tel fl">15900805456</div>
+                        </li>
+                        <li class="mem_row clearfix">
+                            <div class="fl"><img src="../img/tx.png"></div>
+                            <div class="tel fl">飞龙在天</div>
+                            <div class="tel fl">15900805456</div>
+                        </li>
+                    </ul>
+                    <div class="left-bottom-btn"><a href="javascript:;" class="">新增会员</a></div>
+                </div>
+            </div>
+            <div class="bore5 main-right">
+                <div class="auto">
+                    <p class="right-order-status"><a href="javascript:;" class="head-close">关闭</a><span>编辑会员信息</span> </p>
+                   <div class="member-informations clearfix">
+                        <div class="clearfix">
+                           <div class="fl">
+                               <img src="../img/m/goods1.png">
+                               <div class="member-text inline">
+                                   <h5>大鱼海<a href="javascript:;"><i class="iconfont icon-edit2"></i></h5>
+                                   <p class="inline fff"><span>2</span><em>会员等级</em></p>
+                               </div>
+                           </div>
+                           
+                        </div>
+                       
+                       <div class="member-infor-det tc">
+                           <dl>
+                               <dt>会员编号</dt>
+                               <dd>1256</dd>
+                           </dl>
+                           <dl>
+                               <dt>积分</dt>
+                               <dd>0分</dd>
+                           </dl>
+                           <dl>
+                               <dt>会员折扣</dt>
+                               <dd>
+                                  <!-- 点击编辑按钮显示input，按钮消失  -->
+                                  <input type="text" class="hide">
+
+                                  <a href="javascript:;" class="middle btn-edit-head"><i class="iconfont icon-edit2 f-18"></i></a></dd>
+                                  <script>
+                                    $(function(){
+                                      $(".btn-edit-head").click(function(){
+                                        $(this).hide();
+                                        $(this).prev("input").show();
+                                      })
+                                    })
+                                  </script>
+                           </dl>
+                       </div>
+                   </div>
+                   <div class="member-edit-area">
+                   		<span class="triangle"></span>
+                       <dl>
+                           <dt>手机：</dt>
+                           <dd>123456789</dd>
+                       </dl>
+                       <dl>
+                           <dt>邮箱：</dt>
+                           <dd>123456789@163.com</dd>
+                       </dl>
+                       <dl>
+                           <dt>生日：</dt>
+                           <dd><span>1995-05-25</span><a href="javascript:;" class="btn-edit"><i class="iconfont icon-edit"></i></a></dd>
+                       </dl>
+                       <dl>
+                           <dt>性别：</dt>
+                           <dd><span>女</span><a href="javascript:;" class="btn-edit"><i class="iconfont icon-edit"></i></a></dd>
+                       </dl>
+                       <dl>
+                           <dt>注册时间：</dt>
+                           <dd>123456789</dd>
+                       </dl>
+                       <dl>
+                           <dt>关联会员卡编号：</dt>
+                           <dd>123456789</dd>
+                       </dl>
+                       <dl>
+                           <dt>会员卡有限期：</dt>
+                           <dd><span>2017-08-05至2017-11-11</span><a href="javascript:;" class="btn-edit"><i class="iconfont icon-edit"></i></a></dd>
+                       </dl>
+						
+                   </div>
+                   <div class="tc btn-area"><a href="javascript:;" class="btn-bottom style-btn">确认修改</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

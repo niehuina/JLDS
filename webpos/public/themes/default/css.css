@@ -1,0 +1,43 @@
+.ui-menu .ui-menu-item {
+    padding-left: 8px;
+    line-height: 28px;
+}
+
+@media screen and (max-width:640px){
+    .wap_hide{
+        display: none;
+    }
+    .wap_100{
+        width: 100%;
+    }
+}
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.pagination {
+   text-align: right;
+}
+.product-buyer-name {
+
+    max-width: 90px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+/*#form_search{margin-bottom: 5px;}*/
+/*#form_search div.search{margin-right: 10px;}*/
+#form_search div.form-group label{line-height: 35px;display: block;}
+.ace img{ width:40px;height: 25px;}
+/*.ace img:hover{ width:150px;height:80px;z-index:100;}*/
+.table th{text-align:center;color:#2c2e2f;font-size:16px;}
+.table th .fa{color:#2c2e2f;}
+.table td{vertical-align:middle !important;text-align:center;color:#666;font-size:14px;}
+.table a{color:#;}
+.table i.iconfont{color:#aaa !important;font-size:18px;}

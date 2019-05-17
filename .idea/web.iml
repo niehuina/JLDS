@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/webpos/models" isTestSource="false" packagePrefix="models\" />
+      <sourceFolder url="file://$MODULE_DIR$/webpos/class" isTestSource="false" packagePrefix="cs\" />
+      <sourceFolder url="file://$MODULE_DIR$/webpos/modules" isTestSource="false" packagePrefix="modules\" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

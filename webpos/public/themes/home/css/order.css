@@ -1,0 +1,36 @@
+
+.ser-tips{font-size:12px;color:#f9977a;padding:14px 0;}
+/*.order-ziti{margin-top:16px;}*/
+.order-ziti li{font-size:12px;color:#444;padding:14px 20px;box-shadow:0 5px 6px #edf4f4;}
+.order-ziti li span{margin-right: 10px;margin-bottom: 10px;display: inline-block;margin-top: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.order-ziti li span,.order-ziti li em{font-size:14px;color:#666;}
+.order-ziti li strong{font-size:16px;color:#444;}
+.keyarea ul{width:55%;margin:6% auto 0;}
+.keyarea ul li{display:inline-block;width:32.33%;padding:3%;vertical-align: top;}
+.keyarea ul li a{width:100%;height:60px;line-height:60px;box-shadow:0 0 8px #eee; display:inline-block;border:1px solid #e3e3e3;text-align:center;font-size:22px;color:#888;border-radius:3px;}
+.keyarea ul li a:hover,.keyarea ul li a:active{border-color:#38cecb;}
+.order-nodata{position:absolute;left:0;top:45%;width:100%;}
+.order-nodata span{width:96px;height:45px;display:inline-block;background:url(../img/icon-order.png) no-repeat center;background-size:contain;margin-bottom:10px;}
+.order-nodata span.back-goods{background:url(../img/return-goods.png) no-repeat center;background-size:contain;}
+.order-nodata p{font-size:16px;color:#666;}/*
+.right-order-status span{font-size:18px;color:#666;} */
+.right-order-status i.iconfont{font-size:20px;margin-right:2px;}
+.order-present{padding:0 20px;height:50px;line-height:50px; background:#fff;box-shadow:0 6px 12px #e3f2f2;color:#38cecb;font-size:14px;margin-top:30px;}
+.order-present span{margin-right:20px;font-size:14px;}
+.order-present span em{display:inline-block;vertical-align:middle;}
+.order-present span i.iconfont{margin-right:10px;}
+.order-table{font-size:14px;color:#666;width:96%;margin:40px auto 20px;}
+.order-table img{width:50px;height:50px;margin:12px 0;border-radius:4px;}
+.order-table h5{color:#444;margin-bottom:6px;margin-top:16px;width:195px;}
+.order-table li{border-bottom:1px solid #f0f8f8;}
+.order-table li:last-child{border-bottom:none;}
+.order-rel{font-size:14px;color:#666;border-bottom:1px solid #e3e3e3;padding:10px 0;}
+.order-table input[type="checkbox"]{margin-top:25px;}
+.order-right-pad{padding-top:16px;}
+.order-right-pad em{margin-top:14px;}
+/*小票扫码订单*/
+.scan-order-nav{margin-top:10px;}
+.scan-order-nav li{float:left;line-height:42px;border-bottom:2px solid #fff;width:50%;}
+.scan-order-nav li a{font-size:18px;color:#666;}
+.scan-order-nav li.active{border-color:#38cecb;}
+.scan-order-nav li.active a{color:#38cecb;}

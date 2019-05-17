@@ -1,0 +1,313 @@
+<?php if (!defined('ROOT_PATH'))
+{
+	exit('No Permission');
+}
+
+/**
+ * @author     Xinze <xinze@live.cn>
+ */
+class User_GradeModel extends User_Grade
+{
+
+	/**
+	 * 读取等级列表
+	 *
+	 * @param  array $cond_row 查询条件
+	 * @param  array $order_row 排序信息
+	 * @return array $rows 返回的查询内容
+	 * @access public
+	 */
+	public function getGradeList($cond_row = array(), $order_row = array())
+	{
+		return $this->getByWhere($cond_row, $order_row);
+	}
+
+	/**
+	 * 读取等级信息
+	 *
+	 * @param  array $grade_row 查询条件
+	 * @return array $rows 返回的查询内容
+	 * @access public
+	 */
+	public function getUserGrade($grade_row = array())
+	{
+		return $this->getOneByWhere($grade_row);
+		
+
+	}
+	
+	/**
+	 * 获取会员期限--没有使用
+	 *
+	 * @param  array $data 会员的信息
+	 * @return array $data 返回的查询内容
+	 * @access public
+	 */
+	public function getUserExpire($data)
+	{
+		
+		if ($data['user_grade_valid'] > 0)
+		{
+			$time           = strtotime($data['user_grade_time']);
+			$data['expire'] = date("Y-m-d H:i:s", $time + 60 * 60 * 24 * 365 * $data['user_grade_valid']);
+		}
+		
+		return $data;
+		
+	}
+	
+	/**
+	 * 获取下一个等级
+	 *
+	 * @param  array $data会员等级信息, $gradeList等级列表, $re会员信息  查询条件
+	 * @return array $data 返回的查询内容
+	 * @access public
+	 */
+	public function getGradeGrowth($data, $gradeList, $re)
+	{
+		
+		foreach ($gradeList as $val)
+		{
+			if ($val['id'] == ($re['user_grade'] + 1))
+			{
+				$data['next']   = $val['user_grade_name'];
+				$data['growth'] = $val['user_grade_demand'] - $re['user_growth'];
+			}
+		}
+		
+		return $data;
+		
+	}
+
+	/**
+	 * 判断升级
+	 * @param  int $user_id会员的id $user_growth会员现在的经验值  查询条件
+	 * @return array $flag 升级成功返回的状态
+	 * @param $grade_log_id
+	 *
+	 */
+	public function upGrade($user_id, $user_growth)
+	{
+		$User_InfoModel = new User_InfoModel();
+		
+		$user = $User_InfoModel->getInfo($user_id);
+		//当前等级的下个等级
+		$user_grade = $user[$user_id]['user_grade'] * 1 + 1;
+
+		$Grade = $this->getGrade($user_grade);
+		//获取此等级经验值
+		$grade_le = $Grade [$user_grade]['user_grade_demand'] * 1;
+		
+		if ($user_growth > $grade_le)
+		{ //传过的当前经验值大于下个等级经验值升级
+			
+			$cond_row['user_grade'] = $user_grade;
+			$flag                   = $User_InfoModel->editInfo($user_id, $cond_row);
+			return $flag;
+		}
+
+
+	}
+
+    /**
+     * 检查并给用户晋级
+     * @param $user_id 会员的id
+     * @return bool|null
+     * @throws Exception
+     */
+    public function updateGradeVip($user_id)
+    {
+        $User_InfoModel = new User_InfoModel();
+        $User_GradeLogModel = new User_GradeLogModel();
+
+        $user = $User_InfoModel->getInfo($user_id);
+        //当前等级的下个等级
+        $user_grade = $user[$user_id]['user_grade'] * 1 + 1;
+        $Grade = $this->getGrade($user_grade);
+
+        $can_update_grade = false;
+
+        //远程paycenter参数
+        $key = Yf_Registry::get('paycenter_api_key');
+        $url = Yf_Registry::get('paycenter_api_url');
+        $paycenter_app_id = Yf_Registry::get('paycenter_app_id');
+        if($user_grade == 2){//用户升级成为会员
+            //1.获取用户的非账户余额支付的订单金额
+            $order_Base = new Order_BaseModel();
+            $cond_row['order_status'] = Order_StateModel::ORDER_FINISH;
+            $cond_row['order_refund_status'] = Order_StateModel::ORDER_REFUND_NO;
+            $order_sum_amount = $order_Base->getSumOrderPaymentAmount($cond_row);
+
+            //2.获取用户的储值金额
+            $formvars = array();
+            $formvars['app_id'] = $paycenter_app_id;
+            $formvars['user_id'] = $user_id;
+            $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Paycen_PayRecord&met=getDepositAmountByUserId&typ=json', $url), $formvars);
+            $user_deposit_amount = 0;
+            if($rs['status'] == "200"){
+                $user_deposit_amount = $rs['data']['amount']*1;
+            }
+
+            //获取升级会员需要的金额
+            $user_grade_trade = $Grade [$user_grade]['user_grade_trade'] * 1;
+
+            //判断是否可以升级，用户的消费金额+储值金额 >= 升级所需要的金额
+            $can_update_grade = $order_sum_amount + $user_deposit_amount >= $user_grade_trade;
+        }
+
+        if($can_update_grade){
+            //更新用户级别
+            $cond_row['user_grade'] = $user_grade;
+            $flag                   = $User_InfoModel->editInfo($user_id, $cond_row);
+
+            //添加用户晋级log
+            $log['user_id'] = $user_id;
+            $log['user_grade_pre'] = $user[$user_id]['user_grade'];
+            $log['user_grade_to'] = $user_grade;
+            $log['log_date_time'] = get_date_time();
+            $flag1 = $User_GradeLogModel->addGradeLog($log);
+
+            //检查上级会员是否可以晋级
+            $user_parent_id = $user[$user_id]['user_parent_id'];
+            if($user_parent_id){
+                $user_grade_parent = $user_grade+1;
+                $can_update_grade = $this->checkUpdateGradeToPartner($user_parent_id, $user_grade_parent, $Grade);
+
+                if($can_update_grade){
+                    //上级会员晋级为合伙人
+                    $cond_row['user_grade'] = $user_grade_parent;
+                    $flag_p                 = $User_InfoModel->editInfo($user_parent_id, $cond_row);
+
+                    //添加用户晋级log
+                    $log['user_id'] = $user_id;
+                    $log['user_grade_pre'] = $user_grade;
+                    $log['user_grade_to'] = $user_grade_parent;
+                    $log['log_date_time'] = get_date_time();
+                    $flag1_p = $User_GradeLogModel->addGradeLog($log);
+                }
+            }
+
+            return $flag;
+        }else{
+            return null;
+        }
+    }
+
+    public function updateGradePartner($user_id)
+    {
+        $User_InfoModel = new User_InfoModel();
+        $User_GradeLogModel = new User_GradeLogModel();
+
+        $user = $User_InfoModel->getInfo($user_id);
+        //当前等级的下个等级
+        $user_grade = $user[$user_id]['user_grade'] * 1 + 1;
+        $Grade = $this->getGrade($user_grade);
+
+        $can_update_grade = false;
+
+        if($user_grade == 3) {//会员升级为合伙人
+            $can_update_grade = $this->checkUpdateGradeToPartner($user_id, $user_grade, $Grade);
+        }
+
+        if($can_update_grade){
+            //更新用户级别
+            $cond_row['user_grade'] = $user_grade;
+            $flag                   = $User_InfoModel->editInfo($user_id, $cond_row);
+
+            //添加用户晋级log
+            $log['user_id'] = $user_id;
+            $log['user_grade_pre'] = $user[$user_id]['user_grade'];
+            $log['user_grade_to'] = $user_grade;
+            $log['log_date_time'] = get_date_time();
+            $flag1 = $User_GradeLogModel->addGradeLog($log);
+
+            return $flag;
+        }else{
+            return null;
+        }
+    }
+
+    private function checkUpdateGradeToPartner($user_id,$user_grade,$Grade)
+    {
+        //如果要升级的等级不是合伙人等级，则跳出
+        if($user_grade != 3) return false;
+
+        $can_update_grade = false;
+
+        //远程paycenter参数
+        $key = Yf_Registry::get('paycenter_api_key');
+        $url = Yf_Registry::get('paycenter_api_url');
+        $paycenter_app_id = Yf_Registry::get('paycenter_app_id');
+
+        //获取用户的股金是否达标
+        $formvars = array();
+        $formvars['app_id'] = $paycenter_app_id;
+        $formvars['user_id'] = $user_id;
+        $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=getUserResourceInfo&typ=json', $url), $formvars);
+
+        if ($rs['status'] == "200") {
+            $user_rescouce = $rs['data'];
+            $user_pay_shares_date = $user_rescouce['user_pay_shares_date'];
+
+            //查看股金状态，判断是否需要升级
+            if ($user_pay_shares_date) {
+                //获取升级合伙人需要的条件
+                $user_grade_year_num = $Grade[$user_grade]['user_grade_year_num'];
+                $user_grade_per_year = $Grade[$user_grade]['user_grade_per_year'];
+
+                //例如：前三年每年发展10个（及以上）会员
+                $s_user_grade = 2; //1.普通用户;2:会员;3:合伙人;4:高级合伙人
+                for ($y = 1, $temp_date = $user_pay_shares_date; $y <= $user_grade_year_num; $y++) {
+                    $end_date = date('Y-m-d 00:00:00', strtotime('+1 year', strtotime($temp_date)));
+                    $User_GradeLogModel = new User_GradeLogModel();
+                    $user_count = $User_GradeLogModel->getUserCount($user_id, $s_user_grade, $temp_date, $end_date);
+                    if ($user_count < $user_grade_per_year) break;
+                    $temp_date = $end_date;
+                }
+
+                $can_update_grade = true;
+            }
+        }
+
+        return $can_update_grade;
+    }
+
+	//获取当前用户等级对应的折扣率
+	public function getGradeRate($user_grade)
+	{
+		//获取用户等级表所有数据
+		$user_grade_info = $this->getByWhere();
+		//取出不同等级条件组成新数组
+		$user_grade_demand_row = array_column($user_grade_info, 'user_grade_demand');
+		$num = 0;
+		//循环比较当前用户符合哪个等级
+		foreach($user_grade_demand_row as $key=>$val)
+		{
+			if($user_grade > $key)
+			{
+				$num = $key;
+				continue;
+			}
+			elseif($user_grade == $key)
+			{
+				$num = $key;
+				break;
+			}
+			else
+			{
+				break;
+			}
+		}
+		return $this->getOneByWhere(['user_grade_id'=>$num]);
+	}
+
+	public function getUserRate($user_grade)
+	{
+		$grade_info = $this->getOne($user_grade);
+
+		return $grade_info;
+
+	}
+}
+
+?>

@@ -1,0 +1,1 @@
+insert into `yf_goods_spec` ( `spec_readonly`, `spec_id`, `spec_name`) values ( '1', '1', '颜色');
