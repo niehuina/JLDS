@@ -15,18 +15,14 @@ var THISPAGE = {
     },
     initDom: function(){
         this.$_userName = $('#userName');
-        this.$_beginDate = $('#beginDate').val(system.beginDate);
-        this.$_endDate = $('#endDate').val(system.endDate);
         this.$_userName.placeholder();
-        this.$_beginDate.datepicker();
-        this.$_endDate.datepicker();
+        this.$_userMobile = $('#userMobile');
+        this.$_userMobile.placeholder();
     },
     loadGrid: function(){
         var gridWH = Public.setGrid(), _self = this;
-        queryConditions.beginDate = this.$_beginDate.val();
-        queryConditions.endDate = this.$_endDate.val();
         var colModel = [
-            {name:'operating', label:'操作', width:60, fixed:true, formatter:operFmatter, align:"center"},
+            {name:'operating', label:'操作', width:100, fixed:true, formatter:operFmatter, align:"center"},
             {name:'user_id', label:'用户编号', width:120, align:"center"},
             {name:'user_account', label:'用户帐号', width:150,align:'center'},
             {name:'user_delete',label:'状态',  width:150,align:'center'},
@@ -37,6 +33,7 @@ var THISPAGE = {
             {name:'user_recharge_card_frozen', label:'冻结卡资金', width:110, align:"center"},
             {name:'user_shares', label:'用户股金', width:110, align:"center"},
             {name:'user_pay_shares_date', label:'用户股金达标日期', width:150, align:"center"},
+            {name:'user_stocks', label:'用户备货金', width:110, align:"center"},
             {name:'user_login_time', label:'最后登录时间', width:150, align:"center"},
         ];
         this.mod_PageConfig.gridReg('grid', colModel);
@@ -89,9 +86,14 @@ var THISPAGE = {
         
     
         function operFmatter (val, opt, row) {
+            var stock_html = '';
+            //股金达标了，才能填入备货金
+            if(row.user_pay_shares_date){
+                stock_html = '<span class="ui-icon ui-icon-plus " title="备货金"></span>';
+            }
             var html_con = '<div class="operating" data-id="' + row.user_id + '">' +
                 '<span class="ui-icon ui-icon-pencil" title="资金"></span>' +
-                '<span class="ui-icon ui-icon-gear" title="股金"></span>' +
+                '<span class="ui-icon ui-icon-circle-plus" title="股金"></span>' + stock_html +
                 '</div>';
             return html_con;
         };
@@ -121,21 +123,25 @@ var THISPAGE = {
             };
         });
         //修改股金
-        $('.grid-wrap').on('click', '.ui-icon-gear', function(e){
+        $('.grid-wrap').on('click', '.ui-icon-circle-plus', function(e){
             e.preventDefault();
             var e = $(this).parent().data("id");
             handle.operate("addShares", e)
         });
+        //修改备货金
+        $('.grid-wrap').on('click', '.ui-icon-plus', function(e){
+            e.preventDefault();
+            var e = $(this).parent().data("id");
+            handle.operate("addStocks", e)
+        });
   
         $('#search').click(function(){
-            queryConditions.userName = _self.$_userName.val() === '请输入会员名称' ? '' : _self.$_userName.val();
+            queryConditions.userName = _self.$_userName.val() === '请输入会员用户名' ? '' : _self.$_userName.val();
+            queryConditions.userMobile = _self.$_userMobile.val() === '请输入会员手机号' ? '' : _self.$_userMobile.val();
 //            queryConditions.beginDate = _self.$_beginDate.val();
 //            queryConditions.endDate = _self.$_endDate.val();
             THISPAGE.reloadData(queryConditions);
         });
-        
-
-        
         
         $(window).resize(function(){
             Public.resizeGrid();
@@ -160,6 +166,11 @@ var handle = {
         {
             var i = "修改会员股金", a = {oper: t, rowData: $("#grid").jqGrid('getRowData',e), callback: this.callback};
             var url = "url:./index.php?ctl=Paycen_PayBase&met=getEditShares&user_id="+e;
+        }
+        else if("addStocks" == t)
+        {
+            var i = "修改会员备货金", a = {oper: t, rowData: $("#grid").jqGrid('getRowData',e), callback: this.callback};
+            var url = "url:./index.php?ctl=Paycen_PayBase&met=getEditStocks&user_id="+e;
         }
         $.dialog({
             title: i,

@@ -151,14 +151,28 @@ class Api_UserCtl extends Api_Controller
         $userInfoModel = new User_InfoModel();
 
         if ($user_id) {
+            $userInfoModel->sql->startTransactionDb();
+
             $data['user_state'] = $status;
             $flag = $userInfoModel->editInfo($user_id, $data);
 
-            if (false !== $flag) {
+            //如果是用户退出，则要把下属的用户，迁移到该用户的上一级
+            $key = Yf_Registry::get('shop_api_key');
+            $url = Yf_Registry::get('shop_api_url');
+            $shop_app_id = Yf_Registry::get('shop_app_id');
+            $formvars = array();
+            $formvars['app_id'] = $shop_app_id;
+            $formvars['user_id'] = $data['user_id'];
+
+            $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=changeUserParentId&typ=json', $url), $formvars);
+
+            if (false !== $flag && $rs['status'] == "200" && $userInfoModel->sql->commitDb()) {
                 $msg = 'success';
                 $status = 200;
             } else {
-                $msg = 'failure';
+                $userInfoModel->sql->rollBackDb();
+                $m      = $userInfoModel->msg->getMessages();
+                $msg    = $m ? $m[0] : __('failure');
                 $status = 250;
             }
         }

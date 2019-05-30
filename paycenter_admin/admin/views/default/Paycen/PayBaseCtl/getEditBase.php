@@ -9,7 +9,7 @@ include $this->view->getTplPath() . '/'  . 'header.php';
 </head>
 
 <body>
-        <form method="post" enctype="multipart/form-data" id="shop_edit_class" name="form1">
+        <form method="post" enctype="multipart/form-data" id="edit_class" name="form1">
        <div class="ncap-form-default">
               <dl class="row">
                 <dt class="tit">
@@ -58,7 +58,7 @@ function initPopBtns()
         {
             
             postData(oper, rowData.shop_class_id);
-           return cancleGridEdit(),$("#shop_edit_class").trigger("validate"), !1
+           return cancleGridEdit(),$("#edit_class").trigger("validate"), !1
         }
     }, {id: "cancel", name: t[1]})
 }
@@ -117,7 +117,7 @@ function resetForm(t)
     $("#user_id").val("");
     $("#record_desc").val("");
 }
-var curRow, curCol, curArrears, $grid = $("#grid"),  $_form = $("#shop_edit_class"), api = frameElement.api, oper = api.data.oper, rowData = api.data.rowData || {}, callback = api.data.callback;
+var curRow, curCol, curArrears, $grid = $("#grid"),  $_form = $("#edit_class"), api = frameElement.api, oper = api.data.oper, rowData = api.data.rowData || {}, callback = api.data.callback;
 initPopBtns();
 
     </script>

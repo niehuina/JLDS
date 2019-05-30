@@ -32,10 +32,10 @@ class User_GradeModel extends User_Grade
 	public function getUserGrade($grade_row = array())
 	{
 		return $this->getOneByWhere($grade_row);
-		
+
 
 	}
-	
+
 	/**
 	 * 获取会员期限--没有使用
 	 *
@@ -45,17 +45,17 @@ class User_GradeModel extends User_Grade
 	 */
 	public function getUserExpire($data)
 	{
-		
+
 		if ($data['user_grade_valid'] > 0)
 		{
 			$time           = strtotime($data['user_grade_time']);
 			$data['expire'] = date("Y-m-d H:i:s", $time + 60 * 60 * 24 * 365 * $data['user_grade_valid']);
 		}
-		
+
 		return $data;
-		
+
 	}
-	
+
 	/**
 	 * 获取下一个等级
 	 *
@@ -65,7 +65,7 @@ class User_GradeModel extends User_Grade
 	 */
 	public function getGradeGrowth($data, $gradeList, $re)
 	{
-		
+
 		foreach ($gradeList as $val)
 		{
 			if ($val['id'] == ($re['user_grade'] + 1))
@@ -74,9 +74,9 @@ class User_GradeModel extends User_Grade
 				$data['growth'] = $val['user_grade_demand'] - $re['user_growth'];
 			}
 		}
-		
+
 		return $data;
-		
+
 	}
 
 	/**
@@ -89,7 +89,7 @@ class User_GradeModel extends User_Grade
 	public function upGrade($user_id, $user_growth)
 	{
 		$User_InfoModel = new User_InfoModel();
-		
+
 		$user = $User_InfoModel->getInfo($user_id);
 		//当前等级的下个等级
 		$user_grade = $user[$user_id]['user_grade'] * 1 + 1;
@@ -97,10 +97,10 @@ class User_GradeModel extends User_Grade
 		$Grade = $this->getGrade($user_grade);
 		//获取此等级经验值
 		$grade_le = $Grade [$user_grade]['user_grade_demand'] * 1;
-		
+
 		if ($user_growth > $grade_le)
 		{ //传过的当前经验值大于下个等级经验值升级
-			
+
 			$cond_row['user_grade'] = $user_grade;
 			$flag                   = $User_InfoModel->editInfo($user_id, $cond_row);
 			return $flag;
@@ -270,6 +270,47 @@ class User_GradeModel extends User_Grade
         }
 
         return $can_update_grade;
+    }
+
+    public function updateGradeGPartner($user_id, $user_shares, $user_stocks)
+    {
+        $User_InfoModel = new User_InfoModel();
+        $user = $User_InfoModel->getInfo($user_id);
+
+        if($user[$user_id]['user_grade']*1 == 4){
+            return true;
+        }
+
+        //当前等级的下个等级
+        $user_grade = 4;
+        $Grade = $this->getGrade($user_grade);
+
+        $can_update_grade = false;
+
+        //获取升级会员需要
+        $user_grade_shares = $Grade [$user_grade]['user_grade_shares'] * 1;
+        $user_grade_stocks = $Grade [$user_grade]['user_grade_stocks'] * 1;
+        if ($user_shares >= $user_grade_shares && $user_stocks >= $user_grade_stocks) {
+            $can_update_grade = true;
+        }
+
+        if ($can_update_grade) {
+            //更新用户级别
+            $cond_row['user_grade'] = $user_grade;
+            $flag = $User_InfoModel->editInfo($user_id, $cond_row);
+
+            //添加用户晋级log
+            $log['user_id'] = $user_id;
+            $log['user_grade_pre'] = $user[$user_id]['user_grade'];
+            $log['user_grade_to'] = $user_grade;
+            $log['log_date_time'] = get_date_time();
+            $User_GradeLogModel = new User_GradeLogModel();
+            $flag1 = $User_GradeLogModel->addGradeLog($log);
+
+            return $flag;
+        } else {
+            return null;
+        }
     }
 
 	//获取当前用户等级对应的折扣率

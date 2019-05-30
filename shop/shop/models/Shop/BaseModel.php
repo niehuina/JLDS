@@ -797,7 +797,7 @@ limit $offset, $rows
 	/**
 	 * 获取店铺下的商品
 	 * @param $shop_id
-	 * @return boolean
+	 * @return array
 	 */
 	public function getShopGoods ($shop_id)
 	{
@@ -805,6 +805,34 @@ limit $offset, $rows
 		$goods_common_rows = $goodsCommonModel->getByWhere(['shop_id'=> $shop_id]);
 		return $goods_common_rows;
 	}
+
+	public function getShopUserList($cond_row, $order_row,$page = 1, $rows = 20)
+    {
+        $shop_list = $this->listByWhere($cond_row, $$order_row, $page, $rows);
+
+        $user_ids = array_column($shop_list['items'], 'user_id');
+
+        $key = Yf_Registry::get('paycenter_api_key');
+        $url = Yf_Registry::get('paycenter_api_url');
+        $app_id = Yf_Registry::get('paycenter_app_id');
+
+        $formvars = array();
+        $formvars['app_id'] = $app_id;
+        $formvars['user_id_row'] = $user_ids;
+        $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=getUserRowsResourceInfo&typ=json', $url), $formvars);
+
+        if($rs['status'] == "200"){
+            foreach($shop_list['items'] as $key=>$shop){
+                if($rs['data'][$shop['user_id']]) {
+                    $shop_list['items'][$key]['user_stocks'] = $rs['data'][$shop['user_id']]['user_stocks'];
+                }else{
+                    $shop_list['items'][$key]['user_stocks'] = 0;
+                }
+            }
+        }
+
+        return $shop_list;
+    }
 }
 
 ?>

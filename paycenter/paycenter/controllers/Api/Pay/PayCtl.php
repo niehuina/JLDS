@@ -1148,6 +1148,195 @@ class Api_Pay_PayCtl extends Api_Controller
 
         $this->data->addBody(-140, $data, $msg, $status);
     }
+
+
+
+    //添加备货订单信息
+    public function addConsumeTradeForStock()
+    {
+        $consume_trade_id     = request_string('consume_trade_id');
+        $order_id             = request_string('order_id');
+        $buy_id               = request_int('buy_id');
+        $buyer_name			  = request_string('buyer_name');
+        $seller_id            = request_int('seller_id');
+        $seller_name		  = request_string('seller_name');
+        $order_state_id       = request_int('order_state_id');
+        $order_payment_amount = request_float('order_payment_amount');
+        $trade_remark         = request_string('trade_remark');
+        $trade_create_time    = request_string('trade_create_time');
+        $trade_title		  = request_string('trade_title');
+        $app_id               = request_int('from_app_id');
+        $order_commission_fee = request_float('order_commission_fee');
+
+        //开启事物
+        $Consume_TradeModel = new Consume_TradeModel();
+        $Consume_TradeModel->sql->startTransactionDb();
+
+        $add_row                         = array();
+        $add_row['consume_trade_id']     = $consume_trade_id;
+        $add_row['order_id']             = $order_id;
+        $add_row['buyer_id']             = $buy_id;
+        $add_row['seller_id']            = $seller_id;
+        $add_row['order_state_id']       = $order_state_id;
+        $add_row['order_payment_amount'] = $order_payment_amount;
+        $add_row['trade_type_id']        = Trade_TypeModel::STOCK_ORDER;
+        $add_row['trade_remark']         = $trade_remark;
+        $add_row['trade_create_time']    = $trade_create_time;
+        $add_row['trade_amount']         = $order_payment_amount;
+        $add_row['trade_payment_amount'] = $order_payment_amount;
+        $add_row['trade_commis_amount']  = $order_commission_fee;
+        $add_row['app_id'] = $app_id;
+
+        //1.生成交易订单
+        $flag               = $Consume_TradeModel->addTrade($add_row);
+
+        //2.生成合并支付订单
+        $uorder      = "U" . date("Ymdhis", time()) . rand(100, 999);  //18位
+        $union_add_row = array(
+            'union_order_id' => $uorder,
+            'inorder' => $order_id,
+            'trade_title' => $trade_title,
+            'trade_payment_amount' => $order_payment_amount,
+            'create_time' => date("Y-m-d H:i:s"),
+            'buyer_id' => $buy_id,
+            'order_state_id' => Union_OrderModel::WAIT_PAY,
+            'app_id' => $app_id,
+            'trade_type_id' => Trade_TypeModel::SHOPPING,
+        );
+
+        $Union_OrderModel = new Union_OrderModel();
+        $Union_OrderModel->addUnionOrder($union_add_row);
+
+        //3.生成交易明细（付款方，收款方）
+        $Consume_RecordModel = new Consume_RecordModel();
+        $Trade_TypeModel = new Trade_TypeModel();
+        $record_add_buy_row                  = array();
+        $record_add_buy_row['order_id']      = $order_id;
+        $record_add_buy_row['user_id']       = $buy_id;
+        $record_add_buy_row['user_nickname'] = $buyer_name;
+        $record_add_buy_row['record_money']  = $order_payment_amount;
+        $record_add_buy_row['record_date']   = date('Y-m-d');
+        $record_add_buy_row['record_year']	 = date('Y');
+        $record_add_buy_row['record_month']	 = date('m');
+        $record_add_buy_row['record_day']    = date('d');
+        $record_add_buy_row['record_title']  = $Trade_TypeModel->trade_type[Trade_TypeModel::STOCK_ORDER];
+        $record_add_buy_row['record_time']   = date('Y-m-d H:i:s');
+        $record_add_buy_row['trade_type_id'] = Trade_TypeModel::STOCK_ORDER;
+        $record_add_buy_row['user_type']     = 2;	//付款方
+        $record_add_buy_row['record_status'] = RecordStatusModel::IN_HAND;
+
+        $Consume_RecordModel->addRecord($record_add_buy_row);
+
+
+//        $record_add_seller_row                  = array();
+//        $record_add_seller_row['order_id']      = $order_id;
+//        $record_add_seller_row['user_id']       = $seller_id;
+//        $record_add_seller_row['user_nickname'] = $seller_name;
+//        $record_add_seller_row['record_money']  = $order_payment_amount;
+//        $record_add_seller_row['record_date']   = date('Y-m-d');
+//        $record_add_seller_row['record_year']	= date('Y');
+//        $record_add_seller_row['record_month']	= date('m');
+//        $record_add_seller_row['record_day']	= date('d');
+//        $record_add_seller_row['record_title']  = $Trade_TypeModel->trade_type[Trade_TypeModel::STOCK_ORDER];
+//        $record_add_seller_row['record_time']   = date('Y-m-d H:i:s');
+//        $record_add_seller_row['trade_type_id'] = Trade_TypeModel::STOCK_ORDER;
+//        $record_add_seller_row['user_type']     = 1;	//收款方
+//        $record_add_seller_row['record_status'] = RecordStatusModel::IN_HAND;
+//
+//        $Consume_RecordModel->addRecord($record_add_seller_row);
+
+
+        if ($flag && $Consume_TradeModel->sql->commitDb())
+        {
+            $msg    = 'success';
+            $status = 200;
+            $data = array('union_order' => $uorder);
+        }
+        else
+        {
+            $Consume_TradeModel->sql->rollBackDb();
+            $m      = $Consume_TradeModel->msg->getMessages();
+            $msg    = $m ? $m[0] : _('failure');
+            $status = 250;
+            $data = array();
+        }
+
+        $this->data->addBody(-140, $data, $msg, $status);
+
+    }
+
+    //确认收货
+    public function confirmStockOrder()
+    {
+        $rs_row  = array();
+        if(request_string('type') == 'row')
+        {
+            $order_id = request_row('order_id');
+        }
+        else
+        {
+            $order_id[] = request_string('order_id');
+        }
+
+        //判断是否是货到付款订单，货到付款订单不需要修改卖家资金
+        $payment = request_int('payment','1');
+
+        $Consume_TradeModel = new Consume_TradeModel();
+
+        //开启事物
+        $Consume_TradeModel->sql->startTransactionDb();
+
+        //1.修改订单表（consume_trade）
+        $Consume_TradeModel->editTrade($order_id,array('order_state_id' => Union_OrderModel::FINISH));
+
+//        $consume_trade_row = $Consume_TradeModel->getOne($order_id);
+
+        //2.合并支付表
+        $Union_OrderModel = new Union_OrderModel();
+        $union_row = $Union_OrderModel->getByWhere(array('inorder' => $order_id));
+        $uorder_id = array_column($union_row,'union_order_id');
+        $flag1 = $Union_OrderModel->editUnionOrder($uorder_id,array('order_state_id' => Union_OrderModel::FINISH));
+        check_rs($flag1,$rs_row);
+
+        //3.交易明细
+        $Consume_RecordModel = new Consume_RecordModel();
+        $record_row = $Consume_RecordModel->getByWhere(array('order_id:IN' => $order_id));
+        $record_id_row = array_column($record_row,'consume_record_id');
+        $flag2 = $Consume_RecordModel->editRecord($record_id_row,array('record_status' => RecordStatusModel::RECORD_FINISH));
+        check_rs($flag2,$rs_row);
+
+        if($payment)
+        {
+            //4.减少买家的备货金
+            $union_row_buy = current($union_row);
+            $money = $union_row_buy['trade_payment_amount'];
+            $user_resource_edit_row = array();
+            $user_resource_edit_row['user_stocks'] = $money*(-1);
+
+            $User_ResourceModel = new User_ResourceModel();
+            $flag3 = $User_ResourceModel->editResource($union_row_buy['buyer_id'],$user_resource_edit_row,true);
+
+            check_rs($flag3,$rs_row);
+        }
+
+        $flag = is_ok($rs_row);
+
+        if ($flag && $Consume_TradeModel->sql->commitDb())
+        {
+            $msg    = 'success';
+            $status = 200;
+        }
+        else
+        {
+            $Consume_TradeModel->sql->rollBackDb();
+            $m      = $Consume_TradeModel->msg->getMessages();
+            $msg    = $m ? $m[0] : _('failure');
+            $status = 250;
+        }
+        $data = array();
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
+
 }
 
 ?>

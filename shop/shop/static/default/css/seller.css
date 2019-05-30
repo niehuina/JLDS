@@ -4667,3 +4667,45 @@ label.down {
     font-size:12px;
     text-align:center;
 }
+
+/*  Step  */
+.step_order {
+    padding: 25px 0 25px 30px;
+    border: 1px solid #E6E6E6;
+}
+
+.step_order li {
+    float: left;
+    width: 33%;
+    height: 50px;
+    position: relative;
+    z-index: 1;
+}
+
+.step_order li:last-child {
+    width: 33%;
+}
+
+.step_order li h3,
+.step_order li h2 {
+    font: normal 16px/20px "microsoft yahei";
+    position: absolute;
+    z-index: 1;
+}
+
+.step_order li h2 {
+    top: 20px;
+    line-height: 30px;
+}
+
+.step_order li i {
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+    width: 20px;
+    height: 50px;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 28%;
+}

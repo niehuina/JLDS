@@ -68,7 +68,7 @@ class Grade_Log extends Yf_Model
 	 */
 	public function editLog($grade_log_id = null, $field_row)
 	{
-		$update_flag = $this->edit($points_log_id, $field_row);
+		$update_flag = $this->edit($grade_log_id, $field_row);
 
 		return $update_flag;
 	}
@@ -84,7 +84,7 @@ class Grade_Log extends Yf_Model
 	 */
 	public function editLogSingleField($grade_log_id, $field_name, $field_value_new, $field_value_old)
 	{
-		$update_flag = $this->editSingleField($points_log_id, $field_name, $field_value_new, $field_value_old);
+		$update_flag = $this->editSingleField($grade_log_id, $field_name, $field_value_new, $field_value_old);
 
 		return $update_flag;
 	}

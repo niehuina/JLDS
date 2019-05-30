@@ -37,12 +37,6 @@ include TPL_PATH . '/' . 'header.php';
                             <input type="text" id="userName" class="ui-input ui-input-ph con" value="请输入会员名称">
                             <input type="text" id="userMobile" class="ui-input ui-input-ph con" value="请输入会员手机号">
                         </li>
-                        <!--        <li>
-                                  <label>注册时间:</label>
-                                  <input type="text" id="beginDate" value="2015-12-02" class="ui-input ui-datepicker-input">
-                                  <i>-</i>
-                                  <input type="text" id="endDate" value="2015-12-08" class="ui-input ui-datepicker-input">
-                                </li>-->
                         <li><a class="ui-btn" id="search">查询<i class="iconfont icon-btn02"></i></a></li>
                     </ul>
                 </div>

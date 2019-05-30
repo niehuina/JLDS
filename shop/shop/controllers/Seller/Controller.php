@@ -356,6 +356,32 @@ class Seller_Controller extends Yf_AppController
             return false;
         }
     }
+
+    public function getPayCenterUrl($ctl, $met, $formvars, $typ='json')
+    {
+        //远程paycenter参数
+        $key = Yf_Registry::get('paycenter_api_key');
+        $url = Yf_Registry::get('paycenter_api_url');
+        $paycenter_app_id = Yf_Registry::get('paycenter_app_id');
+
+        $formvars['app_id'] = $paycenter_app_id;
+        $rs = get_url_with_encrypt($key, sprintf('%s?ctl=%s&met=%s&typ=%s', $url, $ctl, $met, $typ), $formvars);
+
+        return $rs;
+    }
+
+    public function getUCenterUrl($ctl, $met, $formvars, $typ='json')
+    {
+        //远程paycenter参数
+        $key = Yf_Registry::get('ucenter_api_key');
+        $url = Yf_Registry::get('ucenter_api_url');
+        $ucenter_app_id = Yf_Registry::get('ucenter_app_id');
+
+        $formvars['app_id'] = $ucenter_app_id;
+        $rs = get_url_with_encrypt($key, sprintf('%s?ctl=%s&met=%s&typ=%s', $ctl, $met, $typ, $url), $formvars);
+
+        return $rs;
+    }
 }
 
 ?>

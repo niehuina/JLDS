@@ -6,7 +6,7 @@
 class User_GradeLogModel extends User_GradeLog
 {
     /**
-     * 读取等级列表
+     * 读取Log列表
      *
      * @param  array $cond_row 查询条件
      * @param  array $order_row 排序信息

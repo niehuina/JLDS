@@ -4,6 +4,11 @@ function sd()
 	$("#d_1").attr('class','hidden')
 	$("#d_2").removeClass('hidden')
 }
+function sd()
+{
+	$("#d_1").attr('class','hidden')
+	$("#d_2").removeClass('hidden')
+}
 function district(obj){
 	
 	$(obj).children('option').attr('class','');

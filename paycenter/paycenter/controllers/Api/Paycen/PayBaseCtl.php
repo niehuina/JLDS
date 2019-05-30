@@ -73,9 +73,9 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
             $data['user_type'] = 3;
             $data['record_status'] = 2;
             if ($data['record_money'] > 0) {
-                $data['record_title'] = _("管理员增加金额");
+                $data['record_title'] = _("管理员增加用户余额");
             } else {
-                $data['record_title'] = _("管理员减少金额");
+                $data['record_title'] = _("管理员减少用户余额");
             }
             $Consume_RecordModel = new Consume_RecordModel();
             $flag1 = $Consume_RecordModel->addRecord($data);
@@ -97,17 +97,7 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
 
     function getEditShares()
     {
-        $user_id = request_int("user_id");
-        $User_BaseModel = new User_BaseModel();
-        $data = $User_BaseModel->getOne($user_id);
-        if ($data) {
-            $msg = 'success';
-            $status = 200;
-        } else {
-            $msg = 'failure';
-            $status = 250;
-        }
-        $this->data->addBody(-140, $data, $msg, $status);
+        $this->getEditBase();
     }
 
     function editSharesRow()
@@ -131,9 +121,9 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
         $data['user_type'] = Consume_RecordModel::RECORD;
         $data['record_status'] = 2;
         if ($data['record_money'] > 0) {
-            $data['record_title'] = _("管理员增加股金");
+            $data['record_title'] = _("管理员增加用户股金");
         } else {
-            $data['record_title'] = _("管理员减少股金");
+            $data['record_title'] = _("管理员减少用户股金");
         }
 
         //添加用户股金记录
@@ -170,6 +160,79 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
                         $flag = $flag && $flag2;
                     }
                 }
+            }
+        }
+
+        if ($flag && $User_ResourceModel->sql->commitDb()) {
+            $msg = 'success';
+            $status = 200;
+        } else {
+            $User_ResourceModel->sql->rollBackDb();
+            $m      = $User_ResourceModel->msg->getMessages();
+            $msg    = $m ? $m[0] : __('failure');
+            $status = 250;
+        }
+
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
+
+    function getEditStocks()
+    {
+        $this->getEditBase();
+    }
+
+    function editStocksRow()
+    {
+        $data['user_id'] = request_int("user_id");
+        $data['user_nickname'] = request_string("user_account");
+        $data['record_money'] = request_float("user_stocks");
+        $data['record_desc'] = request_string("record_desc");
+        $User_ResourceModel = new User_ResourceModel();
+
+        //开启事物
+        $User_ResourceModel->sql->startTransactionDb();
+
+        $data['order_id'] = "";
+        $data['record_date'] = date("Y-m-d H:i:s");
+        $data['record_year'] = date("Y");
+        $data['record_month'] = date("m");
+        $data['record_day'] = date("d");
+        $data['record_time'] = date("Y-m-d H:i:s");
+        $data['trade_type_id'] = Trade_TypeModel::STOCKS;
+        $data['user_type'] = Consume_RecordModel::RECORD;
+        $data['record_status'] = 2;
+        if ($data['record_money'] > 0) {
+            $data['record_title'] = _("管理员增加用户备货金");
+        } else {
+            $data['record_title'] = _("管理员减少用户备货金");
+        }
+
+        //添加用户备货金记录
+        $Consume_RecordModel = new Consume_RecordModel();
+        $flag = $Consume_RecordModel->addRecord($data);
+
+        if ($flag) {
+            //修改用户备货金
+            $flag1 = $User_ResourceModel->editResource($data['user_id'], array("user_stocks" => $data['record_money']), true);
+            $flag = $flag && $flag1;
+
+            //查询用户资金信息
+            $user_resource = $User_ResourceModel->getOne($data['user_id']);
+
+            //更新用户等级
+            $key = Yf_Registry::get('shop_api_key');
+            $url = Yf_Registry::get('shop_api_url');
+            $shop_app_id = Yf_Registry::get('shop_app_id');
+            $formvars = array();
+            $formvars['app_id'] = $shop_app_id;
+            $formvars['user_id'] = $data['user_id'];
+            $formvars['user_shares'] = $user_resource['user_shares'];
+            $formvars['user_stocks'] = $user_resource['user_stocks'];
+            $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=updateUserGradeToGPartner&typ=json', $url), $formvars);
+            if ($rs['status'] == "200") {
+                $flag = $flag && true;
+            }else{
+                $flag = false;
             }
         }
 

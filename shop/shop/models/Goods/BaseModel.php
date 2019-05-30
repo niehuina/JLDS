@@ -1276,6 +1276,106 @@ class Goods_BaseModel extends Goods_Base
         $data['rate_price']  = number_format($goods_info['goods_price'] - $data['now_price'], 2, '.', '');
         return $data;
     }
+
+    /**
+     * 减少商品库存
+     */
+    public function reduceGoodsStock($goods_id, $num)
+    {
+        $goods_base    = $this->getOne($goods_id);
+        $edit_base_num = $goods_base['goods_stock'] - $num;
+
+        if($edit_base_num < 0)
+        {
+            return 'no_stock' ;
+        }
+        $edit_base_row = array('goods_stock' => $edit_base_num);
+        $flag          = $this->editBase($goods_id, $edit_base_row, false);
+
+        if ($flag)
+        {
+            $Goods_CommonModel = new Goods_CommonModel();
+            $common_base       = $Goods_CommonModel->getOne($goods_base['common_id']);
+
+            $edit_common_num   = $common_base['common_stock'] - $num;
+            $edit_common_row   = array('common_stock' => $edit_common_num);
+            $resd               = $Goods_CommonModel->editCommon($goods_base['common_id'], $edit_common_row, false);
+
+            $rs_row = array();
+            check_rs($resd,$rs_row);
+            $res = is_ok($rs_row);
+
+            if($goods_base['goods_alarm'] >= $edit_base_num)
+            {
+                //查找店铺信息
+                $Shop_BaseModel = new Shop_BaseModel();
+                $shop_base = $Shop_BaseModel->getOne($common_base['shop_id']);
+                $message = new MessageModel();
+                $message->sendMessage('goods are not in stock',$shop_base['user_id'], $shop_base['user_name'], $order_id = NULL, $shop_name = NULL, 1, 1, $end_time = Null,$goods_base['common_id'],$goods_id);
+            }
+
+        }
+        else
+        {
+            $res = false;
+        }
+
+
+        return $res;
+
+    }
+
+    /**
+     * 返回商品库存(取消订单后根据订单商品id返回商品库存)
+     */
+    public function addGoodsStock($order_goods_id)
+    {
+        $Stock_OrderGoodsModel  = new Stock_OrderGoodsModel();
+        $Goods_CommonModel = new Goods_CommonModel();
+        $flag = true;
+        if (is_array($order_goods_id))
+        {
+            foreach ($order_goods_id as $key => $val)
+            {
+                $order_goods_base = $Stock_OrderGoodsModel->getOne($val);
+                $goods_id         = $order_goods_base['goods_id'];
+                $num              = $order_goods_base['goods_num'];
+
+                $edit_base_row = array('goods_stock' => $num);
+                $result1 = $this->editBase($goods_id, $edit_base_row);
+                if($result1 === false){
+                    $flag = false;
+                    break;
+                }
+                $edit_common_row = array('common_stock' => $num);
+                $result2 = $Goods_CommonModel->editCommonTrue($order_goods_base['common_id'], $edit_common_row);
+                if($result2 === false){
+                    $flag = false;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            $order_goods_base = $Stock_OrderGoodsModel->getOne($order_goods_id);
+            $goods_id         = $order_goods_base['goods_id'];
+            $num              = $order_goods_base['goods_num'];
+
+            $edit_base_row = array('goods_stock' => $num);
+            $result1          = $this->editBase($goods_id, $edit_base_row);
+            if($result1 === false){
+                $flag = false;
+            }
+            $edit_common_row = array('common_stock' => $num);
+            $result2 = $Goods_CommonModel->editCommonTrue($order_goods_base['common_id'], $edit_common_row);
+
+            if($result2 === false){
+                $flag = false;
+            }
+        }
+        return $flag;
+
+    }
 }
 
 ?>

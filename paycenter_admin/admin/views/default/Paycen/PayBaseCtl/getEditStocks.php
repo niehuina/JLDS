@@ -28,10 +28,10 @@ include $this->view->getTplPath() . '/' . 'header.php';
         <input id="user_id" name="user_id" value="<?= $data['user_id'] ?>" type="hidden"/>
         <dl class="row">
             <dt class="tit">
-                <label for="user_shares">*缴纳股金</label>
+                <label for="user_stocks">*缴纳备货金</label>
             </dt>
             <dd class="opt">
-                <input id="user_shares" name="user_shares" value="" class="ui-input w200" type="text"/>
+                <input id="user_stocks" name="user_stocks" value="" class="ui-input w200" type="text"/>
                 <p style="color: red;">
                 <p>
                 <p class="notic">负数为减，例如 -1000</p>
@@ -75,16 +75,16 @@ include $this->view->getTplPath() . '/' . 'header.php';
 
             valid: function (form) {
                 var user_account = $.trim($("#user_account").val()),
-                    user_shares = $.trim($("#user_shares").val()),
+                    user_stocks = $.trim($("#user_stocks").val()),
                     user_id = $.trim($("#user_id").val()),
                     record_desc = $.trim($("#record_desc").val()),
                     params = {
                         user_id: user_id,
                         user_account: user_account,
-                        user_shares: user_shares,
+                        user_stocks: user_stocks,
                         record_desc: record_desc,
                     };
-                Public.ajaxPost(SITE_URL + "?ctl=Paycen_PayBase&met=editSharesRow&typ=json", params, function (e) {
+                Public.ajaxPost(SITE_URL + "?ctl=Paycen_PayBase&met=editStocksRow&typ=json", params, function (e) {
                     if (200 == e.status) {
                         parent.parent.Public.tips({content: "修改成功！"});
                         var callback = frameElement.api.data.callback;
@@ -108,7 +108,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
     function resetForm(t) {
         $_form.validate().resetForm();
         $("#user_account").val("");
-        $("#user_shares").val("");
+        $("#user_stocks").val("");
         $("#user_id").val("");
         $("#record_desc").val("");
     }

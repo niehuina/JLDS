@@ -15,6 +15,8 @@ class Trade_TypeModel
 	const CREDIT_RETURN		= 8;   //白条还款
 	const WEB_POS = 9; //webPos付款
     const SHARES = 10; //股金
+    const STOCKS = 11; //备货金
+    const STOCK_ORDER = 12; //备货订单
 
 	public static $trade_type_row = array(
 		'1' => 'shopping',
@@ -26,7 +28,9 @@ class Trade_TypeModel
 		'7' => 'pay',
 		'8' => 'credit_return',
 		'9' => 'web_pos',
-        '10' => 'shares'
+        '10' => 'shares',
+        '11' => 'stocks',
+        '12' => 'stock_order'
 
 	);
     public function __construct()
@@ -42,6 +46,8 @@ class Trade_TypeModel
 			'8' => _('白条还款'),
             '9' => _('pos端购物'),
             '10' => _('股金'),
+            '11' => _('备货金'),
+            '12' => _('备货订单'),
 		);
 	}
         

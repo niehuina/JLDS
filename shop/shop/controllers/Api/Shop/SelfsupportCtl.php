@@ -169,6 +169,13 @@ class Api_Shop_SelfsupportCtl extends Api_Controller
             $Seller_BaseModel = new Seller_BaseModel();
             $seller_flag      = $Seller_BaseModel->addBase($seller_base);
             check_rs($seller_flag, $rs_row);
+
+            $config_key = 'self_shop_id';
+            $edit_row['config_value'] = $shop_id;
+            $Web_ConfigModel = new Web_ConfigModel();
+            $config_flag = $Web_ConfigModel->editConfig($config_key, $edit_row);
+            check_rs($config_flag, $rs_row);
+
             if (is_ok($rs_row) && $this->UserBaseModel->sql->commitDb()){
                 $status = 200;
                 $msg    = __('success');

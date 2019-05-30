@@ -520,7 +520,53 @@ class Api_User_InfoCtl extends Yf_AppController
         $data = array();
         $this->data->addBody(-140, $data, $msg, $status);
     }
-	
+
+    public function updateUserGradeToGPartner()
+    {
+        $user_id              = request_int('user_id');
+        $user_shares          = request_int('user_shares');
+        $user_stocks          = request_int('user_stocks');
+
+        $User_GradeModel = new User_GradeModel();
+        $flag = $User_GradeModel->updateGradeGPartner($user_id, $user_shares, $user_stocks);
+        Yf_Log::log("flag:".$flag, Yf_Log::LOG, 'debug');
+
+        if($flag || empty($flag)) {
+            $this->data->addBody(-140, array());
+        }else{
+            $msg    = 'failure';
+            $status = 250;
+            $this->data->addBody(-140, array(), $msg, $status);
+        }
+    }
+
+    public function changeUserParentId()
+    {
+        $user_id              = request_int('user_id');
+
+        $user_info = $this->userInfoModel->getOne($user_id);
+        $user_parent_id = $user_info['user_parent_id'];
+
+        $user_list = $this->userInfoModel->getKeyByWhere(['user_parent_id'=>$user_id]);
+        $this->userInfoModel->sql->startTransactionDb();
+        $flag = true;
+        foreach ($user_list as $user_id){
+            $flag1 = $this->userInfoModel->editInfo($user_id, ['user_parent_id'=>$user_parent_id]);
+            $flag = $flag && $flag1;
+        }
+
+        if ($flag && $this->userInfoModel->sql->commitDb()) {
+            $msg = 'success';
+            $status = 200;
+        } else {
+            $this->userInfoModel->sql->rollBackDb();
+            $m      = $this->userInfoModel->msg->getMessages();
+            $msg    = $m ? $m[0] : __('failure');
+            $status = 250;
+        }
+
+        $this->data->addBody(-140, array(), $msg, $status);
+    }
 }
 
 ?>

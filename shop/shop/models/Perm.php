@@ -170,9 +170,9 @@ class Perm
 		if (array_key_exists('user_id', $user_row))
 		{
 			self::$userId = $user_row['user_id'];
-			self::$shopId = @$user_row['shop_id'];
-			self::$chainId = @$user_row['chain_id'];			
-			self::$login  = true;
+            self::$shopId = @$user_row['shop_id'];
+            self::$chainId = @$user_row['chain_id'];
+            self::$login  = true;
 
 			return true;
 		}
