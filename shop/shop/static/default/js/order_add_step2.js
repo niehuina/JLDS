@@ -1,36 +1,5 @@
 var select_goods_list = {};
 
-function initEvent() {
-    // $(window).resize(function () {
-    //         Public.resizeGrid()
-    //     }
-    // );
-    // $("#button_next_step").submit(function () {
-    //     var params = $("#form").serialize();
-    //     return false;
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: SITE_URL + "?ctl=Seller_Stock_Order&met=addSendOrder",
-    //         data: params,
-    //         success: function(result){
-    //             if (result.status == "200"){
-    //                 parent.Public.tips({
-    //                     content: '提交成功',
-    //                     type: 3
-    //                 });
-    //                 window.location.href = SITE_URL + "?ctl=Seller_Stock_Order&met=physical";
-    //             } else {
-    //                 parent.Public.tips({
-    //                     type: 1,
-    //                     content: result.msg
-    //                 });
-    //             }
-    //         }
-    //     });
-    //     return false;
-    // })
-}
-
 function setGrid(adjustH, adjustW) {
     var defaultPage = Public.getDefaultPage();
     if (defaultPage.SYSTEM.skin === 'green') {
@@ -275,7 +244,6 @@ function initGrid() {
 }
 
 initGrid();
-initEvent();
 
 function disabledButton(){
     if(Object.keys(select_goods_list).length > 0){

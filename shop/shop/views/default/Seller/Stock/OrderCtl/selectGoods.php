@@ -148,6 +148,8 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 <script type="text/javascript" src="<?=$this->view->js?>/district.js"></script>
 <script type="text/javascript" src="<?=$this->view->js?>/order_add_step2.js" charset="utf-8"></script>
 
+
+
 <?php
 include $this->view->getTplPath() . '/' . 'seller_footer.php';
 ?>

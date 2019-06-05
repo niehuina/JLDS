@@ -29,7 +29,12 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
         $order['order_create_time'] = 'desc';
         $Stock_OrderModel = new Stock_OrderModel();
-        $data = $Stock_OrderModel->getOrderList($condition, $order, $page, $rows);
+        $self_shop_id = Web_ConfigModel::value('self_shop_id');
+        if($self_shop_id == Perm::$shopId) {
+            $data = $Stock_OrderModel->getOrderList($condition, $order, $page, $rows);
+        }else{
+            $data = $Stock_OrderModel->getOrderUserList($condition, $order, $page, $rows);
+        }
 
         $Yf_Page->totalRows = $data['totalsize'];
         $page_nav = $Yf_Page->prompt();
@@ -51,7 +56,13 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
         $order['order_create_time'] = 'desc';
         $Stock_OrderModel = new Stock_OrderModel();
-        $data = $Stock_OrderModel->getOrderList($condition, $order, $page, $rows);
+
+        $self_shop_id = Web_ConfigModel::value('self_shop_id');
+        if($self_shop_id == Perm::$shopId) {
+            $data = $Stock_OrderModel->getOrderList($condition, $order, $page, $rows);
+        }else{
+            $data = $Stock_OrderModel->getOrderUserList($condition, $order, $page, $rows);
+        }
 
         $Yf_Page->totalRows = $data['totalsize'];
         $page_nav = $Yf_Page->prompt();
@@ -215,7 +226,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
             $goods_ids = array_keys($select_goods_list);
             $cond_row = array();
-            $self_shop_id = Perm::$shopId;
+            $self_shop_id = Web_ConfigModel::value('self_shop_id');
             $cond_row['shop_id'] = $self_shop_id;
             $cond_row['goods_id:in'] = $goods_ids;
             $order['CONVERT(goods_name USING gbk)'] = 'asc';
@@ -353,14 +364,31 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
     public function listGoods()
     {
-        $page = request_int('page', 1);
-        $rows = request_int('rows', 20);
+        $page    = request_int('page', 0);
+        $rows    = request_int('rows', 20);
 
         $self_shop_id = Web_ConfigModel::value('self_shop_id');
+        $cond_row['shop_id'] = $self_shop_id;
+        $cond_row['common_state'] = Goods_CommonModel::GOODS_STATE_NORMAL;
+        $cond_row['common_verify'] = Goods_CommonModel::GOODS_VERIFY_ALLOW;
+        if (!empty($goods_key) && isset($goods_key))
+        {
+            $cond_row['common_name:like'] = '%' . $goods_key . '%';
+        }
 
-        $order_row['CONVERT(goods_name USING gbk)'] = 'asc';
-        $Goods_BaseModel = new Goods_BaseModel();
-        $goods_list = $Goods_BaseModel->getGoodsListByShopId($self_shop_id, $order_row, $page, $rows);
+        $order_row['common_id'] = 'DESC';
+        $Goods_CommonModel = new Goods_CommonModel();
+        $common_rows = $Goods_CommonModel->getByWhere($cond_row);
+        $common_id_rows = array_column($common_rows, 'common_id');
+        $goods_list = array();
+        if(!empty($common_id_rows))
+        {
+            $Goods_BaseModel = new Goods_BaseModel();
+            $cond_goods_row = array();
+            $cond_goods_row['common_id:in'] = $common_id_rows;
+            $goods_order_row['CONVERT(goods_name USING gbk)'] = 'asc';
+            $goods_list = $Goods_BaseModel->listByWhere($cond_goods_row, $goods_order_row, $page, $rows);
+        }
 
         $this->data->addBody(-140, $goods_list);
     }
@@ -501,7 +529,6 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         }
     }
 
-
     /**
      * 实物交易订单 ==> 选择发货地址
      *
@@ -633,5 +660,321 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             }
             $this->data->addBody(-140, array(), $msg, $status);
         }
+    }
+
+    public function confirmOrder()
+    {
+        $typ = request_string('typ');
+
+        if ($typ == 'e')
+        {
+            include $this->view->getView();
+        }
+        else
+        {
+            $Order_BaseModel = new Stock_OrderModel();
+            $Order_GoodsModel = new Stock_OrderGoodsModel();
+
+            $rs_row = array();
+            //开启事物
+            $Order_BaseModel->sql->startTransactionDb();
+
+            $order_id = request_string('order_id');
+
+            $order_base           = $Order_BaseModel->getOne($order_id);
+            //判断下单者是否是当前用户
+            if($order_base['shop_user_id'] == Perm::$userId && $order_base['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS)
+            {
+                $order_payment_amount = $order_base['order_payment_amount'];
+
+                $condition['order_status'] = Order_StateModel::ORDER_FINISH;
+
+                $condition['order_finished_time'] = get_date_time();
+
+//                if(Web_ConfigModel::value('Plugin_Directseller'))
+//                {
+//                    //确认收货以后将总佣金写入商品订单表
+//                    $order_goods_data = $Order_GoodsModel->getByWhere(array('order_id'=>$order_id));
+//
+//                    $order_directseller_commission = array_sum(array_column($order_goods_data,'directseller_commission_0')) + array_sum(array_column($order_goods_data,'directseller_commission_1')) + array_sum(array_column($order_goods_data,'directseller_commission_2'));
+//                    $condition['order_directseller_commission'] = $order_directseller_commission;
+//                }
+
+                $edit_flag = $Order_BaseModel->editOrder($order_id, $condition);
+                check_rs($edit_flag,$rs_row);
+
+                //修改订单商品表中的订单状态
+                $edit_row['order_goods_status'] = Order_StateModel::ORDER_FINISH;
+                $order_goods_id                 = $Order_GoodsModel->getKeyByWhere(array('stock_order_id' => $order_id));
+
+                $edit_flag1 = $Order_GoodsModel->editOrderGoods($order_goods_id, $edit_row);
+                check_rs($edit_flag1,$rs_row);
+
+                $User_Stock_Model = new User_StockModel();
+                $user_stock_list = $User_Stock_Model->getByWhere(['user_id'=>$order_base['shop_user_id']]);
+//                $goods_id_array = array($user_stock_list, 'goods_id');
+
+                $goods_id_array = array_reduce($user_stock_list, function($carry,$item){
+                    $carry[$item['goods_id']] = $item['stock_id'];
+                    return $carry;
+                });
+
+                $Stock_OrderGoodsModel = new Stock_OrderGoodsModel();
+                $orderGoods_list = $Stock_OrderGoodsModel->getByWhere(array('stock_order_id' => $order_id));
+                foreach ($orderGoods_list as $order_goods){
+                    $goods_id = $order_goods['goods_id'];
+                    if(array_key_exists($goods_id, $goods_id_array)){
+                        $stock_row = array();
+                        $stock_row['goods_stock'] = $order_goods['goods_num'];
+
+                        //修改用户仓储商品数量
+                        $stock_id = $goods_id_array[$goods_id];
+                        $s_flag = $User_Stock_Model->editUserStock($stock_id,$stock_row, true);
+                        check_rs($s_flag,$rs_row);
+                    }else{
+                        $stock_row = array();
+                        $stock_row['user_id'] = $order_base['shop_user_id'];
+                        $stock_row['user_name'] = $order_base['shop_user_name'];
+                        $stock_row['goods_id'] = $order_goods['goods_id'];
+                        $stock_row['common_id'] = $order_goods['common_id'];
+                        $stock_row['goods_name'] = $order_goods['goods_name'];
+                        $stock_row['goods_stock'] = $order_goods['goods_num'];
+                        $stock_row['alarm_stock'] = 0;
+                        $stock_row['stock_date_time'] = get_date_time();
+
+                        //添加到用户仓储
+                        $s_flag = $User_Stock_Model->addUserStock($stock_row);
+                        check_rs($s_flag,$rs_row);
+                    }
+                }
+
+                //将需要确认的订单号远程发送给Paycenter修改订单状态
+                //远程修改paycenter中的订单状态
+                //判断修改用户的备货金
+                $formvars = array();
+                $formvars['order_id']    = $order_id;
+                $formvars['from_app_id'] = Yf_Registry::get('shop_app_id');
+
+                $rs = $this->getPayCenterUrl('Api_Pay_Pay', 'confirmOrder', $formvars);
+                if($rs['status'] == 250)
+                {
+                    $rs_flag = false;
+                    check_rs($rs_flag,$rs_row);
+                }
+
+//                /*
+//                *  经验与成长值
+//                */
+//                $user_points        = Web_ConfigModel::value("points_recharge");//订单每多少获取多少积分
+//                $user_points_amount = Web_ConfigModel::value("points_order");//订单每多少获取多少积分
+//
+//                if ($order_payment_amount / $user_points < $user_points_amount)
+//                {
+//                    $user_points = floor($order_payment_amount / $user_points);
+//                }
+//                else
+//                {
+//                    $user_points = $user_points_amount;
+//                }
+//
+//                $user_grade        = Web_ConfigModel::value("grade_recharge");//订单每多少获取多少积分
+//                $user_grade_amount = Web_ConfigModel::value("grade_order");//订单每多少获取多少成长值
+//
+//                if ($order_payment_amount / $user_grade > $user_grade_amount)
+//                {
+//                    $user_grade = floor($order_payment_amount / $user_grade);
+//                }
+//                else
+//                {
+//                    $user_grade = $user_grade_amount;
+//                }
+//
+//                $User_ResourceModel = new User_ResourceModel();
+//                //获取积分经验值
+//                $ce = $User_ResourceModel->getResource(Perm::$userId);
+//
+//                $resource_row['user_points'] = $ce[Perm::$userId]['user_points'] * 1 + $user_points * 1;
+//                $resource_row['user_growth'] = $ce[Perm::$userId]['user_growth'] * 1 + $user_grade * 1;
+//
+//                $res_flag = $User_ResourceModel->editResource(Perm::$userId, $resource_row);
+//                check_rs($res_flag,$rs_row);
+            }
+            else
+            {
+                $flag = false;
+
+                check_rs($flag,$rs_row);
+            }
+
+            $flag = is_ok($rs_row);
+
+            if ($flag && $Order_BaseModel->sql->commitDb())
+            {
+                $status = 200;
+                $msg    = __('success');
+            }
+            else
+            {
+                $Order_BaseModel->sql->rollBackDb();
+                $m      = $Order_BaseModel->msg->getMessages();
+                $msg    = $m ? $m[0] : __('failure');
+                $status = 250;
+            }
+
+            $this->data->addBody(-140, array(), $msg, $status);
+        }
+    }
+
+    public function user_stock()
+    {
+        $Yf_Page = new Yf_Page();
+        $row     = $Yf_Page->listRows;
+        $offset  = request_int('firstRow', 0);
+        $page    = ceil_r($offset / $row);
+
+        $goods_key  = request_string('goods_key', '');
+        $User_Stock_Model = new User_StockModel();
+        $cond_row['user_id'] = Perm::$userId;
+        if(!empty($goods_key)){
+            $cond_row['goods_name:like'] = '%' . $goods_key . '%';
+        }
+        $order_row['CONVERT(goods_name USING gbk)'] = 'asc';
+        $goods = $User_Stock_Model->getUserStockList($cond_row, $order_row, $page, $row);
+
+        $Yf_Page->totalRows = $goods['totalsize'];
+        $page_nav = $Yf_Page->prompt();
+
+        include $this->view->getView();
+    }
+
+    public function setAlarm()
+    {
+        $typ = request_string('typ');
+        $goods_id  = request_string('goods_id', '0');
+
+        $User_Stock_Model = new User_StockModel();
+        $cond_row['user_id'] = Perm::$userId;
+        if($goods_id){
+            $cond_row['goods_id'] = $goods_id;
+        }
+        $goods_stock = $User_Stock_Model->getOneByWhere($cond_row);
+
+        if ($typ == 'e')
+        {
+            include $this->view->getView();
+        }else{
+            $alarm_stock  = request_int('alarm_stock', '0');
+            $edit_row['alarm_stock'] = $alarm_stock;
+            $flag =$User_Stock_Model->editUserStock($goods_stock['stock_id'], $edit_row);
+
+            if ($flag)
+            {
+                $status = 200;
+                $msg    = __('success');
+            }
+            else
+            {
+                $msg    = __('failure');
+                $status = 250;
+            }
+
+            $this->data->addBody(-140, array(), $msg, $status);
+        }
+    }
+
+    public function stock_check()
+    {
+        $typ = request_string('typ');
+        if($typ == 'e'){
+            include $this->view->getView();
+        }else{
+            $real_stock_list = request_string('real_stock_list');
+            $real_stock_list = decode_json($real_stock_list);
+
+            $User_Stock_Model = new User_StockModel();
+            $Stock_CheckModel = new Stock_CheckModel();
+            $Stock_CheckGoodsModel = new Stock_CheckGoodsModel();
+            $User_Stock_Model->sql->startTransactionDb();
+
+            $cond_row['user_id'] = Perm::$userId;
+            $goods_stock_list = $User_Stock_Model->getByWhere($cond_row);
+
+            $rs_row = array();
+            //添加盘点记录表
+            $add_row = array();
+            $add_row['user_id'] = Perm::$userId;
+            $add_row['user_name'] = '';
+            $add_row['check_date'] = date('Y-m-d');
+            $add_row['check_date_time'] = get_date_time();
+            $check_id = $Stock_CheckModel->addCheck($add_row, true);
+            check_rs($check_id, $rs_row);
+
+            try {
+                foreach ($goods_stock_list as $stock_id => $goods_stock) {
+                    $real_num = isset($real_stock_list[$stock_id]) ? $real_stock_list[$stock_id] : $goods_stock['goods_stock'];
+                    //添加盘点明细表
+                    $add_goods_row = array();
+                    $add_goods_row['check_id'] = $check_id;
+                    $add_goods_row['goods_id'] = $goods_stock['goods_id'];
+                    $add_goods_row['common_id'] = $goods_stock['common_id'];
+                    $add_goods_row['goods_name'] = $goods_stock['goods_name'];
+                    $add_goods_row['goods_stock'] = $goods_stock['goods_stock'];
+                    $add_goods_row['real_goods_stock'] = $real_num;
+                    //根据实际数据与库存数量相比，得出盘盈/盘亏/账实相符
+                    if($real_num > $goods_stock['goods_stock']){
+                        $add_goods_row['check_status'] = Stock_CheckModel::STOCK_SURPLUS;
+                    }else if($real_num < $goods_stock['goods_stock']){
+                        $add_goods_row['check_status'] = Stock_CheckModel::STOCK_LOSSES;
+                    }else{
+                        $add_goods_row['check_status'] = Stock_CheckModel::STOCK_NORMAL;
+                    }
+                    $add_goods_row['check_date_time'] = get_date_time();
+                    $add_flag = $Stock_CheckGoodsModel->addCheckGoods($add_goods_row);
+                    check_rs($add_flag, $rs_row);
+
+                    //修改商品库存
+                    if($real_num != $goods_stock['goods_stock']) {
+                        $edit_row = array();
+                        $edit_row['goods_stock'] = $real_num;
+                        $edit_flag = $User_Stock_Model->editUserStock($stock_id, $edit_row);
+                        check_rs($edit_flag, $rs_row);
+                    }
+                }
+            }catch (Exception $e){
+                $User_Stock_Model->sql->rollBackDb();
+                $msg =  __('failure');
+                $status = 250;
+            }
+
+            if(is_ok($rs_row) && $User_Stock_Model->sql->commitDb()){
+                $msg =  __('success');
+                $status = 200;
+            }else{
+                $User_Stock_Model->sql->rollBackDb();
+                $m = $User_Stock_Model->msg->getMessages();
+                $msg = $m ? $m[0] : __('failure');
+                $status = 250;
+            }
+
+            $redirect = "index.php?ctl=Seller_Stock_Order&met=user_stock&typ=e";
+            location_to(urldecode($redirect));
+        }
+    }
+
+    public function stock_goods()
+    {
+        $page    = request_int('page', 0);
+        $rows    = request_int('rows', 20);
+        $goods_key = request_string('goods_key', '');
+
+        $User_Stock_Model = new User_StockModel();
+        $cond_row['user_id'] = Perm::$userId;
+        if (!empty($goods_key)) {
+            $cond_row['goods_name:like'] = '%' . $goods_key . '%';
+        }
+        $order_row['CONVERT(goods_name USING gbk)'] = 'asc';
+        $goods = $User_Stock_Model->getUserStockList($cond_row, $order_row, $page, $rows);
+
+        $this->data->addBody(-140, $goods);
     }
 }

@@ -47,6 +47,36 @@ class Stock_OrderModel extends Stock_Order
         return $data;
     }
 
+    public function getOrderUserList($cond_row = array(), $order_row = array(), $page = 1, $rows = 100)
+    {
+        $data = $this->listByWhere($cond_row, $order_row, $page, $rows);
+
+        $url = Yf_Registry::get('url');
+        $Order_StateModel = new Order_StateModel();
+        foreach ($data['items'] as $key => $val) {
+            $order_id = $val['stock_order_id'];
+
+            //订单详情URL
+            $data['items'][$key]['info_url'] = $url . '?ctl=Seller_Stock_Order&met=physicalInfo&o&typ=e&order_id=' . $order_id;
+            //发货单URL
+            $data['items'][$key]['delivery_url'] = $url . '?ctl=Seller_Stock_Order&met=getOrderPrint&typ=e&order_id=' . $order_id;
+            //设置收货URL
+            $data['items'][$key]['confirm_url'] = $url . '?ctl=Seller_Stock_Order&met=send&typ=e&order_id=' . $order_id;
+
+            if ($val['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS) {
+                $set_html = "<a class=\"ncbtn ncbtn-mint mt10 bbc_seller_btns\" onclick=\"confirmOrder('{$order_id}')\"><i class=\"icon-truck\"></i>确认收货</a>";
+                $data['items'][$key]['set_html'] = $set_html;
+            } else {
+                $data['items'][$key]['set_html'] = null;
+            }
+
+            $data['items'][$key]['order_status_html'] = $Order_StateModel->orderState[$val['order_status']];
+        }
+
+        return $data;
+    }
+
+
     public function getOrderInfo($cond_row = array())
     {
         $order_info = $this->getOneByWhere($cond_row);
@@ -71,7 +101,6 @@ class Stock_OrderModel extends Stock_Order
 
         return $order_info;
     }
-
 
     /*
      *  ly

@@ -129,7 +129,7 @@ $brother_menu = $Menu_Base->getByWhere(array('menu_parent_id'=>$father_menu['men
                     <dd class="opt">
                         <input type="text"  style="width:100px;height:25px;" value="<?=$val['user_grade_name'];?>" name="gr[<?=$key;?>][user_grade_name]">
                         &nbsp;晋级需交纳股金 <input type="text"  style="width:100px;height:25px;" value="<?=$val['user_grade_shares'];?>" name="gr[<?=$key;?>][user_grade_shares]"> 元，
-                        以会员价备货 <input type="text"  style="width:100px;height:25px;" value="<?=$val['user_grade_goods_fee'];?>" name="gr[<?=$key;?>][user_grade_goods_fee]"> 元; 享受股东价;
+                        以会员价备货 <input type="text"  style="width:100px;height:25px;" value="<?=$val['user_grade_stocks'];?>" name="gr[<?=$key;?>][user_grade_stocks]"> 元; 享受股东价;
                         <input type="hidden" readonly="" class="w50" value="<?=$val['user_grade_id'];?>" name="gr[<?=$key;?>][user_grade_id]">
                     </dd>
                 </dl>

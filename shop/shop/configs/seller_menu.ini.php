@@ -616,6 +616,35 @@ $seller_menu = array(
                     )
                 )
             ),
+            120013 => array(
+                'menu_id' => '120013',
+                'menu_parent_id' => '12000',
+                'menu_name' => __('用户仓储管理'),
+                'menu_icon' => '',
+                'menu_url_ctl' => 'Seller_Stock_Order',
+                'menu_url_met' => 'user_stock',
+                'menu_url_parem' => '',
+                'sub' => array(
+                    1200130 => array(
+                        'menu_id' => '1200130',
+                        'menu_parent_id' => '120013',
+                        'menu_name' => __('所有商品'),
+                        'menu_icon' => '',
+                        'menu_url_ctl' => 'Seller_Stock_Order',
+                        'menu_url_met' => 'user_stock',
+                        'menu_url_parem' => '',
+                    ),
+                    1200131 => array(
+                        'menu_id' => '1200131',
+                        'menu_parent_id' => '120013',
+                        'menu_name' => __('库存盘点'),
+                        'menu_icon' => '',
+                        'menu_url_ctl' => 'Seller_Stock_Order',
+                        'menu_url_met' => 'stock_check',
+                        'menu_url_parem' => '',
+                    ),
+                )
+            ),
             120004 => array(
                 'menu_id' => '120004',
                 'menu_parent_id' => '12000',
