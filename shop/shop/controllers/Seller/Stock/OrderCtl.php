@@ -894,11 +894,11 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $User_Stock_Model = new User_StockModel();
             $Stock_CheckModel = new Stock_CheckModel();
             $Stock_CheckGoodsModel = new Stock_CheckGoodsModel();
-            $User_Stock_Model->sql->startTransactionDb();
 
             $cond_row['user_id'] = Perm::$userId;
             $goods_stock_list = $User_Stock_Model->getByWhere($cond_row);
 
+            $User_Stock_Model->sql->startTransactionDb();
             $rs_row = array();
             //添加盘点记录表
             $add_row = array();
@@ -915,6 +915,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                     //添加盘点明细表
                     $add_goods_row = array();
                     $add_goods_row['check_id'] = $check_id;
+                    $add_goods_row['user_id'] = Perm::$userId;
                     $add_goods_row['goods_id'] = $goods_stock['goods_id'];
                     $add_goods_row['common_id'] = $goods_stock['common_id'];
                     $add_goods_row['goods_name'] = $goods_stock['goods_name'];
@@ -949,15 +950,15 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             if(is_ok($rs_row) && $User_Stock_Model->sql->commitDb()){
                 $msg =  __('success');
                 $status = 200;
+
+                $redirect = "index.php?ctl=Seller_Stock_Order&met=user_stock&typ=e";
+                location_to(urldecode($redirect));
             }else{
                 $User_Stock_Model->sql->rollBackDb();
                 $m = $User_Stock_Model->msg->getMessages();
                 $msg = $m ? $m[0] : __('failure');
                 $status = 250;
             }
-
-            $redirect = "index.php?ctl=Seller_Stock_Order&met=user_stock&typ=e";
-            location_to(urldecode($redirect));
         }
     }
 
@@ -976,5 +977,69 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         $goods = $User_Stock_Model->getUserStockList($cond_row, $order_row, $page, $rows);
 
         $this->data->addBody(-140, $goods);
+    }
+
+    public function stock_self_use()
+    {
+        $typ = request_string('typ');
+        if($typ == 'e'){
+            include $this->view->getView();
+        }else{
+            $out_num_list = request_string('out_num_list');
+            $out_num_list = decode_json($out_num_list);
+
+            $User_Stock_Model = new User_StockModel();
+            $User_StockOutModel = new User_StockOutModel();
+
+            $cond_row = array();
+            $cond_row['user_id'] = Perm::$userId;
+            $goods_stock_list = $User_Stock_Model->getByWhere($cond_row);
+
+            $user_id = Perm::$userId;
+            $prefix = sprintf('%s-%s-%s', Yf_Registry::get('shop_app_id'), date('Ymd'), $user_id);
+            $Number_SeqModel = new Number_SeqModel();
+            $order_number = $Number_SeqModel->createSeq($prefix);
+            $order_id = sprintf('%s-%s', 'BH', $order_number);
+
+            $User_StockOutModel->sql->startTransactionDb();
+            $rs_row = array();
+            foreach ($out_num_list as $stock_id=>$out_num)
+            {
+                $goods_stock = $goods_stock_list[$stock_id];
+                $add_row = array();
+                $add_row['out_order_id'] = $order_id;
+                $add_row['user_id'] = $user_id;
+                $add_row['user_name'] = $user_id;
+                $add_row['goods_id'] = $goods_stock['goods_id'];
+                $add_row['common_id'] = $goods_stock['common_id'];
+                $add_row['goods_name'] = $goods_stock['goods_name'];
+                $add_row['out_num'] = $out_num;
+                $add_row['out_type'] = User_StockOutModel::OUT_SELF;
+                $add_row['out_time'] = get_date_time();
+
+                $add_flag = $User_StockOutModel->addStockOut($add_row);
+                check_rs($add_flag, $rs_row);
+
+                //修改商品库存
+                if($out_num) {
+                    $edit_row = array();
+                    $edit_row['goods_stock'] = $out_num * -1;
+                    $edit_flag = $User_Stock_Model->editUserStock($stock_id, $edit_row, true);
+                    check_rs($edit_flag, $rs_row);
+                }
+            }
+
+            if(is_ok($rs_row) && $User_StockOutModel->sql->commitDb()){
+                $msg =  __('success');
+                $status = 200;
+            }else{
+                $User_StockOutModel->sql->rollBackDb();
+                $m = $User_StockOutModel->msg->getMessages();
+                $msg = $m ? $m[0] : __('failure');
+                $status = 250;
+            }
+
+            $this->data->addBody(-140, array(), $msg, $status);
+        }
     }
 }

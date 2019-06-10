@@ -17,40 +17,58 @@ function setGrid(adjustH, adjustW) {
     }
 };
 
-function recordPageAll() {
+function cbkCheck(obj) {
+    var stock_id = $(obj).data("stock_id");
+    if(obj.checked == true){
+        var out_num = $("#"+stock_id).find("input[name='out_num']").val();
+        select_goods_list[stock_id] = out_num;
+    }else if(obj.checked == false){
+        delete select_goods_list[stock_id];
+    }
+    disabledButton();
+}
+
+function selectAllCheck() {
     var flag = true;
-    $("#goods_grid tbody").find("input[name='real_goods_stock']").each(function () {
-        var real_goods_stock = $(this).val();
+    $("#goods_grid tbody").find(":checkbox[name='check']:checked").each(function(){
         var stock_id = $(this).data('stock_id');
         var row_num = $(this).data('row_num');
-        if (!real_goods_stock) {
-            Public.tips.error('选中的第【' + row_num + '】行商品未填写实际库存！');
-            $("#" + stock_id).find("input[name='real_goods_stock']").focus();
-            flag = false;
+        var out_num = $("#"+stock_id).find("input[name='out_num']").val();
+        if(out_num && out_num > 0){
+            select_goods_list[stock_id] = out_num;
         }else{
-            //select_goods_list[stock_id] = real_goods_stock;
+            Public.tips.error('选中的第【'+row_num+'】行商品未填写自用数量！');
+            $("#"+stock_id).find("input[name='out_num']").focus();
+            flag = false;
         }
     });
-    if (flag) {
-        $("#real_stock_list").val(JSON.stringify(select_goods_list));
+    if(flag){
+        $("#out_num_list").val(JSON.stringify(select_goods_list));
     }
     return flag;
 }
 
-function setSelect(obj) {
-    var real_goods_stock = $(obj).val();
-    var stock_id = $(obj).data('stock_id');
-    var row_num = $(obj).data('row_num');
-    if (real_goods_stock) {
-        select_goods_list[stock_id] = real_goods_stock;
-    } else {
-        Public.tips.error('选中的第【' + row_num + '】行商品未填写实际库存！');
-        $("#" + stock_id).find("input[name='real_goods_stock']").focus();
+function unSelectAllCheck() {
+    var flag = true;
+    $("#goods_grid tbody").find(":checkbox[name='check']").each(function(){
+        var stock_id = $(this).data('stock_id');
+        if(select_goods_list.hasOwnProperty(stock_id)){
+            delete select_goods_list[stock_id];
+        }
+    });
+    return flag;
+}
+
+function disabledButton(){
+    if(Object.keys(select_goods_list).length > 0){
+        $('#button_submit').attr('disabled',false).addClass('bbc_seller_submit_btns').removeClass('bbc_sellerGray_submit_btns');
+    }else {
+        $('#button_submit').attr('disabled',true).removeClass('bbc_seller_submit_btns').addClass('bbc_sellerGray_submit_btns');
     }
 }
 
 function initGrid() {
-    var a = ['', "商品名称", "商品库存", "实际库存"]
+    var a = ['', "商品名称", "商品库存", "自用数量"]
         , b = [{
         name: "goods_id",
         index: "goods_id",
@@ -65,11 +83,11 @@ function initGrid() {
         align: "right",
         width: 100
     }, {
-        name: "real_goods_stock",
+        name: "out_num",
         width: 100,
         formatter: function (val, opt, row) {
-            var html_con = '<input type="number" name="real_goods_stock" role="textbox" class="textbox" autocomplete="false" onchange="setSelect(this);" ' +
-                'value="' + row.goods_stock + '"data-goods_id="' + row.goods_id + '" data-stock_id="' + row.stock_id + '" /></div>';
+            var html_con = '<input type="number" name="out_num" role="textbox" class="textbox" autocomplete="false" ' +
+                '"data-goods_id="' + row.goods_id + '" data-stock_id="' + row.stock_id + '" /></div>';
             return html_con;
         }
     }];
@@ -81,6 +99,7 @@ function initGrid() {
         height: 500,
         altRows: !0,
         rownumbers: true,
+        multiselect: true,
         multiboxonly: false,
         gridview: !0,
         rowNum: 5,
@@ -131,22 +150,38 @@ function initGrid() {
             for (var k = 0; k < rowIds.length; k++) {
                 var stock_id = rowIds[k];
                 var curRowData = $("#goods_grid").jqGrid('getRowData', stock_id);
-                var input = $("#" + stock_id + "").find("input[name='real_goods_stock']");
-                input.attr('data-goods_id', stock_id);
-                input.attr('data-row_num', k + 1);
+                var curChk = $("#"+stock_id+"").find(":checkbox");
+                curChk.attr('name', 'check');
+                curChk.attr('data-stock_id', stock_id);
+                curChk.attr('data-row_num', k+1);
 
-                var real_goods_stock_cell = $("#" + stock_id).find("input[name='real_goods_stock']");
+                var real_goods_stock_cell = $("#" + stock_id).find("input[name='out_num']");
                 if (select_goods_list.hasOwnProperty(stock_id)) {
+                    $(curChk).prop("checked","true");
                     $(real_goods_stock_cell).val(select_goods_list[stock_id]);
                 }
-                // else{
-                //     select_goods_list[stock_id] = curRowData['goods_stock'];
-                // }
+
+                $(curChk).click(function () {
+                    cbkCheck(this);
+                });
             }
+
+            //下面的代码顺序不能变(这是页面上所有行被真选中[所有行被黄色])
+            $("#cb_goods_grid").click(function () {
+                if(this.checked){
+                    $("#goods_grid tbody").find(":checkbox").prop("checked", "true");
+                    selectAllCheck(true);
+                }else{
+                    unSelectAllCheck();
+                }
+            });   //input框
+            $("#jqgh_goods_grid_cb").click();   //div标签
+            $("#goods_grid_cb").click();   //th标签
 
         },
         beforeRequest: function () {
-            var flag = recordPageAll();
+            var flag = selectAllCheck();
+            disabledButton();
             return flag;
         },
     });
@@ -169,22 +204,22 @@ $(function () {
     });
 
     $("#button_submit").click(function () {
-        var flag = recordPageAll();
+        var flag = selectAllCheck();
         if(flag) {
-            var url = "index.php?ctl=Seller_Stock_Order&met=stock_check&typ=json";
+            var url = "index.php?ctl=Seller_Stock_Order&met=stock_self_use&typ=json";
             var form_ser = {
-                real_stock_list: $("#real_stock_list").val()
+                out_num_list: $("#out_num_list").val()
             };
             $.post(url, form_ser, function (data) {
                 if (data.status == 200) {
                     parent.Public.tips({
-                        content: '库存盘点成功',
+                        content: '自用成功',
                         type: 3
                     }), window.location.reload();
                     return true;
                 } else {
                     parent.Public.tips({
-                        content: '库存盘点失败',
+                        content: '自用失败',
                         type: 1
                     });
                     return false;

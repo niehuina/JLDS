@@ -38,7 +38,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
         <div id="search_form" class="search_form_reset">
             <input class="text w150" type="text" id="goods_key" value="<?=($goods_key?$goods_key:'');?>" placeholder="<?=__('请输入商品名称')?>"/>
             <a class="button refresh" href="index.php?ctl=Seller_Stock_Order&met=stock_check&typ=e"><i
-                        class="iconfont icon-huanyipi"></i></a>
+                    class="iconfont icon-huanyipi"></i></a>
             <a class="button btn_search_goods" href="javascript:void(0);">
                 <i class="iconfont icon-btnsearch"></i><?= __('搜索') ?>
             </a>
@@ -50,7 +50,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
             $("#search_form").submit();
         });
     </script>
-    <form id="form" method="post"">
+    <form id="form" method="post">
         <div class="goods-category-list fn-clear clearfix">
             <div>
                 <div class="grid-wrap">
@@ -60,12 +60,12 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 </div>
             </div>
         </div>
-        <input type="hidden" id="real_stock_list" name="real_stock_list" />
-        <input type="button" class="button bbc_seller_submit_btns" id="button_submit" value="<?=__('提交')?>">
+        <input type="hidden" id="out_num_list" name="out_num_list" />
+        <input type="button" class="button bbc_sellerGray_submit_btns" id="button_submit" value="<?=__('提交')?>">
     </form>
 
     <script src="<?= $this->view->js_com ?>/plugins/jquery.jqgrid.js"></script>
-    <script type="text/javascript" src="<?=$this->view->js?>/stock_check.js" charset="utf-8"></script>
+    <script type="text/javascript" src="<?=$this->view->js?>/stock_self_use.js" charset="utf-8"></script>
 
 <?php
 include $this->view->getTplPath() . '/' . 'seller_footer.php';

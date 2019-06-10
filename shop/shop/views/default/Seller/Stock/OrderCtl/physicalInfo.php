@@ -40,14 +40,16 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     </dl>
                     <dl class="line">
                         <dt><?=__('订单编号')?>：</dt>
-                        <dd><?= $data['stock_order_id']; ?><a href="javascript:void(0);"><?=__('更多')?><i class="iconfont icon-iconjiantouxia"></i>
+                        <dd><?= $data['stock_order_id']; ?>
+                            <a href="javascript:void(0);"><?=__('更多')?><i class="iconfont icon-iconjiantouxia"></i>
                                 <div class="more"><span class="arrow"></span>
                                     <ul>
                                         <li><span><?= $data['order_create_time']; ?></span><?=__('买家下单')?></li>
                                         <li><span><?= $data['order_create_time']; ?></span><?=__('买家 生成订单')?></li>
                                     </ul>
                                 </div>
-                            </a></dd>
+                            </a>
+                        </dd>
                     </dl>
                     <dl>
                         <dt></dt>
@@ -175,7 +177,50 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
         </div>
     </div>
     <script type="text/javascript">
+        $('.tabmenu > ul').find('li:gt(3)').remove();
+        $('.tabmenu > ul').find('li:lt(3)').remove();
+        var href = window.location.href; ;
+        $('.tabmenu > ul > li > a').attr('href',href);
+        /*$($('.tabmenu > ul')[0]).find('li:lt(6)').remove();*/
 
+
+        window.edit_cost = function (e)
+        {
+            url = SITE_URL + "?ctl=Seller_Stock_Order&met=cost&typ=e&order_id="+e;
+
+            $.dialog({
+                title: '<?=__('修改订单金额')?>',
+                content: 'url: ' + url ,
+                height: 340,
+                width: 580,
+                lock: true,
+                drag: false
+
+            })
+        }
+
+        window.hide_logistic = function (order_id)
+        {
+            $("#info_"+order_id).hide();
+            $("#info_"+order_id).html("");
+        }
+
+        window.show_logistic = function (order_id,express_id,shipping_code)
+        {
+            $("#info_"+order_id).show();
+            $.post(BASE_URL + "/shop/api/logistic.php",{"order_id":order_id,"express_id":express_id,"shipping_code":shipping_code} ,function(da) {
+
+                if(da)
+                {
+                    $("#info_"+order_id).html(da);
+                }
+                else
+                {
+                    $("#info_"+order_id).html('<div class="error_msg"><?=__('接口出现异常')?></div>');
+                }
+
+            })
+        }
     </script>
 </div>
 
@@ -183,50 +228,3 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 <?php
 include $this->view->getTplPath() . '/' . 'seller_footer.php';
 ?>
-
-<script>
-    $('.tabmenu > ul').find('li:gt(3)').remove();
-    $('.tabmenu > ul').find('li:lt(3)').remove();
-    var href = window.location.href; ;
-    $('.tabmenu > ul > li > a').attr('href',href);
-  /*$($('.tabmenu > ul')[0]).find('li:lt(6)').remove();*/
-    
-
-    window.edit_cost = function (e)
-    {
-        url = SITE_URL + "?ctl=Seller_Stock_Order&met=cost&typ=e&order_id="+e;
-
-        $.dialog({
-            title: '<?=__('修改订单金额')?>',
-            content: 'url: ' + url ,
-            height: 340,
-            width: 580,
-            lock: true,
-            drag: false
-
-        })
-    }
-
-    window.hide_logistic = function (order_id)
-    {
-        $("#info_"+order_id).hide();
-        $("#info_"+order_id).html("");
-    }
-
-    window.show_logistic = function (order_id,express_id,shipping_code)
-    {
-        $("#info_"+order_id).show();
-        $.post(BASE_URL + "/shop/api/logistic.php",{"order_id":order_id,"express_id":express_id,"shipping_code":shipping_code} ,function(da) {
-
-            if(da)
-            {
-                $("#info_"+order_id).html(da);
-            }
-            else
-            {
-                $("#info_"+order_id).html('<div class="error_msg"><?=__('接口出现异常')?></div>');
-            }
-
-        })
-    }
-</script>
