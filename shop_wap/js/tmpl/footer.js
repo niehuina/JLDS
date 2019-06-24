@@ -77,17 +77,18 @@
 
     $(document).on('click', '.logbtn', function()
     {
-        callback = WapSiteUrl;
-
-        login_url   = UCenterApiUrl + '?ctl=Login&met=index&typ=e';
-
-
-        callback = ApiUrl + '?ctl=Login&met=check&typ=e&redirect=' + encodeURIComponent(callback);
-
-
-        login_url = login_url + '&from=wap&callback=' + encodeURIComponent(callback);
-
-        window.location.href = login_url;
+        // callback = WapSiteUrl;
+        //
+        // login_url   = UCenterApiUrl + '?ctl=Login&met=index&typ=e';
+        //
+        //
+        // callback = ApiUrl + '?ctl=Login&met=check&typ=e&redirect=' + encodeURIComponent(callback);
+        //
+        //
+        // login_url = login_url + '&from=wap&callback=' + encodeURIComponent(callback);
+        //
+        // window.location.href = login_url;
+        window.location.href = "login.html";
     });
 
     $(document).on('click', '#logoutbtn', function()
@@ -95,6 +96,12 @@
         var username = getCookie('username');
         var key = getCookie('key');
         var client = 'wap';
+
+        delCookie('username');
+        delCookie('user_account');
+        delCookie('id');
+        delCookie('key');
+        delCookie('location');
 
         login_url   = UCenterApiUrl + '?ctl=Login&met=logout&typ=e';
 
@@ -105,12 +112,6 @@
         login_url = login_url + '&from=wap&callback=' + encodeURIComponent(callback);
 
         window.location.href = login_url;
-
-        delCookie('username');
-        delCookie('user_account');
-        delCookie('id');
-        delCookie('key');
-
     });
 
 });

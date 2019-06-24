@@ -175,6 +175,37 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         $this->data->addBody(-140, $result);
     }
 
+    /**
+     * 账单明细
+     *
+     * @access public
+     */
+    public function getRecordListForWap() {
+        $page = request_int('page');
+        $rows = request_int('rows');
+
+        $cond_row = array();
+        $cond_row['user_id'] = request_int('user_id');
+        $cond_row['user_type'] = request_int('type_id');
+        if(request_int('is_deliver')){
+            $cond_row['trade_type_id'] = Trade_TypeModel::DELIVER;
+        }
+
+        $order_row['record_time'] = 'desc';
+        $Consume_RecordModel = new Consume_RecordModel();
+        $data           = $Consume_RecordModel->getRecordList1($cond_row,$order_row,$page,$rows);
+        if ($data)
+        {
+            $msg    = 'success';
+            $status = 200;
+        }
+        else
+        {
+            $msg    = 'failure';
+            $status = 250;
+        }
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
 
 }
 

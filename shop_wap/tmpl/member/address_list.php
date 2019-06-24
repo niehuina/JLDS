@@ -61,7 +61,9 @@ include __DIR__.'/../../includes/header.php';
                     </li>
                     <%}%>
             </ul>
-            <a class="btn-l mt5" href="address_opera.html">添加新地址</a>
+            <div class="nctouch-inp-con">
+                <div class="form-btn ok"><a class="btn" href="address_opera.html">添加新地址</a></div>
+            </div>
             <%}else{%>
                 <div class="nctouch-norecord address">
                     <div class="norecord-ico"><i></i></div>
@@ -69,16 +71,18 @@ include __DIR__.'/../../includes/header.php';
                         <dt>您还没有过添加收货地址</dt>
                         <dd>正确填写常用收货地址方便购物</dd>
                     </dl>
-                    <a href="address_opera.html" class="btn">添加新地址</a>
+                    <div class="nctouch-inp-con">
+                        <div class="form-btn ok"><a class="btn" href="address_opera.html">添加新地址</a></div>
+                    </div>
                 </div>
                 </div>
                 <%}%>
     </script>
-    <script type="text/javascript" src="../../js/zepto.min.js"></script>
+    <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
     
-    <script type="text/javascript" src="../../js/template.js"></script>
+    <script type="text/javascript" src="../../js/libs/template.js"></script>
     <script type="text/javascript" src="../../js/common.js"></script>
-    <script type="text/javascript" src="../../js/simple-plugin.js"></script>
+    <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
     <script type="text/javascript" src="../../js/tmpl/address_list.js"></script>
     <script type="text/javascript" src="../../js/tmpl/footer.js"></script>
 </body>

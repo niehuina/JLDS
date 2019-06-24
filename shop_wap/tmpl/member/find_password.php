@@ -57,14 +57,17 @@ include __DIR__.'/../../includes/header.php';
         <input type="hidden" name="referurl">
     </div>
     <footer id="footer" class="bottom"></footer>
-    
-    <script type="text/javascript" src="../../js/zepto.min.js"></script>
-    <script type="text/javascript" src="../../js/common.js"></script>
-    <script type="text/javascript" src="../../js/simple-plugin.js"></script>
-    <script type="text/javascript" src="../../js/tmpl/footer.js"></script>
-    <script type="text/javascript" src="../../js/tmpl/find_password.js"></script>
 </body>
+<script type="text/javascript">
 
+    callback = WapSiteUrl + '/tmpl/member/login.html';
+
+    login_url   = UCenterApiUrl + 'index.php?ctl=Login&act=reset&typ=e';
+
+    login_url = login_url + '&from=wap&callback=' + encodeURIComponent(callback);
+
+    window.location.href = login_url;
+</script>
 </html>
 <?php 
 include __DIR__.'/../../includes/footer.php';

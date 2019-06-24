@@ -1665,6 +1665,42 @@ class Buyer_UserCtl extends Buyer_Controller
         $this->data->addBody(-140, $data, $msg, $status);
     }
 
+    /**
+     * 账单明细
+     */
+    public function getRecordListForWap()
+    {
+        $Yf_Page           = new Yf_Page();
+        $Yf_Page->listRows = request_int('listRows')?request_int('listRows'):10;
+        $rows              = $Yf_Page->listRows;
+        $offset            = request_int('firstRow', 0);
+        $page              = ceil_r($offset / $rows);
+
+        $data['page'] = $page;
+        $data['rows'] = $rows;
+        $data['user_id'] = request_string('user_id');
+        $data['type_id'] = request_string('type');
+        $data['is_deliver'] = request_int('is_deliver');
+        $rs = $this->getPaycenterApi($data, 'Api_Paycen_PayRecord', 'getRecordListForWap');
+        $rs['data']['type_id'] = request_string('type');
+
+        $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
+    }
+
+    public function getUserChildren()
+    {
+        $User_InfoModel = new User_InfoModel();
+
+        $level    = request_string('level', '1');
+        $page    = request_int('curpage', 1);
+        $rows    = request_int('page', 20);
+        $cond_row['user_parent_id'] = Perm::$userId;
+        $cond_row['user_grade'] = $level;
+        $order_row['user_regtime'] = 'asc';
+        $data = $User_InfoModel->getInfoList($cond_row, $order_row, $page, $rows);
+
+        $this->data->addBody(-140, $data);
+    }
 }
 
 ?>

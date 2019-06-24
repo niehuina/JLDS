@@ -148,6 +148,8 @@
 .member-center dt h3 i.mc-05 { background-image: url(../images/new/icon-u.png);}
 .member-center dt h3 i.mc-06 { background-image: url(../images/new/icon-f.png);}
 .member-center dt h3 i.mc-07 { background-image: url(../images/new/fenxiao-det.png);}
+.member-center dt h3 i.mc-08 { background-image: url(../images/new/icon-ck.png);}
+.member-center dt h3 i.mc-09 { background-image: url(../images/new/icon-fx.png);}
 
 /*.member-center dt h3 i.mc-dis{background-image:url(../images/bbc-bgdis.png);}
 .member-center dt h3 i.mc-distlog{background-image:url(../images/distlog.png);}*/
@@ -445,21 +447,23 @@ i.cc-10 { background-image: url(../images/bbc-bg23.png); background-size: cover 
 .nctouch-asset-info .container .rule dd { font-size: 0.5rem; line-height: 0.68rem; height: auto;}
 
 /* 触屏版资产日志形列表 */
-.nctouch-log-list { padding-left: 0.5rem; background-color: #FFF;}
-.nctouch-log-list li { position: relative; z-index: 1; display: block; padding: 0.5rem 0; border-bottom: solid 0.05rem #EEE;}
+.nctouch-log-list { padding: 0 0.5rem; background-color: #FFF;}
+.nctouch-log-list li { position: relative; z-index: 1; display: block; padding: 0.5rem; border-bottom: solid 0.05rem #EEE;}
 .nctouch-log-list li .detail { min-height: 1.8rem; margin: 0 50% 0 0; font-size: 0.55rem; word-wrap:break-word; line-height: 0.9rem; color: #555;}
 .nctouch-log-list li .money { position: absolute; z-index: 1; top: 0.5rem; right: 0.5rem; height: 0.9rem; font-weight: 0.7rem; line-height: 0.9rem;}
 .nctouch-log-list.tx .money { right: 1.5rem;}
-.nctouch-log-list li .money.add { color: #F60;}
-.nctouch-log-list li .money.reduce { color: #36BC9B;}
+.nctouch-log-list li .money.add { color: #F60; background-color: transparent !important;}
+.nctouch-log-list li .money.reduce { color: #36BC9B;background-color: transparent !important;}
 .nctouch-log-list li .date { position: absolute; z-index: 1; bottom: 0.4rem; right: 0.5rem; height: 0.9rem; font-size: 0.5rem; line-height: 0.9rem; color: #999;}
 .nctouch-log-list.tx .date { right: 1.5rem;}
-.nctouch-log-list li dl {}
+.nctouch-log-list li dl { padding-left: 45px;}
 .nctouch-log-list li dt { font-size: 0.7rem; line-height: 1rem; font-weight: 600; color: #333; height: 1rem; margin-bottom: 0.2rem;}
 .nctouch-log-list li dt i { display: inline-block; vertical-align: top; width: 1rem; height: 1rem; margin-right: 0.1rem; background-image: url(../images/mcc_11_b.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 65%; opacity: 0.4;}
 .nctouch-log-list li dt span { font-size: 0.55rem; color: #4FC0E8;}
-.nctouch-log-list li dd { font-size: 0.55rem; line-height: 0.65rem; color: #777;}
+.nctouch-log-list li dt em { position: relative; color: red;  margin-left: 0.5rem;}
+.nctouch-log-list li dd { font-size: 0.55rem; line-height: 0.65rem; color: #777;min-height: 14px;}
 .nctouch-log-list li .arrow-r { position: absolute; z-index: 2; top: 50%; right: 0.4rem; display: block; width: 0.8rem; height: 0.9rem; margin-top: -0.4rem; background-image: url(../images/arrow_right_b.png); background-repeat: no-repeat; background-repeat: 50% 50%; background-size: 80%; opacity: 0.3;}
+.nctouch-log-list li img {position: absolute;width: 40px;height: 40px;}
 
 /* 触屏版代金卡券列表 */
 .nctouch-tickets { display: block; padding: 0.5rem 0.5rem 0 0.5rem;}
@@ -524,3 +528,56 @@ i.cc-10 { background-image: url(../images/bbc-bg23.png); background-size: cover 
 @media (max-width:360px){
 	.nctouch-order-item-con .goods-info{width:8.4rem;}
 }
+
+.member-money { font-size: 0; height: 3.2rem; background:#fff;}
+.member-money span { display: inline-block; width: 20%; height: 2rem; padding: 0.6rem 0;text-align:center;}
+.member-money span a { display: block;}
+.member-money span em { font-weight: lighter; font-size: 0.65rem; color: #F60; line-height: 1rem; text-align: center; vertical-align: top; display: inline-block; min-width: 1rem; height: 1rem; margin: 0 auto;}
+.member-money span i { vertical-align: top; display: inline-block; width: 1rem; height: 1rem; margin: 0 auto;}
+.member-money span i.favorite-goods { background-image: url(../images/favorite_w.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 100%;}
+.member-money span i.favorite-store { background-image: url(../images/store_w.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 100%;}
+.member-money span i.goods-browse { background-image: url(../images/bbc-bg41.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 71%;}
+.member-money span i.goods-sign { background-image: url(../images/sign.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 100%;}
+.member-money span p { font-size: 0.55rem; line-height: 1rem; color: #666; height: 1rem;}
+
+
+.nctouch-money { display: block; text-align: center; margin: 20% 10%; font-size: 0.8rem}
+.nctouch-money .money-content em { font-size: 1.4rem; color: #F60;}
+.nctouch-money .money-content span { font-size: 1.4rem; color: #F60;}
+.nctouch-inp-con ul li .input-box .inp { min-height:1.8rem; line-height:1.8rem;}
+
+/*在线支付方式选择*/
+.nctouch-pay { display: block;}
+.nctouch-pay .spacing-div { position: relative; z-index: 1; display: block; height: 1rem; margin: 0 0.5rem 1rem 0.5rem; border-bottom: solid #EEE 0.05rem;}
+.nctouch-pay .spacing-div span { position: absolute; z-index: 1; bottom: -0.3rem; left: 50%; display: block; width: 5rem; margin-left: -2.5rem; text-align: center; font-size: 0.55rem; line-height: 0.6rem; height: 0.6rem; background-color: #FFF; color: #888;}
+.nctouch-pay .pay-sel { display: block; font-size: 0; overflow: hidden;}
+.nctouch-pay label { float: left; width: 50%; height: 2rem; padding: 0.25rem 0; text-align: center; border: none !important;}
+.nctouch-pay label.checked span.sel_icon{ display:block !important; }
+.nctouch-pay label input[type="radio"] { display: none;}
+.nctouch-pay label span { display: inline-block; width: 5.8rem; height: 1.8rem; margin: 0 auto; background-position: 50% 50%; background-repeat: no-repeat; background-size: 100%; }
+.nctouch-pay label span.alipay { background-image: url(../images/pay/zhifubao.png);}
+.nctouch-pay label span.wxpay { background-image: url(../images/pay/weixinzhifu.png);}
+.nctouch-pay label span.sel_icon{ width:20px; height:20px; display:none; position:relative; left:45%; bottom:10px;background:url(../images/selected-icon.png) no-repeat; background-size:cover;  }
+
+
+.goods-raty{width: 82%;float: right;margin-top: 0.15rem}
+.goods-raty i { display: inline-block; height: 0.5rem; background-image: url(../images/star_r.png); background-repeat: repeat-x; background-position: 0 0; background-size: contain;}
+.goods-raty i.star1 { width: 0.5rem;}
+.goods-raty i.star2 { width: 1rem;}
+.goods-raty i.star3 { width: 1.5rem;}
+.goods-raty i.star4 { width: 2rem;}
+.goods-raty i.star5 { width: 2.5rem;}
+
+.store-totle-delivermoney
+{
+    font-size: 1.0rem !important;
+    color: #F60;
+}
+
+.store-totle-deliverdistance
+{
+    font-size: 0.6rem;!important;
+    color: #F60;
+}
+
+.nctouch-order-search.fixed{ position: fixed; width: 100%; z-index: 990;  }

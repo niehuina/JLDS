@@ -47,6 +47,7 @@ class Plugin_Perm implements Yf_Plugin_Interface
 			'Supplier_Goods'
 		);
 		session_start();
+        Yf_Log::log($_REQUEST['ctl'], Yf_Log::LOG, 'debug_user_perm');
 		//不需要登录
 		if (!isset($_REQUEST['ctl']) || (isset($_REQUEST['ctl']) && in_array($_REQUEST['ctl'], $not_perm)) || (isset($_REQUEST['ctl']) && 'Api_' == substr($_REQUEST['ctl'], 0, 4)) || (isset($_REQUEST['ctl']) && 'WebPosApi_' == substr($_REQUEST['ctl'], 0, 10)) || (isset($_REQUEST['ctl']) && 'Goods_' == substr($_REQUEST['ctl'], 0, 6)))
 		{

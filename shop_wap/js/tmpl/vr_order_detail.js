@@ -139,7 +139,7 @@ $(function(){
         }
         if (typeof(map_js_flag) == 'undefined') {
             $.ajax({
-                url: WapSiteUrl+'/js/map.js',
+                url: WapSiteUrl+'/js/libs/map.js',
                 dataType: "script",
                 async: false
             });

@@ -197,12 +197,12 @@ include __DIR__ . '/../includes/header.php';
     </script>
 
 
-    <script type="text/javascript" src="../js/zepto.js"></script>
-    <script type="text/javascript" src="../js/simple-plugin.js"></script>
-    <script type="text/javascript" src="../js/template.js"></script>
+    <script type="text/javascript" src="../js/libs/zepto.min.js"></script>
+    <script type="text/javascript" src="../js/libs/simple-plugin.js"></script>
+    <script type="text/javascript" src="../js/libs/template.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
-    <script type="text/javascript" src="../js/product_list.js"></script>
-    <!--<script type="text/javascript" src="../js/footer.js"></script>--></body></html>
+    <script type="text/javascript" src="../js/tmpl/product_list.js"></script>
+<!--    <script type="text/javascript" src="../js/tmpl/footer.js"></script>--></body></html>-->
 <?php
 include __DIR__ . '/../includes/footer.php';
 ?>

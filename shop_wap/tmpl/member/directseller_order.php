@@ -19,7 +19,7 @@ include __DIR__.'/../../includes/header.php';
     <link rel="stylesheet" type="text/css" href="../../css/nctouch_member.css">
     <link rel="stylesheet" type="text/css" href="../../css/nctouch_common.css">
     <link rel="stylesheet" type="text/css" href="../../css/nctouch_cart.css">
-    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/libs/jquery.js"></script>
 </head>
 
 <body>
@@ -180,10 +180,10 @@ include __DIR__.'/../../includes/header.php';
         }
     </script>
 
-    <script type="text/javascript" src="../../js/zepto.min.js"></script>
-    <script type="text/javascript" src="../../js/template.js"></script>
+    <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
+    <script type="text/javascript" src="../../js/libs/template.js"></script>
     <script type="text/javascript" src="../../js/common.js"></script>
-    <script type="text/javascript" src="../../js/simple-plugin.js"></script>
+    <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
     <script type="text/javascript" src="../../js/zepto.waypoints.js"></script>
     <script type="text/javascript" src="../../js/tmpl/order_payment_common.js"></script>
     <script type="text/javascript" src="../../js/tmpl/directseller_order.js"></script>

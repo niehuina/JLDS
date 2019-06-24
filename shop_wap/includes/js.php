@@ -7,9 +7,9 @@
 	var ShopWapUrl = "<?php echo $WapSiteUrl;?>";
 	var PayCenterWapUrl = "<?php echo $PayCenterWapUrl;?>";
 	var UCenterWapUrl = "<?php echo $UCenterApiUrl;?>";
-  var ImApiUrl = "<?php echo $ImApiUrl;?>";
-  var app_id = 102;
-  var copyright = "<?php echo $copyright;?>";
+    var ImApiUrl = "<?php echo $ImApiUrl;?>";
+    var app_id = 102;
+    var copyright = "<?php echo $copyright;?>";
 	window.title = "<?php echo $title;?>";
 	window.paySiteName = "<?php echo $paySiteName;?>";  
 </script>

@@ -50,9 +50,9 @@ include __DIR__.'/../../includes/header.php';
     </div>
 </div>
 
-<script type="text/javascript" src="../../js/zepto.js"></script> 
+<script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
 <script type="text/javascript" src="../../js/common.js"></script> 
-<script type="text/javascript" src="../../js/template.js"></script>
+<script type="text/javascript" src="../../js/libs/template.js"></script>
 <script type="text/javascript" src="../../js/tmpl/directseller.js"></script>
 </body>
 </html>

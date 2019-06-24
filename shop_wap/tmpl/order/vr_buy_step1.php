@@ -163,10 +163,10 @@ include __DIR__.'/../../includes/header.php';
         </div>
 </script>
 
-<script type="text/javascript" src="../../js/zepto.min.js"></script>
-<script type="text/javascript" src="../../js/template.js"></script>
+<script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
+<script type="text/javascript" src="../../js/libs/template.js"></script>
 <script type="text/javascript" src="../../js/common.js"></script>
-<script type="text/javascript" src="../../js/simple-plugin.js"></script>
+<script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
 <script type="text/javascript" src="../../js/tmpl/order_payment_common.js"></script>
 <script type="text/javascript" src="../../js/tmpl/vr_buy_step1.js"></script>
 </body>

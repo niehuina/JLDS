@@ -750,7 +750,7 @@ extract($_GET);
 			if(data.status == 200)
 			{
 				 Public.tips.alert('重置密码成功，请妥善保管新密码！');
-				window.location.href = '<?=sprintf('%s?ctl=Login&met=index&t=%s&from=%s&callback=%s', Yf_Registry::get('url'), request_string('t'), request_string('from'), urlencode(request_string('callback')))?>';
+				 window.location.href = '<?=sprintf('%s?ctl=Login&met=index&t=%s&from=%s&callback=%s', Yf_Registry::get('url'), request_string('t'), request_string('from'), urlencode(request_string('callback')))?>';
 
 			}else{
 				//$("#form-authcode").val("");

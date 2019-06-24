@@ -154,9 +154,9 @@ include __DIR__.'/../includes/header.php';
 </script>
 
 
-<script type="text/javascript" src="../js/zepto.min.js"></script>
-<script type="text/javascript" src="../js/simple-plugin.js"></script>
-<script type="text/javascript" src="../js/template.js"></script>
+<script type="text/javascript" src="../js/libs/zepto.min.js"></script>
+<script type="text/javascript" src="../js/libs/simple-plugin.js"></script>
+<script type="text/javascript" src="../js/libs/template.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
 <script type="text/javascript" src="../js/swipe.js"></script>
 <script type="text/javascript" src="../js/integral.js"></script>

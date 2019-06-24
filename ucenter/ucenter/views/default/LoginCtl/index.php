@@ -58,7 +58,6 @@ $wb = $connect_rows['weibo']['status'];
             </a>
             <b>欢迎登录</b>
         </div>
-
     </div>
 	<div id="content">
 		<div class="login-cont" style="background:<?=Web_ConfigModel::value('login_backcolor')?>">
@@ -134,7 +133,7 @@ $wb = $connect_rows['weibo']['status'];
 						</div>
 					</div>
 					<div class="wap-show">
-						<a href="<?=sprintf('%s?ctl=Login&act=reg&t=%s&from=%s&callback=%s', Yf_Registry::get('url'), request_string('t'), request_string('from'), urlencode(request_string('callback')))?>" target="_blank"><b></b>立即注册</a>|<a href="<?=sprintf('%s?ctl=Login&act=reset&t=%s&from=%s&callback=%s', Yf_Registry::get('url'), request_string('t'), request_string('from'), urlencode(request_string('callback')))?>" class="" target="_blank" >忘记密码</a>
+						<a href="<?=sprintf('%s/tmpl/member/register.html', Yf_Registry::get('shop_wap_url'))?>"><b></b>立即注册</a>|<a href="<?=sprintf('%s/tmpl/member/find_password.html', Yf_Registry::get('shop_wap_url'))?>" class="">忘记密码</a>
 					</div>
 					<div class="coagent" style="display: block; visibility: visible;">
 						<div class="titlea"> 其他登录方式</div>

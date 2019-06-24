@@ -72,10 +72,10 @@ $act = $_GET['act'] ? $_GET['act'] : 0;
             </ul>
         <%}%>
     </script>
-    <script type="text/javascript" src="../../js/zepto.min.js"></script>
-    <script type="text/javascript" src="../../js/template.js"></script>
+    <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
+    <script type="text/javascript" src="../../js/libs/template.js"></script>
     <script type="text/javascript" src="../../js/common.js"></script>
-    <script type="text/javascript" src="../../js/simple-plugin.js"></script>
+    <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
     <script type="text/javascript" src="../../js/tmpl/member_voucher.js"></script>
     <script type="text/javascript" src="../../js/tmpl/footer.js"></script>
     </body></html>

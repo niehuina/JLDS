@@ -45,17 +45,17 @@ include __DIR__.'/../../includes/header.php';
                
                     <li class="goods-item">
                         <span class="goods-pic">
-			<a href="../product_detail.html?goods_id=<%=arr.items[i].goods_id%>">
-				<img src="<%=$image_thumb(arr.items[i].common_image, 116, 116)%>"/>
-			</a>
-		</span>
+                            <a href="../product_detail.html?goods_id=<%=arr.items[i].goods_id%>">
+                                <img src="<%=$image_thumb(arr.items[i].common_image, 116, 116)%>"/>
+                            </a>
+                        </span>
                         <dl class="goods-info">
                             <dt class="goods-name">
-				<a href="../product_detail.html?goods_id=<%=arr.items[i].goods_id%>">
-					<h4><%=arr.items[i].common_name%></h4>
-					<h6></h6>
-				</a>
-			</dt>
+                                <a href="../product_detail.html?goods_id=<%=arr.items[i].goods_id%>">
+                                    <h4><%=arr.items[i].common_name%></h4>
+                                    <h6></h6>
+                                </a>
+                            </dt>
                             <dd class="goods-sale">
                                 <a href="../product_detail.html?goods_id=<%=arr.items[i].goods_id%>">
                                     <span class="goods-price">￥<em><%=arr.items[i].common_price%></em></span>
@@ -64,10 +64,8 @@ include __DIR__.'/../../includes/header.php';
                         </dl>
                     </li>
                     
-                    
                     <% } %>
-                        <li class="loading">
-                            <div class="spinner"><i></i></div>浏览记录读取中...</li>
+                <li class="loading"><div class="spinner"><i></i></div>浏览记录读取中...</li>
             </ul>
             <% } else {%>
                 <div class="nctouch-norecord views">
@@ -78,16 +76,16 @@ include __DIR__.'/../../includes/header.php';
                     </dl>
                     <a href="<%=WapSiteUrl%>" class="btn">随便逛逛</a>
                 </div>
-                <% } %>
+            <% } %>
     </script>
     
-    <script type="text/javascript" src="../../js/zepto.min.js"></script>
-    <script type="text/javascript" src="../../js/template.js"></script>
+    <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
+    <script type="text/javascript" src="../../js/libs/template.js"></script>
+    <script type="text/javascript" src="../../js/libs/ncscroll-load.js"></script>
     <script type="text/javascript" src="../../js/common.js"></script>
-    <script type="text/javascript" src="../../js/simple-plugin.js"></script>
+    <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
     <script type="text/javascript" src="../../js/tmpl/footer.js"></script>
     <script type="text/javascript" src="../../js/tmpl/view_list.js"></script>
-    <script type="text/javascript" src="../../js/ncscroll-load.js"></script>
 </body>
 
 </html>

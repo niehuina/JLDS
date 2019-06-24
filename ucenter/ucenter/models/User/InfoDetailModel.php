@@ -158,7 +158,15 @@ class User_InfoDetailModel extends User_InfoDetail
         return $res;
     }
 	
+    public function getInfoDetailListByKeys($keys)
+    {
+        $where = 'user_truename = \''.$keys.'\' or user_mobile = \''.$keys.'\'';
 
+        $sql = 'select user_id, user_name, user_truename, user_mobile from '.$this->_tableName.' where '.$where;
+        $sql .= $this->sql->getLimit();
+        $data_rows = $this->sql->getAll($sql);
+        return $data_rows;
+    }
 
 }
 ?>

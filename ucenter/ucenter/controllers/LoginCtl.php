@@ -197,6 +197,7 @@ class LoginCtl extends Yf_AppController
 		$qq_logo = substr($bind_info['bind_avator'], 0,strrpos($bind_info['bind_avator'],'/'));
 		$qq_logo = $qq_logo.'/40';
 
+        $arr_field_user_info_detail['user_id']             = $user_id;
 		$arr_field_user_info_detail['user_name']           = $bind_info['bind_nickname'];
 		$arr_field_user_info_detail['user_mobile']         = $mobile;
 		$arr_field_user_info_detail['nickname']            = $bind_info['bind_nickname'];
@@ -341,7 +342,7 @@ class LoginCtl extends Yf_AppController
 		$arr_field_user_info_detail['user_count_login']    = $info_row['user_count_login'] + 1;
 		$arr_field_user_info_detail['user_lastlogin_time'] = time();
 
-		$user_detail_flag = $User_InfoDetail->editInfoDetail($user_name, $arr_field_user_info_detail);
+		$user_detail_flag = $User_InfoDetail->editInfoDetail($user_info_row['user_id'], $arr_field_user_info_detail);
 		check_rs($rs_row,$user_detail_flag);
 
 
@@ -547,7 +548,8 @@ class LoginCtl extends Yf_AppController
 		$mobile = request_string('mobile');
         $email = request_string('email');
         $yzm = request_string('yzm');
-		if (!Perm::checkYzm($yzm)){
+        $from = request_string('from', '');
+		if (!Perm::checkYzm($yzm) && empty($from)){
             return $this->data->addBody(-140, array(), _('图形验证码有误'), 230);
 		}
         $check_code = mt_rand(100000, 999999);
@@ -874,6 +876,11 @@ class LoginCtl extends Yf_AppController
 		$mobile    = request_string('mobile');
         $email = request_string('email'); 
         $reg_checkcode = request_int('reg_checkcode',1);
+        $parent_id = request_int('parent_id');
+        if($parent_id){
+            $rec = 'u'.$parent_id.'s';
+            setcookie('recserialize',$rec,time()+60*60*24*3,'/');
+        }
 		$server_id = 0;
 
 		if (!$user_name)
@@ -982,8 +989,7 @@ class LoginCtl extends Yf_AppController
                     }
                 }
 
-
-
+                $arr_field_user_info_detail['user_id']             = $user_id;
 				$arr_field_user_info_detail['user_name']           = $user_name;
                 if($reg_checkcode == 1){
                     $arr_field_user_info_detail['user_mobile']         = $mobile;
@@ -1068,7 +1074,7 @@ class LoginCtl extends Yf_AppController
 						);
 					
 
-					$User_InfoDetail->editInfoDetail($user_name,$user_info_detail);
+					$User_InfoDetail->editInfoDetail($user_id,$user_info_detail);
 
 					$time = date('Y-m-d H:i:s',time());
 
@@ -1387,7 +1393,7 @@ class LoginCtl extends Yf_AppController
 					$arr_field_user_info_detail['user_count_login']    = $info_row['user_count_login'] + 1;
 					$arr_field_user_info_detail['user_lastlogin_time'] = time();
 
-					$User_InfoDetail->editInfoDetail($user_name, $arr_field_user_info_detail);
+					$User_InfoDetail->editInfoDetail($user_info_row['user_id'], $arr_field_user_info_detail);
 
 					$arr_body['mobile'] = $info_row['user_mobile'];
 					$this->data->addBody(100, $arr_body);
@@ -1467,7 +1473,7 @@ class LoginCtl extends Yf_AppController
 			//user detail
 			
 			$User_InfoDetailModel = new User_InfoDetailModel();
-			$data_info = $User_InfoDetailModel->getOne($data['user_name']);
+			$data_info = $User_InfoDetailModel->getOne($data['user_id']);
 
 			$data = array_merge($data, $data_info);
 
@@ -1658,6 +1664,7 @@ class LoginCtl extends Yf_AppController
             array_push($rs_row, $flag);
 
             $arr_field_user_info_detail                        = array();
+            $arr_field_user_info_detail['user_id']             = $user_id;
             $arr_field_user_info_detail['user_name']           = $user_name;
             $arr_field_user_info_detail['user_mobile']         = $mobile;
             //$arr_field_user_info_detail['user_mobile_verify']         = 1;
@@ -2245,7 +2252,35 @@ class LoginCtl extends Yf_AppController
 			return $this->data->addBody('失败');
 		}
 	}
-            
+
+	public function getIntroducer()
+    {
+        $intro_keys = request_string('intro_keys');
+
+        $User_InfoDetailModel = new User_InfoDetailModel();
+
+        $user_list = $User_InfoDetailModel->getInfoDetailListByKeys($intro_keys);
+
+        return $this->data->addBody(-140, $user_list);
+    }
+
+
+
+    public function getRegisterDocument()
+    {
+        $Web_ConfigModel = new Web_ConfigModel();
+        $data = $Web_ConfigModel->getByWhere(array('config_type' => 'register'));
+        if(isset($data['reg_protocol'])){
+            $data = $data['reg_protocol'];
+            $msg = '';
+            $status = 200;
+        }else{
+            $data = array();
+            $msg = '协议未设置';
+            $status = 250;
+        }
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
 }
 
 ?>

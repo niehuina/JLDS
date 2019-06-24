@@ -222,7 +222,6 @@ Yf_Registry::set('static_url', 'http://'. $host . $themes);
 
 
 
-
 if(!function_exists('is_local')){
 	/**
 	 * 是否是本机访问
@@ -486,6 +485,7 @@ else
 Yf_Registry::set('shop_api_key', $shop_api_key);
 Yf_Registry::set('shop_app_id', $shop_app_id);
 Yf_Registry::set('shop_api_url', $shop_api_url);
+Yf_Registry::set('shop_wap_url', @$shop_wap_url);
 
 
 //支付中心配置
@@ -505,6 +505,12 @@ Yf_Registry::set('paycenter_app_id', $paycenter_app_id);
 Yf_Registry::set('paycenter_api_url', $paycenter_api_url);
 
 
+if (request_string('typ') != 'json' && !request_string('redirect') && Yf_Utils_Device::isMobile()) {
+    if (request_string('ctl') == 'Login' && request_string('act') == 'index') {
+        $url = $shop_wap_url . '/tmpl/member/login.html';
+        location_to($url);
+    }
+}
 
 
 //

@@ -232,12 +232,12 @@ include __DIR__.'/../includes/header.php';
     <a href="javascript:void(0);" class="gotop-btn gotop" id="goTopBtn"><i></i></a>
 </div>
 
-<script type="text/javascript" src="../js/zepto.js"></script>
-<script type="text/javascript" src="../js/simple-plugin.js"></script>
-<script type="text/javascript" src="../js/template.js"></script>
+<script type="text/javascript" src="../js/libs/zepto.min.js"></script>
+<script type="text/javascript" src="../js/libs/simple-plugin.js"></script>
+<script type="text/javascript" src="../js/libs/template.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
-<script type="text/javascript" src="../js/group_buy_list.js"></script>
-<script type="text/javascript" src="../js/jquery.timeCountDown.js" ></script>
+<script type="text/javascript" src="../js/tmpl/group_buy_list.js"></script>
+<script type="text/javascript" src="../js/libs/jquery.timeCountDown.js" ></script>
 </body>
 
 </html>

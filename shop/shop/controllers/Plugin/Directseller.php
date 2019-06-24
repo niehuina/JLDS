@@ -38,7 +38,7 @@ class Plugin_Directseller implements Yf_Plugin_Interface
 		$Distribution_ShopDirectsellerGoodsCommonModel = new Distribution_ShopDirectsellerGoodsCommonModel();
 		$recImages = $Distribution_ShopDirectsellerGoodsCommonModel->getOne($cond_row);
  
-		setcookie('recserialize',$rec,time()+60*60*24*3);
+		setcookie('recserialize',$rec,time()+60*60*24*3,'/');
 		
 		if(!empty($recImages['directseller_images_image']))
 		{
@@ -64,6 +64,8 @@ class Plugin_Directseller implements Yf_Plugin_Interface
 		
 		$User_InfoModel = new User_InfoModel();
 		$User_InfoModel->editInfo($user_id,$data);
+
+        setcookie('recserialize',$rec,time()+60*60*24*3,'/');
 		
 		return true;
 	}

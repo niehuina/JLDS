@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/new-style.css">
     <link rel="stylesheet" href="css/index-swiper.css">
     <link rel="stylesheet" href="css/swiper.min.css">
-    <script src="js/jquery.js"></script>
+    <script src="js/libs/jquery.js"></script>
     <!-- <script src="js/new-common.js"></script> -->
 </head>
 
@@ -207,8 +207,8 @@
     </div>
 </script>
 
-<script type="text/javascript" src="js/zepto.min.js"></script> 
-<script type="text/javascript" src="js/template.js"></script> 
+<script type="text/javascript" src="js/libs/zepto.min.js"></script>
+<script type="text/javascript" src="js/libs/template.js"></script>
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/index.js"></script> 
 <script type="text/javascript" src="js/tmpl/footer.js"></script>

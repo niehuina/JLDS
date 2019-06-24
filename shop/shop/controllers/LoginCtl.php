@@ -370,6 +370,7 @@ class LoginCtl extends Yf_AppController
 
         if (200 == $init_rs['status']) {
             //读取服务列表
+            $user_account = $init_rs['data']['user_account'];
         } else {
             $msg = __('登录信息有误');
             if ('e' == $this->typ) {
@@ -378,7 +379,6 @@ class LoginCtl extends Yf_AppController
                 return $this->data->setError($msg, array());
             }
         }
-
 
         $userBaseModel = new User_BaseModel();
 
@@ -545,11 +545,12 @@ class LoginCtl extends Yf_AppController
                 $Grade_LogModel = new Grade_LogModel;
                 $Grade_LogModel->addLog($grade_row);
             }
-
+            Yf_Log::log('login', Yf_Log::LOG, 'debug');
             //$flag     = $userBaseModel->editBaseSingleField($user_row['user_id'], 'user_key', $user_key, $user_row['user_key']);
             Yf_Hash::setKey($user_key);
             $encrypt_str = Perm::encryptUserInfo($data);
 
+            Yf_Log::log($encrypt_str, Yf_Log::LOG, 'debug');
             if ('e' == $this->typ) {
                 location_to(Yf_Registry::get('base_url'));
             } else {

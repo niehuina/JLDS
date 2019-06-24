@@ -856,7 +856,6 @@ return $connect_rows;
         $data = $Web_ConfigModel->getByWhere(array('config_type' => $config_type));
         return $data;
     }
-	
 }
 
 ?>

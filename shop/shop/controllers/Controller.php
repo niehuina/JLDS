@@ -167,6 +167,43 @@ class Controller extends Yf_AppController
 //		return $data;
 //	}
 
+    /**
+     * 调用paycenter Api
+     * @param $data
+     * @param $ctl
+     * @param $met
+     * @param string $typ
+     * @return array|mixed
+     */
+    public function getPaycenterApi($data, $ctl, $met, $typ = 'json')
+    {
+        //本地读取远程信息
+        $key = Yf_Registry::get('paycenter_api_key');
+        $api_url = Yf_Registry::get('paycenter_api_url');
+        $app_id = Yf_Registry::get('paycenter_app_id');
+
+        $formvars            = $data;
+        $formvars['app_id']  = $app_id;
+
+        $url = sprintf('%s?ctl=%s&met=%s&typ=%s', $api_url, $ctl, $met, $typ);
+        $rs = get_url_with_encrypt($key, $url, $formvars);
+        return $rs;
+    }
+
+    public function getUcenterApi($data, $ctl, $met, $typ = 'json')
+    {
+        //本地读取远程信息
+        $key = Yf_Registry::get('ucenter_api_key');
+        $api_url = Yf_Registry::get('ucenter_api_url');
+        $app_id = Yf_Registry::get('ucenter_app_id');
+
+        $formvars            = $data;
+        $formvars['app_id']  = $app_id;
+
+        $url = sprintf('%s?ctl=%s&met=%s&typ=%s', $api_url, $ctl, $met, $typ);
+        $rs = get_url_with_encrypt($key, $url, $formvars);
+        return $rs;
+    }
 }
 
 ?>

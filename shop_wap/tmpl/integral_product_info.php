@@ -45,7 +45,7 @@ include __DIR__.'/../includes/header.php';
 </div>
 
 <footer id="footer"></footer>
-<script type="text/javascript" src="../js/zepto.min.js"></script>
+<script type="text/javascript" src="../js/libs/zepto.min.js"></script>
 
 <script type="text/javascript" src="../js/common.js"></script>
 <script type="text/javascript" src="../js/tmpl/integral_product_info.js"></script>

@@ -13,9 +13,9 @@ include __DIR__.'/../includes/header.php';
     <link rel="stylesheet" href="../css/swiper.min.css" />
     <link rel="stylesheet" href="../css/nctouch_common.css" />
     <link rel="stylesheet" href="../css/nctouch_products_list.css" />
-    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/libs/jquery.js"></script>
     <script type="text/javascript" src="../js/config.js"></script>
-    <script type="text/javascript" src="../js/zepto.min.js"></script> 
+    <script type="text/javascript" src="../js/libs/zepto.min.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript" src="../js/swipe.js"></script>
     

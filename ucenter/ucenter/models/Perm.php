@@ -77,6 +77,8 @@ class Perm
 	 */
 	public static function encryptUserInfo($user_row = null, $user_key=null)
 	{
+        Yf_Log::log($user_row, Yf_Log::LOG, 'debug');
+        Yf_Log::log($user_key, Yf_Log::LOG, 'debug');
 		$user_str = http_build_query($user_row);
 
 		$user_str = str_replace('&amp;', '&', $user_str);
@@ -87,7 +89,6 @@ class Perm
 		}
 
 		$encrypt_str = Yf_Hash::encrypt($user_str);
-
 
 		if (request_string('auto_login') == 'true')
         {
@@ -101,6 +102,7 @@ class Perm
             setcookie(self::$cookieName, $encrypt_str);
             setcookie(self::$cookieId, $user_row['user_id']);
         }
+        Yf_Log::log($_COOKIE, Yf_Log::LOG, 'debug');
         
 		return $encrypt_str;
 	}
@@ -154,7 +156,7 @@ class Perm
 	{
 		//登录通过
 		$user_row = self::getUserByCookie();
-
+        Yf_Log::log($user_row, Yf_Log::LOG, 'debug');
 		if (array_key_exists('user_id', $user_row))
 		{
 			self::$userId = $user_row['user_id'];
@@ -280,8 +282,8 @@ class Perm
 		$Cache_Lite   = new Cache_Lite_Output($config_cache['verify_code']);
         $user_code = $Cache_Lite->get($verify_key);
         //验证一次后，验证码失效
-        $Cache_Lite->remove($verify_key);
         if($user_code == $verify_code){
+            $Cache_Lite->remove($verify_key);
             return true;
         }else{
             return false;

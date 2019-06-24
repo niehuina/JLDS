@@ -19,9 +19,20 @@ function setGrid(adjustH, adjustW) {
 
 function cbkCheck(obj) {
     var stock_id = $(obj).data("stock_id");
+    var goods_stock = $(obj).data('goods_stock');
+    var row_num = $(obj).data('row_num');
     if(obj.checked == true){
         var out_num = $("#"+stock_id).find("input[name='out_num']").val();
-        select_goods_list[stock_id] = out_num;
+        if(out_num && out_num > 0 && out_num <= goods_stock){
+            select_goods_list[stock_id] = out_num;
+        }else{
+            if(out_num && out_num > goods_stock){
+                Public.tips.error('选中的商品自用数量不能大于商品库存！');
+            }else if(!out_num){
+                Public.tips.error('选中的商品未填写自用数量！');
+            }
+            $("#"+stock_id).find("input[name='out_num']").focus();
+        }
     }else if(obj.checked == false){
         delete select_goods_list[stock_id];
     }
@@ -32,12 +43,17 @@ function selectAllCheck() {
     var flag = true;
     $("#goods_grid tbody").find(":checkbox[name='check']:checked").each(function(){
         var stock_id = $(this).data('stock_id');
+        var goods_stock = $(this).data('goods_stock');
         var row_num = $(this).data('row_num');
         var out_num = $("#"+stock_id).find("input[name='out_num']").val();
-        if(out_num && out_num > 0){
+        if(out_num && out_num > 0 && out_num <= goods_stock){
             select_goods_list[stock_id] = out_num;
         }else{
-            Public.tips.error('选中的第【'+row_num+'】行商品未填写自用数量！');
+            if(out_num && out_num > goods_stock){
+                Public.tips.error('选中的第【'+row_num+'】行商品自用数量不能大于商品库存！');
+            }else if(!out_num){
+                Public.tips.error('选中的第【'+row_num+'】行商品未填写自用数量！');
+            }
             $("#"+stock_id).find("input[name='out_num']").focus();
             flag = false;
         }
@@ -87,7 +103,7 @@ function initGrid() {
         width: 100,
         formatter: function (val, opt, row) {
             var html_con = '<input type="number" name="out_num" role="textbox" class="textbox" autocomplete="false" ' +
-                '"data-goods_id="' + row.goods_id + '" data-stock_id="' + row.stock_id + '" /></div>';
+                '"data-goods_id="' + row.goods_id + '" data-stock_id="' + row.stock_id + '" data-goods_stock="'+ row.goods_stock +'" /></div>';
             return html_con;
         }
     }];
@@ -153,12 +169,13 @@ function initGrid() {
                 var curChk = $("#"+stock_id+"").find(":checkbox");
                 curChk.attr('name', 'check');
                 curChk.attr('data-stock_id', stock_id);
+                curChk.attr('data-goods_stock', curRowData['goods_stock']);
                 curChk.attr('data-row_num', k+1);
 
-                var real_goods_stock_cell = $("#" + stock_id).find("input[name='out_num']");
+                var out_num_cell = $("#" + stock_id).find("input[name='out_num']");
                 if (select_goods_list.hasOwnProperty(stock_id)) {
                     $(curChk).prop("checked","true");
-                    $(real_goods_stock_cell).val(select_goods_list[stock_id]);
+                    $(out_num_cell).val(select_goods_list[stock_id]);
                 }
 
                 $(curChk).click(function () {

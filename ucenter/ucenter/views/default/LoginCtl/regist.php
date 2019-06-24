@@ -57,6 +57,11 @@ extract($_GET);
         .form-item .clear-btn {
             right: 10px;
         }
+
+        .intro_list {
+            padding-left: 138px;
+            line-height: 30px;
+        }
     </style>
 </head>
 <body>
@@ -93,9 +98,12 @@ extract($_GET);
     <div class="ui-mask"></div>
 </div>
 <div class="container w">
-    <div id="header"><a href="javascript:history.go(-1)" class="back-pre"></a>账户注册<a
-                href="<?= sprintf('%s?ctl=Login&met=index&t=%s&from=%s&callback=%s', Yf_Registry::get('url'), request_string('t'), request_string('from'), urlencode(request_string('callback'))) ?>"
-                class="back-to-login">登录</a></div>
+    <div id="header">
+        <a href="javascript:history.go(-1)" class="back-pre"></a>账户注册
+        <a href="<?= sprintf('%s?ctl=Login&met=index&t=%s&from=%s&callback=%s', Yf_Registry::get('url'), request_string('t'), request_string('from'), urlencode(request_string('callback'))) ?>"
+                class="back-to-login">登录
+        </a>
+    </div>
     <div class="main clearfix" id="form-main">
         <div class="reg-form fl">
             <form action="" id="register-form" method="post" novalidate="novalidate" onsubmit="return false;"
@@ -114,17 +122,16 @@ extract($_GET);
 
                 <div class="form-item form-item-account " id="form-item-account">
                     <label><em class="must">*</em>用　户　名：</label>
-
                     <input type="text" id="re_user_account" class="field re_user_account" maxlength="20"
                            placeholder="您的账户名和登录名" default="<i class=&quot;i-def&quot;></i>支持数字、字母、“-”“_”的组合，至多20个字符"
                            onfocus="checkAcount()" onblur="userCallback()">
                     <span class="clear-btn js_clear_btn clear-icon"></span>
                     <i class="i-status"></i>
-
                 </div>
                 <div class="input-tip disb">
                     <span></span>
                 </div>
+
                 <div class="pas">
                     <div id="form-item-password" class="form-item" style="z-index: 12;">
                         <label><em class="must">*</em>设 置 密 码：</label>
@@ -137,10 +144,10 @@ extract($_GET);
 
                     </div>
                 </div>
-
                 <div class="input-tip">
                     <span></span>
                 </div>
+
                 <div id="form-item-rpassword" class="form-item disb">
                     <label><em class="must">*</em>确 认 密 码：</label>
                     <input type="password" name="form-equalTopwd" id="form-equalTopwd" class="field"
@@ -154,7 +161,6 @@ extract($_GET);
                 <div class="input-tip disb">
                     <span></span>
                 </div>
-
 
                 <div class="mobile">
                     <div id="Mobile" style="display: <?= $mobile_display ?>">
@@ -234,8 +240,6 @@ extract($_GET);
                             <a href="javascript:;" onclick="orMobile()">手机验证</a>
                         </div>
                     </div>
-
-
                     <div class="form-item form-item-phonecode">
                         <label><em class="must">*</em>邮箱验证码：</label>
 
@@ -249,6 +253,17 @@ extract($_GET);
 
                 <div class="input-tip">
                     <span></span>
+                </div>
+
+                <div class="form-item form-item-intro">
+                    <label>推荐人：</label>
+                    <input type="hidden" id="parent_id" name="parent_id" class="field">
+                    <input type="text" id="intro_keys" class="field" placeholder="请输入推荐人姓名/手机号">
+                    <button type="button" class="btn-serach-intro" onclick="getIntroducer(this)">查询</button>
+                    <i class="i-status"></i>
+                </div>
+                <div class="form-item input-tip hidden">
+                    <span id="intro_list" class=""></span>
                 </div>
 
                 <?php foreach ($reg_opt_rows as $opt_row): ?>
@@ -331,10 +346,8 @@ extract($_GET);
 
                 <div class="form-agreen">
                     <div>
-
-                        <input id="agree_button" type="checkbox" name="agreen" checked="">我已阅读并同意<a href="javascript:;"
-                                                                                                    id="protocol"
-                                                                                                    onclick="registalert()">《用户注册协议》</a>
+                        <input id="agree_button" type="checkbox" name="agreen" checked="">我已阅读并同意
+                        <a href="javascript:;" id="protocol" onclick="registalert()">《用户注册协议》</a>
                     </div>
                     <div class="input-tip">
                         <span></span>
@@ -343,13 +356,13 @@ extract($_GET);
                 <div>
                     <button type="submit" class="btn-register" onclick="registclick()">立即注册</button>
                 </div>
-
             </form>
         </div>
         <div id="form-company" class="reg-other disb">
             <div class="phone-fast-reg">
-                <a href="<?= Web_ConfigModel::value('register_logo_url') ?>"><img
-                            src="<?= Web_ConfigModel::value('register_logo') ?>" alt="广告位"></a>
+                <a href="<?= Web_ConfigModel::value('register_logo_url') ?>">
+                    <img src="<?= Web_ConfigModel::value('register_logo') ?>" alt="广告位">
+                </a>
             </div>
         </div>
     </div>
@@ -359,6 +372,41 @@ extract($_GET);
 </div>
 
 <script>
+
+    function getIntroducer(obj){
+        var intro_keys = $("#intro_keys").val();
+        if(!intro_keys) return;
+        var ajaxurl = './index.php?ctl=Login&met=getIntroducer&typ=json&intro_keys='+$("#intro_keys").val();
+        $.ajax({
+            type: "POST",
+            url: ajaxurl,
+            dataType: "json",
+            async: false,
+            success: function (respone) {
+                if (respone.status == 200) {
+                    var data = respone.data;
+                    var html = '';
+                    $.each(data, function (i, item) {
+                        if(i == 0) {
+                            $("#parent_id").val(item.user_id);
+                            html += item.user_truename + '/' + item.user_mobile;
+                        }
+                    });
+
+                    if(html == ""){
+                        html = icons.error + '请准确填写推荐人姓名或手机号';
+                        $("#intro_list").addClass("error").removeClass("intro_list");
+                    }else{
+                        $("#intro_list").removeClass("error").addClass("intro_list");
+                    }
+                    $("#intro_list").html(html);
+                    $($("#intro_list").parent()).removeClass("hidden");
+                    $(obj).html("清除");
+                }
+            }
+        });
+    }
+
     $('#agree_button').click(function () {
         if ($(this).is(':checked')) {
             $(this).attr('checked', true);
@@ -460,7 +508,6 @@ extract($_GET);
         if (!$(e).parent().next().find("span").html()) {
             $(e).parent().next().find("span").html(msg);
         }
-
 
     }
 
@@ -1167,7 +1214,7 @@ extract($_GET);
             "mobile": mobile,
             "t": token,
             'email': email,
-            'reg_checkcode': reg_checkcode
+            'reg_checkcode': reg_checkcode,
         });
 
         //

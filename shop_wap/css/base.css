@@ -25,7 +25,9 @@ html { font-size: 25px !important; }
 
 
 html { -ms-touch-action: none;}
-body { font-family: Heiti, Heiti SC, DroidSans, DroidSansFallback, Arial, "Microsoft YaHei"; background-color: #f5f5f5; }
+body {
+        /*font-family: Helvetica, STHeiti STXihei, Microsoft JhengHei, Microsoft YaHei, Tohoma, Arial;*/
+        font-family:  Heiti, Heiti SC, DroidSans, DroidSansFallback, Arial, "Microsoft YaHei"; background-color: #f5f5f5; }
 input { font-family: Arial, "Microsoft YaHei", sans-serif; }
 a { text-decoration: none;  -webkit-touch-callout: none;}
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, span, a { margin: 0; padding: 0 }
@@ -42,6 +44,7 @@ blockquote:before, blockquote:after, q:before, q:after { content: '' }
 abbr, acronym { border: 0; font-variant: normal }
 img { vertical-align: top; border: none; }
 input, textarea { -webkit-user-select: text; -ms-user-select: text; user-select: text; -webkit-appearance: none; }
+input:disabled, textarea:disabled, select:disabled, optgroup:disabled, option:disabled, select[disabled] > option { color: graytext; background-color: #e3e3e3; border: none;}
 input:focus, select:focus, textarea:focus, button:focus { outline: none; }
 input[type="text"], input[type="password"], input[type="search"], input[type="tel"], input[type="number"], input[type="email"], input[type="url"], textarea { -webkit-appearance: none; border: 1px solid; border-radius: 0; }
 input[type="number"]::-webkit-inner-spin-button {
@@ -111,10 +114,12 @@ sub { vertical-align: text-bottom }
 .bgf{background:#fff;}
 .bgf5{background:#f5f5f5 !important;}
 .opera-tips { color: #D9434E; font-size: 14px; }
-.error-tips { display: none; background-color: rgba(255,255,255,0.95); border: solid 0.05rem #CCC; padding: 0.8rem 0.6rem; text-align: center; border-radius: 0.2rem; position: fixed; z-index: 9999; top: 40%; left: 25%; right: 25%; color: #333; font-size: 0.7rem; line-height: 1rem; box-shadow: 0 0 1rem rgba(0,0,0,0.15);}
-.error-tips p { font-size: 0.7rem; line-height: 1rem; color: #333; }
+.error-tips { display: none; background-color: #777; border: solid 0.05rem #CCC; padding: 0.8rem 0.6rem; text-align: center; border-radius: 0.2rem; position: fixed; z-index: 9999; top: 40%; left: 15%; right: 15%; color: #fff; font-size: 0.7rem; line-height: 1rem; box-shadow: 0 0 1rem rgba(0,0,0,0.15);opacity: 0.8}
+.error-tips p { font-size: 0.8rem; line-height: 1rem; color: #fff; }
+.error-tips a {  color: #fff;text-decoration:underline; }
 .bgf{background-color:#fff !important;}
 .borb1{border-bottom:1px solid #e3e3e3;}
+.borr1{border-right:1px solid #e3e3e3;}
 .fl{float:left;}
 .fr{float:right;}
 .fz4{font-size:0.4rem;}
@@ -125,6 +130,8 @@ sub { vertical-align: text-bottom }
 .col8{color:#888;}
 .col-red{color:#fd504e;}
 .bor0{border:none !important;}
+.top0{top:0 !important;}
+.ht2{height:1rem;}
 
 /*操作提示弹出层*/
 .s-dialog-mask { position: fixed; z-index: 999; top: 0; right: 0; bottom: 0; left: 0; filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#BF000000', endColorstr='#BF000000');background:rgba(0,0,0,0.75);}
@@ -250,6 +257,7 @@ footer.bottom .nctouch-footer-wrap { background-color: transparent; border: none
 /*默认内容区域*/
 .nctouch-main-layout { display:inline-block;/*position:fixed;top:2rem;*/ background-color: #F5F5F5;width:100%; margin-top:2rem;}
 .nctouch-main-layout-a { display: block; position: absolute; top: 4rem; right: 0; left: 0; bottom: 0; overflow: hidden; z-index: 1;}
+.nctouch-main-layout .textstyle {font-size: 16px; color:#777; padding: 5px 10px;}
 
 /*特别提示*/
 .special-tips { display: block; padding: 0.4rem 5%;}
@@ -350,6 +358,7 @@ header.posf { animation: headerFixed 0.5s ease-in-out; -webkit-animation: header
 .nctouch-inp-con ul li .input-box.write .input-del { display: block;}
 .nctouch-inp-con ul li .input-box .checkbox { position: absolute; z-index: 1; top: 0.5rem; left: 0.5rem;}
 .nctouch-inp-con ul li .input-box .txt { margin: 0 0 0 1.5rem; font-size: 0.7rem; line-height: 1.95rem; color: #555;}
+.nctouch-inp-con ul li .input-box .tips { font-size: 0.5rem; line-height: 1.95rem; color: #555;}
 .nctouch-inp-con ul li .input-box .note { position: absolute; z-index: 1; right: 0; top: 0.25rem; height: 1.6rem; text-align: right;}
 .nctouch-inp-con ul li .input-box .note em { display: block; vertical-align: top; font-size: 0.6rem; font-weight: 600; color: #36BC9B; line-height: 0.8rem;}
 .nctouch-inp-con ul li .input-box .note h6 { display: block; vertical-align: top; font-size: 0.55rem; color: #999; line-height: 0.8rem;margin-top:0.34rem;}
@@ -365,13 +374,17 @@ header.posf { animation: headerFixed 0.5s ease-in-out; -webkit-animation: header
 .reduce,.no_reduce{background:#eee;}
 .no_add,.add{background:#d5d5d5;}
 /*开关*/
-.input-box label { display: inline-block !important; height: 1.95rem !important; padding: 0 !important; margin: 0!important; border: 0 !important; border-radius: 0 !important; font-size: 0.7rem !important; line-height: 1.95rem !important; color: #555 !important;}
+.input-box label { display: inline-block !important; height: 1.1rem !important; padding: 0 !important; margin: 0!important; border: 0 !important; border-radius: 0 !important; font-size: 0.6rem !important; line-height: 1.95rem !important; color: #555 !important;}
 .input-box label.checked { background-color: transparent !important; padding: 0 !important; color: #555 !important;}
 .input-box label input[type="checkbox"] { display: none;}
 .input-box label .power { position: relative; z-index: 1; display: inline-block; vertical-align: middle; width: 1.6rem; height: 0.9rem; margin: 0 0.2rem; border: solid 0.05rem #DDD; border-radius: 0.5rem; }
 .input-box label .power i { position: absolute; z-index: 1; top: 0rem; left: 0rem; width: 0.9rem; height: 0.9rem; background-color: #FFF; border-radius: 100%; box-shadow: 0.05rem 0.1rem 0.25rem rgba(0,0,0,0.3);}
 .input-box label.checked .power{ background-color: #D13030; border-color: #D13030;}
 .input-box label.checked .power i { left: auto; right: 0; box-shadow: -0.05rem 0.1rem 0.25rem rgba(0,0,0,0.3);}
+.input-box span {font-size:0.6rem; color: #aaa;}
+.input-box .text {width: 100%; font-size:0.6rem;}
+.input-box .text .textarea-item { width: 98%; height: 100px; border: 0; padding-right: 10px; resize: none; color: #aaa; }
+.input-box .text .textarea-count { position: absolute; bottom: 10px; right: 10px; color: #aaa; }
 
 
 /*无数据信息为空提示*/
@@ -413,6 +426,9 @@ header.posf { animation: headerFixed 0.5s ease-in-out; -webkit-animation: header
 .btn { vertical-align: top; display: inline-block !important;/* height: 1.1rem;*/ padding: 0.15rem 0.5rem; margin: 0 auto; font-size: 0.6rem; color: #555 !important; /*line-height: 1.1rem;*/ text-align: center; background-color: #FFF; border: solid 1px #CCC; border-radius: 0.7rem }
 .btn.key { border-color: #F60; color: #F60 !important; font-weight: 600;}
 .btn-l { display: inline-block; width: 90%; margin: 0 5%; font-size: 0.8rem; line-height: 2rem; text-align: center; color: #FFF; background: #fd3d53; border-radius: 0.9rem; }
+.btn-green { display: inline-block; width: 90%; margin: 0 5%; font-size: 0.8rem; line-height: 2rem; text-align: center; color: #FFF; background: #0da944; border-radius: 0.2rem; border: 1px solid #0da944;}
+.btn-white { display: inline-block; width: 90%; margin: 0 5%; font-size: 0.8rem; line-height: 2rem; text-align: center; color: #0da944; background: #FFF; border-radius: 0.2rem; border: 1px solid #0da944;}
+.btn-mobile { display: inline-block;  margin: 0 5%; font-size: 0.6rem; line-height: 1.2rem; text-align: center; color: #FFF; background: #F60; border-radius: 0.1rem; border: 1px solid #F60;}
 
 /*图片选择上传*/
 .nctouch-upload { display: inline-block; width: 1.94rem; height: 1.94rem; border: solid 0.05rem #EEE; border-radius: 0.1rem; vertical-align: top;}

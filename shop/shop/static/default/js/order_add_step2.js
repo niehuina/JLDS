@@ -32,15 +32,20 @@ function selectAllCheck(isCompute) {
     var flag = true;
     $("#goods_grid tbody").find(":checkbox[name='check']:checked").each(function(){
         var goods_id = $(this).data('goods_id');
+        var goods_stock = $(this).data('goods_stock');
         var row_num = $(this).data('row_num');
         var order_goods_num = $("#"+goods_id).find("input[name='order_goods_num']").val();
-        if(order_goods_num){
+        if(order_goods_num && order_goods_num > 0 && order_goods_num <= goods_stock){
             select_goods_list[goods_id] = order_goods_num;
             if(isCompute) {
                 computeTotalAmountPlus(goods_id);
             }
         }else{
-            Public.tips.error('选中的第【'+row_num+'】行商品未填写发货数量！');
+            if(order_goods_num && order_goods_num > goods_stock){
+                Public.tips.error('选中的第【'+row_num+'】行商品发货数量不能大于商品库存！');
+            }else if(!order_goods_num){
+                Public.tips.error('选中的第【'+row_num+'】行商品未填写发货数量！');
+            }
             $("#"+goods_id).find("input[name='order_goods_num']").focus();
             flag = false;
         }
@@ -187,6 +192,7 @@ function initGrid() {
                 curChk.attr('name', 'check');
                 curChk.attr('data-goods_id', goods_id);
                 curChk.attr('data-goods_name', curRowData['goods_name']);
+                curChk.attr('data-goods_stock', curRowData['goods_stock']);
                 curChk.attr('data-row_num', k+1);
 
                 var order_goods_num_cell = $("#"+goods_id).find("input[name='order_goods_num']");

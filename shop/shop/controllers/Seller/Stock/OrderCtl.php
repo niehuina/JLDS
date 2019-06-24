@@ -252,6 +252,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $Stock_OrderModel->sql->startTransactionDb();
             foreach ($select_goods_list as $key => $goods_num) {
                 $goods_base = $goods_list[$key];
+                if(!$goods_num || $goods_num > $goods_base['goods_stock']) continue;
 
                 //计算单个商品金额
                 $order_goods_amount = $goods_base['goods_price'] * 1 * $goods_num;
@@ -844,7 +845,12 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         $Yf_Page->totalRows = $goods['totalsize'];
         $page_nav = $Yf_Page->prompt();
 
-        include $this->view->getView();
+        if ('json' == $this->typ)
+        {
+            $this->data->addBody(-140, $goods);
+        }else{
+            include $this->view->getView();
+        }
     }
 
     public function setAlarm()
@@ -1006,27 +1012,30 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             foreach ($out_num_list as $stock_id=>$out_num)
             {
                 $goods_stock = $goods_stock_list[$stock_id];
-                $add_row = array();
-                $add_row['out_order_id'] = $order_id;
-                $add_row['user_id'] = $user_id;
-                $add_row['user_name'] = $user_id;
-                $add_row['goods_id'] = $goods_stock['goods_id'];
-                $add_row['common_id'] = $goods_stock['common_id'];
-                $add_row['goods_name'] = $goods_stock['goods_name'];
-                $add_row['out_num'] = $out_num;
-                $add_row['out_type'] = User_StockOutModel::OUT_SELF;
-                $add_row['out_time'] = get_date_time();
+                if($out_num > 0 && $out_num <= $goods_stock['goods_stock']) {
+                    $add_row = array();
+                    $add_row['out_order_id'] = $order_id;
+                    $add_row['user_id'] = $user_id;
+                    $add_row['user_name'] = $user_id;
+                    $add_row['goods_id'] = $goods_stock['goods_id'];
+                    $add_row['common_id'] = $goods_stock['common_id'];
+                    $add_row['goods_name'] = $goods_stock['goods_name'];
+                    $add_row['out_num'] = $out_num;
+                    $add_row['out_type'] = User_StockOutModel::OUT_SELF;
+                    $add_row['out_time'] = get_date_time();
 
-                $add_flag = $User_StockOutModel->addStockOut($add_row);
-                check_rs($add_flag, $rs_row);
+                    $add_flag = $User_StockOutModel->addStockOut($add_row);
+                    check_rs($add_flag, $rs_row);
 
-                //修改商品库存
-                if($out_num) {
-                    $edit_row = array();
-                    $edit_row['goods_stock'] = $out_num * -1;
-                    $edit_flag = $User_Stock_Model->editUserStock($stock_id, $edit_row, true);
-                    check_rs($edit_flag, $rs_row);
+                    //修改商品库存
+                    if($out_num) {
+                        $edit_row = array();
+                        $edit_row['goods_stock'] = $out_num * -1;
+                        $edit_flag = $User_Stock_Model->editUserStock($stock_id, $edit_row, true);
+                        check_rs($edit_flag, $rs_row);
+                    }
                 }
+
             }
 
             if(is_ok($rs_row) && $User_StockOutModel->sql->commitDb()){

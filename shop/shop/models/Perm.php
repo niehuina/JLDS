@@ -85,6 +85,7 @@ class Perm
 	public static function encryptUserInfo($user_row = null, $user_key = null)
 	{
 
+        Yf_Log::log('encryptyUserInfo', Yf_Log::LOG, 'debug');
  		//user_account 这个COOKIE IM是需要的。by sunkang
 		setcookie('user_account',$user_row['user_account']);
 		unset($user_row['user_account']);
@@ -98,8 +99,9 @@ class Perm
 		{
 			Yf_Hash::setKey($user_key);
 		}
-
+        Yf_Log::log($user_row, Yf_Log::LOG, 'debug');
 		$encrypt_str = Yf_Hash::encrypt($user_str);
+        Yf_Log::log($encrypt_str, Yf_Log::LOG, 'debug');
 
 		$expires = time() + 60 * 60 * 24 * 30;
 
@@ -166,7 +168,7 @@ class Perm
 	public static function checkUserPerm()
 	{
 		//登录通过
-		$user_row = self::getUserByCookie();
+		$user_row = self::getUserByCookie();Yf_Log::log($user_row, Yf_Log::LOG, 'debug_user_perm');
 		if (array_key_exists('user_id', $user_row))
 		{
 			self::$userId = $user_row['user_id'];

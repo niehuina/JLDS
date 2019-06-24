@@ -1,0 +1,19 @@
+.nctouch-inp-con ul li{
+    margin: 0 0.5rem 0 1rem;
+}
+
+.nctouch-inp-con ul li .input-box{
+    height: 1.95rem;
+    padding-top: 0.25rem;
+}
+.nctouch-inp-con ul li .input-box .input-del{
+    top: 0.8rem;
+}
+
+.nctouch-inp-con ul li h4{
+    line-height: 2.05rem;
+}
+
+.remember-form input[type="checkbox"]{
+    margin-top: -0.45rem;
+}
