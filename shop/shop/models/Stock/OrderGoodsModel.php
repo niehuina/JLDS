@@ -15,4 +15,9 @@ class Stock_OrderGoodsModel extends Stock_OrderGoods
     {
         return $this->listByWhere($cond_row, $order_row, $page, $rows);
     }
+
+    public function get_count($cond_row)
+    {
+        return $this->getNum($cond_row);
+    }
 }

@@ -5,27 +5,6 @@
 include $this->view->getTplPath() . '/' . 'seller_header.php';
 ?>
 
-    <style>
-        .form-style dl dt, .form-style dl dd {
-            padding: 0;
-        }
-
-        .goods .form-style dl dt, .goods .form-style dl dd {
-            padding: 0;
-        }
-
-        .goods .form-style dl dd {
-            padding: 0 12px;
-        }
-
-        a.ncbtn-mini {
-            line-height: 16px;
-            height: 16px;
-            padding: 3px 7px;
-            border-radius: 2px;
-        }
-    </style>
-
     <link href="<?= $this->view->css ?>/ui.min.css?ver=20140430" rel="stylesheet">
 
     <style>
@@ -67,6 +46,9 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
     <script src="<?= $this->view->js_com ?>/plugins/jquery.jqgrid.js"></script>
     <script type="text/javascript" src="<?=$this->view->js?>/stock_self_use.js" charset="utf-8"></script>
 
+    <script>
+        $('.tabmenu > ul').find('li:gt(2)').remove();
+    </script>
 <?php
 include $this->view->getTplPath() . '/' . 'seller_footer.php';
 ?>

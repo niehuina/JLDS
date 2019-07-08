@@ -134,62 +134,72 @@ class Goods_BaseModel extends Goods_Base
 	 *
 	 * @author Zhuyt
 	 */
-	public function delStock($goods_id, $num)
+	public function delStock($goods_id, $num, $user_id = null)
 	{
-		$goods_base    = $this->getOne($goods_id);
-		$edit_base_num = $goods_base['goods_stock'] - $num;
+        if($user_id != null && Perm::$row['user_id']){
+            $user_id = Perm::$row['user_id'];
 
-		if($edit_base_num < 0)
-		{
-			return 'no_stock' ;
-		}
-		$edit_base_row = array('goods_stock' => $edit_base_num);
-		$flag          = $this->editBase($goods_id, $edit_base_row, false);
+            if($user_id){
+                //获取消费者对应的高级合伙人的库存
+                $flag = $this->editUserStock($goods_id, -1*$num, $user_id);
 
-		if ($flag)
-		{
-			$Goods_CommonModel = new Goods_CommonModel();
-			$common_base       = $Goods_CommonModel->getOne($goods_base['common_id']);
+                if(!is_bool($flag)){
+                    return $flag;
+                }
 
-			//查询此件商品是否为团购商品
-			$GroupBuy_BaseModel = new GroupBuy_BaseModel();
-			$group_buy_row = array(
-				'common_id' => $goods_base['common_id'],
-				'groupbuy_state'=>GroupBuy_BaseModel::NORMAL,
-				'groupbuy_starttime:<=' => get_date_time(),
-				'groupbuy_endtime:>=' => get_date_time(),
-			);
-			$gruop = $GroupBuy_BaseModel->getOneByWhere($group_buy_row);
-			if($gruop)
-			{
-				$edit_gruop_row['groupbuy_buyer_count'] = 1;
-				$edit_gruop_row['groupbuy_buy_quantity'] = $num;
-				$edit_gruop_row['groupbuy_virtual_quantity'] = $num;
-				$GroupBuy_BaseModel->editGroupBuy($gruop['groupbuy_id'],$edit_gruop_row,true);
-			}
+                $res = $flag;
+            }
+        }else {
 
-			$edit_common_num   = $common_base['common_stock'] - $num;
-			$edit_common_row   = array('common_stock' => $edit_common_num);
-			$resd               = $Goods_CommonModel->editCommon($goods_base['common_id'], $edit_common_row, false);
+            $goods_base = $this->getOne($goods_id);
+            $edit_base_num = $goods_base['goods_stock'] - $num;
 
-			$rs_row = array();
-			check_rs($resd,$rs_row);
-			$res = is_ok($rs_row);
+            if ($edit_base_num < 0) {
+                return 'no_stock';
+            }
+            $edit_base_row = array('goods_stock' => $edit_base_num);
+            $flag = $this->editBase($goods_id, $edit_base_row, false);
 
-			if($goods_base['goods_alarm'] >= $edit_base_num)
-			{
-				//查找店铺信息
-				$Shop_BaseModel = new Shop_BaseModel();
-				$shop_base = $Shop_BaseModel->getOne($common_base['shop_id']);
-				$message = new MessageModel();
-				$message->sendMessage('goods are not in stock',$shop_base['user_id'], $shop_base['user_name'], $order_id = NULL, $shop_name = NULL, 1, 1, $end_time = Null,$goods_base['common_id'],$goods_id);
-			}
+            if ($flag) {
+                $Goods_CommonModel = new Goods_CommonModel();
+                $common_base = $Goods_CommonModel->getOne($goods_base['common_id']);
 
-		}
-		else
-		{
-			$res = false;
-		}
+                //查询此件商品是否为团购商品
+                $GroupBuy_BaseModel = new GroupBuy_BaseModel();
+                $group_buy_row = array(
+                    'common_id' => $goods_base['common_id'],
+                    'groupbuy_state' => GroupBuy_BaseModel::NORMAL,
+                    'groupbuy_starttime:<=' => get_date_time(),
+                    'groupbuy_endtime:>=' => get_date_time(),
+                );
+                $gruop = $GroupBuy_BaseModel->getOneByWhere($group_buy_row);
+                if ($gruop) {
+                    $edit_gruop_row['groupbuy_buyer_count'] = 1;
+                    $edit_gruop_row['groupbuy_buy_quantity'] = $num;
+                    $edit_gruop_row['groupbuy_virtual_quantity'] = $num;
+                    $GroupBuy_BaseModel->editGroupBuy($gruop['groupbuy_id'], $edit_gruop_row, true);
+                }
+
+                $edit_common_num = $common_base['common_stock'] - $num;
+                $edit_common_row = array('common_stock' => $edit_common_num);
+                $resd = $Goods_CommonModel->editCommon($goods_base['common_id'], $edit_common_row, false);
+
+                $rs_row = array();
+                check_rs($resd, $rs_row);
+                $res = is_ok($rs_row);
+
+                if ($goods_base['goods_alarm'] >= $edit_base_num) {
+                    //查找店铺信息
+                    $Shop_BaseModel = new Shop_BaseModel();
+                    $shop_base = $Shop_BaseModel->getOne($common_base['shop_id']);
+                    $message = new MessageModel();
+                    $message->sendMessage('goods are not in stock', $shop_base['user_id'], $shop_base['user_name'], $order_id = NULL, $shop_name = NULL, 1, 1, $end_time = Null, $goods_base['common_id'], $goods_id);
+                }
+
+            } else {
+                $res = false;
+            }
+        }
 
 
 		return $res;
@@ -203,52 +213,88 @@ class Goods_BaseModel extends Goods_Base
 	 */
 	public function returnGoodsStock($order_goods_id)
 	{
-		$Order_GoodsModel  = new Order_GoodsModel();
-		$Goods_CommonModel = new Goods_CommonModel();
         $flag = true;
 		if (is_array($order_goods_id))
 		{
 			foreach ($order_goods_id as $key => $val)
 			{
-				$order_goods_base = $Order_GoodsModel->getOne($val);
-				$goods_id         = $order_goods_base['goods_id'];
-				$num              = $order_goods_base['order_goods_num'];
-
-				$edit_base_row = array('goods_stock' => $num);
-				$result1 = $this->editBase($goods_id, $edit_base_row);
-                if($result1 === false){
-                    $flag = false;
-                    break;
-                }
-				$edit_common_row = array('common_stock' => $num);
-				$result2 = $Goods_CommonModel->editCommonTrue($order_goods_base['common_id'], $edit_common_row);
-                if($result2 === false){
-                    $flag = false;
-                    break;
-                }
+                $flag = $this->editGoodStock($val);
+                if(!$flag) break;
 			}
 		}
 		else
 		{
-			$order_goods_base = $Order_GoodsModel->getOne($order_goods_id);
-			$goods_id         = $order_goods_base['goods_id'];
-			$num              = $order_goods_base['order_goods_num'];
-
-			$edit_base_row = array('goods_stock' => $num);
-			$result1          = $this->editBase($goods_id, $edit_base_row);
-            if($result1 === false){
-                $flag = false;
-            }
-			$edit_common_row = array('common_stock' => $num);
-			$result2 = $Goods_CommonModel->editCommonTrue($order_goods_base['common_id'], $edit_common_row);
-
-            if($result2 === false){
-                $flag = false;
-            }
+			$flag = $this->editGoodStock($order_goods_id);
 		}
         return $flag;
 
 	}
+
+	private function editGoodStock($order_goods_id)
+    {
+        $Order_GoodsModel  = new Order_GoodsModel();
+        $Goods_CommonModel = new Goods_CommonModel();
+        $flag = true;
+
+        $order_goods_base = $Order_GoodsModel->getOne($order_goods_id);
+        $goods_id         = $order_goods_base['goods_id'];
+        $num              = $order_goods_base['order_goods_num'];
+        $shop_id          = $order_goods_base['shop_id'];
+        $self_shop_id     = Web_ConfigModel::value("self_shop_id");
+
+        $User_InfoModel = new User_InfoModel();
+        $buyer_user_id    = $order_goods_base['buyer_user_id'];
+        $user_parent_id = $User_InfoModel->getParentId($buyer_user_id);
+
+        $Shop_BaseModel = new Shop_BaseModel();
+        $parent_shop_key = $Shop_BaseModel->getKeyByWhere(['user_id'=>$user_parent_id]);
+        $parent_shop_id = current($parent_shop_key);
+
+        if($shop_id == $self_shop_id && $shop_id != $parent_shop_id){
+            $flag = $this->editUserStock($goods_id, $num, $buyer_user_id);
+        }else {
+            $edit_base_row = array('goods_stock' => $num);
+            $result1 = $this->editBase($goods_id, $edit_base_row);
+            if ($result1 === false) {
+                $flag = false;
+                return $flag;
+            }
+            $edit_common_row = array('common_stock' => $num);
+            $result2 = $Goods_CommonModel->editCommonTrue($order_goods_base['common_id'], $edit_common_row);
+
+            if ($result2 === false) {
+                $flag = false;
+                return $flag;
+            }
+        }
+        return $flag;
+    }
+
+    private function editUserStock($goods_id, $num, $user_id)
+    {
+        $User_InfoModel = new User_InfoModel();
+        $buyer_user_id    = $user_id;
+        $user_parent_id = $User_InfoModel->getParentId($buyer_user_id);
+        $User_StockModel = new User_StockModel();
+        $user_stock = $User_StockModel->getOneByWhere(['goods_id'=>$goods_id, 'user_id'=>$user_parent_id]);
+
+        $edit_base_num = $user_stock['goods_stock'] + $num;
+        if ($edit_base_num < 0) {
+            return 'no_stock';
+        }
+
+        $flag = $User_StockModel->editUserStock($user_stock['stock_id'], ['goods_stock'=>$num], true);
+
+        if ($user_stock['alarm_stock'] >= $edit_base_num) {
+            //查找店铺信息
+            $Shop_BaseModel = new Shop_BaseModel();
+            $shop_base = $Shop_BaseModel->getOneByWhere(['user_id'=>$user_parent_id]);
+            $message = new MessageModel();
+            $message->sendMessage('goods are not in stock', $shop_base['user_id'], $shop_base['user_name'], $order_id = NULL, $shop_name = NULL, 1, 1, $end_time = Null, $user_stock['common_id'], $goods_id);
+        }
+
+        return $flag;
+    }
 
 	/**
 	 * 检测商品状态
@@ -608,7 +654,6 @@ class Goods_BaseModel extends Goods_Base
 			return null;
 		}
 
-
 		//获取商品信息及活动信息
 		$goods_base = $this->getGoodsInfoAndPromotionById($goods_id);
 
@@ -879,7 +924,17 @@ class Goods_BaseModel extends Goods_Base
 			return array();
 		}
 
-		$Promotion = new Promotion();
+        $user_id = Perm::$userId;
+        $user_info_model = new User_InfoModel();
+        $user_info = $user_info_model->getOne($user_id);
+        $user_grade = $user_info['user_grade'];
+        if($user_grade == '2'){
+            $goods_info['goods_price'] = $goods_info['goods_price_vip'];
+        }else if($user_grade == '3' || $user_grade == '4'){
+            $goods_info['goods_price'] = $goods_info['goods_price_partner'];
+        }
+
+        $Promotion = new Promotion();
 
 		//团购
 		$goods_info['groupbuy_info'] = $Promotion->getGroupBuyInfoByGoodsCommonID($goods_info['common_id']);

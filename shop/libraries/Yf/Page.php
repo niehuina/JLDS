@@ -2,7 +2,7 @@
 class Yf_Page
 {
 	var $firstRow     = 0 ;   //
-	var $listRows     = 10;   //
+	var $listRows     = 4;   //
 	var $parameter    = '';   //
 	var $totalPages   = 0 ;   //
 	var $totalRows    = 0 ;   //

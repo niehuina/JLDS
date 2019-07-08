@@ -1,5 +1,13 @@
 <?php if (!defined('ROOT_PATH')){exit('No Permission');}
-$seller_menu = include_once INI_PATH . '/seller_menu.ini.php';
+if(self::$is_partner){
+    $seller_menu = include_once INI_PATH . '/partner_menu.ini.php';
+}else{
+    if(Perm::$shopId == Web_ConfigModel::value('self_shop_id')){
+        $seller_menu = include_once INI_PATH . '/self_partner_menu.ini.php';
+    }else {
+        $seller_menu = include_once INI_PATH . '/seller_menu.ini.php';
+    }
+}
 
 $User_InfoModel = new User_InfoModel();
 $user_info = $User_InfoModel->getOne(Perm::$userId);

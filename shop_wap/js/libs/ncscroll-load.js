@@ -42,6 +42,7 @@ function ncScrollLoad() {
         //初始化时延时分页为1
         if(options.iIntervalId){
             param.curpage = 1;
+            $(options.containerobj).html('');
         }
         param.page = page;
         param.curpage = curpage;

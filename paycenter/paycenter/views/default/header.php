@@ -34,6 +34,7 @@
 		var U_URL = "<?=Yf_Registry::get('ucenter_api_url')?>";
 		var SHOP_URL = "<?=Yf_Registry::get('shop_api_url')?>";
 		var UCENTER_URL = "<?=Yf_Registry::get('ucenter_api_url')?>";
+        var WAP_URL = "<?=Yf_Registry::get('shop_wap_url')?>";
 
 		var DOMAIN = document.domain;
 		var WDURL = "";

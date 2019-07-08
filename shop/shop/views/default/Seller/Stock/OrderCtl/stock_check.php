@@ -64,6 +64,10 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
         <input type="button" class="button bbc_seller_submit_btns" id="button_submit" value="<?=__('提交')?>">
     </form>
 
+    <script>
+        $('.tabmenu > ul').find('li:lt(3)').remove();
+        $('.tabmenu > ul').find('li:gt(0)').remove();
+    </script>
     <script src="<?= $this->view->js_com ?>/plugins/jquery.jqgrid.js"></script>
     <script type="text/javascript" src="<?=$this->view->js?>/stock_check.js" charset="utf-8"></script>
 

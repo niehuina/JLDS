@@ -268,7 +268,7 @@
         }
     }
 </script>
-<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/libs/swiper.min.js"></script>
 
 </body>
 

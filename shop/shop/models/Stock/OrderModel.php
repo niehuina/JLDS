@@ -31,14 +31,19 @@ class Stock_OrderModel extends Stock_Order
             $data['items'][$key]['send_url'] = $url . '?ctl=Seller_Stock_Order&met=send&typ=e&order_id=' . $order_id;
 
             if ($val['order_status'] == Order_StateModel::ORDER_PAYED) {
-                $set_html = "<a href=\"javascript:void(0)\" data-order_id=$order_id dialog_id=\"seller_order_cancel_order\" class=\"ncbtn ncbtn-grapefruit mt5\"><i class=\"icon-remove-circle\"></i>取消订单</a>";
+                $set_html = "<a href=\"javascript:void(0)\" data-order_id=$order_id dialog_id=\"seller_order_cancel_order\" class=\"ncbtn ncbtn-grapefruit mt5 bbc_seller_btns\"><i class=\"icon-remove-circle\"></i>取消订单</a>";
 
                 $send_url = $data['items'][$key]['send_url'];
-                $set_html .= "<a class=\"ncbtn ncbtn-mint mt10 bbc_seller_btns\" href=\"$send_url\"><i class=\"icon-truck\"></i>设置发货</a>";
+                $set_html .= "<a class=\"ncbtn ncbtn-mint mt10 bbc_seller_btns\" target='_blank' ' href=\"$send_url\"><i class=\"icon-truck\"></i>设置发货</a>";
 
                 $data['items'][$key]['set_html'] = $set_html;
             } else {
                 $data['items'][$key]['set_html'] = null;
+                if($val['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS){
+                    $Stock_OrderShippingModel = new Stock_OrderShippingModel();
+                    $order_shipping = $Stock_OrderShippingModel->getByWhere(['stock_order_id' => $order_id]);
+                    $data['items'][$key]['order_shipping'] = array_values($order_shipping);
+                }
             }
 
             $data['items'][$key]['order_status_html'] = $Order_StateModel->orderState[$val['order_status']];
@@ -61,13 +66,18 @@ class Stock_OrderModel extends Stock_Order
             //发货单URL
             $data['items'][$key]['delivery_url'] = $url . '?ctl=Seller_Stock_Order&met=getOrderPrint&typ=e&order_id=' . $order_id;
             //设置收货URL
-            $data['items'][$key]['confirm_url'] = $url . '?ctl=Seller_Stock_Order&met=send&typ=e&order_id=' . $order_id;
+            $data['items'][$key]['send_url'] = $url . '?ctl=Seller_Stock_Order&met=send&typ=e&order_id=' . $order_id;
 
             if ($val['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS) {
                 $set_html = "<a class=\"ncbtn ncbtn-mint mt10 bbc_seller_btns\" onclick=\"confirmOrder('{$order_id}')\"><i class=\"icon-truck\"></i>确认收货</a>";
                 $data['items'][$key]['set_html'] = $set_html;
             } else {
                 $data['items'][$key]['set_html'] = null;
+                if($val['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS){
+                    $Stock_OrderShippingModel = new Stock_OrderShippingModel();
+                    $order_shipping = $Stock_OrderShippingModel->getByWhere(['stock_order_id' => $order_id]);
+                    $data['items'][$key]['order_shipping'] = array_values($order_shipping);
+                }
             }
 
             $data['items'][$key]['order_status_html'] = $Order_StateModel->orderState[$val['order_status']];
@@ -79,8 +89,10 @@ class Stock_OrderModel extends Stock_Order
 
     public function getOrderInfo($cond_row = array())
     {
+        $Order_StateModel = new Order_StateModel();
         $order_info = $this->getOneByWhere($cond_row);
         $order_info['receiver_info'] = $order_info['order_receiver_name'] . '&nbsp;' .  $order_info['order_receiver_address']. '&nbsp;' .$order_info['order_receiver_phone'];
+        $order_info['order_stauts_const'] = $Order_StateModel->orderState[$order_info['order_status']];;
 
         $Stock_OrderGoodsModel = new Stock_OrderGoodsModel();
         $goods_row['stock_order_id'] = $order_info['stock_order_id'];
@@ -89,7 +101,6 @@ class Stock_OrderModel extends Stock_Order
 
         $order_info['goods_list'] = $goods_list;
 
-
         //发货人信息
         if (empty($order_info['order_seller_name'])) {
             $order_info['shipper'] = 0;
@@ -97,6 +108,14 @@ class Stock_OrderModel extends Stock_Order
         } else {
             $order_info['shipper'] = 1;
             $order_info['shipper_info'] = $order_info['order_seller_name'] . "&nbsp" . $order_info['order_seller_address'] . "&nbsp" . $order_info['order_seller_contact'];
+        }
+
+        //运费信息
+        if ($order_info['order_shipping_fee'] == 0) {
+            $order_info['shipping_info'] = "(免运费)";
+        } else {
+            $shipping_fee = @format_money($order_info['order_shipping_fee']);
+            $order_info['shipping_info'] = "(含运费$shipping_fee)";
         }
 
         return $order_info;
@@ -112,6 +131,8 @@ class Stock_OrderModel extends Stock_Order
     public function getPhysicalInfoData($condi = array())
     {
         $data = $this->getOrderInfo($condi);
+        $data['goods_count'] = count($data['goods_list']);
+        $data['goods_list'] = array_values($data['goods_list']);
 
         $data['payment_name'] = '备货金';
         switch ($data['order_status']) {
@@ -149,13 +170,13 @@ class Stock_OrderModel extends Stock_Order
 
             case Order_StateModel::ORDER_WAIT_CONFIRM_GOODS :
                 $data['order_status_text'] = '已经发货';
+                $order_shipping_time = $data['order_receiver_date'];
                 if (empty($data['order_receiver_date'])) {
                     $order_shipping_time = strtotime($data['order_shipping_time']);
-                    $order_shipping_time = strtotime('+1 month', $order_shipping_time);
-                    $order_shipping_time = date('Y-m-d', $order_shipping_time);
-                    $data['order_receiver_time'] = $order_shipping_time;
-                } else {
-                    $order_shipping_time = $data['order_receiver_time'];
+
+                    $confirm_order_time = Yf_Registry::get('confirm_order_time');
+                    $order_shipping_time = date('Y-m-d', $order_shipping_time + $confirm_order_time);
+                    $data['order_receiver_date'] = date('Y-m-d H:i:s', $order_shipping_time);
                 }
 
                 if(!empty($data['order_shipping_express_id']) && !empty($data['order_shipping_code']))
@@ -170,9 +191,27 @@ class Stock_OrderModel extends Stock_Order
                     $data['order_status_html'] = "<li>1. 商品已发出；$express_name : $order_shipping_code 。</li><li>2. 如果买家没有及时进行收货，系统将于<time>$order_shipping_time</time>自动完成“确认收货”，完成交易。</li>";
 
                 }
-                else
-                {
-                    $data['order_status_html'] = "<li>1. 商品已发出；无需物流。</li><li>2. 如果买家没有及时进行收货，系统将于<time>$order_shipping_time</time>自动完成“确认收货”，完成交易。</li>";
+                else {
+                    $Stock_OrderShippingModel = new Stock_OrderShippingModel();
+                    $order_shipping = $Stock_OrderShippingModel->getByWhere(['stock_order_id' => $condi['stock_order_id']]);
+                    $data['order_shipping'] = array_values($order_shipping);
+                    if (count($order_shipping) > 0) {
+                        $order_shipping_html = '<li>1. 商品已发出；';
+                        $expressModel = new ExpressModel();
+                        foreach ($order_shipping as $key => $shipping) {
+                            //查找物流公司
+                            $express_base = $expressModel->getExpress($shipping['shipping_express_id']);
+                            $express_base = pos($express_base);
+                            $express_name = $express_base['express_name'];
+                            $order_shipping_code = $shipping['shipping_code'];
+                            $order_shipping_html .= "$express_name : $order_shipping_code;  ";
+                        }
+                        $order_shipping_html .= "</li><li>2. 如果买家没有及时进行收货，系统将于<time>$order_shipping_time</time>自动完成“确认收货”，完成交易。</li>";
+
+                        $data['order_status_html'] = $order_shipping_html;
+                    } else {
+                        $data['order_status_html'] = "<li>1. 商品已发出；无需物流。</li><li>2. 如果买家没有及时进行收货，系统将于<time>$order_shipping_time</time>自动完成“确认收货”，完成交易。</li>";
+                    }
                 }
 
                 //页面的订单状态
@@ -212,14 +251,14 @@ class Stock_OrderModel extends Stock_Order
         }
 
         //取出物流公司名称
-        if (!empty($data['order_shipping_express_id'])) {
-            $expressModel = new ExpressModel();
-            $express_base = $expressModel->getExpress($data['order_shipping_express_id']);
-            $express_base = pos($express_base);
-            $data['express_name'] = $express_base['express_name'];
-        } else {
-            $data['express_name'] = '';
-        }
+//        if (!empty($data['order_shipping_express_id'])) {
+//            $expressModel = new ExpressModel();
+//            $express_base = $expressModel->getExpress($data['order_shipping_express_id']);
+//            $express_base = pos($express_base);
+//            $data['express_name'] = $express_base['express_name'];
+//        } else {
+//            $data['express_name'] = '';
+//        }
 
         //店主名称
         $shopBaseModel = new Shop_BaseModel();

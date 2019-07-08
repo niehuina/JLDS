@@ -528,7 +528,7 @@ class Api_User_InfoCtl extends Yf_AppController
         $user_stocks          = request_int('user_stocks');
 
         $User_GradeModel = new User_GradeModel();
-        $flag = $User_GradeModel->updateGradeGPartner($user_id, $user_shares, $user_stocks);
+        $flag = $User_GradeModel->updateGradeToPartner($user_id, $user_shares, $user_stocks);
         Yf_Log::log("flag:".$flag, Yf_Log::LOG, 'debug');
 
         if($flag || empty($flag)) {

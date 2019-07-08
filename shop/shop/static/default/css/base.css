@@ -1634,3 +1634,8 @@ body {
     height: 60px;
     margin: 0 6% 0 12%;
 }
+
+.button_disabled{
+    background-color: #bbb;
+    border-color: #bbb;
+}

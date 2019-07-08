@@ -198,8 +198,8 @@ class PayCtl extends Controller
 			$msg    = _('failure');
 			$status = 250;
 		}
-		
-		$this->data->addBody(-140, $data, $msg, $status);
+
+        $this->data->addBody(-140, $data, $msg, $status);
 	}
 
 	//主管账号待支付
@@ -300,26 +300,26 @@ class PayCtl extends Controller
 
 
 //			/****************************************************************************************************/
-			$user_id_row = $sub_user['data']['sub']['user_id'];
-			try{
-				//订单付款成功后进行极光推送
-				require_once "Jpush/JPush.php";
-				$type=array('type'=>'1');
-				$app_key = '67c48d5035a1f01bc8c09a88';
-				$master_secret = '805f959b10b0d13d63a231fd';
-				$alert="您作为主管账号在".date("Y-m-d H:i:s")."帮助".$sub_user['data']['sub']['user_account']."支付订单成功，支出-".$edit_row['record_money'];
-				$client = new JPush($app_key, $master_secret);
-				$result=$client->push()
-					->setPlatform(array('ios', 'android'))
-					->addAlias($user_id_row)
-					->addIosNotification($alert,'', null, null, null, $type)
-					->addAndroidNotification($alert,null,null,$type)
-					->setOptions(100000, 3600, null, false)
-					->send();
-			}
-			catch(Exception $e){
-
-			}
+//			$user_id_row = $sub_user['data']['sub']['user_id'];
+//			try{
+//				//订单付款成功后进行极光推送
+//				require_once "Jpush/JPush.php";
+//				$type=array('type'=>'1');
+//				$app_key = '67c48d5035a1f01bc8c09a88';
+//				$master_secret = '805f959b10b0d13d63a231fd';
+//				$alert="您作为主管账号在".date("Y-m-d H:i:s")."帮助".$sub_user['data']['sub']['user_account']."支付订单成功，支出-".$edit_row['record_money'];
+//				$client = new JPush($app_key, $master_secret);
+//				$result=$client->push()
+//					->setPlatform(array('ios', 'android'))
+//					->addAlias($user_id_row)
+//					->addIosNotification($alert,'', null, null, null, $type)
+//					->addAndroidNotification($alert,null,null,$type)
+//					->setOptions(100000, 3600, null, false)
+//					->send();
+//			}
+//			catch(Exception $e){
+//
+//			}
 			/****************************************************************************************************/
 
 		}else

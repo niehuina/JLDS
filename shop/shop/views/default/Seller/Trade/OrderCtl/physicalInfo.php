@@ -136,14 +136,13 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <?php if ( $key == 0 ) { ?>
                     <td class="bdl bdr" rowspan="<?= $data['goods_cat_num']; ?>"><?= $data['order_shop_benefit']?></td>
                     <td class="bdl bdr" rowspan="<?= $data['goods_cat_num']; ?>">
-                        <?= $data['order_stauts_const']; ?>
+                        <?= $data['order_stauts_const']; ?><br/>
                         <?php if($data['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS ){ ?>
-                            <p>
-                            <a style="position:relative;" onmouseover="show_logistic('<?=($data['order_id'])?>','<?=($data['order_shipping_express_id'])?>','<?=($data['order_shipping_code'])?>')" onmouseout="hide_logistic('<?=($data['order_id'])?>')">
+                            <a style="position:relative;" onmouseover="show_logistic('<?=($data['order_id'])?>','<?=($data['order_shipping_express_id'])?>','<?=($data['order_shipping_code'])?>')"
+                               onmouseout="hide_logistic('<?=($data['order_id'])?>')">
                                 <i class="iconfont icon-icowaitproduct rel_top2"></i><?=__('物流信息')?>
                                 <div style="display: none;" id="info_<?=($data['order_id'])?>" class="prompt-01"> </div>
-                            </a>
-                                </p>
+                            </a><br/>
                         <?php }?>
                     </td>
 

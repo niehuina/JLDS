@@ -33,6 +33,9 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
         margin: 0px;
     }
 
+    button.ncbtn{
+        padding: 3px 7px;
+    }
 </style>
 </head>
 </body>
@@ -267,7 +270,8 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <td class="bdl" style="width: 151px;"><?= $val['express_name']; ?></td>
                     <td class="bdl" style="width: 249px;"><input name="shipping_code" type="text" class="text w200 tip-r" title="<?=__('正确填写物流单号，确保快递跟踪查询信息正确')?>" maxlength="20"></td>
                     <td class="bdl gray"></td>
-                    <td class="bdl bdr tc"><a nc_value="<?= $val['express_id']; ?>" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认')?></a></td>
+                    <td class="bdl bdr tc">
+                        <button nc_value="<?= $val['express_id']; ?>" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认')?></button></td>
                 </tr>
                 <?php } ?>
                 <?php } ?>
@@ -280,7 +284,8 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 </tr>
                 <tr>
                     <td class="bdl tr"><?=__('如果订单中的商品无需物流运送，您可以直接点击确认')?></td>
-                    <td class="bdr tl w400"> <a nc_type="eb" nc_value="e1000" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认')?></a>
+                    <td class="bdr tl w400"> 
+                        <button nc_type="eb" nc_value="e1000" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认')?></button>
                     </td>
                 </tr>
                 <tr>
@@ -382,11 +387,12 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
         });
 
         //提交表单
-        $('a[nc_value]').on('click', function () {
-
+        $('button[nc_value]').on('click', function () {
+            $('button[nc_value]').attr("disabled", "disabled").addClass("button_disabled");
             seller_address_span = $("#seller_address_span").attr('data');
             if(seller_address_span == 0)
             {
+                $('button[nc_value]').removeAttr("disabled").removeClass("button_disabled");
                 Public.tips( {content: '<?=__('请设置发货地址')?>', type: 1} );
                 return;
             }
@@ -406,6 +412,7 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
                     Public.tips( {content: '<?=__('发货成功')?>', type: 3} );
                     window.location.href = SITE_URL + '?ctl=Seller_Trade_Order&met=physical&typ=e';
                 } else {
+                    $('button[nc_value]').removeAttr("disabled").removeClass("button_disabled");
                     Public.tips( {content: '<?=__('发货失败')?>', type: 1} );
                 }
             })
@@ -413,7 +420,7 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
 
         <?php if ( $data['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS ) { ?>
         /* 如果订单已经发货 初始化单据号 */
-        var $a = $('a.ncbtn[nc_value="<?= $data['order_shipping_express_id']; ?>"]');
+        var $a = $('button.ncbtn[nc_value="<?= $data['order_shipping_express_id']; ?>"]');
         $a.parents('tr').find('input[name="shipping_code"]').val("<?= $data['order_shipping_code'] ?>");
         <?php } ?>
 

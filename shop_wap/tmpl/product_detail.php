@@ -189,14 +189,6 @@ include __DIR__.'/../includes/header.php';
                         <div class="item-con"><dt><%=goods_info.common_code%></dt></div>
                     </div>
                     <div class="goods-detail-item">
-                        <div class="itme-name">仓库</div>
-                        <div class="item-con"><dt>该商品由<b style="font-weight: bold;padding: 0 2px;">临沂保税仓</b>发货</dt></div>
-                    </div>
-                    <div class="goods-detail-item">
-                        <div class="itme-name">税率</div>
-                        <div class="item-con"><em>消费税率：<%=consumption_tax%>%, 增值税率：<%=value_added_tax%>%</em></div>
-                    </div>
-                    <div class="goods-detail-item">
                         <div class="itme-name">送至</div>
                         <div class="item-con">
                             <a href="javascript:void(0);" id="get_area_selected" data-common_id=<%=goods_info.common_id%> data-transport_type_id=<%=goods_info.transport_type_id%> >
@@ -584,7 +576,7 @@ include __DIR__.'/../includes/header.php';
                             <%if(voucher_list[i].is_get == 1){%>
                             <a href="javascript:;" class="had">已经<br>领取</a>
                             <%}else{%>
-                            <a onclick="confrimVoucher(<%=voucher_list[i].voucher_t_id%>,<%=voucher_list[i].voucher_t_points%>,<%=voucher_list[i].voucher_t_price%>)">立即<br>领取</a>
+                            <a onclick="confrimVoucher('<%=voucher_list[i].voucher_t_id%>','<%=voucher_list[i].voucher_t_points%>','<%=voucher_list[i].voucher_t_price%>')">立即<br>领取</a>
                             <%}%>
                         </div>
                     </div>
@@ -612,9 +604,9 @@ include __DIR__.'/../includes/header.php';
     <script type="text/javascript" src="../js/libs/zepto.min.js"></script>
 
     <script type="text/javascript" src="../js/libs/template.js"></script>
-    <script type="text/javascript" src="../js/swipe.js"></script>
+    <script type="text/javascript" src="../js/libs/swipe.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
-    <script type="text/javascript" src="../js/iscroll.js"></script>
+    <script type="text/javascript" src="../js/libs/iscroll.js"></script>
     <script type="text/javascript" src="../js/libs/simple-plugin.js"></script>
     <script type="text/javascript" src="../js/tmpl/footer.js"></script>
     <script type="text/javascript" src="../js/fly/requestAnimationFrame.js"></script>

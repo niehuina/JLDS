@@ -151,7 +151,22 @@ class User_InfoModel extends User_Info
         return $order_count;
     }
 
-
+    public function getParentId($user_id)
+    {
+        $sql = "select getUserParent({$user_id})";
+        $data_rows = $this->sql->getAll($sql);
+        $rs = current($data_rows);
+        $rs = array_values($rs);
+        return $rs[0];
+    }
+    public function getUserChildren($user_id, $is_hasParent = 1)
+    {
+        $sql = "select getUserChildren({$user_id}, {$is_hasParent})";
+        $data_rows = $this->sql->getAll($sql);
+        $rs = current($data_rows);
+        $rs = array_values($rs);
+        return $rs[0];
+    }
 }
 
 User_InfoModel::$userSex = array(

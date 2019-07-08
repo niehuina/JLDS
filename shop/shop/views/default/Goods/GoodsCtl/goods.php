@@ -208,9 +208,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
                                                value="<?= $goods_detail['goods_base']['promotion_price'] ?>"
                                                id="goods_price"/>
                                     <?php else: ?>
-                                        <input type="hidden" name="goods_price"
-                                               value="<?= $goods_detail['goods_base']['goods_price'] ?>"
-                                               id="goods_price"/>
+                                        <input type="hidden" name="goods_price" value="<?= $goods_detail['goods_base']['goods_price'] ?>" id="goods_price"/>
                                         <strong class="color-db0a07 bbc_color"><?= format_money($goods_detail['goods_base']['goods_price']) ?></strong>
 
                                     <?php endif; ?>

@@ -67,7 +67,7 @@ function setGrid(adjustH, adjustW) {
 };
 
 function initGrid() {
-    var a = ["操作", "用户名", "店铺名称", "备货金"]
+    var a = ["操作", "用户名", "用户姓名", "用户身份", "备货金"]
         , b = [{
         name: "operate",
         width: 60,
@@ -81,12 +81,18 @@ function initGrid() {
     }, {
         name: "user_name",
         index: "user_name",
-        width: 200
-    }, {
-        name: "shop_name",
-        index: "shop_name",
         align: "center",
-        width: 300
+        width: 150
+    }, {
+        name: "user_realname",
+        index: "user_realname",
+        align: "center",
+        width: 150
+    }, {
+        name: "user_grade_text",
+        index: "user_grade_text",
+        align: "center",
+        width: 100
     }, {
         name: "user_stocks",
         index: "user_stocks",

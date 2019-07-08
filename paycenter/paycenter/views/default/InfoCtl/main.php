@@ -52,19 +52,19 @@ include $this->view->getTplPath() . '/' . 'header.php';
 						</a>
 					</dd>
 				</dl>
-                <dl class="clearfix">
-                    <dt><i class="iconfont icon-shimingrenzheng"></i><?=_('低保认证')?></dt>
-                    <dd><a href="<?= Yf_Registry::get('url') ?>?ctl=Info&met=minLivingCertification&typ=e">
-                            <?php
-
-
-                            echo $user_info['user_minimum_living_status_con'];
-
-                            ?>
-
-                        </a>
-                    </dd>
-                </dl>
+<!--                <dl class="clearfix">-->
+<!--                    <dt><i class="iconfont icon-shimingrenzheng"></i>--><?//=_('低保认证')?><!--</dt>-->
+<!--                    <dd><a href="--><?//= Yf_Registry::get('url') ?><!--?ctl=Info&met=minLivingCertification&typ=e">-->
+<!--                            --><?php
+//
+//
+//                            echo $user_info['user_minimum_living_status_con'];
+//
+//                            ?>
+<!---->
+<!--                        </a>-->
+<!--                    </dd>-->
+<!--                </dl>-->
 			</div>
 		</div>
 

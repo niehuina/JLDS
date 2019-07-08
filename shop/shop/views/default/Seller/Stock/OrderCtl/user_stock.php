@@ -162,6 +162,9 @@ if (!empty($goods)){
     </div>
 <?php } ?>
 
+<script>
+    $('.tabmenu > ul').find('li:gt(2)').remove();
+</script>
 <script type="text/javascript">
     var offt = true;
     $(document).ready(function ()

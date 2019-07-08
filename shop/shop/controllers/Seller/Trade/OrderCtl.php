@@ -31,6 +31,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
         $condition       = array();
 		$Order_BaseModel = new Order_BaseModel();
         $order_row = array('order_create_time'=>'desc');
+        if(self::$is_partner){
+            $condition['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
 		$data            = $Order_BaseModel->getPhysicalList($condition,$order_row);
 		$condition       = $data['condi'];
 
@@ -47,7 +50,11 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 
 		$Order_BaseModel = new Order_BaseModel();
 
-		$condition['shop_id']           = Perm::$shopId;
+        if(self::$is_partner){
+            $condition['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }else{
+            $condition['shop_id']           = Perm::$shopId;
+        }
 		$condition['order_is_virtual']  = Order_BaseModel::ORDER_IS_VIRTUAL;
 		$condition['order_shop_hidden'] = Order_BaseModel::ORDER_IS_REAL;
 		$Order_BaseModel->createSearchCondi($condition);
@@ -65,6 +72,11 @@ class Seller_Trade_OrderCtl extends Seller_Controller
      */
     public function chain()
     {
+        if(self::$is_partner){
+            $condition['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }else{
+            $condition['shop_id']           = Perm::$shopId;
+        }
         $Order_BaseModel = new Order_BaseModel();
         $condition['chain_id:!=']       = 0;
         $order_row = array('order_create_time'=>'desc');

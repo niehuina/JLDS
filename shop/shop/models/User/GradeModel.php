@@ -88,25 +88,25 @@ class User_GradeModel extends User_Grade
 	 */
 	public function upGrade($user_id, $user_growth)
 	{
-		$User_InfoModel = new User_InfoModel();
+//		$User_InfoModel = new User_InfoModel();
+//
+//		$user = $User_InfoModel->getInfo($user_id);
+//		//当前等级的下个等级
+//		$user_grade = $user[$user_id]['user_grade'] * 1 + 1;
+//
+//		$Grade = $this->getGrade($user_grade);
+//		//获取此等级经验值
+//		$grade_le = $Grade [$user_grade]['user_grade_demand'] * 1;
+//
+//		if ($user_growth > $grade_le)
+//		{ //传过的当前经验值大于下个等级经验值升级
+//
+//			$cond_row['user_grade'] = $user_grade;
+//			$flag                   = $User_InfoModel->editInfo($user_id, $cond_row);
+//			return $flag;
+//		}
 
-		$user = $User_InfoModel->getInfo($user_id);
-		//当前等级的下个等级
-		$user_grade = $user[$user_id]['user_grade'] * 1 + 1;
-
-		$Grade = $this->getGrade($user_grade);
-		//获取此等级经验值
-		$grade_le = $Grade [$user_grade]['user_grade_demand'] * 1;
-
-		if ($user_growth > $grade_le)
-		{ //传过的当前经验值大于下个等级经验值升级
-
-			$cond_row['user_grade'] = $user_grade;
-			$flag                   = $User_InfoModel->editInfo($user_id, $cond_row);
-			return $flag;
-		}
-
-
+        return $this->updateGradeVip($user_id);
 	}
 
     /**
@@ -158,6 +158,7 @@ class User_GradeModel extends User_Grade
         if($can_update_grade){
             //更新用户级别
             $cond_row['user_grade'] = $user_grade;
+            $cond_row['user_grade_update_date'] = get_date_time();
             $flag                   = $User_InfoModel->editInfo($user_id, $cond_row);
 
             //添加用户晋级log
@@ -171,12 +172,13 @@ class User_GradeModel extends User_Grade
             $user_parent_id = $user[$user_id]['user_parent_id'];
             if($user_parent_id){
                 $user_grade_parent = $user_grade+1;
-                $can_update_grade = $this->checkUpdateGradeToPartner($user_parent_id, $user_grade_parent, $Grade);
+                $can_update_grade_parent = $this->checkUpdateGradeToPartner($user_parent_id, $user_grade_parent, $Grade);
 
-                if($can_update_grade){
+                if($can_update_grade_parent){
                     //上级会员晋级为合伙人
-                    $cond_row['user_grade'] = $user_grade_parent;
-                    $flag_p                 = $User_InfoModel->editInfo($user_parent_id, $cond_row);
+                    $cond_row_parent['user_grade'] = $user_grade_parent;
+                    $cond_row_parent['user_grade_update_date'] = get_date_time();
+                    $flag_p                 = $User_InfoModel->editInfo($user_parent_id, $cond_row_parent);
 
                     //添加用户晋级log
                     $log['user_id'] = $user_id;
@@ -193,6 +195,11 @@ class User_GradeModel extends User_Grade
         }
     }
 
+    /**
+     * 检查是否是会员，并升级为合伙人
+     * @param $user_id
+     * @return bool|null
+     */
     public function updateGradePartner($user_id)
     {
         $User_InfoModel = new User_InfoModel();
@@ -205,13 +212,15 @@ class User_GradeModel extends User_Grade
 
         $can_update_grade = false;
 
-        if($user_grade == 3) {//会员升级为合伙人
+        //下个会员升级为合伙人
+        if($user_grade == 3) {
             $can_update_grade = $this->checkUpdateGradeToPartner($user_id, $user_grade, $Grade);
         }
 
         if($can_update_grade){
             //更新用户级别
             $cond_row['user_grade'] = $user_grade;
+            $cond_row['user_grade_update_date'] = get_date_time();
             $flag                   = $User_InfoModel->editInfo($user_id, $cond_row);
 
             //添加用户晋级log
@@ -272,7 +281,14 @@ class User_GradeModel extends User_Grade
         return $can_update_grade;
     }
 
-    public function updateGradeGPartner($user_id, $user_shares, $user_stocks)
+    /**
+     * 用户直接升到高级合伙人
+     * @param $user_id
+     * @param $user_shares
+     * @param $user_stocks
+     * @return bool|null
+     */
+    public function updateGradeToPartner($user_id, $user_shares, $user_stocks)
     {
         $User_InfoModel = new User_InfoModel();
         $user = $User_InfoModel->getInfo($user_id);
@@ -297,6 +313,7 @@ class User_GradeModel extends User_Grade
         if ($can_update_grade) {
             //更新用户级别
             $cond_row['user_grade'] = $user_grade;
+            $cond_row['user_grade_update_date'] = get_date_time();
             $flag = $User_InfoModel->editInfo($user_id, $cond_row);
 
             //添加用户晋级log

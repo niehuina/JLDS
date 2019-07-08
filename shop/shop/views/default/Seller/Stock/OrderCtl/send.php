@@ -62,29 +62,12 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                         <span class="fr mr30"></span>
                         <span class="ml10 fl ml10"><?=__('订单编号')?>：<?= $data['stock_order_id']; ?></span>
                         <span class="ml20 fl"><?=__('下单时间')?>：<em class="goods-time"><?= $data['order_create_time']; ?></em></span>
+                        <a class="ncbtn-mini bbc_seller_btns fr" href="javascript:selectSendGoods('<?= $data['stock_order_id']; ?>')">选择发货商品(<em id="sel_goods_num">0</em>)</a>
+                        <input type="hidden" name="select_goods" id="select_goods" value="" />
                     </th>
                 </tr>
-
-                <!-- S商品列表 -->
-                <?php if ( !empty($data['goods_list']) ) { ?>
-                <?php foreach ($data['goods_list'] as $key => $val) { ?>
                 <tr>
-                    <td class="bdl w10"></td>
-                    <td class="w50">
-                        <div class="pic-thumb">
-                            <a href="<?= $val['goods_link'] ?>" target="_blank"><img src="<?= $val['goods_image']; ?>"></a>
-                        </div>
-                    </td>
-                    <td class="tl">
-                        <dl class="goods-name">
-                            <dt>
-                                <a target="_blank" href="<?= $val['goods_link']; ?>"><?= $val['goods_name']; ?></a>
-                            </dt>
-                            <dd><strong>￥<?= $val['order_goods_amount']; ?></strong>&nbsp;x&nbsp;<em><?= $val['order_goods_num']; ?></em>件</dd>
-                        </dl>
-                    </td>
-                    <?php if ( $key == 0 ) { ?>
-                    <td class="bdl bdr order-info w500" rowspan="<?= $data['goods_cat_num']; ?>">
+                    <td class="bdl bdr order-info w500">
                         <dl>
                             <dt><?=__('运费')?>：</dt>
                             <dd><?= $data['shipping_info']; ?></dd>
@@ -95,18 +78,15 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                                 <textarea name="deliver_explain" cols="100" rows="2" class="w320 tip-t" title="<?=__('您可以输入一些发货备忘信息（仅卖家自己可见）')?>"></textarea>
                             </dd>
                         </dl>
-                         <dl>
+                        <dl>
                             <dt><?=__('给买家留言')?>：</dt>
                             <dd>
                                 <textarea name="order_seller_message" cols="100" rows="2" class="w320 tip-t" title="<?=__('您可以输入一些给买家的留言信息')?>"></textarea>
                             </dd>
                         </dl>
                     </td>
-                    <?php } ?>
                 </tr>
-                <!-- E商品列表 -->
-                <?php } ?>
-                <?php } ?>
+
                 <?php if($data['order_invoice_id']){?>
                 <tr>
                     <td colspan="20" class="tl bdl bdr" style="padding:0px">
@@ -302,6 +282,7 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
 ?>
 
 <script>
+    var select_goods_list = {};
 
     function etab(t){
         if (t==1){
@@ -392,13 +373,26 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
                 return false;
             }
 
-            var $this = $(this),
-                send_data = {
+            var $this = $(this);
+            var order_send_goods = $('#select_goods').val();
+            if(!order_send_goods){
+                $('button[nc_value]').removeAttr("disabled").removeClass("button_disabled");
+                Public.tips( {content: '<?=__('请选择发货商品')?>', type: 1} );
+                return false;
+            }
+            var order_shipping_code = $this.parents('tr').find('input[name="shipping_code"]').val();
+            if(!order_shipping_code){
+                $('button[nc_value]').removeAttr("disabled").removeClass("button_disabled");
+                Public.tips( {content: '<?=__('请填写物流单号')?>', type: 1} );
+                return false;
+            }
+            var send_data = {
                     order_id: $('#order_id').val(),
                     order_shipping_code: $this.parents('tr').find('input[name="shipping_code"]').val(),
                     order_shipping_express_id: $this.attr('nc_value'),
                     order_shipping_message: $('textarea[name="deliver_explain"]').val(),
-					order_seller_message: $('textarea[name="order_seller_message"]').val()
+					order_seller_message: $('textarea[name="order_seller_message"]').val(),
+                    order_send_goods: $('#select_goods').val()
                 };
 
             $.post(SITE_URL + '?ctl=Seller_Stock_Order&met=send&typ=json', send_data, function (data){
@@ -420,4 +414,29 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
         <?php } ?>
 
     })
+
+    //选择发货商品
+    window.selectSendGoods = function (e) {
+        var url = SITE_URL + '?ctl=Seller_Stock_Order&met=stock_orderGoods&typ=';
+
+        $.dialog({
+            title: '选择发货商品',
+            content: 'url: ' + url + 'e',
+            data: {order_id: e, select_goods_list: select_goods_list},
+            height: 600,
+            width: 1000,
+            lock: true,
+            drag: false,
+            ok: function () {
+
+                var flag = this.content.recordPageAll();
+                if(flag) {
+                    select_goods_list = this.content.select_goods_list;
+                    $("#select_goods").val(JSON.stringify(select_goods_list));
+                    $("#sel_goods_num").text(Object.keys(select_goods_list).length);
+                }
+            }
+        })
+    }
+    //隐藏订单
 </script>

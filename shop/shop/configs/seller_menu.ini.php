@@ -1,7 +1,7 @@
 <?php
-$ctl = request_string('ctl');
-$met = request_string('met');
-$act = request_string("act");
+$ctl       = request_string('ctl');
+$met       = request_string('met');
+$act       = request_string("act");
 $level_row = array();
 $seller_menu = array(
     10000 => array(
@@ -116,6 +116,7 @@ $seller_menu = array(
                     ),
                 ),
             ),
+
             110004 => array(
                 'menu_id' => '110004',
                 'menu_parent_id' => '11000',
@@ -522,7 +523,7 @@ $seller_menu = array(
                 'menu_url_met' => 'deliver',
                 'menu_url_parem' => '',
                 'sub' => array(
-                    1200031 => array(
+                    1200031=>array(
                         'menu_id' => '1200031',
                         'menu_parent_id' => '120003',
                         'menu_name' => __('待发货'),
@@ -531,7 +532,7 @@ $seller_menu = array(
                         'menu_url_met' => 'deliver',
                         'menu_url_parem' => '',
                     ),
-                    1200032 => array(
+                    1200032=>array(
                         'menu_id' => '1200032',
                         'menu_parent_id' => '120003',
                         'menu_name' => __('发货中'),
@@ -540,7 +541,7 @@ $seller_menu = array(
                         'menu_url_met' => 'delivering',
                         'menu_url_parem' => '',
                     ),
-                    1200033 => array(
+                    1200033=>array(
                         'menu_id' => '1200033',
                         'menu_parent_id' => '120003',
                         'menu_name' => __('已收货'),
@@ -549,109 +550,6 @@ $seller_menu = array(
                         'menu_url_met' => 'delivered',
                         'menu_url_parem' => '',
                     )
-                )
-            ),
-            120011 => array(
-                'menu_id' => '120011',
-                'menu_parent_id' => '12000',
-                'menu_name' => __('创建备货订单'),
-                'menu_icon' => '',
-                'menu_url_ctl' => 'Seller_Stock_Order',
-                'menu_url_met' => 'add',
-                'menu_url_parem' => '',
-            ),
-            120012 => array(
-                'menu_id' => '120012',
-                'menu_parent_id' => '12000',
-                'menu_name' => __('备货订单'),
-                'menu_icon' => '',
-                'menu_url_ctl' => 'Seller_Stock_Order',
-                'menu_url_met' => 'physical',
-                'menu_url_parem' => '',
-                'sub' => array(
-                    1200120 => array(
-                        'menu_id' => '1200120',
-                        'menu_parent_id' => '120012',
-                        'menu_name' => __('所有订单'),
-                        'menu_icon' => '',
-                        'menu_url_ctl' => 'Seller_Stock_Order',
-                        'menu_url_met' => 'physical',
-                        'menu_url_parem' => '',
-                    ),
-                    1200121 => array(
-                        'menu_id' => '1200121',
-                        'menu_parent_id' => '120012',
-                        'menu_name' => __('发货中'),
-                        'menu_icon' => '',
-                        'menu_url_ctl' => 'Seller_Stock_Order',
-                        'menu_url_met' => 'delivering',
-                        'menu_url_parem' => '',
-                    ),
-                    1200122 => array(
-                        'menu_id' => '1200122',
-                        'menu_parent_id' => '120012',
-                        'menu_name' => __('已收货'),
-                        'menu_icon' => '',
-                        'menu_url_ctl' => 'Seller_Stock_Order',
-                        'menu_url_met' => 'delivered',
-                        'menu_url_parem' => '',
-                    ),
-                    1200125 => array(
-                        'menu_id' => '1200125',
-                        'menu_parent_id' => '120012',
-                        'menu_name' => __('备货订单详情'),
-                        'menu_icon' => '',
-                        'menu_url_ctl' => 'Seller_Stock_Order',
-                        'menu_url_met' => 'physicalInfo',
-                        'menu_url_parem' => '',
-                    ),
-                    1200126 => array(
-                        'menu_id' => '1200126',
-                        'menu_parent_id' => '120012',
-                        'menu_name' => __('发货'),
-                        'menu_icon' => '',
-                        'menu_url_ctl' => 'Seller_Stock_Order',
-                        'menu_url_met' => 'send',
-                        'menu_url_parem' => '',
-                    )
-                )
-            ),
-            120013 => array(
-                'menu_id' => '120013',
-                'menu_parent_id' => '12000',
-                'menu_name' => __('用户仓储管理'),
-                'menu_icon' => '',
-                'menu_url_ctl' => 'Seller_Stock_Order',
-                'menu_url_met' => 'user_stock',
-                'menu_url_parem' => '',
-                'sub' => array(
-                    1200130 => array(
-                        'menu_id' => '1200130',
-                        'menu_parent_id' => '120013',
-                        'menu_name' => __('所有商品'),
-                        'menu_icon' => '',
-                        'menu_url_ctl' => 'Seller_Stock_Order',
-                        'menu_url_met' => 'user_stock',
-                        'menu_url_parem' => '',
-                    ),
-                    1200131 => array(
-                        'menu_id' => '1200131',
-                        'menu_parent_id' => '120013',
-                        'menu_name' => __('库存盘点'),
-                        'menu_icon' => '',
-                        'menu_url_ctl' => 'Seller_Stock_Order',
-                        'menu_url_met' => 'stock_check',
-                        'menu_url_parem' => '',
-                    ),
-                    1200132 => array(
-                        'menu_id' => '1200132',
-                        'menu_parent_id' => '120013',
-                        'menu_name' => __('商品自用'),
-                        'menu_icon' => '',
-                        'menu_url_ctl' => 'Seller_Stock_Order',
-                        'menu_url_met' => 'stock_self_use',
-                        'menu_url_parem' => '',
-                    ),
                 )
             ),
             120004 => array(
@@ -663,7 +561,7 @@ $seller_menu = array(
                 'menu_url_met' => 'deliverSetting',
                 'menu_url_parem' => '',
                 'sub' => array(
-                    1240001 => array(
+                    1240001=>array(
                         'menu_id' => '1240001',
                         'menu_parent_id' => '120004',
                         'menu_name' => __('地址库'),
@@ -1088,7 +986,7 @@ $seller_menu = array(
                         'menu_url_ctl' => 'Distribution_Seller_Setting',
                         'menu_url_met' => 'addDirectsellerGoods',
                         'menu_url_parem' => '',
-                    ), 130016 => array(
+                    ),130016 => array(
                         'menu_id' => '130016',
                         'menu_parent_id' => '130012',
                         'menu_name' => __('分销业绩'),
@@ -1745,7 +1643,7 @@ $seller_menu = array(
 
 //根据后台配置，去除一些不需要限时的功能模块
 
-if(Web_ConfigModel::value('groupbuy_allow') == 0)//团购功能关闭
+/*if(Web_ConfigModel::value('groupbuy_allow') == 0)//团购功能关闭
 {
     unset($seller_menu[13000]['sub'][130001]);
 }
@@ -1759,30 +1657,28 @@ if(!Web_ConfigModel::value('promotion_allow'))//促销功能关闭，对应需�
 if(!(Web_ConfigModel::value('pointshop_isuse') && Web_ConfigModel::value('pointprod_isuse') && Web_ConfigModel::value('voucher_allow')))//代金券功能开启限制，代金券功能、积分功能、积分中心启用后，商家可以申请代金券活动
 {
     unset($seller_menu[13000]['sub'][130011]);
-}
+}*/
 
-if (!Web_ConfigModel::value('Plugin_Directseller') || @$this->shopBase['shop_type'] == 2) {
+if(!Web_ConfigModel::value('Plugin_Directseller')||@$this->shopBase['shop_type'] == 2)
+{
     unset($seller_menu[13000]['sub'][130012]);
 }
 
-if(count($seller_menu[13000]['sub']) == 0){
-    unset($seller_menu[13000]['sub']);
-    unset($seller_menu[13000]);
-}
-
-if (!Web_ConfigModel::value('Plugin_Distribution')) {
-    unset($seller_menu[11000]['sub'][110004]);  //分销商品
+if(!Web_ConfigModel::value('Plugin_Distribution'))
+{
+    unset($seller_menu[11000]['sub'][110004]);//分销商品
     unset($seller_menu[14000]['sub'][140013]);  //我的供应商
     unset($seller_menu[14000]['sub'][140014]);  //分销明细
     unset($seller_menu[14000]['sub'][140012]);  //我的分销商菜单
     unset($seller_menu[14000]['sub'][140015]);  //批发市场
-} else {
-    if (@$this->shopBase['shop_type'] == 2) {
+}else{
+    if(@$this->shopBase['shop_type'] == 2)
+    {
         //供货商店铺
         unset($seller_menu[14000]['sub'][140013]);  //我的供应商
         unset($seller_menu[14000]['sub'][140014]);  //分销明细
         unset($seller_menu[11000]['sub'][110004]);//分销商品
-    } else {
+    }else{
         unset($seller_menu[14000]['sub'][140012]);  //我的分销商菜单
     }
 }
@@ -1794,13 +1690,17 @@ $seller_menu_rows = array();
 
 function get_menu_rows($seller_menu, &$seller_menu_rows)
 {
-    foreach ($seller_menu as $id => $item) {
-        if (isset($item['sub']) && $item['sub']) {
+    foreach ($seller_menu as $id=>$item)
+    {
+        if (isset($item['sub']) && $item['sub'])
+        {
             get_menu_rows($item['sub'], $seller_menu_rows);
 
             unset($item['sub']);
             $seller_menu_rows[$id] = $item;
-        } else {
+        }
+        else
+        {
             $seller_menu_rows[$id] = $item;
         }
 
@@ -1823,19 +1723,25 @@ function get_menu_id($seller_menu, $level = 0, &$level_row, $ctl, $met)
 
     $level++;
 
-    foreach ($seller_menu as $menu_row) {
-        if ($menu_row['menu_url_ctl'] == $ctl && $menu_row['menu_url_met'] == $met) {
-            $level_row[$ctl][$met][$level] = $menu_row['menu_id'];
+    foreach ($seller_menu as $menu_row)
+    {
+        if ($menu_row['menu_url_ctl'] == $ctl && $menu_row['menu_url_met'] == $met)
+        {
+            $level_row[$ctl][$met][$level]     = $menu_row['menu_id'];
             $level_row[$ctl][$met][$level - 1] = $menu_row['menu_parent_id'];
 
             //向上查找一次
-            if (isset($seller_menu_rows[$menu_row['menu_parent_id']])) {
+            if (isset($seller_menu_rows[$menu_row['menu_parent_id']]))
+            {
                 $level_row[$ctl][$met][$level - 2] = $seller_menu_rows[$menu_row['menu_parent_id']]['menu_parent_id'];
             }
-        } else {
+        }
+        else
+        {
         }
 
-        if (isset($menu_row['sub'])) {
+        if (isset($menu_row['sub']))
+        {
             get_menu_id($menu_row['sub'], $level, $level_row, $ctl, $met);
         }
     }
@@ -1843,10 +1749,12 @@ function get_menu_id($seller_menu, $level = 0, &$level_row, $ctl, $met)
 
 function get_menu_url_map($seller_menu, &$level_row, $seller_menu_ori)
 {
-    foreach ($seller_menu as $menu_row) {
+    foreach ($seller_menu as $menu_row)
+    {
         get_menu_id($seller_menu, 0, $level_row, $menu_row['menu_url_ctl'], $menu_row['menu_url_met']);
 
-        if (isset($menu_row['sub'])) {
+        if (isset($menu_row['sub']))
+        {
             get_menu_url_map($menu_row['sub'], $level_row, $seller_menu_ori);
         }
     }

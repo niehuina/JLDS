@@ -1701,6 +1701,18 @@ class Buyer_UserCtl extends Buyer_Controller
 
         $this->data->addBody(-140, $data);
     }
+
+    public function getProfit()
+    {
+        $formvars = array();
+        $formvars['user_id'] = Perm::$userId;
+        $formvars['trade_type_id'] = 13;
+        $formvars['user_type'] = 1;
+
+        $rs = $this->getPaycenterApi($formvars, 'Api_Paycen_PayRecordCtl', 'getRecordListByUserId');
+
+        $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
+    }
 }
 
 ?>

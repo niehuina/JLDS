@@ -374,6 +374,15 @@ extract($_GET);
 <script>
 
     function getIntroducer(obj){
+        if(obj.html() == "清除"){
+            $("#parent_id").val("");
+            $("#intro_keys").val("");
+            $("#intro_list").html("");
+            $($("#intro_list").parent()).addClass("hidden");
+            $(obj).html("查询");
+            return;
+        }
+
         var intro_keys = $("#intro_keys").val();
         if(!intro_keys) return;
         var ajaxurl = './index.php?ctl=Login&met=getIntroducer&typ=json&intro_keys='+$("#intro_keys").val();

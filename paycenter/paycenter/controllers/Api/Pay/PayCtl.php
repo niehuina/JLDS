@@ -881,14 +881,12 @@ class Api_Pay_PayCtl extends Api_Controller
 	//分销佣金
     public function directsellerOrder()
     {
-        $data = array();
-        $this->data->addBody(-140, $data, $msg, $status);
-		
 		$date = array();
         $user_id  = request_row('user_id');  //收款人
         $amount   = request_row('user_money');        //付款金额
         $reason   = request_row('reason');  //付款说明
         $order_id = request_row('order_id');
+        $trade_type = request_row('trade_type', 10);
  
         //交易明细表
         $Consume_RecordModel = new Consume_RecordModel();
@@ -923,7 +921,7 @@ class Api_Pay_PayCtl extends Api_Controller
                 'record_title' => $reason,
                 'record_desc' => "",
                 'record_time' => date('Y-m-d H:i:s'),
-                'trade_type_id' => '10',
+                'trade_type_id' => $trade_type,
                 'user_type' => '1',
                 'record_status' => RecordStatusModel::RECORD_FINISH,
                 'record_paytime' => date('Y-m-d H:i:s'),
@@ -1225,7 +1223,8 @@ class Api_Pay_PayCtl extends Api_Controller
         $record_add_buy_row['user_type']     = 2;	//付款方
         $record_add_buy_row['record_status'] = RecordStatusModel::IN_HAND;
 
-        $Consume_RecordModel->addRecord($record_add_buy_row);
+        $flag3 = $Consume_RecordModel->addRecord($record_add_buy_row);
+        $flag = $flag && $flag3;
 
 
 //        $record_add_seller_row                  = array();
@@ -1245,6 +1244,10 @@ class Api_Pay_PayCtl extends Api_Controller
 //
 //        $Consume_RecordModel->addRecord($record_add_seller_row);
 
+        //4.进去用户的备货金
+        $User_ResourceModel = new User_ResourceModel();
+        $flag4= $User_ResourceModel->editResource($buy_id, ['user_stocks'=>-1*$order_payment_amount], true);
+        $flag = $flag && $flag4;
 
         if ($flag && $Consume_TradeModel->sql->commitDb())
         {

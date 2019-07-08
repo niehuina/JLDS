@@ -466,12 +466,16 @@ class Goods_CommonModel extends Goods_Common
 					$user_shop_id = $seller_info['shop_id'];
 				}
 
+                $user_id = Perm::$userId;
+                $user_info_model = new User_InfoModel();
+                $user_info = $user_info_model->getOne($user_id);
+                $user_grade = $user_info['user_grade'];
+
 				foreach ($goods_rows as $key => $goods_row)
 				{
 					if ($goods_row && isset($common_rows[$goods_row['common_id']]))
 					{                        
 						$common_rows[$goods_row['common_id']]["goods_id"] = $goods_row['goods_id'];
-						$common_rows[$goods_row['common_id']]["good"][]   = $goods_row;
 						//判断该商品是否是自己的商品
 						if ($goods_row['shop_id'] == $user_shop_id)
 						{
@@ -503,6 +507,15 @@ class Goods_CommonModel extends Goods_Common
 						{
 							$common_rows[$goods_row['common_id']]["is_favorite"] = 0;
 						}
+
+                        if($user_grade == '2'){
+                            $goods_row['goods_price'] = $goods_row['goods_price_vip'];
+                            $common_rows[$goods_row['common_id']]['common_price']  = $common_rows[$goods_row['common_id']]['common_price_vip'];
+                        }else if($user_grade == '3' || $user_grade == '4'){
+                            $goods_row['goods_price'] = $goods_row['goods_price_partner'];
+                            $common_rows[$goods_row['common_id']]['common_price']  = $common_rows[$goods_row['common_id']]['common_price_partner'];
+                        }
+                        $common_rows[$goods_row['common_id']]["good"][]   = $goods_row;
 					}
 					else
 					{

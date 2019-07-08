@@ -77,18 +77,18 @@
 
     $(document).on('click', '.logbtn', function()
     {
-        // callback = WapSiteUrl;
-        //
-        // login_url   = UCenterApiUrl + '?ctl=Login&met=index&typ=e';
-        //
-        //
-        // callback = ApiUrl + '?ctl=Login&met=check&typ=e&redirect=' + encodeURIComponent(callback);
-        //
-        //
-        // login_url = login_url + '&from=wap&callback=' + encodeURIComponent(callback);
-        //
-        // window.location.href = login_url;
-        window.location.href = "login.html";
+        callback = WapSiteUrl;
+
+        login_url   = UCenterApiUrl + '?ctl=Login&met=index&typ=e';
+
+
+        callback = ApiUrl + '?ctl=Login&met=check&typ=e&redirect=' + encodeURIComponent(callback);
+
+
+        login_url = login_url + '&from=wap&callback=' + encodeURIComponent(callback);
+
+        window.location.href = login_url;
+        // window.location.href = "login.html";
     });
 
     $(document).on('click', '#logoutbtn', function()

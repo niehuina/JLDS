@@ -466,7 +466,7 @@ class WebPosApi_OrderCtl extends WebPosApi_Controller
 
 			$flag2 = $this->Order_GoodsModel->addGoods($order_goods_row);
 
-			$flag3 = $this->Goods_BaseModel->delStock($v['goods_id'], $v['goods_num']);			//修改商品库存信息
+			$flag3 = $this->Goods_BaseModel->delStock($v['goods_id'], $v['goods_num'], $buyer_id);			//修改商品库存信息
 			$trade_title = $v['goods_name'];
 		}
 

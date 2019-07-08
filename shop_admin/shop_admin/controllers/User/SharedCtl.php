@@ -15,7 +15,10 @@ class User_SharedCtl extends AdminController
 		parent::__construct($ctl, $met, $typ);
 	}
 
-
+    public function shares()
+    {
+        return include $this->view->getView();
+    }
 }
 
 ?>

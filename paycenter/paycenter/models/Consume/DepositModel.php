@@ -316,63 +316,63 @@ class Consume_DepositModel extends Consume_Deposit
             if (is_ok($rs_row) && $Union_OrderModel->sql->commitDb())
             {
 				/****************************************************************************************************/
-				$user_id_row = $user_id;
-				try{
-					//付款成功后对买家进行极光推送
-					require_once "Jpush/JPush.php";
-					$type=array('type'=>'1');
-					$app_key = 'cf3f465424d79b172f0fc732';
-					$master_secret = 'bd7c4a065d3c4c320ffe3ed1';
-					$alert="您在".date("Y-m-d H:i:s")."支付订单成功";
-					$client = new JPush($app_key, $master_secret);
-					$result=$client->push()
-						->setPlatform(array('ios', 'android'))
-						->addAlias($user_id_row)
-						->addIosNotification($alert,'', null, null, null, $type)
-						->addAndroidNotification($alert,null,null,$type)
-						->setOptions(100000, 3600, null, false)
-						->send();
-				}
-				catch(Exception $e){
-
-				}
-
-				//给卖家极光推送
-				$Consume_TradeModel = new Consume_TradeModel();
-				//如果是合并支付订单
-				if(strpos($union_order['inorder'], ',') !== false)
-				{
-					$order_id_arr = explode($union_order['inorder'], ',');
-					$consume_trade_info = $Consume_TradeModel->getByWhere(['consume_trade_id:IN'=>$order_id_arr]);
-				}
-				else
-				{
-					$consume_trade_info = $Consume_TradeModel->getByWhere(['consume_trade_id'=>$union_order['inorder']]);
-				}
-
-				foreach($consume_trade_info as $key=>$val)
-				{
-					$user_id_row = $val['seller_id'];
-					try{
-						//订单付款成功后对卖家进行极光推送
-						require_once "Jpush/JPush.php";
-						$type=array('type'=>'1');
-						$app_key = 'cf3f465424d79b172f0fc732';
-						$master_secret = 'bd7c4a065d3c4c320ffe3ed1';
-						$alert="您的会员在".date("Y-m-d H:i:s")."提交了订单".$val['order_id'].'，请尽快发货。';
-						$client = new JPush($app_key, $master_secret);
-						$result=$client->push()
-							->setPlatform(array('ios', 'android'))
-							->addAlias($user_id_row)
-							->addIosNotification($alert,'', null, null, null, $type)
-							->addAndroidNotification($alert,null,null,$type)
-							->setOptions(100000, 3600, null, false)
-							->send();
-					}
-					catch(Exception $e){
-
-					}
-				}
+//				$user_id_row = $user_id;
+//				try{
+//					//付款成功后对买家进行极光推送
+//					require_once "Jpush/JPush.php";
+//					$type=array('type'=>'1');
+//					$app_key = 'cf3f465424d79b172f0fc732';
+//					$master_secret = 'bd7c4a065d3c4c320ffe3ed1';
+//					$alert="您在".date("Y-m-d H:i:s")."支付订单成功";
+//					$client = new JPush($app_key, $master_secret);
+//					$result=$client->push()
+//						->setPlatform(array('ios', 'android'))
+//						->addAlias($user_id_row)
+//						->addIosNotification($alert,'', null, null, null, $type)
+//						->addAndroidNotification($alert,null,null,$type)
+//						->setOptions(100000, 3600, null, false)
+//						->send();
+//				}
+//				catch(Exception $e){
+//
+//				}
+//
+//				//给卖家极光推送
+//				$Consume_TradeModel = new Consume_TradeModel();
+//				//如果是合并支付订单
+//				if(strpos($union_order['inorder'], ',') !== false)
+//				{
+//					$order_id_arr = explode($union_order['inorder'], ',');
+//					$consume_trade_info = $Consume_TradeModel->getByWhere(['consume_trade_id:IN'=>$order_id_arr]);
+//				}
+//				else
+//				{
+//					$consume_trade_info = $Consume_TradeModel->getByWhere(['consume_trade_id'=>$union_order['inorder']]);
+//				}
+//
+//				foreach($consume_trade_info as $key=>$val)
+//				{
+//					$user_id_row = $val['seller_id'];
+//					try{
+//						//订单付款成功后对卖家进行极光推送
+//						require_once "Jpush/JPush.php";
+//						$type=array('type'=>'1');
+//						$app_key = 'cf3f465424d79b172f0fc732';
+//						$master_secret = 'bd7c4a065d3c4c320ffe3ed1';
+//						$alert="您的会员在".date("Y-m-d H:i:s")."提交了订单".$val['order_id'].'，请尽快发货。';
+//						$client = new JPush($app_key, $master_secret);
+//						$result=$client->push()
+//							->setPlatform(array('ios', 'android'))
+//							->addAlias($user_id_row)
+//							->addIosNotification($alert,'', null, null, null, $type)
+//							->addAndroidNotification($alert,null,null,$type)
+//							->setOptions(100000, 3600, null, false)
+//							->send();
+//					}
+//					catch(Exception $e){
+//
+//					}
+//				}
 				/****************************************************************************************************/
 
 
@@ -482,26 +482,26 @@ class Consume_DepositModel extends Consume_Deposit
 		if ($flag && $Union_OrderModel->sql->commitDb())
 		{
 			/****************************************************************************************************/
-			$user_id_row = $user_id;
-			try{
-				//充值成功后进行极光推送
-				require_once "Jpush/JPush.php";
-				$type=array('type'=>'1');
-				$app_key = 'cf3f465424d79b172f0fc732';
-				$master_secret = 'bd7c4a065d3c4c320ffe3ed1';
-				$alert="您在".date("Y-m-d H:i:s")."充值成功";
-				$client = new JPush($app_key, $master_secret);
-				$result=$client->push()
-					->setPlatform(array('ios', 'android'))
-					->addAlias($user_id_row)
-					->addIosNotification($alert,'', null, null, null, $type)
-					->addAndroidNotification($alert,null,null,$type)
-					->setOptions(100000, 3600, null, false)
-					->send();
-			}
-			catch(Exception $e){
-
-			}
+//			$user_id_row = $user_id;
+//			try{
+//				//充值成功后进行极光推送
+//				require_once "Jpush/JPush.php";
+//				$type=array('type'=>'1');
+//				$app_key = 'cf3f465424d79b172f0fc732';
+//				$master_secret = 'bd7c4a065d3c4c320ffe3ed1';
+//				$alert="您在".date("Y-m-d H:i:s")."充值成功";
+//				$client = new JPush($app_key, $master_secret);
+//				$result=$client->push()
+//					->setPlatform(array('ios', 'android'))
+//					->addAlias($user_id_row)
+//					->addIosNotification($alert,'', null, null, null, $type)
+//					->addAndroidNotification($alert,null,null,$type)
+//					->setOptions(100000, 3600, null, false)
+//					->send();
+//			}
+//			catch(Exception $e){
+//
+//			}
 			/****************************************************************************************************/
 			return true;
 		}

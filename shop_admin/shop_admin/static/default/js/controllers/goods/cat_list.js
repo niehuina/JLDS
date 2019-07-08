@@ -380,16 +380,6 @@ var colModel = [{
     "width": 100,
     "sortable": false
 }, {
-    "name": "cat_commission",
-    "index": "cat_commission",
-    "label": "分佣比例",
-    "classes": "ui-ellipsis",
-    "align": "center",
-    "title": false,
-    "formatter": handle.commissionFmatter,
-    "sortable": false,
-     "width": 100,
-}, {
     "name": "cat_is_virtual",
     "index": "cat_is_virtual",
     "label": "服务产品",

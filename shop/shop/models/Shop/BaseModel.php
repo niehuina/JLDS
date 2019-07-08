@@ -812,6 +812,22 @@ limit $offset, $rows
 
         $user_ids = array_column($shop_list['items'], 'user_id');
 
+        $user_infoModel = new User_InfoModel();
+        $user_infos = $user_infoModel->getByWhere(['user_id:in'=>$user_ids, 'user_grade'=>4]);
+
+        foreach($shop_list['items'] as $key=>$shop){
+            if($user_infos[$shop['user_id']]) {
+                $shop_list['items'][$key]['user_realname'] = $user_infos[$shop['user_id']]['user_realname'];
+                $shop_list['items'][$key]['user_grade_text'] = '高级合伙人';
+            }
+            else{
+                unset($shop_list['items'][$key]);
+
+                $key=array_search($shop['user_id'] ,$user_ids);
+                array_splice($user_ids,$key,1);
+            }
+        }
+
         $key = Yf_Registry::get('paycenter_api_key');
         $url = Yf_Registry::get('paycenter_api_url');
         $app_id = Yf_Registry::get('paycenter_app_id');
@@ -822,15 +838,22 @@ limit $offset, $rows
         $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=getUserRowsResourceInfo&typ=json', $url), $formvars);
 
         if($rs['status'] == "200"){
-            foreach($shop_list['items'] as $key=>$shop){
-                if($rs['data'][$shop['user_id']]) {
-                    $shop_list['items'][$key]['user_stocks'] = $rs['data'][$shop['user_id']]['user_stocks'];
-                }else{
-                    $shop_list['items'][$key]['user_stocks'] = 0;
+            $user_resource_list = $rs['data'];
+            if(count($user_resource_list) == 0){
+                $shop_list['items'] = null;
+            }else {
+                foreach ($shop_list['items'] as $key => $shop) {
+                    $user_resource = $user_resource_list[$shop['user_id']];
+                    if ($user_resource && $user_resource['user_stocks']) {
+                        $shop_list['items'][$key]['user_stocks'] = $rs['data'][$shop['user_id']]['user_stocks'];
+                    } else {
+                        $shop_list['items'][$key]['user_stocks'] = 0;
+                    }
                 }
             }
         }
 
+        $shop_list['items'] = array_values($shop_list['items']);
         return $shop_list;
     }
 }

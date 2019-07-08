@@ -249,7 +249,33 @@ function initGrid() {
     $("#goods_grid").jqGrid('setLabel','rn', '序号', {'text-align':'left'},'');
 }
 
-initGrid();
+$(function () {
+    initGrid();
+
+    $("#button_next_step").click(function () {
+        var flag = selectAllCheck(false);
+        if(flag) {
+            var url = "index.php?ctl=Seller_Stock_Order&met=addSendOrder&typ=json";
+            var form_ser = $("#form").serialize();
+            $.post(url, form_ser, function (data) {
+                if (data.status == 200) {
+                    parent.Public.tips({
+                        content: '创建备货订单成功',
+                        type: 3
+                    });
+                    window.location.href = SITE_URL + "?ctl=Seller_Stock_Order&met=physical";
+                    return true;
+                } else {
+                    parent.Public.tips({
+                        content: '创建备货订单失败',
+                        type: 1
+                    });
+                    return false;
+                }
+            })
+        }
+    })
+});
 
 function disabledButton(){
     if(Object.keys(select_goods_list).length > 0){

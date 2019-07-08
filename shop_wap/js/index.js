@@ -23,7 +23,7 @@ $(function() {
     }
     var sub_site_id = getCookie('sub_site_id');
     $.ajax({
-        url: ApiUrl + "/index.php?ctl=Index&met=index&typ=json&ua=wap&sub_site_id="+sub_site_id,
+        url: ApiUrl + "/index.php?ctl=Index&met=index&typ=json&ua=wap&sub_site_id="+sub_site_id+"&user_id="+getCookie('id'),
         type: 'get',
         dataType: 'json',
         success: function(result) {

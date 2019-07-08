@@ -428,7 +428,7 @@ header.posf { animation: headerFixed 0.5s ease-in-out; -webkit-animation: header
 .btn-l { display: inline-block; width: 90%; margin: 0 5%; font-size: 0.8rem; line-height: 2rem; text-align: center; color: #FFF; background: #fd3d53; border-radius: 0.9rem; }
 .btn-green { display: inline-block; width: 90%; margin: 0 5%; font-size: 0.8rem; line-height: 2rem; text-align: center; color: #FFF; background: #0da944; border-radius: 0.2rem; border: 1px solid #0da944;}
 .btn-white { display: inline-block; width: 90%; margin: 0 5%; font-size: 0.8rem; line-height: 2rem; text-align: center; color: #0da944; background: #FFF; border-radius: 0.2rem; border: 1px solid #0da944;}
-.btn-mobile { display: inline-block;  margin: 0 5%; font-size: 0.6rem; line-height: 1.2rem; text-align: center; color: #FFF; background: #F60; border-radius: 0.1rem; border: 1px solid #F60;}
+.btn-mobile { display: inline-block;  margin: 0 5%; font-size: 0.6rem; line-height: 1.2rem; text-align: center; color: #FFF; background: #F60; border-radius: 0.1rem; border: 1px solid #F60; }
 
 /*图片选择上传*/
 .nctouch-upload { display: inline-block; width: 1.94rem; height: 1.94rem; border: solid 0.05rem #EEE; border-radius: 0.1rem; vertical-align: top;}

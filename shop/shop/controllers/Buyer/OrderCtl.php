@@ -503,7 +503,7 @@ class Buyer_OrderCtl extends Buyer_Controller
                 if($order_id){
                     $analytics_data['order_id'] = array($order_id);
                     $analytics_data['status'] =  Order_StateModel::ORDER_FINISH;
-		    Yf_Plugin_Manager::getInstance()->trigger('analyticsUpdateOrderStatus',$analytics_data);
+		            Yf_Plugin_Manager::getInstance()->trigger('analyticsUpdateOrderStatus',$analytics_data);
                 }
                 /******************************************************************/
                 
@@ -1160,7 +1160,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 		$cart_id           = request_row("cart_id");
 		$shop_id           = request_row("shop_id");
 		$remark            = request_row("remark");
-		$increase_arr    = request_row("increase_arr");
+		$increase_arr      = request_row("increase_arr");
 		$voucher_id        = request_row('voucher_id');
 		$pay_way_id		   = request_int('pay_way_id');
 		$invoice_id		   = request_int('invoice_id');
@@ -1169,105 +1169,9 @@ class Buyer_OrderCtl extends Buyer_Controller
 		$address_id        = request_int('address_id');
 		$from              = request_string('from','pc');
 		$rpacket_id		   = request_string('redpacket_id');
-		$rpacket_id = json_decode($rpacket_id, true);
-		$isShopAddr=request_string('isShopAddr');
+		$rpacket_id        = json_decode($rpacket_id, true);
+		$isShopAddr        = request_string('isShopAddr');
         $chain_id          = request_int('chain_id');
-
-		if($increase_arr)
-		{
-			//检验加价购商品信息是否正确
-			$increase_price_info = $this->checkIncreaseGoods($increase_arr, $cart_id);
-			if(!$increase_price_info)
-			{
-				return $this->data->addBody(-140, array('code'=>1), 'failure1', 250);
-			}
-            $increase_goods_id = array_column($increase_arr, 'increase_goods_id');
-		}
-
-		//重组加价购商品
-		//活动下的所有规则下的换购商品信息
-		if ($increase_goods_id)
-		{
-			$Goods_BaseModel                    = new Goods_BaseModel();
-			$Goods_CatModel                     = new Goods_CatModel();
-			$Shop_ClassBindModel 				= new Shop_ClassBindModel();
-			$increase_shop_row = array();
-			$increase_shop_ids = array();
-			foreach ($increase_price_info as $key => $val)
-			{
-				//获取加价购商品的信息
-				$goods_base         = $Goods_BaseModel->getOne($val['goods_id']);  //获取加价购商品的信息
-				$Goods_CommonModel = new Goods_CommonModel();
-				$common_base = $Goods_CommonModel->getOne($goods_base['common_id']);
-				$val['goods_name']  = $goods_base['goods_name'];
-				$val['goods_image'] = $goods_base['goods_image'];
-				$val['cat_id']      = $goods_base['cat_id'];
-				$val['common_id']   = $goods_base['common_id'];
-				$val['shop_id']	 = $goods_base['shop_id'];
-				$val['now_price']   = $val['redemp_price'];
-				//判断店铺中是否存在自定义的经营类目
-				$cat_base = $Shop_ClassBindModel->getByWhere(array('shop_id'=>$val['shop_id'],'product_class_id'=>$val['cat_id']));
-				if($cat_base)
-				{
-					$cat_base = current($cat_base);
-					$cat_commission = $cat_base['commission_rate'];
-				}
-				else
-				{
-					//获取分类佣金
-					$cat_base = $Goods_CatModel->getOne($val['cat_id']);
-					if ($cat_base)
-					{
-						$cat_commission = $cat_base['cat_commission'];
-					}
-					else
-					{
-						$cat_commission = 0;
-					}
-				}
-
-				$val['cat_commission'] = $cat_commission;
-				$val['commission'] = number_format(($val['redemp_price'] * $cat_commission / 100), 2, '.', '');
-
-				if(Web_ConfigModel::value('Plugin_Directseller'))
-				{
-					$val['directseller_flag'] = $common_base['common_is_directseller'];
-					if($common_base['common_is_directseller'])
-					{
-						//产品佣金
-						$val['directseller_commission_0'] = $val['redemp_price']*$common_base['common_cps_rate']/100;
-						$val['directseller_commission_1'] = $val['redemp_price']*$common_base['common_second_cps_rate']/100;
-						$val['directseller_commission_2'] = $val['redemp_price']*$common_base['common_third_cps_rate']/100;
-					}
-				}
-
-				if (in_array($val['shop_id'], $increase_shop_ids))
-				{
-					$increase_shop_row[$val['shop_id']]['goods'][] = $val;
-					$increase_shop_row[$val['shop_id']]['price'] += $val['redemp_price']*$val['goods_num'];
-					$increase_shop_row[$val['shop_id']]['commission'] += $val['commission'];
-
-					if(Web_ConfigModel::value('Plugin_Directseller'))
-					{
-						$increase_shop_row[$val['shop_id']]['directseller_commission'] += $val['directseller_commission_0']+$val['directseller_commission_1']+$val['directseller_commission_2'];
-						$increase_shop_row[$val['shop_id']]['directseller_flag'] = $common_base['common_is_directseller'];
-					}
-				}
-				else
-				{
-					$increase_shop_ids[] = $val['shop_id'];
-					$increase_shop_row[$val['shop_id']]['goods'][]             = $val;
-					$increase_shop_row[$val['shop_id']]['price']      = $val['redemp_price']*$val['goods_num'];
-					$increase_shop_row[$val['shop_id']]['commission'] = $val['commission'];
-
-					if(Web_ConfigModel::value('Plugin_Directseller'))
-					{
-						$increase_shop_row[$val['shop_id']]['directseller_commission'] = $val['directseller_commission_0']+$val['directseller_commission_1']+$val['directseller_commission_2'];
-						$increase_shop_row[$val['shop_id']]['directseller_flag'] = $common_base['common_is_directseller'];
-					}
-				}
-			}
-		}
 
 		if($from == 'pc')
 		{
@@ -1298,7 +1202,6 @@ class Buyer_OrderCtl extends Buyer_Controller
 			$order_status = Order_StateModel::ORDER_WAIT_PREPARE_GOODS;
 		}
 
-
 		$shop_remark = array_combine($shop_id, $remark);
 
 		//开启事物
@@ -1319,7 +1222,6 @@ class Buyer_OrderCtl extends Buyer_Controller
 		{
 			$user_rate = $user_grade['user_grade_rate'];
 		}
-
 		
 		//分销员开启，查找用户的上级
 		if(Web_ConfigModel::value('Plugin_Directseller'))
@@ -1332,7 +1234,104 @@ class Buyer_OrderCtl extends Buyer_Controller
 			@$directseller_gp_id = $user_g_parent['user_parent_id']; //三级
 		}
 
-		//重组代金券信息
+
+        if($increase_arr)
+        {
+            //检验加价购商品信息是否正确
+            $increase_price_info = $this->checkIncreaseGoods($increase_arr, $cart_id);
+            if(!$increase_price_info)
+            {
+                return $this->data->addBody(-140, array('code'=>1), 'failure1', 250);
+            }
+            $increase_goods_id = array_column($increase_arr, 'increase_goods_id');
+        }
+
+        //重组加价购商品
+        //活动下的所有规则下的换购商品信息
+        if ($increase_goods_id)
+        {
+            $Goods_BaseModel                    = new Goods_BaseModel();
+            $Goods_CatModel                     = new Goods_CatModel();
+            $Shop_ClassBindModel 				= new Shop_ClassBindModel();
+            $increase_shop_row = array();
+            $increase_shop_ids = array();
+            foreach ($increase_price_info as $key => $val)
+            {
+                //获取加价购商品的信息
+                $goods_base         = $Goods_BaseModel->getOne($val['goods_id']);  //获取加价购商品的信息
+                $Goods_CommonModel = new Goods_CommonModel();
+                $common_base = $Goods_CommonModel->getOne($goods_base['common_id']);
+                $val['goods_name']  = $goods_base['goods_name'];
+                $val['goods_image'] = $goods_base['goods_image'];
+                $val['cat_id']      = $goods_base['cat_id'];
+                $val['common_id']   = $goods_base['common_id'];
+                $val['shop_id']	 = $goods_base['shop_id'];
+                $val['now_price']   = $val['redemp_price'];
+                //判断店铺中是否存在自定义的经营类目
+				$cat_base = $Shop_ClassBindModel->getByWhere(array('shop_id'=>$val['shop_id'],'product_class_id'=>$val['cat_id']));
+				if($cat_base)
+				{
+					$cat_base = current($cat_base);
+					$cat_commission = $cat_base['commission_rate'];
+				}
+				else
+				{
+					//获取分类佣金
+					$cat_base = $Goods_CatModel->getOne($val['cat_id']);
+					if ($cat_base)
+					{
+						$cat_commission = $cat_base['cat_commission'];
+					}
+					else
+					{
+						$cat_commission = 0;
+					}
+				}
+
+                $val['cat_commission'] = $cat_commission;
+                $val['commission'] = number_format(($val['redemp_price'] * $cat_commission / 100), 2, '.', '');
+
+                if(Web_ConfigModel::value('Plugin_Directseller'))
+                {
+                    $val['directseller_flag'] = 0;//$common_base['common_is_directseller'];
+                    if($common_base['common_is_directseller'])
+                    {
+                        //产品佣金
+						$val['directseller_commission_0'] = $val['redemp_price']*$common_base['common_cps_rate']/100;
+						$val['directseller_commission_1'] = $val['redemp_price']*$common_base['common_second_cps_rate']/100;
+						$val['directseller_commission_2'] = $val['redemp_price']*$common_base['common_third_cps_rate']/100;
+                    }
+                }
+
+                if (in_array($val['shop_id'], $increase_shop_ids))
+                {
+                    $increase_shop_row[$val['shop_id']]['goods'][] = $val;
+                    $increase_shop_row[$val['shop_id']]['price'] += $val['redemp_price']*$val['goods_num'];
+                    $increase_shop_row[$val['shop_id']]['commission'] += $val['commission'];
+
+                    if(Web_ConfigModel::value('Plugin_Directseller'))
+                    {
+                        $increase_shop_row[$val['shop_id']]['directseller_commission'] += $val['directseller_commission_0']+$val['directseller_commission_1']+$val['directseller_commission_2'];
+                        $increase_shop_row[$val['shop_id']]['directseller_flag'] = $common_base['common_is_directseller'];
+                    }
+                }
+                else
+                {
+                    $increase_shop_ids[] = $val['shop_id'];
+                    $increase_shop_row[$val['shop_id']]['goods'][]             = $val;
+                    $increase_shop_row[$val['shop_id']]['price']      = $val['redemp_price']*$val['goods_num'];
+                    $increase_shop_row[$val['shop_id']]['commission'] = $val['commission'];
+
+                    if(Web_ConfigModel::value('Plugin_Directseller'))
+                    {
+                        $increase_shop_row[$val['shop_id']]['directseller_commission'] = $val['directseller_commission_0']+$val['directseller_commission_1']+$val['directseller_commission_2'];
+                        $increase_shop_row[$val['shop_id']]['directseller_flag'] = $common_base['common_is_directseller'];
+                    }
+                }
+            }
+        }
+
+        //重组代金券信息
 		if ($voucher_id)
 		{
 			//查找代金券的信息
@@ -1408,29 +1407,29 @@ class Buyer_OrderCtl extends Buyer_Controller
 
 			}
 
-			//计算加价购商品的价格
-			if (isset($increase_shop_row[$ckey]))
-			{
-				$increase_price      = $increase_shop_row[$ckey]['price'];
+            //计算加价购商品的价格
+            if (isset($increase_shop_row[$ckey]))
+            {
+                $increase_price      = $increase_shop_row[$ckey]['price'];
 
-				foreach($increase_shop_row[$ckey]['goods'] as $insgkey => $insgval)
-				{
-					array_push($shop_order_goods_row[$ckey]['goods'], $insgval);
-				}
+                foreach($increase_shop_row[$ckey]['goods'] as $insgkey => $insgval)
+                {
+                    array_push($shop_order_goods_row[$ckey]['goods'], $insgval);
+                }
 
-				if($increase_shop_row[$key]['directseller_flag']&&isset($increase_shop_row[$key]))
-				{
-					$increase_directseller_commission = $increase_shop_row[$key]['directseller_commission'];
-				}else{
-					$increase_directseller_commission = 0;
-				}
-				$order_directseller_commission = $cgval['directseller_commission'] + $increase_directseller_commission;
-			}
-			else
-			{
-				$increase_price      = 0;
-				$order_directseller_commission = 0;
-			}
+                if($increase_shop_row[$key]['directseller_flag']&&isset($increase_shop_row[$key]))
+                {
+                    $increase_directseller_commission = $increase_shop_row[$key]['directseller_commission'];
+                }else{
+                    $increase_directseller_commission = 0;
+                }
+                $order_directseller_commission = $cgval['directseller_commission'] + $increase_directseller_commission;
+            }
+            else
+            {
+                $increase_price      = 0;
+                $order_directseller_commission = 0;
+            }
 
 			$shop_order_goods_row[$ckey]['shop_sumprice'] += $increase_price;
 
@@ -1907,7 +1906,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 				fb($flag2);*/
 				$flag = $flag && $flag2;
 				//删除商品库存
-				$flag3 = $Goods_BaseModel->delStock($v['goods_id'], $v['goods_num']);
+				$flag3 = $Goods_BaseModel->delStock($v['goods_id'], $v['goods_num'], $user_id);
 
 				$trade_title = $v['goods_base']['goods_name'];
 
@@ -1968,7 +1967,6 @@ class Buyer_OrderCtl extends Buyer_Controller
 						$order_goods_row['directseller_flag'] = $v['directseller_flag'];
 						$order_goods_row['directseller_id'] = $user_parent_id;
 					}
-
 
 					$flag2 = $Order_GoodsModel->addGoods($order_goods_row);
 
@@ -4841,7 +4839,6 @@ class Buyer_OrderCtl extends Buyer_Controller
         }
 
         
-        
         //将不同订单号分别插入订单发票表
         if($order_invoice_id > 0)
         {
@@ -5105,6 +5102,36 @@ class Buyer_OrderCtl extends Buyer_Controller
         $page_nav           = $Yf_Page->prompt();
 
         include $this->view->getView();
+    }
+
+    public function get_order_profit()
+    {
+        $OrderModel = new Order_BaseModel();
+        $Order_GoodsModel = new Order_GoodsModel();
+
+        $page    = request_int('curpage', 1);
+        $rows    = request_int('page', 20);
+        $status    = request_int('status', 0);
+        $cond_row['directseller_id:>'] = 0;
+        $cond_row['order_is_settlement'] = $status;
+        $order_row['order_create_time'] = 'desc';
+        $order_list = $OrderModel->listByWhere($cond_row, $order_row, $page, $rows);
+
+        foreach ($order_list['items'] as $key=>$order){
+            $goods_list = $Order_GoodsModel->getByWhere($order['order_id']);
+            $directseller_commission_0_array = array_column($goods_list, 'directseller_commission_0');
+            $order_commission_0 = array_sum($directseller_commission_0_array);
+
+            $order_list['items'][$key]['order_create_text'] = '创建日'.date('m-d H:i', strtotime($order['order_create_time']));
+            if($order['order_settlement_time']){
+                $order_list['items'][$key]['order_settlement_text'] = '结算日'.date('m-d H:i', strtotime($order['order_settlement_time']));
+            }else{
+                $order_list['items'][$key]['order_settlement_text'] = '';
+            }
+            $order_list['items'][$key]['order_commission'] = $order_commission_0;
+        }
+
+        $this->data->addBody(-140, $order_list);
     }
 }
 

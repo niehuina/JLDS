@@ -73,7 +73,7 @@ $(function () {
                     $(".member-center").append(html);
                     var html = '<dl class="mt5">' +
                         '<dt>' +
-                        '<a href="member_agent.html">' +
+                        '<a href="member_profit.html">' +
                         '<h3><i class="mc-02"></i>下线返利</h3>' +
                         '<h5><i class="arrow-r"></i></h5>' +
                         '</a>' +
@@ -82,17 +82,17 @@ $(function () {
                     $(".member-center").append(html);
                 }
 
-                if (true) {
-                    var html = '<dl class="mt5">' +
-                        '<dt>' +
-                        '<a id="distribution" href="distlog.html">' +
-                        '<h3><i class="mc-07"></i>分销明细</h3>' +
-                        '<h5><i class="arrow-r"></i></h5>' +
-                        '</a>' +
-                        '</dt>' +
-                        '</dl>';
-                    $(".member-center").append(html);
-                }
+                // if (true) {
+                //     var html = '<dl class="mt5">' +
+                //         '<dt>' +
+                //         '<a id="distribution" href="distlog.html">' +
+                //         '<h3><i class="mc-07"></i>分销明细</h3>' +
+                //         '<h5><i class="arrow-r"></i></h5>' +
+                //         '</a>' +
+                //         '</dt>' +
+                //         '</dl>';
+                //     $(".member-center").append(html);
+                // }
 
                 return false;
             }

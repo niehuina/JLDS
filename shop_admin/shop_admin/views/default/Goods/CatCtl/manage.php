@@ -74,23 +74,23 @@ body{background: #fff;}
             </dd>
         </dl>
         -->
-        <dl class="row">
-            <dt class="tit">
-                <label><em>*</em>分佣比例</label>
-            </dt>
-            <dd class="opt">
-                <div style="float: left;width:50%;">
-                    <input id="cat_commission" class="ui-input ui-input-ph" type="text" value="1" name="cat_commission">
-                    <i>%</i> <span class="err"></span>
-                    <p class="notic mb10">分佣比例必须为0-100的整数。</p>
-                </div>
-                <!--<div style="float: right;width:50%;">
-                    <label for="t_commis_rate">
-                    <input id="t_commis_rate" class="checkbox" type="checkbox" value="1" name="t_commis_rate">关联到子分类</label>
-                    <p class="notic">勾选关联到子分类后，该分类下的子分类分佣比利也将按此继承设定。</p>
-                </div>-->
-            </dd>
-        </dl>
+<!--        <dl class="row">-->
+<!--            <dt class="tit">-->
+<!--                <label><em>*</em>分佣比例</label>-->
+<!--            </dt>-->
+<!--            <dd class="opt">-->
+<!--                <div style="float: left;width:50%;">-->
+<!--                    <input id="cat_commission" class="ui-input ui-input-ph" type="text" value="1" name="cat_commission">-->
+<!--                    <i>%</i> <span class="err"></span>-->
+<!--                    <p class="notic mb10">分佣比例必须为0-100的整数。</p>-->
+<!--                </div>-->
+<!--                <!--<div style="float: right;width:50%;">-->
+<!--                    <label for="t_commis_rate">-->
+<!--                    <input id="t_commis_rate" class="checkbox" type="checkbox" value="1" name="t_commis_rate">关联到子分类</label>-->
+<!--                    <p class="notic">勾选关联到子分类后，该分类下的子分类分佣比利也将按此继承设定。</p>-->
+<!--                </div>-->-->
+<!--            </dd>-->
+<!--        </dl>-->
         <dl class="row">
             <dt class="tit">
                 <label>上级分类:</label>

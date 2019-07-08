@@ -17,6 +17,8 @@ class Trade_TypeModel
     const SHARES = 10; //股金
     const STOCKS = 11; //备货金
     const STOCK_ORDER = 12; //备货订单
+    const STOCK_ORDER_REBATE = 13; //备货差价返利
+    const BUYER_ORDER_REBATE = 14; //订单提成返利
 
 	public static $trade_type_row = array(
 		'1' => 'shopping',
@@ -30,7 +32,9 @@ class Trade_TypeModel
 		'9' => 'web_pos',
         '10' => 'shares',
         '11' => 'stocks',
-        '12' => 'stock_order'
+        '12' => 'stock_order',
+        '13' => 'stock_order_profit',
+        '14' => 'buyer_order_profit'
 
 	);
     public function __construct()
@@ -48,6 +52,8 @@ class Trade_TypeModel
             '10' => _('股金'),
             '11' => _('备货金'),
             '12' => _('备货订单'),
+            '13' => _('备货差价返利'),
+            '14' => _('订单提成返利'),
 		);
 	}
         

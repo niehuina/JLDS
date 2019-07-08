@@ -202,7 +202,8 @@ include __DIR__ . '/../includes/header.php';
     <script type="text/javascript" src="../js/libs/template.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript" src="../js/tmpl/product_list.js"></script>
-<!--    <script type="text/javascript" src="../js/tmpl/footer.js"></script>--></body></html>-->
+<!--    <script type="text/javascript" src="../js/tmpl/footer.js"></script>-->
+    </body></html>
 <?php
 include __DIR__ . '/../includes/footer.php';
 ?>

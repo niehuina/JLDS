@@ -102,10 +102,10 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 <tr>
                     <th class="w10">&nbsp;</th>
                     <th colspan="2"><?=__('商品')?></th>
-                    <th class="w120"><?=__('商品价格')?><!--(<?/*=Web_ConfigModel::value('monetary_unit')*/?>)--></th>
+                    <th class="w120"><?=__('商品VIP价格')?><!--(<?/*=Web_ConfigModel::value('monetary_unit')*/?>)--></th>
                     <th class="w60"><?=__('数量')?></th>
-                    <th class="w200"><strong><?=__('实付')?> * <?=__('佣金比')?> = <?=__('应付佣金')?>(<?=Web_ConfigModel::value('monetary_unit')?>)</strong></th>
-                    <th class="w100"><?=__('优惠活动')?></th>
+                    <th class="w200"><strong><?=__('应返还差价')?>(<?=Web_ConfigModel::value('monetary_unit')?>)</strong></th>
+<!--                    <th class="w100">--><?//=__('优惠活动')?><!--</th>-->
                     <th class="w100"><?=__('操作')?></th>
                 </tr>
                 </thead>
@@ -130,24 +130,33 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                             <!--<dd><?/*= $val['spec_name']; */?></dd>-->
                         </dl>
                     </td>
-                    <td><?= format_money($val['goods_price']); ?><p class="green"></p></td>
+                    <td><?= format_money($val['goods_price_vip']); ?><p class="green"></p></td>
                     <td><?= $val['goods_num']; ?></td>
                     <td class="commis bdl bdr"><?= $val['order_goods_commission']?></td>
                     <!-- S 合并TD -->
                     <?php if ( $key == 0 ) { ?>
-                    <td class="bdl bdr" rowspan="<?= $data['goods_cat_num']; ?>"><?= $data['order_shop_benefit']?></td>
-                    <td class="bdl bdr" rowspan="<?= $data['goods_cat_num']; ?>">
-                        <?= $data['order_stauts_const']; ?>
+<!--                    <td class="bdl bdr" rowspan="--><?//= $data['goods_cat_num']; ?><!--">--><?//= $data['order_shop_benefit']?><!--</td>-->
+                    <td class="bdl bdr" rowspan="<?= $data['goods_count']; ?>">
+                        <?= $data['order_stauts_const']; ?><br/>
                         <?php if($data['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS ){ ?>
-                            <p>
-                            <a style="position:relative;" onmouseover="show_logistic('<?=($data['order_id'])?>','<?=($data['order_shipping_express_id'])?>','<?=($data['order_shipping_code'])?>')" onmouseout="hide_logistic('<?=($data['order_id'])?>')">
-                                <i class="iconfont icon-icowaitproduct rel_top2"></i><?=__('物流信息')?>
-                                <div style="display: none;" id="info_<?=($data['order_id'])?>" class="prompt-01"> </div>
-                            </a>
-                                </p>
+                            <?php if($data['order_shipping']){ ?>
+                                <?php $is_show = count($data['order_shipping']) > 1 ?>
+                                <?php foreach($data['order_shipping'] as $i=>$ship){ ?>
+                                    <a style="position:relative;" onmouseover="show_logistic('<?=($ship['stock_order_id'])?>','<?=($ship['shipping_express_id'])?>','<?=($ship['shipping_code'])?>')"
+                                       onmouseout="hide_logistic('<?=($ship['stock_order_id'])?>')">
+                                        <i class="iconfont icon-icowaitproduct rel_top2"></i><?=__('物流信息')?><?php if($is_show) echo $i+1; ?>
+                                        <div style="display: none;" id="info_<?=($ship['stock_order_id'])?>" class="prompt-01"> </div>
+                                    </a><br/>
+                                <?php }?>
+                            <?php } else {?>
+                                <a style="position:relative;" onmouseover="show_logistic('<?=($data['stock_order_id'])?>','<?=($data['order_shipping_express_id'])?>','<?=($data['order_shipping_code'])?>')"
+                                   onmouseout="hide_logistic('<?=($data['stock_order_id'])?>')">
+                                    <i class="iconfont icon-icowaitproduct rel_top2"></i><?=__('物流信息')?>
+                                    <div style="display: none;" id="info_<?=($data['stock_order_id'])?>" class="prompt-01"> </div>
+                                </a>
+                            <?php }?>
                         <?php }?>
                     </td>
-
                     <?php } ?>
                     <!-- E 合并TD -->
                 </tr>
@@ -159,7 +168,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="20">
+                    <td colspan="7">
                         <dl class="freight">
                             <dd><?= $data['shipping_info']; ?></dd>
                         </dl>

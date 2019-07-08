@@ -123,6 +123,12 @@ class IndexCtl extends Controller
 
 						if ( $common_list )
 						{
+                            $user_id = request_int('user_id', '');;
+						    if($user_id){
+                                $user_info_model = new User_InfoModel();
+                                $user_info = $user_info_model->getOne($user_id);
+                                $user_grade = $user_info['user_grade'];
+                            }
 							foreach($common_list as $common_id => $common_data)
 							{
 								$goods_id = pos($common_data['goods_id']);
@@ -134,6 +140,14 @@ class IndexCtl extends Controller
 								$item[$common_id]['goods_name'] 		   = $common_data['common_name'];
 								$item[$common_id]['goods_promotion_price'] = $common_data['common_price'];
 								$item[$common_id]['goods_image'] 		   = sprintf('%s!360x360', $common_data['common_image']);
+
+                                if($user_id){
+                                    if($user_grade == '2'){
+                                        $item[$common_id]['goods_promotion_price']  = $common_data['common_price_vip'];
+                                    }else if($user_grade == '3' || $user_grade == '4'){
+                                        $item[$common_id]['goods_promotion_price']  = $common_data['common_price_partner'];
+                                    }
+                                }
 							}
 							$goods['item'] = array_values($item);
 							$goods['title'] = $layout_data_val['mb_tpl_layout_title'];

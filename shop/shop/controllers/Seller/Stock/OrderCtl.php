@@ -29,8 +29,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
         $order['order_create_time'] = 'desc';
         $Stock_OrderModel = new Stock_OrderModel();
-        $self_shop_id = Web_ConfigModel::value('self_shop_id');
-        if($self_shop_id == Perm::$shopId) {
+        if(self::$self_shop_id == Perm::$shopId) {
             $data = $Stock_OrderModel->getOrderList($condition, $order, $page, $rows);
         }else{
             $data = $Stock_OrderModel->getOrderUserList($condition, $order, $page, $rows);
@@ -57,8 +56,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         $order['order_create_time'] = 'desc';
         $Stock_OrderModel = new Stock_OrderModel();
 
-        $self_shop_id = Web_ConfigModel::value('self_shop_id');
-        if($self_shop_id == Perm::$shopId) {
+        if(self::$self_shop_id == Perm::$shopId) {
             $data = $Stock_OrderModel->getOrderList($condition, $order, $page, $rows);
         }else{
             $data = $Stock_OrderModel->getOrderUserList($condition, $order, $page, $rows);
@@ -100,6 +98,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         $query_end_date = request_string('query_end_date');
         $query_buyer_name = request_string('query_buyer_name');
         $query_order_sn = request_string('query_order_sn');
+        $skip_off = request_int('skip_off');            //是否显示已取消订单
 
         if (!empty($query_start_date)) {
             $condition['order_create_time:>='] = $query_start_date;
@@ -116,6 +115,11 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         if (!empty($query_order_id)) {
             $condition['stock_order_id'] = $query_order_sn;
         }
+
+        if ($skip_off) {
+            $condition['order_status:<>'] = Order_StateModel::ORDER_CANCEL;
+        }
+
 
         return $condition;
     }
@@ -204,7 +208,6 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $order_row['order_date'] = date('Y-m-d');
             $order_row['order_create_time'] = get_date_time();
             $order_row['shop_id'] = $shop_id;
-            $order_row['shop_name'] = $shop_info['shop_name'];
             $order_row['shop_user_id'] = $user_id;
             $order_row['shop_user_name'] = $user_info['user_name'];
             $order_row['order_receiver_name'] = $order_address_name;
@@ -226,8 +229,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
             $goods_ids = array_keys($select_goods_list);
             $cond_row = array();
-            $self_shop_id = Web_ConfigModel::value('self_shop_id');
-            $cond_row['shop_id'] = $self_shop_id;
+            $cond_row['shop_id'] = self::$self_shop_id;
             $cond_row['goods_id:in'] = $goods_ids;
             $order['CONVERT(goods_name USING gbk)'] = 'asc';
             $Goods_BaseModel = new Goods_BaseModel();
@@ -235,7 +237,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
             //如果卖家设置了默认地址，则将默认地址信息加入order表
             $Shop_ShippingAddressModel = new Shop_ShippingAddressModel();
-            $address_list              = $Shop_ShippingAddressModel->getByWhere(array('shop_id' => $self_shop_id, 'shipping_address_default'=>1));
+            $address_list              = $Shop_ShippingAddressModel->getByWhere(array('shop_id' => self::$self_shop_id, 'shipping_address_default'=>1));
             if($address_list)
             {
                 $address_list = current($address_list);
@@ -309,7 +311,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $formvars['seller_id'] = $shop_info['user_id'];
             $formvars['seller_name'] = $shop_info['user_name'];
             $formvars['order_state_id'] = $order_row['order_status'];
-            $formvars['order_payment_amount'] = $order_row['order_goods_amount_vip'];
+            $formvars['order_payment_amount'] = $order_row['order_payment_amount_vip'];
             $formvars['order_commission_fee'] = 0;
             $formvars['trade_remark'] = $order_row['order_message'];
             $formvars['trade_create_time'] = $order_row['order_create_time'];
@@ -329,7 +331,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             if (is_ok($rs) && $Stock_OrderModel->sql->commitDb()) {
                 $status = 200;
                 $msg = __('success');
-                location_to(Yf_Registry::get('url').'?ctl=Seller_Stock_Order&met=physical');
+                //location_to(Yf_Registry::get('url').'?ctl=Seller_Stock_Order&met=physical');
             } else {
                 $Stock_OrderModel->sql->rollBackDb();
                 $m = $Stock_OrderModel->msg->getMessages();
@@ -368,8 +370,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         $page    = request_int('page', 0);
         $rows    = request_int('rows', 20);
 
-        $self_shop_id = Web_ConfigModel::value('self_shop_id');
-        $cond_row['shop_id'] = $self_shop_id;
+        $cond_row['shop_id'] = self::$self_shop_id;
         $cond_row['common_state'] = Goods_CommonModel::GOODS_STATE_NORMAL;
         $cond_row['common_verify'] = Goods_CommonModel::GOODS_VERIFY_ALLOW;
         if (!empty($goods_key) && isset($goods_key))
@@ -467,6 +468,9 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             }
             include $this->view->getView();
         } else {
+            $Stock_OrderGoodsModel = new Stock_OrderGoodsModel();
+            $Stock_OrderShippingModel = new Stock_OrderShippingModel();
+
             //判断该笔订单是否是自己的单子
             $order_base = $Stock_OrderModel->getOne($order_id);
 
@@ -476,22 +480,52 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $Stock_OrderModel->sql->startTransactionDb();
 
             if ($order_base['order_status'] < Order_StateModel::ORDER_RECEIVED) {
-                //设置发货
-                $update_data['order_status'] = Order_StateModel::ORDER_WAIT_CONFIRM_GOODS;
-                $update_data['order_shipping_express_id'] = request_int('order_shipping_express_id');
-                $update_data['order_shipping_code'] = request_int('order_shipping_code');
-                $update_data['order_shipping_message'] = request_string('order_shipping_message');
-//                $update_data['order_shipping_method']     = $order_address_phone;
-//                $update_data['order_seller_message']      = request_string('order_seller_message');
+                //查询订单的总商品数量，及已发货的商品数量
+                $goods_cond['stock_order_id'] = $order_id;
+                $order_goods_count = $Stock_OrderGoodsModel->get_count($goods_cond);
+                $goods_cond['goods_shipping_status'] = 1;
+                $already_shipping_goods_count = $Stock_OrderGoodsModel->get_count($goods_cond);
 
-                //配送时间 收货时间
+                //本次发货的商品数量
+                $order_send_goods = request_string('order_send_goods');
+                $order_send_goods = decode_json($order_send_goods);
+                $current_ship_goods_count = count($order_send_goods);
+
                 $current_time = time();
-                $confirm_order_time = Yf_Registry::get('confirm_order_time');
-                $update_data['order_shipping_time'] = date('Y-m-d H:i:s', $current_time);
-                $update_data['order_receiver_date'] = date('Y-m-d H:i:s', $current_time + $confirm_order_time);
+                //判断订单的总商品数量 是否等于 已发货的商品数量+本次发货的商品数量
+                if($order_goods_count == ($already_shipping_goods_count + $current_ship_goods_count)) {
+                    //设置发货
+                    $update_data['order_status'] = Order_StateModel::ORDER_WAIT_CONFIRM_GOODS;
+//                $update_data['order_shipping_express_id'] = request_int('order_shipping_express_id');
+//                $update_data['order_shipping_code'] = request_string('order_shipping_code');
+//                $update_data['order_shipping_message'] = request_string('order_shipping_message');
+//                $update_data['order_seller_message']      = request_string('order_seller_message');
+//                $update_data['order_shipping_method']     = $order_address_phone;
+                    //配送时间 默认收货时间
+                    $confirm_order_time = Yf_Registry::get('confirm_order_time');
+                    $update_data['order_shipping_time'] = date('Y-m-d H:i:s', $current_time);
+                    $update_data['order_receiver_date'] = date('Y-m-d H:i:s', $current_time + $confirm_order_time);
+                    $update_flag = $Stock_OrderModel->editOrder($order_id, $update_data);
+                    check_rs($update_flag, $rs_row);
+                }
 
-                $edit_flag = $Stock_OrderModel->editOrder($order_id, $update_data);
+                //更新订单商品的发货状态
+                $order_goods_id = array_values($order_send_goods);
+                $goods_edit['goods_shipping_status'] = 1;
+                $goods_edit['goods_shipping_code'] = request_string('order_shipping_code');
+                $edit_flag = $Stock_OrderGoodsModel->editOrderGoods($order_goods_id,$goods_edit);
                 check_rs($edit_flag, $rs_row);
+
+                //添加订单物流记录
+                $add_shipping['stock_order_id'] = $order_id;
+                $add_shipping['shipping_express_id'] = request_int('order_shipping_express_id');
+                $add_shipping['shipping_code'] = request_string('order_shipping_code');
+                $add_shipping['shipping_message'] = request_string('order_shipping_message');
+                $add_shipping['seller_message']      = request_string('order_seller_message');
+                $add_shipping['shipping_stock_goods_id'] = implode(',', $order_goods_id);
+                $add_shipping['shipping_time'] = date('Y-m-d H:i:s', $current_time);
+                $add_flag = $Stock_OrderShippingModel->addOrderShipping($add_shipping);
+                check_rs($add_flag, $rs_row);
 
                 $flag = is_ok($rs_row);
                 if($flag) {
@@ -511,12 +545,13 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                 $flag = false;
                 check_rs($flag, $rs_row);
             }
+
             $flag = is_ok($rs_row);
 
             if ($flag && $Stock_OrderModel->sql->commitDb()) {
                 //发送站内信
                 $message = new MessageModel();
-                $message->sendMessage('ordor_complete_shipping', $order_base['shop_user_id'], $order_base['shop_user_name'], $order_id, $order_base['shop_name'], 0, MessageModel::ORDER_MESSAGE);
+                $message->sendMessage('ordor_complete_shipping', $order_base['shop_user_id'], $order_base['shop_user_name'], $order_id, '', 0, MessageModel::ORDER_MESSAGE);
 
                 $msg = __('success');
                 $status = 200;
@@ -528,6 +563,46 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
             $this->data->addBody(-140, array(), $msg, $status);
         }
+    }
+
+    /**
+     * 选择物流商品
+     * @throws Exception
+     */
+    public function stock_orderGoods()
+    {
+        $stock_id = request_string('order_id');
+        $typ = request_string('typ');
+
+        if ($typ == 'e')
+        {
+            include $this->view->getView();
+        }else{
+            if($_SERVER['REQUEST_METHOD']=="POST"){
+                $this->data->addBody(-140, array(), '', 250);
+            }else {
+                $Yf_Page = new Yf_Page();
+                $row = $Yf_Page->listRows;
+                $offset = request_int('firstRow', 0);
+                $page = ceil_r($offset / $row);
+
+                $goods_key = request_string('goods_key');
+                if (!empty($goods_key)) {
+                    $cond_row['goods_name:like'] = '%' . $goods_key . '%';
+                }
+                $cond_row['stock_order_id'] = $stock_id;
+                $cond_row['goods_shipping_status'] = 0;
+                $order_row['order_goods_time'] = 'desc';
+                $Stock_OrderGoodsModel = new Stock_OrderGoodsModel();
+                $data = $Stock_OrderGoodsModel->listByWhere($cond_row, $order_row, $page, $row);
+
+                $Yf_Page->totalRows = $data['totalsize'];
+                $page_nav = $Yf_Page->prompt();
+
+                $this->data->addBody(-140, $data);
+            }
+        }
+
     }
 
     /**
@@ -623,8 +698,10 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                 $Stock_OrderGoodsModel = new Stock_OrderGoodsModel();
                 $order_goods_id = $Stock_OrderGoodsModel->getKeyByWhere(array('stock_order_id' => $order_id));
 
-                $edit_flag1 = $Stock_OrderGoodsModel->editOrderGoods($order_goods_id, $edit_row);
-                check_rs($edit_flag1, $rs_row);
+                if($order_goods_id) {
+                    $edit_flag1 = $Stock_OrderGoodsModel->editOrderGoods($order_goods_id, $edit_row);
+                    check_rs($edit_flag1, $rs_row);
+                }
 
                 //退还订单商品的库存
                 $Goods_BaseModel = new Goods_BaseModel();
@@ -762,43 +839,6 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                     $rs_flag = false;
                     check_rs($rs_flag,$rs_row);
                 }
-
-//                /*
-//                *  经验与成长值
-//                */
-//                $user_points        = Web_ConfigModel::value("points_recharge");//订单每多少获取多少积分
-//                $user_points_amount = Web_ConfigModel::value("points_order");//订单每多少获取多少积分
-//
-//                if ($order_payment_amount / $user_points < $user_points_amount)
-//                {
-//                    $user_points = floor($order_payment_amount / $user_points);
-//                }
-//                else
-//                {
-//                    $user_points = $user_points_amount;
-//                }
-//
-//                $user_grade        = Web_ConfigModel::value("grade_recharge");//订单每多少获取多少积分
-//                $user_grade_amount = Web_ConfigModel::value("grade_order");//订单每多少获取多少成长值
-//
-//                if ($order_payment_amount / $user_grade > $user_grade_amount)
-//                {
-//                    $user_grade = floor($order_payment_amount / $user_grade);
-//                }
-//                else
-//                {
-//                    $user_grade = $user_grade_amount;
-//                }
-//
-//                $User_ResourceModel = new User_ResourceModel();
-//                //获取积分经验值
-//                $ce = $User_ResourceModel->getResource(Perm::$userId);
-//
-//                $resource_row['user_points'] = $ce[Perm::$userId]['user_points'] * 1 + $user_points * 1;
-//                $resource_row['user_growth'] = $ce[Perm::$userId]['user_growth'] * 1 + $user_grade * 1;
-//
-//                $res_flag = $User_ResourceModel->editResource(Perm::$userId, $resource_row);
-//                check_rs($res_flag,$rs_row);
             }
             else
             {
@@ -824,6 +864,171 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
             $this->data->addBody(-140, array(), $msg, $status);
         }
+    }
+
+    /**
+     * 删除订单
+     *
+     * @author     Str
+     */
+    public function hideOrder()
+    {
+        $order_id = request_string('order_id');
+        $user     = request_string('user');
+        $op       = request_string('op');
+
+        $edit_row = array();
+        $flag = false;
+        $Order_BaseModel = new Stock_OrderModel();
+        $order_base = $Order_BaseModel->getOne($order_id);
+
+        //买家删除订单
+        if ($user == 'seller')
+        {
+            //判断订单状态是否是已完成（6）或者已取消（7）状态
+            if($order_base['order_status'] >= Order_StateModel::ORDER_FINISH)
+            {
+                //判断当前用户是否是自营店铺
+                if(self::$self_shop_id == Perm::$shopId)
+                {
+                    if ($op == 'del')
+                    {
+                        $edit_row['order_shop_hidden'] = Order_BaseModel::IS_SELLER_REMOVE;
+                    }
+                    else
+                    {
+                        $edit_row['order_shop_hidden'] = Order_BaseModel::IS_SELLER_HIDDEN;
+                    }
+                }
+            }
+
+            $flag = $Order_BaseModel->editOrder($order_id, $edit_row);
+        }
+
+        if ($flag)
+        {
+            $status = 200;
+            $msg    = __('success');
+        }
+        else
+        {
+            $msg    = __('failure');
+            $status = 250;
+        }
+
+        $this->data->addBody(-140, array(), $msg, $status);
+    }
+
+    /**
+     * 还原回收站中的订单
+     *
+     * @author     Str
+     */
+    public function restoreOrder()
+    {
+        $order_id = request_string('order_id');
+        $user     = request_string('user');
+
+        $edit_row = array();
+        $flag = false;
+        $Order_BaseModel = new Stock_OrderModel();
+
+        if ($user == 'seller')
+        {
+            $edit_row['order_shop_hidden'] = Order_BaseModel::NO_SELLER_HIDDEN;
+            $flag = $Order_BaseModel->editOrder($order_id, $edit_row);
+        }
+
+        if ($flag)
+        {
+            $status = 200;
+            $msg    = __('success');
+        }
+        else
+        {
+            $msg    = __('failure');
+            $status = 250;
+        }
+
+        $this->data->addBody(-140, array(), $msg, $status);
+
+    }
+
+    public function stock_check_list()
+    {
+        return include $this->view->getView();
+    }
+
+    public function stock_check_log()
+    {
+        $Yf_Page = new Yf_Page();
+        $row     = $Yf_Page->listRows;
+        $offset  = request_int('firstRow', 0);
+        $page    = ceil_r($offset / $row);
+
+        $query_start_date = request_string('query_start_date');
+        $query_end_date = request_string('query_end_date');
+        if (!empty($query_start_date)) {
+            $cond_row['check_date_time:>='] = $query_start_date;
+        }
+
+        if (!empty($query_end_date)) {
+            $cond_row['check_date_time:<='] = $query_end_date;
+        }
+        $Stock_CheckModel = new Stock_CheckModel();
+        $cond_row['user_id'] = Perm::$userId;
+        $order_row['check_date_time'] = 'desc';
+        $data = $Stock_CheckModel->listByWhere($cond_row, $order_row, $page, $row);
+
+        $Stock_CheckGoodsModel = new Stock_CheckGoodsModel();
+        foreach($data['items'] as $key=>$check){
+            $goods_cond_row = array();
+            $goods_cond_row['check_id'] = $check['check_id'];
+            $goods_count = $Stock_CheckGoodsModel->get_count($goods_cond_row);
+            $data['items'][$key]['good_count'] = $goods_count;
+        }
+
+        $Yf_Page->totalRows = $data['totalsize'];
+        $page_nav = $Yf_Page->prompt();
+
+        $this->data->addBody(-140, $data);
+    }
+
+    public function stock_check_detail()
+    {
+        $check_id = request_int('check_id');
+        $Stock_CheckModel = new Stock_CheckModel();
+        $Stock_CheckGoodsModel = new Stock_CheckGoodsModel();
+
+        $stock_check = $Stock_CheckModel->getOne($check_id);
+        $goods_cond_row['check_id'] = $check_id;
+        $goods_count = $Stock_CheckGoodsModel->get_count($goods_cond_row);
+
+        include $this->view->getView();
+    }
+
+    public function check_goods()
+    {
+        $check_id = request_int('check_id');
+
+        $Yf_Page = new Yf_Page();
+        $row     = $Yf_Page->listRows;
+        $offset  = request_int('firstRow', 0);
+        $page    = ceil_r($offset / $row);
+
+        $goods_key = request_string('goods_key');
+        if(!empty($goods_key)){
+            $cond_row['goods_name:like'] = '%' . $goods_key . '%';
+        }
+        $cond_row['check_id'] = $check_id;
+        $order_row['check_date_time'] = 'desc';
+        $Stock_CheckGoodsModel = new Stock_CheckGoodsModel();
+        $data = $Stock_CheckGoodsModel->listByWhere($cond_row, $order_row, $page, $row);
+
+        $Yf_Page->totalRows = $data['totalsize'];
+        $page_nav = $Yf_Page->prompt();
+
+        $this->data->addBody(-140, $data);
     }
 
     public function user_stock()
@@ -1050,5 +1255,28 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
             $this->data->addBody(-140, array(), $msg, $status);
         }
+    }
+
+    public function get_order_profit()
+    {
+        $Stock_OrderModel = new Stock_OrderModel();
+
+        $page    = request_int('curpage', 1);
+        $rows    = request_int('page', 20);
+        $status    = request_int('status', 0);
+        $cond_row['order_is_settlement'] = $status;
+        $order_row['order_create_time'] = 'desc';
+        $order_list = $Stock_OrderModel->listByWhere($cond_row, $order_row, $page, $rows);
+        foreach ($order_list['items'] as $key=>$order){
+            $order_list['items'][$key]['order_create_text'] = '创建日'.date('m-d H:i', strtotime($order['order_create_time']));
+            if($order['order_settlement_time']){
+                $order_list['items'][$key]['order_settlement_text'] = '结算日'.date('m-d H:i', strtotime($order['order_settlement_time']));
+            }else{
+                $order_list['items'][$key]['order_settlement_text'] = '';
+            }
+            $order_list['items'][$key]['order_commission'] = $order['order_payment_amount_vip'] - $order['order_payment_amount_partner'];
+        }
+
+        $this->data->addBody(-140, $order_list);
     }
 }

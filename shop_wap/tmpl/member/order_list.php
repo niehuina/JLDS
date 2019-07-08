@@ -26,7 +26,10 @@ include __DIR__.'/../../includes/header.php';
     <header id="header" class="fixed">
         <div class="header-wrap">
             <div class="header-l"><a href="member.html"><i class="back"></i></a></div>
-            <span class="header-tab"><a href="javascript:void(0);" class="cur">实物订单</a><a href="vr_order_list.html">服务订单</a></span>
+<!--            <span class="header-tab"><a href="javascript:void(0);" class="cur">实物订单</a><a href="vr_order_list.html">服务订单</a></span>-->
+            <div class="header-title">
+                <h1>订单列表</h1>
+            </div>
             <div class="header-r"> <a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a> </div>
         </div>
         <div class="nctouch-nav-layout">
@@ -43,8 +46,11 @@ include __DIR__.'/../../includes/header.php';
     <div class="nctouch-main-layout">
         <div class="nctouch-order-search">
             <form>
-                <span class="ser-area "><i class="icon-ser"></i><input type="text" autocomplete="on" maxlength="50" placeholder="输入商品标题或订单号进行搜索" name="order_key" id="order_key" oninput="writeClear($(this));" >
-      <span class="input-del"></span></span>
+                <span class="ser-area ">
+                    <i class="icon-ser"></i>
+                    <input type="text" autocomplete="on" maxlength="50" placeholder="输入商品标题或订单号进行搜索" name="order_key" id="order_key" oninput="writeClear($(this));" >
+                     <span class="input-del"></span>
+                </span>
                 <input type="button" id="search_btn" value="搜索">
             </form>
         </div>

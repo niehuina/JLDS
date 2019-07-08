@@ -215,6 +215,10 @@ class CartModel extends Cart
 		}
 
         $user_info_model = new User_InfoModel();
+        $user_info = $user_info_model->getOne($user_id);
+        $user_parent_id = $user_info['user_parent_id'];
+        $user_parent = $user_info_model->getOne($user_parent_id);
+        $user_grade = $user_info['user_grade'];
         $bt_info = $user_info_model->getPayerCenterInfo();
 		foreach ($cart_row as $key => $val)
 		{
@@ -235,14 +239,27 @@ class CartModel extends Cart
 				$val['goods_num'] = $goods_base['goods_base']['goods_stock'];
 			}
 
-            $val['old_price']  = 0;
-            $val['now_price']  = $goods_base['goods_base']['goods_price'];
+            if($user_grade == '1'){
+                $val['old_price']  = 0;
+                $val['now_price']  = $goods_base['goods_base']['goods_price'];
+            }else if($user_grade == '2'){
+                $val['old_price']  = $goods_base['goods_base']['goods_price'];
+                $val['now_price']  = $goods_base['goods_base']['goods_price_vip'];
+                $val['down_price'] = $goods_base['goods_base']['goods_price_vip'] - $goods_base['goods_base']['goods_price'];
+            }else if($user_grade == '3' || $user_grade == '4'){
+                $val['old_price']  = $goods_base['goods_base']['goods_price'];
+                $val['now_price']  = $goods_base['goods_base']['goods_price_partner'];
+            }
+
             $val['down_price'] = 0;
+            if($val['old_price'] > 0){
+                $val['down_price'] = $val['old_price'] - $val['now_price'];
+            }
 
             //低保用户价格
             if( $bt_info['data']['user_minimum_living_status']){
                 if( $goods_base['common_base']['common_dibao_price'] > 0 ){
-                $val['now_price']  =    $goods_base['common_base']['common_dibao_price'];
+                    $val['now_price']  =    $goods_base['common_base']['common_dibao_price'];
                 }
             }
 			$IsHaveBuy = 0;
@@ -269,7 +286,6 @@ class CartModel extends Cart
 
 				if (isset($goods_base['goods_base']['promotion_type']) && $goods_base['goods_base']['promotion_type'])
 				{
-
 					if ($goods_base['goods_base']['groupbuy_starttime'] < date('Y-m-d H:i:s') && $goods_base['goods_base']['groupbuy_endtime'] > date('Y-m-d H:i:s'))
 					{
 						//检测是否限购数量
@@ -388,11 +404,28 @@ class CartModel extends Cart
 			if(Web_ConfigModel::value('Plugin_Directseller')&&$goods_base['common_base']['common_is_directseller'])
 			{
 				$directseller_commission = 0;
-				
-				$val['directseller_flag'] = $goods_base['common_base']['common_is_directseller'];
-				$val['directseller_commission_0'] =  number_format(($val['sumprice']*$goods_base['common_base']['common_cps_rate']/100), 2, '.', '');  //一级分佣
-				$val['directseller_commission_1'] = number_format(($val['sumprice']*$goods_base['common_base']['common_second_cps_rate']/100), 2, '.', ''); //二级分佣
-				$val['directseller_commission_2'] = number_format(($val['sumprice']*$goods_base['common_base']['common_third_cps_rate']/100), 2, '.', ''); //三级分佣
+
+                $order_price = $goods_base['goods_base']['goods_price'];
+                $order_price_dis = $goods_base['goods_base']['goods_price_vip'];
+                if($user_info['user_grade'] == 2){
+                    $order_price = $goods_base['goods_base']['goods_price_vip'];
+                }else if($user_info['user_grade'] == "3" || $user_info['user_grade'] == 4){
+                    $order_price = $goods_base['goods_base']['goods_price_partner'];
+                }
+                if($user_parent['user_grade'] == 2){
+                    $order_price_dis = $goods_base['goods_base']['goods_price_vip'];
+                }else if($user_info['user_grade'] == "3" || $user_info['user_grade'] == 4){
+                    $order_price_dis = $goods_base['goods_base']['goods_price_partner'];
+                }
+
+                $val['directseller_commission_0'] = $order_price - $order_price_dis;
+                $val['directseller_commission_1'] = 0;
+                $val['directseller_commission_2'] = 0;
+
+                $val['directseller_flag'] = $goods_base['common_base']['common_is_directseller'];
+//				$val['directseller_commission_0'] =  number_format(($val['sumprice']*$goods_base['common_base']['common_cps_rate']/100), 2, '.', '');  //一级分佣
+//				$val['directseller_commission_1'] = number_format(($val['sumprice']*$goods_base['common_base']['common_second_cps_rate']/100), 2, '.', ''); //二级分佣
+//				$val['directseller_commission_2'] = number_format(($val['sumprice']*$goods_base['common_base']['common_third_cps_rate']/100), 2, '.', ''); //三级分佣
 				
 				$directseller_commission += $val['directseller_commission_0'] + $val['directseller_commission_1'] + $val['directseller_commission_2'];
 			}

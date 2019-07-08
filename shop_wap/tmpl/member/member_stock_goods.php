@@ -90,10 +90,10 @@ include __DIR__ . '/../../includes/header.php';
         %>
         <li class="goods-item" goods_id="<%=goods.goods_id;%>">
             <span class="goods-pic">
-					<a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
-                        <img src="<%=goods.common_info.common_image;%>"/>
-                    </a>
-				</span>
+                <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
+                    <img src="<%=goods.common_info.common_image;%>"/>
+                </a>
+            </span>
             <dl class="goods-info">
                 <dt class="goods-name">
                     <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
@@ -122,7 +122,7 @@ include __DIR__ . '/../../includes/header.php';
         <li class="loading">
             <div class="spinner"><i></i></div>
             商品数据读取中...
-        </li><% } %><%}else {%>
+        </li><%}else {%>
         <div class="nctouch-norecord search">
             <div class="norecord-ico"><i></i></div>
             <dl>

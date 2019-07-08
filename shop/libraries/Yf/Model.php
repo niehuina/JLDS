@@ -998,6 +998,7 @@ class Yf_Model extends Yf_Singleton
         $data['total'] = ceil_r($total / $rows);  //total page
         $data['totalsize'] = $total;
         $data['records'] = $total;
+        $data['hasmore'] = $page >= $data['total'] ?false:true;
 
         if ($flag)
         {

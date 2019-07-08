@@ -27,7 +27,7 @@ function initField(){
         }
 
 
-        $('#cat_commission').val(rowData.cat_commission);
+        // $('#cat_commission').val(rowData.cat_commission);
         $('#cat_displayorder').val(rowData.cat_displayorder);
         $('#cat_image').attr('src',rowData.cat_pic);
         $('#cat_logo').val(rowData.cat_pic);
@@ -136,7 +136,7 @@ function postData(oper, id){
         return false;
     }
     var	cat_name = $.trim($('#cat_name').val());
-    var cat_commission = $.trim($('#cat_commission').val());
+    var cat_commission = 0;//$.trim($('#cat_commission').val());
     var cat_displayorder = $.trim($('#cat_displayorder').val());
     var parent_id = $.trim($('#parent_id').val());
     var cat_pic = $.trim($('#cat_logo').val());

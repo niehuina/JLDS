@@ -466,16 +466,16 @@ class InfoCtl extends Controller
         $uorder_base = $Union_OrderModel->getOne($uorder);
 
 
-        $key = Yf_Registry::get('shop_api_key');
-        $url = Yf_Registry::get('shop_api_url');
-        $shop_app_id = Yf_Registry::get('shop_app_id');
-        $formvars = array();
+//        $key = Yf_Registry::get('shop_api_key');
+//        $url = Yf_Registry::get('shop_api_url');
+//        $shop_app_id = Yf_Registry::get('shop_app_id');
+//        $formvars = array();
+//
+//        $formvars['app_id'] = $shop_app_id;
+//        $formvars['banner_type'] = 'orderBanner';
 
-        $formvars['app_id'] = $shop_app_id;
-        $formvars['banner_type'] = 'orderBanner';
-
-        $banners = get_url_with_encrypt($key, sprintf('%s?ctl=Index&met=getBanner&typ=json&ua=wap', $url), $formvars);
-        $banner = empty($banners['data']['banner_list']) ? null : $banners['data']['banner_list'][0];
+//        $banners = get_url_with_encrypt($key, sprintf('%s?ctl=Index&met=getBanner&typ=json&ua=wap', $url), $formvars);
+//        $banner = empty($banners['data']['banner_list']) ? null : $banners['data']['banner_list'][0];
 
         $User_InfoModel = new User_InfoModel();
         if ($act != 'deposit') {

@@ -47,8 +47,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
     <div class="dataLoading" id="dataLoading"><p><?=__('加载中')?>...</p></div>
     <div class="goods">
         <div class="form-style">
-            <form method="post" id="form" action="<?=Yf_Registry::get('url')?>?ctl=Seller_Stock_Order&met=addSendOrder"
-                  onsubmit="return selectAllCheck(false);">
+            <form method="post" id="form">
                 <h3><i class="iconfont icon-edit"></i><?=__('高级合伙人信息')?></h3>
                 <input type="hidden" name="order_id" value="<?php if ( !empty($order_data) ) { echo $order_data['stock_order_id']; } ?>"/>
                 <input type="hidden" name="action" value="<?php if ( !empty($order_data) ) { echo 'edit'; } ?>"/>
@@ -58,12 +57,6 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <dt><?=__('合伙人姓名')?>：</dt>
                     <dd>
                         <?php echo $user_info['user_realname'] ?>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt><?=__('合伙人店铺名称')?>：</dt>
-                    <dd>
-                        <?php echo $shop_info['shop_name'] ?>
                     </dd>
                 </dl>
                 <dl>
@@ -140,7 +133,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     </div>
                 </div>
                 <input type="hidden" id="select_goods_list" name="select_goods_list" />
-                <input type="submit" class="button bbc_sellerGray_submit_btns" id="button_next_step" value="<?=__('提交')?>">
+                <input type="button" class="button bbc_sellerGray_submit_btns" id="button_next_step" value="<?=__('提交')?>">
             </form>
         </div>
     </div>

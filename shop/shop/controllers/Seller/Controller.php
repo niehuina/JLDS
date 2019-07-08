@@ -19,6 +19,8 @@ class Seller_Controller extends Yf_AppController
 	public static $menu 		= array();
 	public static $current_menu = array();
 	public static $left_menu	= array();
+    public static $is_partner	= false;
+    public static $self_shop_id = '';
 	
 	public $sellerBaseModel 	= null;
 	public $sellerGroupModel 	= null;
@@ -54,6 +56,13 @@ class Seller_Controller extends Yf_AppController
 				$this->shopBase = $shopBaseModel->getOne($shop_id);
 			}
 
+			self::$self_shop_id = Web_ConfigModel::value('self_shop_id');
+			if($shop_id != self::$self_shop_id && $this->user_info['user_grade'] == 4){
+                self::$is_partner = true;
+            }else{
+                self::$is_partner = false;
+            }
+
 			$sellerBaseModel 	= new Seller_BaseModel();
 			$sellerGroupModel 	= new Seller_GroupModel();
 
@@ -74,6 +83,12 @@ class Seller_Controller extends Yf_AppController
 			}
 
 			$seller_menu = $this->getSellerMenuList($seller_info['seller_is_admin'], explode(',', $limits));
+
+            if(self::$is_partner){
+                unset($seller_menu['seller_menu']['goods']);
+                unset($seller_menu['seller_menu']['promotion']);
+                unset($seller_menu['seller_menu']['distribution']);
+            }
 
 			self::$menu  = $seller_menu['seller_menu'];
 			self::$current_menu = $this->getCurrentMenu($seller_menu['seller_function_list']);

@@ -34,11 +34,11 @@ $(function () {
     });
     /*显示注册协议 结束 */
 
-    $.getJSON(ApiUrl + "/index.php?act=connect&op=get_state&t=connect_sms_reg", function (e) {
-        if (e.datas != "0") {
-            $(".register-tab").show()
-        }
-    });
+    // $.getJSON(ApiUrl + "/index.php?act=connect&op=get_state&t=connect_sms_reg", function (e) {
+    //     if (e.datas != "0") {
+    //         $(".register-tab").show()
+    //     }
+    // });
     $.sValid.init({
         rules: {
             username: "required",
@@ -75,6 +75,7 @@ $(function () {
         var a = $("input[name=password_confirm]").val();
         var m = $("input[name=usermobile]").val();
         var c = $('input[name=captcha]').val();
+        var d = $('input[name=parent_id]').val();
         var t = "wap";
 
         if ($.sValid()) {
@@ -92,7 +93,7 @@ $(function () {
             $.ajax({
                 type: "post",
                 url: UCenterApiUrl + "/index.php?ctl=Login&met=register&typ=json",
-                data: {"user_account": e, "user_password": r, "user_code": c, "mobile": m},
+                data: {"user_account": e, "user_password": r, "user_code": c, "mobile": m, "parent_id": d},
                 dataType: "json",
                 success: function (data) {
                     console.info(data);
@@ -197,5 +198,50 @@ $(function () {
             t = setTimeout(countDown, 1000);
         }
     }
-
 });
+
+
+function getIntroducer(obj){
+    if($(obj).html() == "清除"){
+        $("#parent_id").val("");
+        $("#intro_keys").val("");
+        $("#intro_list").html("");
+        $("#intro_list").parent().parent().hide();
+        $(obj).html("查询");
+        return;
+    }
+
+    var intro_keys = $("#intro_keys").val();
+    if(!intro_keys) return;
+    var ajaxurl = UCenterApiUrl + '/index.php?ctl=Login&met=getIntroducer&typ=json&intro_keys='+$("#intro_keys").val();
+    $.ajax({
+        type: "POST",
+        url: ajaxurl,
+        dataType: "json",
+        async: false,
+        success: function (respone) {
+            if (respone.status == 200) {
+                var data = respone.data;
+                var html = '';
+                $.each(data, function (i, item) {
+                    if(i == 0) {
+                        $("#parent_id").val(item.user_id);
+                        html += item.user_truename + '/' + item.user_mobile;
+                    }
+                });
+
+                if(html == ""){
+                    html = '请准确填写推荐人姓名或手机号';
+                    $("#intro_list").addClass("error");
+                    $("#intro_list").parent().parent().show();
+                }else{
+                    $("#intro_list").removeClass("error");
+                    $("#intro_list").parent().parent().show();
+                }
+                $("#intro_list").html(html);
+                $($("#intro_list").parent()).removeClass("hidden");
+                $(obj).html("清除");
+            }
+        }
+    });
+}

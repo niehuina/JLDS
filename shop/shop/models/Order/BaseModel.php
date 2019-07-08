@@ -544,7 +544,7 @@ class Order_BaseModel extends Order_Base
     /*
      *  windfnn
      *
-     * 获取卖家订单列表
+     * 获取买家订单列表
      */
     public function getOrderList($cond_row = array(), $order_row = array(), $page = 1, $rows = 15)
     {
@@ -563,6 +563,10 @@ class Order_BaseModel extends Order_Base
         $rows = $Yf_Page->listRows;
         $offset = request_int('firstRow', 0);
         $page = ceil_r($offset / $rows);
+
+        $User_InfoModel = new User_InfoModel();
+        $user_children_ids = $User_InfoModel->getUserChildren(Perm::$userId);
+        $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
 
         $data = $this->listByWhere($cond_row, $order_row, $page, $rows);
         $Order_StateModel = new Order_StateModel();
@@ -1073,10 +1077,12 @@ class Order_BaseModel extends Order_Base
      * */
     public function getPhysicalList(&$condi,$order_row=array())
     {
-        $condi['shop_id'] = Perm::$shopId;
-        if(!isset($condi['order_is_virtual']) || !$condi['order_is_virtual']){
-            $condi['order_is_virtual'] = 0;
+        if(!isset($condi['shop_id']) || !$condi['shop_id']) {
+            $condi['shop_id'] = Perm::$shopId;
         }
+//        if(!isset($condi['order_is_virtual']) || !$condi['order_is_virtual']){
+//            $condi['order_is_virtual'] = 0;
+//        }
         if(!isset($condi['order_shop_hidden']) || !$condi['order_shop_hidden']){
             $condi['order_shop_hidden'] = 0;
         }

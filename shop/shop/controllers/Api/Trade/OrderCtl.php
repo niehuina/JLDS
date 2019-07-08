@@ -18,6 +18,7 @@ class Api_Trade_OrderCtl extends Api_Controller
 {
 	
 	public $Order_BaseModel = null;
+    public $tradeOrderModel = null;
 
 	/**
 	 * Constructor
