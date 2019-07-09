@@ -5118,7 +5118,8 @@ class Buyer_OrderCtl extends Buyer_Controller
         $order_list = $OrderModel->listByWhere($cond_row, $order_row, $page, $rows);
 
         foreach ($order_list['items'] as $key=>$order){
-            $goods_list = $Order_GoodsModel->getByWhere($order['order_id']);
+            $order_commission_0 = 0;
+            $goods_list = $Order_GoodsModel->getByWhere(['order_id'=>$order['order_id']]);
             $directseller_commission_0_array = array_column($goods_list, 'directseller_commission_0');
             $order_commission_0 = array_sum($directseller_commission_0_array);
 
@@ -5129,6 +5130,15 @@ class Buyer_OrderCtl extends Buyer_Controller
                 $order_list['items'][$key]['order_settlement_text'] = '';
             }
             $order_list['items'][$key]['order_commission'] = $order_commission_0;
+        }
+
+        $formvars = array();
+        $formvars['user_id'] = Perm::$userId;
+        $formvars['trade_type_id'] = 14;
+        $formvars['user_type'] = 1;
+        $rs = $this->getPaycenterApi($formvars, 'Api_Paycen_PayRecord', 'getRecordAmountByUserId');
+        if($rs['data']){
+            $order_list['amount'] = $rs['data']['amount'];
         }
 
         $this->data->addBody(-140, $order_list);

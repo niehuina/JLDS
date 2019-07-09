@@ -1277,6 +1277,15 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $order_list['items'][$key]['order_commission'] = $order['order_payment_amount_vip'] - $order['order_payment_amount_partner'];
         }
 
+        $formvars = array();
+        $formvars['user_id'] = Perm::$userId;
+        $formvars['trade_type_id'] = request_int('type', 13);//备货差价返利
+        $formvars['user_type'] = 1;
+        $rs = $this->getPayCenterUrl('Api_Paycen_PayRecord', 'getRecordAmountByUserId',$formvars);
+        if($rs['data']){
+            $order_list['amount'] = $rs['data']['amount'];
+        }
+
         $this->data->addBody(-140, $order_list);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-include __DIR__.'/../../includes/header.php';
+include __DIR__ . '/../../includes/header.php';
 ?>
     <!doctype html>
     <html>
@@ -43,7 +43,7 @@ include __DIR__.'/../../includes/header.php';
     <header id="header" class="fixed">
         <div class="header-wrap">
             <div class="header-l">
-                <a href="member.html"><i class="back"></i> </a>
+                <a href="../member/member.html"><i class="back"></i> </a>
             </div>
             <div class="header-title">
                 <h1>下线返利</h1>
@@ -60,12 +60,7 @@ include __DIR__.'/../../includes/header.php';
                     <span class="mt10">
                         <strong>已返利</strong>
                          <em>¥</em>
-                        <b id="member_money">0.00</b>
-                    </span>
-                    <span>
-                        <strong>待返利</strong>
-                         <em>¥</em>
-                        <b id="member_money">0.00</b>
+                        <b id="profit">0.00</b>
                     </span>
                 </div>
             </div>
@@ -76,12 +71,12 @@ include __DIR__.'/../../includes/header.php';
                     <a href="profit_buyer_order.html"><i class="cc-17"></i><p>订单差价返利</p></a>
                 </li>
                 <li>
-                    <a href=""><i class="cc-18"></i><p>订单提成返利</p></a>
+                    <a href="profit_order_rabate.html"><i class="cc-18"></i><p>订单提成返利</p></a>
                 </li>
             </ul>
             <ul class="">
                 <li class="borr1">
-                    <a href=""><i class="cc-19"></i><p>股金分红</p></a>
+                    <a href="profit_shares.html"><i class="cc-19"></i><p>股金分红</p></a>
                 </li>
                 <li>
                     <a href="profit_stock_order.html"><i class="cc-20"></i><p>备货差额返利</p></a>
@@ -99,5 +94,5 @@ include __DIR__.'/../../includes/header.php';
 
     </html>
 <?php
-include __DIR__.'/../../includes/footer.php';
+include __DIR__ . '/../../includes/footer.php';
 ?>

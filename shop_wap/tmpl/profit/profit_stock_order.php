@@ -1,5 +1,5 @@
 <?php
-include __DIR__.'/../../includes/header.php';
+include __DIR__ . '/../../includes/header.php';
 ?>
     <!DOCTYPE html>
     <html>
@@ -36,13 +36,22 @@ include __DIR__.'/../../includes/header.php';
                 <a href="member_profit.html"> <i class="back"></i> </a>
             </div>
             <div class="header-title">
-                <h1>订单差价返利</h1>
+                <h1>备货差额返利</h1>
             </div>
         </div>
         <div class="header-r">
         </div>
     </header>
     <div class="nctouch-main-layout">
+        <div class="nctouch-asset-info">
+            <div class="container pre">
+                <i class="icon"></i>
+                <dl>
+                    <dt>已返还差额</dt>
+                    <dd>¥<em id="profit_money"></em></dd>
+                </dl>
+            </div>
+        </div>
         <div id="fixed_nav" class="nctouch-single-nav">
             <ul id="filtrate_ul" class="w20h">
                 <li class="selected"><a href="javascript:void(0);" data-status="0">未结算</a></li>
@@ -61,15 +70,15 @@ include __DIR__.'/../../includes/header.php';
         <li data-order-id="<%=profit.stock_order_id;%>">
             <dl>
                 <dt>
-                    <%=profit.order_id;%>
+                    <%=profit.stock_order_id;%>
                 </dt>
                 <dd><%=profit.order_create_text;%>&nbsp;&nbsp;<%=profit.order_settlement_text;%></dd>
             </dl>
-            <div class="money add">+
-                ￥<%=profit.order_commission;%>
+            <div class="money add">
+                <em>¥</em><%=profit.order_commission;%>
             </div>
             <time class="date">
-                订单金额￥<%=profit.order_payment_amount;%>
+                订单金额¥<%=profit.order_payment_amount_vip;%>
             </time>
         </li>
         <%}%>
@@ -81,7 +90,7 @@ include __DIR__.'/../../includes/header.php';
         <div class="nctouch-norecord signin" style="top: 50%;">
             <div class="norecord-ico"><i></i></div>
             <dl>
-                <dt>您还没有订单返利</dt>
+                <dt>您还没有备货订单返利</dt>
             </dl>
         </div>
         <%}%>
@@ -90,11 +99,11 @@ include __DIR__.'/../../includes/header.php';
     <script type="text/javascript" src="../../js/libs/template.js"></script>
     <script type="text/javascript" src="../../js/common.js"></script>
     <script type="text/javascript" src="../../js/libs/ncscroll-load.js"></script>
-    <script type="text/javascript" src="../../js/tmpl/member/profit_buyer_order.js"></script>
+    <script type="text/javascript" src="../../js/tmpl/member/profit_stock_order.js"></script>
     <script type="text/javascript" src="../../js/tmpl/footer.js"></script>
 
     </body>
     </html>
 <?php
-include __DIR__.'/../../includes/footer.php';
+include __DIR__ . '/../../includes/footer.php';
 ?>

@@ -48,46 +48,88 @@ class Api_User_SharesCtl extends Yf_AppController
         $dividend_year = request_string('dividend_year');
         $type = request_string('type');
 
-        $add_row['dividend_datetime'] = get_date_time();
-        $add_row['dividend_year'] = $dividend_year;
-        $add_row['shares_price'] = Web_ConfigModel::value('shares_price');
-        $add_row['shares_dividend'] = Web_ConfigModel::value('shares_dividend');
-        $Shares_DividendModel = new Shares_DividendModel();
-        $id = $Shares_DividendModel->addSharesDividend($add_row, true);
+        $flag = true;
+        $share_price = Web_ConfigModel::value('shares_price');
+        $shares_dividend = Web_ConfigModel::value('shares_dividend');
+        $User_InfoModel = new User_InfoModel();
+        $User_GradeLogModel = new User_GradeLogModel();
+        if(array_search($type, ['all', 'all_g_partner', 'all_partner']) !== false) {
+            $cond_row = array();
+            if ($type == "all") {
+                $cond_row['user_grade:>='] = 3;
+                $cond_row['user_grade:<='] = 4;
+            } else if ($type == "all_g_partner") {
+                $cond_row['user_grade'] = 4;
+            } else if ($type == "all_partner") {
+                $cond_row['user_grade'] = 3;
+            }
+            $sort = array();
+            $sort['user_regtime'] = 'desc';
+            $user_num = $User_InfoModel->user_count($cond_row);
 
-        //Todo 保存用户，给用户分配分红，计算总分红金额
-//        $User_InfoModel = new User_InfoModel();
-//        $User_GradeLogModel = new User_GradeLogModel();
-//        $cond_row = array();
-//        if($type == "all"){
-//            $cond_row['user_grade:>='] = 3;
-//            $cond_row['user_grade:<='] = 4;
-//        }else if($type == "all_g_partner"){
-//            $cond_row['user_grade'] = 4;
-//        }else if($type == "all_partner"){
-//            $cond_row['user_grade'] = 3;
-//        }else if($type == "all_one_year"){
-//            $cond_row['user_grade:>='] = 3;
-//            $cond_row['user_grade:<='] = 4;
-//
-//            //获取升级到3级后，>=1年时间的
-//            $pre_year = date('Y-m-d H:i:s',strtotime("-1 year"));
-//            $cond_row_log['user_grade_to'] = 3;
-//            $cond_row_log['log_date_time:<='] = $pre_year;
-//            $user_log_list = $User_GradeLogModel->getByWhere($cond_row_log);
-//            $user_ids = array_column($user_log_list,'user_id');
-//            if(count($user_ids) > 0){
-//                $cond_row['user_id:in'] = $user_ids;
-//            }else{
-//                $cond_row['user_id'] = 'user_id';
-//            }
-//        }
-//
-//        $sort     = array();
-//        $sort['user_regtime'] = 'desc';
-//        $user_list = $User_InfoModel->getByWhere($cond_row, $sort);
+            $rows = 500;
+            $total_page = ceil($user_num / $rows);
+            Yf_Log::log($total_page, Yf_Log::LOG, 'shares');
+            $total_amount = 0;
+            for ($i = 1; $i <= $total_page; $i = $i + 1) {
+                $user_list = $User_InfoModel->listByWhere($cond_row, $sort, $i, $rows);
+                $user_ids = array_column($user_list['items'], 'user_id');
+                Yf_Log::log($user_ids, Yf_Log::LOG, 'shares');
 
-        if($id){
+                $rs = self::shares_profit($user_ids, $dividend_year, $share_price, $shares_dividend);
+                if ($rs['status'] == 250) {
+                    $flag = false;
+                    break;
+                } else {
+                    $total_amount += $rs['data']['total_amount'] * 1;
+                }
+            }
+        }else if(array_search($type, ['all_one_year', 'part']) !== false){
+            $cond_row = array();
+            $user_ids = array();
+            if($type == "all_one_year"){
+                $cond_row['user_grade:>='] = 3;
+                $cond_row['user_grade:<='] = 4;
+
+                //获取升级到3级后，>=1年时间的股东
+                $pre_year = date('Y-m-d H:i:s',strtotime("-1 year"));
+                $cond_row_log['user_grade_to:in'] = [3,4];
+                $cond_row_log['log_date_time:<='] = $pre_year;
+                $order_row['log_date_time'] = 'asc';
+                $user_ids_list = $User_GradeLogModel->getUserIdBySql($cond_row_log, $order_row);
+                $user_ids = array_column($user_ids_list,'user_id');
+                Yf_Log::log($user_ids, Yf_Log::LOG, 'shares');
+            }else if($type == "part"){
+                $user_ids = request_string('user_list');
+                $user_ids = decode_json($user_ids);
+                Yf_Log::log($user_ids, Yf_Log::LOG, 'shares');
+            }
+
+            $rows = 500;
+            $total_amount = 0;
+            for($i = 0; $i < count($user_ids); $i = $i + $rows) {
+                $user_ids_temps = array_slice($user_ids,$i,$rows);
+                $rs = self::shares_profit($user_ids_temps, $dividend_year, $share_price, $shares_dividend);
+                if ($rs['status'] == 250) {
+                    $flag = false;
+                    break;
+                } else {
+                    $total_amount += $rs['data']['total_amount'] * 1;
+                }
+            }
+        }
+
+        if($flag){
+            $Shares_DividendModel = new Shares_DividendModel();
+            $add_row['dividend_datetime'] = get_date_time();
+            $add_row['dividend_year'] = $dividend_year;
+            $add_row['shares_price'] = $share_price;
+            $add_row['shares_dividend'] = $shares_dividend;
+            $add_row['dividend_amount'] = $total_amount;
+            $id = $Shares_DividendModel->addSharesDividend($add_row, true);
+        }
+
+        if($flag && $id){
             $status = 200;
             $message = __('success');
         }else{
@@ -97,6 +139,25 @@ class Api_User_SharesCtl extends Yf_AppController
         $this->data->addBody(-140, array(), $message, $status);
     }
 
+    private function shares_profit($user_ids, $dividend_year, $share_price, $shares_dividend)
+    {
+        //将需要确认的订单号远程发送给Paycenter修改订单状态
+        //远程修改paycenter中的订单状态
+        $key = Yf_Registry::get('paycenter_api_key');
+        $url = Yf_Registry::get('paycenter_api_url');
+        $paycenter_app_id = Yf_Registry::get('paycenter_app_id');
+
+        $formvars = array();
+        $formvars['user_ids'] = $user_ids;
+        $formvars['app_id'] = $paycenter_app_id;
+        $formvars['desc'] = "{$dividend_year}年度股金分红";
+        $formvars['share_price'] = $share_price;
+        $formvars['shares_dividend'] = $shares_dividend;
+
+        $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Paycen_PayRecord&met=shares_profit&typ=json', $url), $formvars);
+        return $rs;
+    }
+
     public function get_user_list()
     {
         $User_InfoModel = new User_InfoModel();
@@ -104,40 +165,18 @@ class Api_User_SharesCtl extends Yf_AppController
 
         $page = request_int('page', 1);
         $rows = request_int('rows', 20);
-        $type = request_string('type', 'all');
 
         $cond_row = array();
-        if($type == "all"){
-            $cond_row['user_grade:>='] = 3;
-            $cond_row['user_grade:<='] = 4;
-        }else if($type == "all_g_partner"){
-            $cond_row['user_grade'] = 4;
-        }else if($type == "all_partner"){
-            $cond_row['user_grade'] = 3;
-        }else if($type == "all_one_year"){
-            $cond_row['user_grade:>='] = 3;
-            $cond_row['user_grade:<='] = 4;
-
-            //获取升级到3级后，>=1年时间的
-            $pre_year = date('Y-m-d H:i:s',strtotime("-1 year"));
-            $cond_row_log['user_grade_to'] = 3;
-            $cond_row_log['log_date_time:<='] = $pre_year;
-            $user_log_list = $User_GradeLogModel->getByWhere($cond_row_log);
-            $user_ids = array_column($user_log_list,'user_id');
-            if(count($user_ids) > 0){
-                $cond_row['user_id:in'] = $user_ids;
-            }else{
-                $cond_row['user_id'] = 'user_id';
-            }
-        }
+        $cond_row['user_grade:>='] = 3;
+        $cond_row['user_grade:<='] = 4;
 
         $sort     = array();
         $sort['user_regtime'] = 'desc';
         $user_list = $User_InfoModel->listByWhere($cond_row, $sort, $page, $rows);
         foreach ($user_list['items'] as $key=>$user){
             $cond_log['user_id'] = $user['user_id'];
-            $cond_log['user_grade_to'] = 3;
-            $order['log_date_time'] = 'desc';
+            $cond_log['user_grade_to:in'] = [3,4];
+            $order['log_date_time'] = 'asc';
             $user_grade_logs =  $User_GradeLogModel->getByWhere($cond_log, $order);
             $user_grade_log = current($user_grade_logs);
 

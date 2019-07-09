@@ -21,7 +21,10 @@ $(function () {
             },
             'tmplid': 'list_model',
             'containerobj': $("#profit-list"),
-            'iIntervalId': true
+            'iIntervalId': true,
+            'callback': function (data) {
+                $("#profit_money").text(sprintf('%0.2f',data.amount));
+            }
         });
     }
 

@@ -19,7 +19,7 @@ class User_GradeLogModel extends User_GradeLog
     }
 
     /**
-     *
+     * 查询下级用户中1年内升级成为会员的用户数量
      * @param array $cond_row
      * @param array $order_row
      * @return integer
@@ -46,5 +46,52 @@ class User_GradeLogModel extends User_GradeLog
         }
 
         return count($user_ids);
+    }
+
+    /**
+     * 根据条件查询用户id
+     * @param $cond_row
+     * @param $order_row
+     * @return mixed
+     */
+    public function getUserIdBySql($cond_row, $order_row){
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS user_id FROM ' . $this->_tableName;
+
+        if ($cond_row)
+        {
+            foreach ($cond_row as $k => $v)
+            {
+                $k_row = explode(':', $k);
+
+                if (count($k_row) > 1)
+                {
+                    $this->sql->setWhere($k_row[0], $v, $k_row[1]);
+                }
+                else
+                {
+                    $this->sql->setWhere($k, $v);
+                }
+
+            }
+        }
+
+        if ($order_row)
+        {
+            foreach ($order_row as $k => $v)
+            {
+                $this->sql->setOrder($k, $v);
+            }
+        }
+
+        $this->sql->setGroup('user_id');
+
+        $where = $this->sql->getWhere();
+        $group = $this->sql->getGroup();
+        $order = $this->sql->getOrder();
+        $sql   = $sql . $where . $group . $order;
+
+        $rs = $this->sql->getAll($sql);
+
+        return $rs;
     }
 }

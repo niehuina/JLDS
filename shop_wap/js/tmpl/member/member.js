@@ -47,8 +47,8 @@ $(function () {
                     + '<li><a href="order_list.html?data-state=wait_confirm_goods"><i class="cc-03"></i><p>待收货</p></a>' + (result.data.order_count.confirm > 0 ? '<b>' + result.data.order_count.confirm + '</b>' : '') + '</li>'
                     + '<li><a href="order_list.html?data-state=finish"><i class="cc-04"></i><p>待评价</p></a>' + (result.data.order_count.finish > 0 ? '<b>' + result.data.order_count.finish + '</b>' : '') + '</li>'
                     + '<li><a href="member_refund.html"><i class="cc-05"></i><p>退款/退货</p></a>' + (result.data.order_count.return > 0 ? '<b>' + result.data.order_count.return + '</b>' : '') + '</li>';
-                //渲染页面
 
+                //渲染页面
                 $("#order_ul").html(html);
 
                 var html = '<dl class="mt5">'+
@@ -73,7 +73,7 @@ $(function () {
                     $(".member-center").append(html);
                     var html = '<dl class="mt5">' +
                         '<dt>' +
-                        '<a href="member_profit.html">' +
+                        '<a href="../profit/member_profit.html">' +
                         '<h3><i class="mc-02"></i>下线返利</h3>' +
                         '<h5><i class="arrow-r"></i></h5>' +
                         '</a>' +

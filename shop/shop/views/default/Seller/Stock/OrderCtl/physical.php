@@ -92,25 +92,6 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 <td>
                     <em><?= $val['order_status_html']; ?></em>
                     <p><a href="<?= $val['info_url']; ?>" target="_blank"><?=__('订单详情')?></a></p>
-                    <!-- 物流跟踪 -->
-                    <?php if($val['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS ): ?>
-                        <?php if($val['order_shipping']){ ?>
-                            <?php $is_show = count($val['order_shipping']) > 1 ?>
-                            <?php foreach($val['order_shipping'] as $i=>$ship){ ?>
-                                <a style="position:relative;" onmouseover="show_logistic('<?=($ship['stock_order_id'])?>','<?=($ship['shipping_express_id'])?>','<?=($ship['shipping_code'])?>')"
-                                   onmouseout="hide_logistic('<?=($ship['stock_order_id'])?>')">
-                                    <i class="iconfont icon-icowaitproduct rel_top2"></i><?=__('物流信息')?><?php if($is_show) echo $i+1; ?>
-                                    <div style="display: none;" id="info_<?=($ship['stock_order_id'])?>" class="prompt-01"> </div>
-                                </a><br/>
-                            <?php }?>
-                        <?php } else {?>
-                            <a style="position:relative;" onmouseover="show_logistic('<?=($val['stock_order_id'])?>','<?=($val['order_shipping_express_id'])?>','<?=($val['order_shipping_code'])?>')"
-                               onmouseout="hide_logistic('<?=($val['stock_order_id'])?>')">
-                                <i class="iconfont icon-icowaitproduct rel_top2"></i><?=__('物流信息')?>
-                                <div style="display: none;" id="info_<?=($val['stock_order_id'])?>" class="prompt-01"> </div>
-                            </a>
-                        <?php }?>
-                    <?php endif; ?>
                 </td>
                 <td>
                     <em><?= $val['set_html']; ?></em>

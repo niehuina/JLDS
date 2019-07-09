@@ -50,6 +50,8 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
      */
     function getRecordListByUserId()
     {
+        $page = request_int('page');
+        $rows = request_int('rows');
         $user_id  = request_string('user_id');   //用户Id
         $trade_type_id = request_int('trade_type_id'); //交易类型
         $user_type = request_int('user_type'); //用户入账类型
@@ -57,15 +59,21 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         $cond_row['user_id'] = $user_id;
         $cond_row['trade_type_id'] = $trade_type_id;
         $cond_row['user_type'] = $user_type;
+
+        $order_row['record_time'] = 'desc';
         $Consume_RecordModel = new Consume_RecordModel();
-        $data           = $Consume_RecordModel->getByWhere($cond_row);
+        $data           = $Consume_RecordModel->listByWhere($cond_row,$order_row,$page,$rows);
         if ($data)
         {
+            $amount_list = array_column($data['items'], 'record_money');
+            $amount = array_sum($amount_list);
+            $data['amount'] = $amount;
             $msg    = 'success';
             $status = 200;
         }
         else
         {
+            $data['amount'] = 0;
             $msg    = 'failure';
             $status = 250;
         }
@@ -79,11 +87,11 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
     function getRecordAmountByUserId()
     {
         $user_id  = request_string('user_id');   //用户Id
-        $trade_type_id = request_int('trade_type_id'); //交易类型
+        $trade_type_id = request_row('trade_type_id'); //交易类型
         $user_type = request_int('user_type'); //用户入账类型
         $cond_row = array();
         $cond_row['user_id'] = $user_id;
-        $cond_row['trade_type_id'] = $trade_type_id;
+        $cond_row['trade_type_id:in'] = $trade_type_id;
         $cond_row['user_type'] = $user_type;
         $Consume_RecordModel = new Consume_RecordModel();
         $data           = $Consume_RecordModel->getByWhere($cond_row);
@@ -98,6 +106,7 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         }
         else
         {
+            $data['amount'] = 0.00;
             $msg    = 'failure';
             $status = 250;
         }
@@ -207,6 +216,70 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         $this->data->addBody(-140, $data, $msg, $status);
     }
 
+    public function shares_profit()
+    {
+        $user_ids = request_row('user_ids');
+        $desc = request_string('desc');
+        $share_price = request_string('share_price');
+        $shares_dividend = request_string('shares_dividend');
+
+        $rs_row = array();
+        $Consume_RecordModel = new Consume_RecordModel();
+        //开启事物
+        $Consume_RecordModel->sql->startTransactionDb();
+        $total_amount = 0;
+        if($user_ids){
+            $User_ResourceModel = new User_ResourceModel();
+            foreach ($user_ids as $user_id){
+                $user_resource = $User_ResourceModel->getOne($user_id);
+                $user_shares = $user_resource['user_shares']*1;
+                $amount = $user_shares/($share_price*1)*($shares_dividend*1);
+
+                //插入股金分红记录
+                $record_row = array(
+                    'user_id' => $user_id,
+                    'record_money' => $amount,
+                    'record_date' => date("Y-m-d"),
+                    'record_year' => date("Y"),
+                    'record_month' => date("m"),
+                    'record_day' => date("d"),
+                    'record_title' => $desc,
+                    'record_desc' => $desc,
+                    'record_time' => date('Y-m-d H:i:s'),
+                    'trade_type_id' => Trade_TypeModel::SHARES_PROFIT,
+                    'user_type' => '1',
+                    'record_status' => RecordStatusModel::RECORD_FINISH,
+                    'record_paytime' => date('Y-m-d H:i:s'),
+                );
+
+                $flag1 = $Consume_RecordModel->addRecord($record_row, true);
+                check_rs($flag1,$rs_row);
+
+                $edit_row['user_money'] = $amount;
+                $edit_flag = $User_ResourceModel->editResource($user_id, $edit_row, true);
+                check_rs($edit_flag,$rs_row);
+
+                $total_amount = $total_amount + $amount;
+            }
+        }
+
+        $flag = is_ok($rs_row);
+        if ($flag && $Consume_RecordModel->sql->commitDb())
+        {
+            $msg    = 'success';
+            $status = 200;
+        }
+        else
+        {
+            $Consume_RecordModel->sql->rollBackDb();
+            $m      = $Consume_RecordModel->msg->getMessages();
+            $msg    = $m ? $m[0] : _('failure');
+            $status = 250;
+        }
+        $data = array();
+        $data['total_amount'] = $total_amount;
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
 }
 
 ?>

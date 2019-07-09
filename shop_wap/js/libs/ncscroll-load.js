@@ -79,7 +79,7 @@ function ncScrollLoad() {
                 }
             }
             if (options.callback) {
-                options.callback.call('callback');
+                options.callback(data);
             }
             isloading = false;
         });

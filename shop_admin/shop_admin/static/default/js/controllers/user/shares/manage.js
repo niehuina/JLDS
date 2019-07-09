@@ -1,3 +1,4 @@
+var select_goods_list = {};
 var queryConditions = {
         type: 'all'
     },
@@ -18,7 +19,6 @@ var THISPAGE = {
     loadGrid: function(){
         var gridWH = Public.setGrid(), _self = this;
         var colModel = [
-            {name:'operating', label:'操作', width:90, fixed:true, formatter:operFmattershop, align:"center"},
             {name:'user_name', label:'用户名',  width:200, align:"center"},
             {name:'user_realname', label:'用户姓名', width:200,align:'center'},
             {name:'user_grade', label:'用户等级',  width:100, align:"center"},
@@ -34,6 +34,7 @@ var THISPAGE = {
             height: 600,
             altRows: true, //设置隔行显示
             gridview: true,
+            multiselect: true,
             multiboxonly: true,
             colModel:colModel,
             cmTemplate: {sortable: false, title: false},
@@ -61,7 +62,36 @@ var THISPAGE = {
             },
             resizeStop: function(newwidth, index){
                 THISPAGE.mod_PageConfig.setGridWidthByIndex(newwidth, index, 'grid');
-            }
+            },
+            gridComplete: function () {
+                var rowIds = $("#user_grid").jqGrid('getDataIDs');
+                for (var k = 0; k < rowIds.length; k++) {
+                    var user_id = rowIds[k];
+                    var curChk = $("#"+user_id+"").find(":checkbox");
+                    curChk.attr('name', 'check');
+                    curChk.attr('data-user_id', user_id);
+
+                    if (select_user_list.hasOwnProperty(user_id)) {
+                        $(curChk).prop("checked","true");
+                    }
+                }
+
+                //下面的代码顺序不能变(这是页面上所有行被真选中[所有行被黄色])
+                $("#cb_user_grid").click(function () {
+                    if(this.checked){
+                        $("#user_grid tbody").find(":checkbox").prop("checked", "true");
+                        recordPageAll();
+                    }else{
+                        unSelectAllCheck();
+                    }
+                });   //input框
+                $("#jqgh_user_grid_cb").click();   //div标签
+                $("#user_grid_cb").click();   //th标签
+            },
+            beforeRequest: function () {
+                var flag = recordPageAll();
+                return flag;
+            },
         }).navGrid('#user_page',{edit:false,add:false,del:false,search:false,refresh:false}).navButtonAdd('#user_page',{
             caption:"",
             buttonicon:"ui-icon-config",
@@ -70,11 +100,6 @@ var THISPAGE = {
             },
             position:"last"
         });
-
-        function operFmattershop(val, opt, row) {
-            var html_con = '<div class="operating" data-id="' + row.user_id + '"><input type="checkbox" /></div>';
-            return html_con;
-        };
     },
     reloadData: function(data){
         $("#user_grid").jqGrid('setGridParam',{postData: data}).trigger("reloadGrid");
@@ -88,6 +113,7 @@ var THISPAGE = {
 };
 
 $(function(){
+    select_user_list = {};
     $source = $("#source").combo({
         data: [{
             id: "all",
@@ -137,9 +163,19 @@ $(function(){
     }).getCombo();
 
     $(".submit-btn").click(function () {
+        var select_type = $source.getValue();
+        if(select_type == "part"){
+            recordPageAll();
+            if(Object.keys(select_user_list).length <= 0){
+                Public.tips({type: 1, content: _("未选择用户！")});
+                return;
+            }
+        }
+
         Public.ajaxPost(SITE_URL + "?ctl=User_Shares&typ=json&met=save", {
             dividend_year: $year.getValue(),
             type: $source.getValue(),
+            user_list:JSON.stringify(select_user_list)
         }, function (e)
         {
             if (200 == e.status)
@@ -155,3 +191,23 @@ $(function(){
 
     THISPAGE.init();
 });
+
+function recordPageAll() {
+    var flag = true;
+    $("#user_grid tbody").find(":checkbox[name='check']:checked").each(function () {
+        var user_id = $(this).data('user_id');
+        select_user_list[user_id] = user_id;
+    });
+    return flag;
+}
+
+function unSelectAllCheck() {
+    var flag = true;
+    $("#user_grid tbody").find(":checkbox[name='check']").each(function(){
+        var user_id = $(this).data('user_id');
+        if(select_user_list.hasOwnProperty(user_id)){
+            delete select_user_list[user_id];
+        }
+    });
+    return flag;
+}

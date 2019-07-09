@@ -167,6 +167,10 @@ class User_InfoModel extends User_Info
         $rs = array_values($rs);
         return $rs[0];
     }
+    public function user_count($cond_row)
+    {
+        return $this->getNum($cond_row);
+    }
 }
 
 User_InfoModel::$userSex = array(

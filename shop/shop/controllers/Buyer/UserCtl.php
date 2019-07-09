@@ -1687,6 +1687,7 @@ class Buyer_UserCtl extends Buyer_Controller
         $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
     }
 
+    //获取线下人员
     public function getUserChildren()
     {
         $User_InfoModel = new User_InfoModel();
@@ -1702,14 +1703,36 @@ class Buyer_UserCtl extends Buyer_Controller
         $this->data->addBody(-140, $data);
     }
 
+    /**
+     * 总返利金额
+     */
+    public function getRecordAmountByUserId()
+    {
+        $data['user_id'] = request_string('user_id');
+        $data['trade_type_id'] = request_row('type');
+        $data['user_type'] = 1;
+        $rs = $this->getPaycenterApi($data, 'Api_Paycen_PayRecord', 'getRecordAmountByUserId');
+
+        $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
+    }
+
+    //获取返利记录
     public function getProfit()
     {
+        $Yf_Page           = new Yf_Page();
+        $Yf_Page->listRows = request_int('listRows')?request_int('listRows'):10;
+        $rows              = $Yf_Page->listRows;
+        $offset            = request_int('firstRow', 0);
+        $page              = ceil_r($offset / $rows);
+
         $formvars = array();
+        $formvars['page'] = $page;
+        $formvars['rows'] = $rows;
         $formvars['user_id'] = Perm::$userId;
-        $formvars['trade_type_id'] = 13;
+        $formvars['trade_type_id'] = request_int('type', 15);//订单差价返利
         $formvars['user_type'] = 1;
 
-        $rs = $this->getPaycenterApi($formvars, 'Api_Paycen_PayRecordCtl', 'getRecordListByUserId');
+        $rs = $this->getPaycenterApi($formvars, 'Api_Paycen_PayRecord', 'getRecordListByUserId');
 
         $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
     }

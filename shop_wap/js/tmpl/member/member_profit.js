@@ -4,4 +4,11 @@ $(function () {
         window.location.href = WapSiteUrl + '/tmpl/member/login.html';
         return;
     }
+
+    //获取返利金额
+    var url = SiteUrl + '/index.php?ctl=Buyer_User&met=getRecordAmountByUserId&typ=json';
+    var data = {k:key, u:getCookie('id'), user_id: getCookie('id'), user_type: 1, type: [13,14,15,16]};
+    $.getJSON(url, data, function (result){
+        $("#profit").text(sprintf('%0.2f',result.data.amount));
+    });
 });
