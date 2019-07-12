@@ -367,7 +367,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
                 $.ajaxSetup({
                     async: false
                 });
-                $.post(SITE_URL + "?ctl=Info&met=&typ=json", {password: $("input[name='password']").val()},
+                $.post(SITE_URL + "?ctl=Info&met=checkPassword&typ=json", {password: $("input[name='password']").val()},
                     function (data) {
                         var winWidth = $(window).width();
                         var url = SITE_URL + '?ctl=Info&met=passwd';

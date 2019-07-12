@@ -36,6 +36,9 @@ class Seller_Trade_DeliverCtl extends Seller_Controller
 	{
 		$Order_BaseModel              = new Order_BaseModel();
 		$condition['order_status:IN'] = array( Order_StateModel::ORDER_PAYED, Order_StateModel::ORDER_WAIT_PREPARE_GOODS );
+        if(self::$is_partner){
+            $condition['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
 		$data                         = $Order_BaseModel->getPhysicalList($condition);
 
 		fb($data);
@@ -52,6 +55,9 @@ class Seller_Trade_DeliverCtl extends Seller_Controller
 	{
 		$Order_BaseModel           = new Order_BaseModel();
 		$condition['order_status'] = Order_StateModel::ORDER_WAIT_CONFIRM_GOODS;
+        if(self::$is_partner){
+            $condition['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
 		$data                      = $Order_BaseModel->getPhysicalList($condition);
 
 		foreach ($data['items'] as $key => $val)
@@ -75,6 +81,9 @@ class Seller_Trade_DeliverCtl extends Seller_Controller
 	{
 		$Order_BaseModel           = new Order_BaseModel();
 		$condition['order_status'] = Order_StateModel::ORDER_FINISH;
+        if(self::$is_partner){
+            $condition['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
 		$data                      = $Order_BaseModel->getPhysicalList($condition);
 
 		$this->view->setMet('deliver');

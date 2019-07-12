@@ -29,7 +29,7 @@ include TPL_PATH . '/'  . 'header.php';
 				<div class="fl">
 					<ul class="ul-inline">
 						<li>
-							<input type="text" id="matchCon" class="ui-input ui-input-ph matchCon" placeholder="请输入用户名查询">
+							<input type="text" id="matchCon" class="ui-input ui-input-ph con" placeholder="请输入用户账号/用户姓名/用户手机号">
 						</li>
 						<li><a class="ui-btn mrb" id="search">查询<i class="iconfont icon-btn02"></i></a></li>
 					</ul>
@@ -46,7 +46,7 @@ include TPL_PATH . '/'  . 'header.php';
 			</div>
 		</div>
 	</div>
-	<script src="./ucenter_admin/static/default/js/controllers/message/manage.js" charset="utf-8"></script>
+	<script src="./ucenter_admin/static/default/js/controllers/user/manage.js" charset="utf-8"></script>
 <?php
 include TPL_PATH . '/'  . 'footer.php';
 ?>

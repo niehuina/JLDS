@@ -1,12 +1,8 @@
 <?php
-if (!defined('ROOT_PATH'))
-{
-    if (is_file('../../../shop/configs/config.ini.php'))
-    {
+if (!defined('ROOT_PATH')) {
+    if (is_file('../../../shop/configs/config.ini.php')) {
         require_once '../../../shop/configs/config.ini.php';
-    }
-    else
-    {
+    } else {
         die('请先运行index.php,生成应用程序框架结构！');
     }
 
@@ -15,7 +11,7 @@ if (!defined('ROOT_PATH'))
     $rows = $Base_CronModel->checkTask(); //并非指执行自己, 将所有需要执行的都执行掉, 如果自己达到执行条件,也不执行.
 
     //终止执行下面内容, 否则会执行两次
-    return ;
+    return;
 }
 $cur_dir = dirname(__FILE__);
 chdir($cur_dir);
@@ -25,6 +21,9 @@ Yf_Log::log(__FILE__, Yf_Log::INFO, 'crontab');
 $file_name_row = pathinfo(__FILE__);
 $crontab_file = $file_name_row['basename'];
 
+/**
+ * 订单提成返利：合伙人和高级合伙人
+ */
 $Order_BaseModel = new Order_BaseModel();
 $Order_GoodsModel = new Order_GoodsModel();
 $User_InfoModel = new User_InfoModel();
@@ -41,8 +40,9 @@ $user_g_grade = $User_GradeModel->getOne(4);
 $Order_BaseModel->sql->startTransactionDb();
 
 //查找出所有确认收货的未结算订单
-$time = time()-7*24*60*60;
-$N = date('Y-m-d H:i:s',$time);
+//$time = time()-7*24*60*60;
+//$N = date('Y-m-d H:i:s',$time);
+$N = get_date_time();
 
 $cond_row = array();
 $cond_row['order_status'] = Order_StateModel::ORDER_FINISH;
@@ -51,7 +51,7 @@ $cond_row['order_finished_time:<='] = $N;
 $order_row['order_create_time'] = 'asc';
 
 $flag = true;
-foreach ($partner_list as $key=>$user_info) {
+foreach ($partner_list as $key => $user_info) {
     $user_id = $user['user_id'];
     $user_children_ids = $User_InfoModel->getUserChildren($user_id, 0);
     $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
@@ -75,18 +75,18 @@ foreach ($partner_list as $key=>$user_info) {
         $grade_order_rebate1 = $user_grade['order_rebate1'];
         $grade_order_rebate2 = $user_grade['order_rebate2'];
 
-        if($user_info['children_order_total_amount'] > $grade_order_amount){
+        if ($user_info['children_order_total_amount'] > $grade_order_amount) {
             $order_rebate_value = $user_order_amount * $grade_order_rebate2;
-        }else if($user_info['children_order_total_amount'] <= $grade_order_amount){
+        } else if ($user_info['children_order_total_amount'] <= $grade_order_amount) {
             //不足指标金额$grade_order_amount的部分
             $order_amount1 = $grade_order_amount - $user_info['children_order_total_amount'];
             $rebate_value1 = $order_amount1 * $grade_order_rebate1;
 
             //满足指标金额$grade_order_amount的部分
             $order_amount2 = $total_children_order_total_amount - $grade_order_amount;
-            if($order_amount2 > 0){
+            if ($order_amount2 > 0) {
                 $rebate_value2 = $order_amount2 * $grade_order_rebate2;
-            }else{
+            } else {
                 $rebate_value2 = 0;
             }
             $order_rebate_value = $rebate_value1 + $rebate_value2;
@@ -116,8 +116,7 @@ foreach ($partner_list as $key=>$user_info) {
     $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=directsellerOrder&typ=json', $url), $formvars);
 }
 
-foreach ($g_partner_list as $key=>$user_info)
-{
+foreach ($g_partner_list as $key => $user_info) {
     $user_id = $user['user_id'];
 
     //计算高级合伙人的提成比例
@@ -126,10 +125,10 @@ foreach ($g_partner_list as $key=>$user_info)
     $grade_order_rebate_top = $user_g_grade['order_rebate_top'] * 1;
     $partner_count = $user['current_year_partner_count'];
     $order_rebate = $grade_order_rebate1 * 1 + $grade_order_rebate2 * $partner_count;
-    if($order_rebate_value > $grade_order_rebate_top){
+    if ($order_rebate_value > $grade_order_rebate_top) {
         $order_rebate = $grade_order_rebate_top;
     }
-    if($order_rebate == 0) continue;
+    if ($order_rebate == 0) continue;
 
     //获取高级合伙人所有线下的未结算订单
     $user_children_ids = $User_InfoModel->getUserChildren($user_id, 0);
@@ -138,7 +137,7 @@ foreach ($g_partner_list as $key=>$user_info)
     $user_orders = $Order_BaseModel->getByWhere($cond_row, $order_row);
 
     $order_rebate_value = 0;
-    if($user_orders) {
+    if ($user_orders) {
         $user_order_pay_amount = array_column($user_orders, 'order_payment_amount');
         $user_order_refund_amount = array_column($user_orders, 'order_refund_amount');
         $user_order_amount = $user_order_pay_amount - $user_order_refund_amount;
@@ -169,16 +168,13 @@ foreach ($g_partner_list as $key=>$user_info)
     $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=directsellerOrder&typ=json', $url), $formvars);
 }
 
-if ($flag && $Order_BaseModel->sql->commitDb())
-{
+if ($flag && $Order_BaseModel->sql->commitDb()) {
     $status = 200;
-    $msg    = __('success');
-}
-else
-{
+    $msg = __('success');
+} else {
     $Order_BaseModel->sql->rollBackDb();
-    $m      = $Order_BaseModel->msg->getMessages();
-    $msg    = $m ? $m[0] : __('failure');
+    $m = $Order_BaseModel->msg->getMessages();
+    $msg = $m ? $m[0] : __('failure');
     $status = 250;
 }
 

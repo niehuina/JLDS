@@ -19,28 +19,27 @@ else
 $time = time();
 $Base_CronModel = new Base_CronModel();
 	 
-$cron_rows = $Base_CronModel
-			->getByWhere(array('cron_active' => 1), array('cron_nexttransact' => 'ASC'));
+$cron_rows = $Base_CronModel->getByWhere(array('cron_active' => 1), array('cron_nexttransact' => 'ASC'));
 if(!$cron_rows){
 	exit('no cronjob!');
 	return;
 }
 foreach($cron_rows as $cron_row)	{
-	if (
-		   $cron_row['cron_script'] && $cron_row['cron_nexttransact'] <= $time
- 
-		)
-	{
- 		$script = APP_PATH . '/task/crons/' . $cron_row['cron_script'];
- 		if (file_exists($script))
-		{
-			 
-			$cron_scripts[$script] = $script;
-		}
-  		$cron_row['cron_lasttransact'] = $time;
-		$Base_CronModel->editNextTaskTime($cron_row);
-		 
-	}
+    if (
+           $cron_row['cron_script'] && $cron_row['cron_nexttransact'] <= $time
+
+        )
+    {
+        $script = APP_PATH . '/task/crons/' . $cron_row['cron_script'];
+        if (file_exists($script))
+        {
+
+            $cron_scripts[$script] = $script;
+        }
+        $cron_row['cron_lasttransact'] = $time;
+        $Base_CronModel->editNextTaskTime($cron_row);
+
+    }
 
 }	 
  

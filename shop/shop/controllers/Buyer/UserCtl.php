@@ -1713,6 +1713,9 @@ class Buyer_UserCtl extends Buyer_Controller
         $data['user_type'] = 1;
         $rs = $this->getPaycenterApi($data, 'Api_Paycen_PayRecord', 'getRecordAmountByUserId');
 
+        $User_InfoModel = new User_InfoModel();
+        $user_info = $User_InfoModel->getOne($data['user_id']);
+        $rs['data']['user_grade'] = $user_info['user_grade'];
         $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
     }
 

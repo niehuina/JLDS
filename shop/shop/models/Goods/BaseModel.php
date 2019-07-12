@@ -134,14 +134,12 @@ class Goods_BaseModel extends Goods_Base
 	 *
 	 * @author Zhuyt
 	 */
-	public function delStock($goods_id, $num, $user_id = null)
+	public function delStock($goods_id, $num, $seller_user_id = null)
 	{
-        if($user_id != null && Perm::$row['user_id']){
-            $user_id = Perm::$row['user_id'];
-
-            if($user_id){
+        if($seller_user_id != null){
+            if($seller_user_id){
                 //获取消费者对应的高级合伙人的库存
-                $flag = $this->editUserStock($goods_id, -1*$num, $user_id);
+                $flag = $this->editUserStock($goods_id, -1*$num, $seller_user_id);
 
                 if(!is_bool($flag)){
                     return $flag;
@@ -240,8 +238,6 @@ class Goods_BaseModel extends Goods_Base
         $goods_id         = $order_goods_base['goods_id'];
         $num              = $order_goods_base['order_goods_num'];
         $shop_id          = $order_goods_base['shop_id'];
-        $self_shop_id     = Web_ConfigModel::value("self_shop_id");
-
         $User_InfoModel = new User_InfoModel();
         $buyer_user_id    = $order_goods_base['buyer_user_id'];
         $user_parent_id = $User_InfoModel->getParentId($buyer_user_id);
@@ -249,9 +245,10 @@ class Goods_BaseModel extends Goods_Base
         $Shop_BaseModel = new Shop_BaseModel();
         $parent_shop_key = $Shop_BaseModel->getKeyByWhere(['user_id'=>$user_parent_id]);
         $parent_shop_id = current($parent_shop_key);
+        $self_shop_id     = Web_ConfigModel::value("self_shop_id");
 
-        if($shop_id == $self_shop_id && $shop_id != $parent_shop_id){
-            $flag = $this->editUserStock($goods_id, $num, $buyer_user_id);
+        if($user_parent_id != $buyer_user_id && $shop_id == $self_shop_id && $shop_id != $parent_shop_id){
+            $flag = $this->editUserStock($goods_id, $num, $user_parent_id);
         }else {
             $edit_base_row = array('goods_stock' => $num);
             $result1 = $this->editBase($goods_id, $edit_base_row);
@@ -270,11 +267,9 @@ class Goods_BaseModel extends Goods_Base
         return $flag;
     }
 
-    private function editUserStock($goods_id, $num, $user_id)
+    private function editUserStock($goods_id, $num, $seller_user_id)
     {
-        $User_InfoModel = new User_InfoModel();
-        $buyer_user_id    = $user_id;
-        $user_parent_id = $User_InfoModel->getParentId($buyer_user_id);
+        $user_parent_id = $seller_user_id;
         $User_StockModel = new User_StockModel();
         $user_stock = $User_StockModel->getOneByWhere(['goods_id'=>$goods_id, 'user_id'=>$user_parent_id]);
 

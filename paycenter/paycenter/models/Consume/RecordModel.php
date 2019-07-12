@@ -132,7 +132,7 @@ class Consume_RecordModel extends Consume_Record
 
 		return $data;
 	}
-	 public function getRecordList1($cond_row = array(), $order_row = array(), $page = 1, $rows = 100)
+	public function getRecordList1($cond_row = array(), $order_row = array(), $page = 1, $rows = 100)
 	{
 		$data = $this->listByWhere($cond_row, $order_row, $page, $rows);
 		rsort($data['items']);
@@ -285,5 +285,15 @@ class Consume_RecordModel extends Consume_Record
 			'record_status'=> RecordStatusModel::RECORD_CANCEL
 		]);
 	}
+
+    /**
+     * 根据条件获取数量
+     * @param $cond_row
+     * @return int
+     */
+	public function get_count($cond_row)
+    {
+        return $this->getNum($cond_row);
+    }
 }
 ?>

@@ -9,11 +9,11 @@ $(function () {
         defaultPage.SYSTEM.categoryInfo = defaultPage.SYSTEM.categoryInfo || {};
 
         this.$_matchCon = $('#matchCon'),
-            this.$_beginDate = $('#begin_date').val(system.beginDate),
-            this.$_endDate = $('#end_date').val(system.endDate),
-            this.$_matchCon.placeholder(),
-            this.$_beginDate.datepicker(),
-            this.$_endDate.datepicker()
+        this.$_beginDate = $('#begin_date').val(system.beginDate),
+        this.$_endDate = $('#end_date').val(system.endDate),
+        this.$_matchCon.placeholder(),
+        this.$_beginDate.datepicker(),
+        this.$_endDate.datepicker();
 
     };
 
@@ -162,7 +162,6 @@ $(function () {
                 //mod_PageLicence.setGridWidthByIndex(newwidth, index, 'grid');
             }
 
-
         }).navGrid('#page', {
             edit: false,
             add: false,
@@ -185,7 +184,7 @@ $(function () {
         //查询
         $('#search').on('click', function (e) {
             e.preventDefault();
-            var skey = match_con.val() === '请输入查询内容' ? '' : $.trim(match_con.val());
+            var skey = match_con.val() === '请输入用户账号/用户姓名/用户手机号' ? '' : $.trim(match_con.val());
 
             $("#grid").jqGrid('setGridParam', {
                 page: 1,
@@ -202,7 +201,7 @@ $(function () {
                 var b = $(this).data('id'),
                     c = $(this).data('delete');
 
-                if(c == 4) return;//如果用户退出，不能再修改状态
+                if (c == 4) return;//如果用户退出，不能再修改状态
 
                 if (3 == c) {
                     c = 1;
@@ -341,7 +340,7 @@ $(function () {
                 });
             },
 
-            userExit: function(a){
+            userExit: function (a) {
                 //4:退出
                 a && Public.ajaxPost('./index.php?ctl=User_Base&met=editStatus&typ=json', {
                     id: a,
@@ -382,17 +381,23 @@ $(function () {
                 var d = '正常',
                     e = 'ui-label-success';
 
-                if(a == 3) {d = '已锁定', e='ui-label-warning'};
-                if(a == 4) {d = '已退出', e='ui-label-default'};
+                if (a == 3) {
+                    d = '已锁定', e = 'ui-label-warning'
+                }
+                ;
+                if (a == 4) {
+                    d = '已退出', e = 'ui-label-default'
+                }
+                ;
 
                 return '<span class="set-status ui-label ' + e + '" data-delete="' + a + '" data-id="' + c.id + '">' + d + '</span>'
             },
             operFormatter: function (val, opt, row) {
-                if((val && val != 4) || row.user_state != 4){
+                if ((val && val != 4) || row.user_state != 4) {
                     var html_con = '<span class="set-passwd ui-label ui-label-success" data-id="' + row.id + '">修改密码</span>' +
                         '&nbsp;<span class="user-exit ui-label ui-label-success" data-id="' + row.id + '">退出</span>';
                     return html_con;
-                }else{
+                } else {
                     return '';
                 }
             },

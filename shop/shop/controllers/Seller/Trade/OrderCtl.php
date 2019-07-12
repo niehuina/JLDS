@@ -79,6 +79,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
         }
         $Order_BaseModel = new Order_BaseModel();
         $condition['chain_id:!=']       = 0;
+        if(self::$is_partner){
+            $condition['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
         $data            = $Order_BaseModel->getPhysicalList($condition,$order_row);
         $condition       = $data['condi'];
@@ -483,6 +486,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 	{
 		$Order_BaseModel       = new Order_BaseModel();
 		$condi['order_status'] = Order_StateModel::ORDER_WAIT_PAY;
+        if(self::$is_partner){
+            $condi['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
 		$data                  = $Order_BaseModel->getPhysicalList($condi,$order_row);
 		$condition             = $data['condi'];
@@ -500,6 +506,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 	{
 		$Order_BaseModel       = new Order_BaseModel();
 		$condi['order_status'] = Order_StateModel::ORDER_PAYED;
+        if(self::$is_partner){
+            $condi['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
 		$data                  = $Order_BaseModel->getPhysicalList($condi,$order_row);
 		$condition             = $data['condi'];
@@ -517,6 +526,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 	{
 		$Order_BaseModel       = new Order_BaseModel();
 		$condi['order_status'] = Order_StateModel::ORDER_SELF_PICKUP;
+        if(self::$is_partner){
+            $condi['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
 		$data                  = $Order_BaseModel->getPhysicalList($condi,$order_row);
 		$condition             = $data['condi'];
@@ -534,6 +546,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 	{
 		$Order_BaseModel       = new Order_BaseModel();
 		$condi['order_status'] = Order_StateModel::ORDER_WAIT_CONFIRM_GOODS;
+        if(self::$is_partner){
+            $condi['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
 		$data                  = $Order_BaseModel->getPhysicalList($condi,$order_row);
 		$condition             = $data['condi'];
@@ -551,6 +566,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 	{
 		$Order_BaseModel       = new Order_BaseModel();
 		$condi['order_status'] = Order_StateModel::ORDER_FINISH;
+        if(self::$is_partner){
+            $condi['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
 		$data                  = $Order_BaseModel->getPhysicalList($condi,$order_row);
 		$condition             = $data['condi'];
@@ -568,6 +586,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 	{
 		$Order_BaseModel       = new Order_BaseModel();
 		$condi['order_status'] = Order_StateModel::ORDER_CANCEL;
+        if(self::$is_partner){
+            $condi['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
 		$data                  = $Order_BaseModel->getPhysicalList($condi,$order_row);
 		$condition             = $data['condi'];
@@ -939,6 +960,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
         $Order_BaseModel       = new Order_BaseModel();
         $condi['order_status'] = Order_StateModel::ORDER_WAIT_PAY;
         $condi['chain_id:!=']       = 0;
+        if(self::$is_partner){
+            $condi['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
         $data                  = $Order_BaseModel->getPhysicalList($condi,$order_row);
         $condition             = $data['condi'];
@@ -957,6 +981,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
         $Order_BaseModel       = new Order_BaseModel();
         $condi['order_status'] = Order_StateModel::ORDER_SELF_PICKUP;
         $condi['chain_id:!=']       = 0;
+        if(self::$is_partner){
+            $condi['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
         $data                  = $Order_BaseModel->getPhysicalList($condi,$order_row);
         $condition             = $data['condi'];
@@ -975,6 +1002,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
         $Order_BaseModel       = new Order_BaseModel();
         $condi['order_status'] = Order_StateModel::ORDER_FINISH;
         $condi['chain_id:!=']       = 0;
+        if(self::$is_partner){
+            $condi['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
         $data                  = $Order_BaseModel->getPhysicalList($condi,$order_row);
         $condition             = $data['condi'];
@@ -993,6 +1023,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
         $Order_BaseModel       = new Order_BaseModel();
         $condi['order_status'] = Order_StateModel::ORDER_CANCEL;
         $condi['chain_id:!=']       = 0;
+        if(self::$is_partner){
+            $condi['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
         $data                  = $Order_BaseModel->getPhysicalList($condi,$order_row);
         $condition             = $data['condi'];
@@ -1224,6 +1257,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
     public function getPhysicalHideOrder(){
         $Order_BaseModel       = new Order_BaseModel();
         $condi['order_shop_hidden'] = $Order_BaseModel::IS_SELLER_HIDDEN;
+        if(self::$is_partner){
+            $condi['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
         $data                  = $Order_BaseModel->getPhysicalList($condi,$order_row);
         $condition             = $data['condi'];
@@ -1247,6 +1283,9 @@ class Seller_Trade_OrderCtl extends Seller_Controller
         $Order_BaseModel = new Order_BaseModel();
         $condition['order_shop_hidden'] = $Order_BaseModel::IS_SELLER_HIDDEN;
         $condition['chain_id:!=']       = 0;
+        if(self::$is_partner){
+            $condition['shop_id'] = Web_ConfigModel::value('self_shop_id');
+        }
         $order_row = array('order_create_time'=>'desc');
         $data            = $Order_BaseModel->getPhysicalList($condition,$order_row);
         $condition       = $data['condi'];

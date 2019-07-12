@@ -3,38 +3,66 @@
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" line="247" />
     <bookmark url="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" line="38" />
+    <bookmark url="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Controller.php" line="84" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8fcead4a-e539-4ffc-b779-bc3b47ff5f2d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_order_rabate.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_shares.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop_wap/tmpl/profit/profit_order_rabate.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop_wap/tmpl/profit/profit_shares.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/delete_user_list.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayRecordCtl/deleteUser_index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop/shop/task/crons/settleStockOrder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop/shop/task/crons/settleUserRecord.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Pay/PayCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Pay/PayCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayBaseCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayBaseCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayInfoCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayInfoCtl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayRecordCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayRecordCtl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/models/Trade/TypeModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/models/Trade/TypeModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/libraries/Yf/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/libraries/Yf/Model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Api/User/SharesCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Api/User/SharesCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayWithdrawCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayWithdrawCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/User/InfoCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/User/InfoCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/models/Consume/RecordModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/models/Consume/RecordModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/models/User/BaseModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/models/User/BaseModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/models/User/InfoModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/models/User/InfoModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/passwd.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/passwd.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/pay.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/pay.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/controllers/Paycen/PayRecordCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/controllers/Paycen/PayRecordCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paybase/paybase_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paybase/paybase_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/payinfo_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/payinfo_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/views/default/IndexCtl/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/views/default/IndexCtl/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayBaseCtl/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayBaseCtl/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/configs/plugin.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/configs/plugin.ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Api/Trade/OrderCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Api/Trade/OrderCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Api/User/InfoCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Api/User/InfoCtl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Buyer/OrderCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Buyer/OrderCtl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Buyer/UserCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Buyer/UserCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Seller/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Seller/Controller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/shop/models/User/GradeLogModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/User/GradeLogModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/shop/models/User/InfoModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/User/InfoModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/shop/static/default/js/order_add_step2.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/static/default/js/order_add_step2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/physical.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/physical.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shares/manage.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shares/manage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/DeliverCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/DeliverCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/Goods/BaseModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/Goods/BaseModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/MessageModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/MessageModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/Order/BaseModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/Order/BaseModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/User/GradeModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/User/GradeModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/task/crons/directsellerOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/task/crons/directsellerOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/task/crons/rebateOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/task/crons/rebateOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/task/crons/settlement.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/task/crons/settlement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/task/init.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/task/init.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/libraries/Yf/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/libraries/Yf/Model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/css/base.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop_wap/css/nctouch_member.css" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/css/nctouch_member.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/js/libs/ncscroll-load.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/js/libs/ncscroll-load.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/images/G4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/images/G5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/images/g6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/images/g7.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member_money.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member_money.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member_profit.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member_profit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_buyer_order.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_buyer_order.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_stock_order.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_stock_order.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/member/member_profit.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/profit/member_profit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/member/profit_buyer_order.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/profit/profit_buyer_order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/member/profit_stock_order.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/profit/profit_stock_order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ucenter/libraries/Yf/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/libraries/Yf/Model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ucenter_admin/libraries/Yf/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter_admin/libraries/Yf/Model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/member/member.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/member/member.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/member/member_stock.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/member/member_stock.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/profit/member_profit.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/profit/member_profit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter/ucenter/controllers/Api/UserCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/ucenter/controllers/Api/UserCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter/ucenter/models/User/InfoDetailModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/ucenter/models/User/InfoDetailModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/message/manage.js" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/user/manage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/views/default/User/BaseCtl/allUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/views/default/User/BaseCtl/allUser.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webpos/public/misc/AdminLTE-2.3.11/plugins/select2/select2.full.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpos/public/misc/AdminLTE-2.3.11/plugins/select2/select2.full.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webpos/public/misc/AdminLTE-2.3.11/plugins/select2/select2.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpos/public/misc/AdminLTE-2.3.11/plugins/select2/select2.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webpos/public/misc/toastr.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpos/public/misc/toastr.min.js" afterDir="false" />
@@ -69,70 +97,97 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php">
+        <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayBaseCtl.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="183" column="65" selection-start-line="183" selection-start-column="65" selection-end-line="184" selection-end-column="61" />
+            <state relative-caret-position="242">
+              <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/payinfo_list.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-264">
+              <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ucenter_admin/ucenter_admin/views/default/User/BaseCtl/allUser.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="31" column="59" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/user/manage.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="22">
+              <caret line="106" column="56" selection-start-line="106" selection-start-column="48" selection-end-line="106" selection-end-column="56" />
               <folding>
-                <element signature="n#createSearchCondi#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#add#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#listShop#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#listGoods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#chooseSendAddress#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#send#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#stock_orderGoods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#editBuyerAddress#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#physicalInfo#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#cancelOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#confirmOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#hideOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#restoreOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#stock_check_list#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#stock_check_log#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#stock_check_detail#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#check_goods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#user_stock#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#setAlarm#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#stock_check#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#stock_goods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-                <element signature="n#stock_self_use#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="e#73#79#1" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shares/manage.js">
+        <entry file="file://$PROJECT_DIR$/ucenter/ucenter/controllers/Api/UserCtl.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="616">
-              <caret line="76" column="17" selection-start-line="76" selection-start-column="17" selection-end-line="76" selection-end-column="17" />
+            <state relative-caret-position="308">
+              <caret line="38" column="43" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Buyer/UserCtl.php">
+        <entry file="file://$PROJECT_DIR$/ucenter/ucenter/models/User/InfoDetailModel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="1711" column="53" selection-start-line="1711" selection-start-column="53" selection-end-line="1711" selection-end-column="53" />
+            <state relative-caret-position="308">
+              <caret line="51" column="21" selection-start-line="51" selection-start-column="21" selection-end-line="51" selection-end-column="21" />
+              <folding>
+                <element signature="n#sync#0;n#User_InfoDetailModel#0;n#!!top" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Api/User/SharesCtl.php">
+        <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="75" column="73" lean-forward="true" selection-start-line="75" selection-start-column="73" selection-end-line="75" selection-end-column="73" />
+            <state relative-caret-position="358">
+              <caret line="40" column="92" selection-start-line="40" selection-start-column="89" selection-end-line="40" selection-end-column="92" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/User/InfoModel.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="169" column="38" selection-start-line="121" selection-start-column="8" selection-end-line="169" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="36" column="50" lean-forward="true" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/shop/shop/models/User/GradeLogModel.php">
+        <entry file="file://$PROJECT_DIR$/shop/shop/models/Order/BaseModel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="51" column="17" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="17" />
+            <state relative-caret-position="176">
+              <caret line="1079" column="49" selection-start-line="1079" selection-start-column="49" selection-end-line="1079" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -149,36 +204,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>confirm_order_time</find>
-      <find>order_status_text</find>
-      <find>订单状态</find>
-      <find>express_name</find>
-      <find>$data['goods_list']</find>
-      <find>订单金额</find>
-      <find>order_stauts_const</find>
-      <find>goods_cat_num</find>
-      <find>window.hide_logistic</find>
-      <find>shipping_info</find>
-      <find>order_shipping_message</find>
-      <find>ORDER_WAIT_CONFIRM_GOODS</find>
-      <find>Api_Paycen_PayRecord</find>
-      <find>Stock_OrderModel</find>
-      <find>deliver_explain</find>
-      <find>fixed</find>
-      <find>callback</find>
-      <find>moneyCount</find>
-      <find>num</find>
-      <find>getRecordListForWap</find>
-      <find>getProfit</find>
-      <find>get_order_profit</find>
-      <find>getRecordListByUserId</find>
-      <find>unSelectAllCheck</find>
-      <find>sql-</find>
       <find>getWhe</find>
-      <find>getRecordAmountByUserId</find>
       <find>select_goods_list</find>
       <find>group</find>
+      <find>getRecordAmountByUserId</find>
+      <find>/cc/</find>
+      <find>goods.png</find>
       <find>select_</find>
+      <find>confirmO</find>
+      <find>editOrderRowSatus</find>
+      <find>Yf_Registry::get('im_api_url')</find>
+      <find>order_payment_amount</find>
+      <find>Perm::$shopId</find>
+      <find>send()</find>
+      <find>buyer_user_id</find>
+      <find>deliver</find>
+      <find>confirmOrderAu</find>
+      <find>confirmOrderAuto</find>
+      <find>confirmOrder</find>
+      <find>addOrder</find>
+      <find>pay_password</find>
+      <find>checkPassword</find>
+      <find>paycenter</find>
+      <find>changeUserParentId</find>
+      <find>addbase</find>
+      <find>directsellerOrder</find>
+      <find>$N = date('Y-m-d H:i:s',$time);</find>
+      <find>refundTransferMoney</find>
+      <find>record_paytime</find>
+      <find>editUserMoneyFrozen</find>
+      <find>getInfoListIdentity</find>
     </findStrings>
     <replaceStrings>
       <replace>localhost:8018</replace>
@@ -198,36 +253,36 @@
       <replace>js/libs/zepto.min.js</replace>
     </replaceStrings>
     <dirStrings>
-      <dir>D:\Project\JLDS\web\shop_wap\tmpl\member</dir>
-      <dir>D:\Project\JLDS\web\ucenter</dir>
-      <dir>D:\Project\JLDS\web\shop_wap\tmpl</dir>
-      <dir>D:\Project\JLDS\web</dir>
       <dir>D:\Project\JLDS\web\ucenter\ucenter\models</dir>
       <dir>D:\Project\JLDS\web\shop\shop\configs</dir>
-      <dir>D:\Project\JLDS\web\paycenter</dir>
       <dir>D:\Project\JLDS\web\shop\shop\static</dir>
       <dir>D:\Project\JLDS\web\shop\shop\static\default\js</dir>
       <dir>D:\Project\JLDS\web\shop\shop\views</dir>
       <dir>D:\Project\JLDS\web\shop\shop\controllers\Buyer</dir>
       <dir>D:\Project\JLDS\web\shop\shop\controllers</dir>
-      <dir>D:\Project\JLDS\web\paycenter\paycenter\controllers</dir>
       <dir>D:\Project\JLDS\web\shop_admin\shop_admin\views</dir>
       <dir>D:\Project\JLDS\web\shop_admin\shop_admin\controllers</dir>
       <dir>D:\Project\JLDS\web\shop_admin\shop_admin\static\default\js\controllers</dir>
       <dir>D:\Project\JLDS\web\shop_admin\shop_admin\views\default</dir>
       <dir>D:\Project\JLDS\web\shop\shop\controllers\Api</dir>
       <dir>D:\Project\JLDS\web\shop\shop\views\default\Seller\Stock\OrderCtl</dir>
-      <dir>D:\Project\JLDS\web\shop_admin</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\task\crons</dir>
       <dir>D:\Project\JLDS\web\shop\shop\task</dir>
       <dir>D:\Project\JLDS\web\shop_wap\js\tmpl\member</dir>
       <dir>D:\Project\JLDS\web\shop_wap\js</dir>
-      <dir>D:\Project\JLDS\web\shop\shop</dir>
-      <dir>D:\Project\JLDS\web\shop</dir>
-      <dir>D:\Project\JLDS\web\paycenter\paycenter</dir>
-      <dir>D:\Project\JLDS\web\shop_wap</dir>
       <dir>D:\Project\JLDS\web\shop\shop\models</dir>
       <dir>D:\Project\JLDS\web\shop\shop\static\default</dir>
+      <dir>D:\Project\JLDS\web\shop\shop</dir>
+      <dir>D:\Project\JLDS\web\ucenter\ucenter\controllers</dir>
+      <dir>D:\Project\JLDS\web\paycenter_admin\admin</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\task\crons</dir>
+      <dir>D:\Project\JLDS\web\paycenter</dir>
+      <dir>D:\Project\JLDS\web\paycenter\paycenter</dir>
+      <dir>D:\Project\JLDS\web\shop</dir>
+      <dir>D:\Project\JLDS\web\ucenter</dir>
+      <dir>D:\Project\JLDS\web\ucenter_admin</dir>
+      <dir>D:\Project\JLDS\web\shop_admin</dir>
+      <dir>D:\Project\JLDS\web\shop_wap</dir>
+      <dir>D:\Project\JLDS\web\paycenter\paycenter\controllers</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -236,57 +291,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/stock_self_use.php" />
-        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/check_detail.php" />
-        <option value="$PROJECT_DIR$/shop/shop/configs/partner_menu.ini.php" />
-        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/stock_check.php" />
-        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/stock_check_list.php" />
-        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/stock_check_detail.php" />
-        <option value="$PROJECT_DIR$/shop/shop/static/default/js/stock_check_list.js" />
-        <option value="$PROJECT_DIR$/shop/shop/static/default/js/stock_check_detail.js" />
-        <option value="$PROJECT_DIR$/shop/shop/configs/self_partner_menu.ini.php" />
-        <option value="$PROJECT_DIR$/shop/shop/static/default/js/stock_orderGoods.js" />
-        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/stock_orderGoods.php" />
-        <option value="$PROJECT_DIR$/shop/shop/models/Stock/OrderShipping.php" />
-        <option value="$PROJECT_DIR$/shop/shop/models/Stock/OrderShippingModel.php" />
-        <option value="$PROJECT_DIR$/shop/shop/models/Stock/OrderGoodsModel.php" />
-        <option value="$PROJECT_DIR$/shop/shop/static/default/css/base.css" />
-        <option value="$PROJECT_DIR$/shop/shop/models/Order/BaseModel.php" />
-        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Trade/OrderCtl/send.php" />
-        <option value="$PROJECT_DIR$/shop/shop/static/default/js/stock_physical.js" />
-        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Trade/OrderCtl/physicalInfo.php" />
-        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/send.php" />
-        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/physicalInfo.php" />
-        <option value="$PROJECT_DIR$/shop/shop/models/Stock/OrderModel.php" />
-        <option value="$PROJECT_DIR$/shop_wap/js/tmpl/member/member_money.js" />
-        <option value="$PROJECT_DIR$/shop_wap/js/libs/ncscroll-load.js" />
-        <option value="$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_buyer_order.js" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/models/Trade/TypeModel.php" />
-        <option value="$PROJECT_DIR$/shop/shop/controllers/Buyer/OrderCtl.php" />
-        <option value="$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_stock_order.js" />
-        <option value="$PROJECT_DIR$/shop_wap/js/tmpl/member/member_profit.js" />
-        <option value="$PROJECT_DIR$/shop_wap/tmpl/member/member_profit.php" />
-        <option value="$PROJECT_DIR$/shop/shop/models/User/InfoModel.php" />
-        <option value="$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_shares.js" />
-        <option value="$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_order_rabate.js" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayRecordCtl.php" />
-        <option value="$PROJECT_DIR$/shop_wap/tmpl/member/profit_shares.php" />
-        <option value="$PROJECT_DIR$/shop_wap/tmpl/member/profit_order_rabate.php" />
-        <option value="$PROJECT_DIR$/shop_wap/tmpl/member/profit_stock_order.php" />
-        <option value="$PROJECT_DIR$/shop_wap/tmpl/member/profit_buyer_order.php" />
-        <option value="$PROJECT_DIR$/shop_wap/tmpl/profit/member_profit.php" />
-        <option value="$PROJECT_DIR$/shop/shop/controllers/Buyer/UserCtl.php" />
         <option value="$PROJECT_DIR$/shop_wap/css/nctouch_member.css" />
+        <option value="$PROJECT_DIR$/shop_wap/tmpl/member/member_stock.php" />
+        <option value="$PROJECT_DIR$/shop_wap/css/base.css" />
+        <option value="$PROJECT_DIR$/shop_wap/tmpl/member/member.php" />
         <option value="$PROJECT_DIR$/shop_wap/js/tmpl/member/member.js" />
-        <option value="$PROJECT_DIR$/ucenter_admin/libraries/Yf/Model.php" />
-        <option value="$PROJECT_DIR$/ucenter/libraries/Yf/Model.php" />
-        <option value="$PROJECT_DIR$/shop/libraries/Yf/Model.php" />
-        <option value="$PROJECT_DIR$/shop/shop/static/default/js/order_add_step2.js" />
-        <option value="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shares/manage.js" />
         <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" />
-        <option value="$PROJECT_DIR$/shop/shop/controllers/Api/User/SharesCtl.php" />
-        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/physical.php" />
-        <option value="$PROJECT_DIR$/shop/shop/models/User/GradeLogModel.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Api/Trade/OrderCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/models/MessageModel.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/DeliverCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Api/Seller/Trade/OrderCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Controller.php" />
+        <option value="$PROJECT_DIR$/ucenter/ucenter/models/User/Info.php" />
+        <option value="$PROJECT_DIR$/shop/shop/models/User/GradeModel.php" />
+        <option value="$PROJECT_DIR$/shop/shop/task/init.php" />
+        <option value="$PROJECT_DIR$/shop/shop/task/crons/settlement.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Buyer/OrderCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/models/Goods/BaseModel.php" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/pay.php" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/passwd.php" />
+        <option value="$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/message/manage.js" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Api/User/InfoCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/task/crons/rebateOrder.php" />
+        <option value="$PROJECT_DIR$/shop/shop/task/crons/settleStockOrder.php" />
+        <option value="$PROJECT_DIR$/shop/shop/task/crons/directsellerOrder.php" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/models/Consume/RecordModel.php" />
+        <option value="$PROJECT_DIR$/shop_admin/libraries/Yf/Model.php" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Pay/PayCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/task/crons/settleUserRecord.php" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/User/InfoCtl.php" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/views/default/IndexCtl/index.php" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/controllers/Paycen/PayRecordCtl.php" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayRecordCtl/index.php" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayWithdrawCtl.php" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Controller.php" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayBaseCtl/index.php" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/delete_user_list.js" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayRecordCtl/deleteUser_index.php" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paybase/paybase_list.js" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayRecordCtl.php" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayBaseCtl.php" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/models/User/InfoModel.php" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayInfoCtl.php" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/index.php" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/payinfo_list.js" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/models/User/BaseModel.php" />
+        <option value="$PROJECT_DIR$/ucenter_admin/ucenter_admin/views/default/User/BaseCtl/allUser.php" />
+        <option value="$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/user/manage.js" />
+        <option value="$PROJECT_DIR$/ucenter/ucenter/controllers/Api/UserCtl.php" />
+        <option value="$PROJECT_DIR$/ucenter/ucenter/models/User/InfoDetailModel.php" />
+        <option value="$PROJECT_DIR$/shop/shop/models/Order/BaseModel.php" />
       </list>
     </option>
   </component>
@@ -353,11 +408,6 @@
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="paycenter" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="shop" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -388,176 +438,7 @@
               <item name="shop" type="462c0819:PsiDirectoryNode" />
               <item name="controllers" type="462c0819:PsiDirectoryNode" />
               <item name="Seller" type="462c0819:PsiDirectoryNode" />
-              <item name="Stock" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="task" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="task" type="462c0819:PsiDirectoryNode" />
-              <item name="crons" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="Seller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="Seller" type="462c0819:PsiDirectoryNode" />
-              <item name="Stock" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="Seller" type="462c0819:PsiDirectoryNode" />
-              <item name="Stock" type="462c0819:PsiDirectoryNode" />
-              <item name="OrderCtl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-              <item name="shares" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="User" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shop_admin" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="User" type="462c0819:PsiDirectoryNode" />
-              <item name="SharesCtl" type="462c0819:PsiDirectoryNode" />
+              <item name="Trade" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -569,26 +450,26 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../EjtPlatform/SourceCode/web" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Project\JLDS\web\shop_wap\js\tmpl\member" />
-      <recent name="D:\Project\JLDS\web\shop_wap\tmpl\member" />
-      <recent name="D:\Project\JLDS\web\shop_wap\js\tmpl" />
-      <recent name="D:\Project\JLDS\web\shop\shop\views\default\Seller\Stock\OrderCtl" />
-      <recent name="D:\Project\JLDS\web\paycenter_admin\admin\views\default\Paycen\PayBaseCtl" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Project\JLDS\web\ucenter_admin\ucenter_admin\static\default\js\controllers\user" />
       <recent name="D:\Project\JLDS\web\shop_wap\tmpl\profit" />
       <recent name="D:\Project\JLDS\web\shop_admin\shop_admin\views\default\ConfigCtl" />
       <recent name="D:\Project\JLDS\web\shop_admin\shop_admin\views\default\User\SharesCtl" />
       <recent name="D:\Project\JLDS\web\shop_admin\shop_admin\controllers\User" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Project\JLDS\web\paycenter_admin\admin\static\default\js\controllers\payrecord" />
+      <recent name="D:\Project\JLDS\web\ucenter_admin\ucenter_admin\static\default\js\controllers\user" />
+      <recent name="D:\Project\JLDS\web\shop_wap\js\tmpl\member" />
       <recent name="D:\Project\JLDS\web\shop_wap\tmpl\member" />
+      <recent name="D:\Project\JLDS\web\shop_wap\js\tmpl" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -603,7 +484,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="PHP Web Page.shop_8001">
+  <component name="RunManager" selected="PHP Web Page.paycenter_8005">
     <configuration name="paycenter_8005" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="paycenter">
       <method v="2" />
     </configuration>
@@ -648,24 +529,25 @@
       <workItem from="1561946364520" duration="1669000" />
       <workItem from="1561959482979" duration="2589000" />
       <workItem from="1562046496996" duration="19605000" />
-      <workItem from="1562132262235" duration="145143000" />
+      <workItem from="1562132262235" duration="174701000" />
+      <workItem from="1562813638474" duration="32601000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="939510000" />
+    <option name="totallyTimeSpent" value="1001669000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="54" y="-8" width="1874" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49577466" visible="true" weight="0.2054721" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49577466" visible="true" weight="0.21531631" />
       <window_info id="Structure" order="1" sideWeight="0.5042254" side_tool="true" weight="0.18615879" />
       <window_info id="Favorites" order="2" sideWeight="0.50111854" side_tool="true" weight="0.23043944" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49947917" weight="0.062222224" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49947917" visible="true" weight="0.30638298" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.09" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.108510636" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -703,19 +585,21 @@
           <line>265</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/shop/shop/controllers/Api/Trade/OrderCtl.php</url>
+          <line>293</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php</url>
+          <line>1394</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PhpWebAppRunConfigurationType">
-        <watch expression="self::$cookieName" />
-        <watch expression="$seller_menu[$level_row[1]]['sub']" />
-        <watch expression="$menu_row" />
-        <watch expression="($menu_row['menu_id'] == $level_row[3]" />
-        <watch expression="$menu_row['menu_id'] == $level_row[3]" />
-        <watch expression="$this-&gt;user_info['user_grade']" />
-        <watch expression="$this-&gt;is_partner" language="PHP" />
-        <watch expression="self::$is_partner" />
-        <watch expression="Web_ConfigModel::value('Plugin_Distribution')" />
+        <watch expression="$this-&gt;user_info" />
       </configuration>
     </watches-manager>
   </component>
@@ -729,390 +613,377 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/shop_wap/includes/js.php">
+    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/baitiao.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="42" lean-forward="true" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
+        <state relative-caret-position="352">
+          <caret line="67" column="118" selection-start-line="57" selection-start-column="4" selection-end-line="67" selection-end-column="118" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/js/libs/ncscroll-load.js">
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/User/RechargeCtl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="81" column="37" selection-start-line="81" selection-start-column="37" selection-end-line="81" selection-end-column="37" />
+        <state relative-caret-position="-308">
+          <caret line="19" column="32" lean-forward="true" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/js/tmpl/member/moneylog_list.js">
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/Consume/RecordModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="565">
-          <caret line="51" column="7" lean-forward="true" selection-start-line="51" selection-start-column="7" selection-end-line="51" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/tmpl/member/moneylog_list.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="107" column="67" selection-start-line="107" selection-start-column="67" selection-end-line="107" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Api/User/InfoCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-44">
-          <caret line="25" column="8" lean-forward="true" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Api/User/PointsCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Api/User/SharedCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-648">
-          <caret line="24" column="8" lean-forward="true" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Buyer/PointsCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Buyer/OrderCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="584">
-          <caret line="5138" column="32" selection-start-line="5138" selection-start-column="32" selection-end-line="5138" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_stock_order.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="22" column="46" lean-forward="true" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_buyer_order.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="14" lean-forward="true" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2">
-          <caret line="168" selection-start-line="168" selection-end-line="190" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/models/User/Resource.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="72" column="20" selection-start-line="72" selection-start-column="20" selection-end-line="72" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/libraries/__init__.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="654" column="7" selection-start-line="654" selection-start-column="4" selection-end-line="654" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Pay/PayCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="614">
-          <caret line="728" column="42" lean-forward="true" selection-start-line="728" selection-start-column="42" selection-end-line="728" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/models/Subsite/Base.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="257" column="33" selection-start-line="257" selection-start-column="33" selection-end-line="257" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/models/User/InfoModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1716">
-          <caret line="36" column="7" lean-forward="true" selection-start-line="36" selection-start-column="7" selection-end-line="36" selection-end-column="7" />
+        <state relative-caret-position="385">
+          <caret line="292" column="7" lean-forward="true" selection-start-line="292" selection-start-column="7" selection-end-line="292" selection-end-column="7" />
           <folding>
-            <element signature="n#getUserOrderCount#0;n#User_InfoModel#0;n#!!top" />
+            <element signature="n#getRecordList#0;n#Consume_RecordModel#0;n#!!top" />
+            <element signature="n#getRecordList1#0;n#Consume_RecordModel#0;n#!!top" />
+            <element signature="n#getRecordListByType#0;n#Consume_RecordModel#0;n#!!top" />
+            <element signature="n#getRecordByOid#0;n#Consume_RecordModel#0;n#!!top" />
+            <element signature="n#sumMonetary#0;n#Consume_RecordModel#0;n#!!top" />
+            <element signature="n#cancelTrade#0;n#Consume_RecordModel#0;n#!!top" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/models/User/Info.php">
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/RecordStatusModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="15" column="29" lean-forward="true" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+        <state relative-caret-position="198">
+          <caret line="9" column="33" lean-forward="true" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/settlement.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="631">
+          <caret line="105" selection-start-line="105" selection-end-line="105" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/settleStockOrder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="46" column="30" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/Trade/TypeModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+        <state relative-caret-position="291">
+          <caret line="21" column="43" lean-forward="true" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="382" column="34" selection-start-line="382" selection-start-column="14" selection-end-line="382" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_order_rabate.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="28" column="81" selection-start-line="28" selection-start-column="81" selection-end-line="28" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/tmpl/profit/profit_shares.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="56" column="21" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/tmpl/profit/profit_buyer_order.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="22" column="13" lean-forward="true" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/tmpl/profit/profit_order_rabate.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="541">
-          <caret line="69" column="26" selection-start-line="69" selection-start-column="26" selection-end-line="69" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/js/tmpl/member/profit_shares.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/tmpl/profit/profit_stock_order.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="82" column="13" selection-start-line="82" selection-start-column="13" selection-end-line="82" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/publishGoods.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/Consume/RecordModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="181" column="17" selection-start-line="181" selection-start-column="17" selection-end-line="181" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/js/tmpl/member/member_profit.js">
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/controllers/Paycen/PayInfoCtl.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
-          <caret line="8" column="78" selection-start-line="8" selection-start-column="55" selection-end-line="8" selection-end-column="78" />
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/tmpl/profit/member_profit.php">
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Pay/PayCtl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="39" column="11" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+        <state relative-caret-position="1885">
+          <caret line="1344" column="2" lean-forward="true" selection-start-line="1344" selection-start-column="2" selection-end-line="1344" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/css/nctouch_member.css">
+    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/settleUserRecord.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1078">
-          <caret line="49" selection-start-line="49" selection-end-line="49" />
+        <state relative-caret-position="495">
+          <caret line="35" column="62" selection-start-line="35" selection-start-column="62" selection-end-line="35" selection-end-column="62" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/js/tmpl/member/member.js">
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/User/InfoCtl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="41" column="37" lean-forward="true" selection-start-line="41" selection-start-column="37" selection-end-line="41" selection-end-column="37" />
+        <state relative-caret-position="684">
+          <caret line="519" column="17" selection-start-line="514" selection-start-column="16" selection-end-line="519" selection-end-column="17" />
           <folding>
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#getUserResourceInfo#0;n#Api_User_InfoCtl#0;n#!!top" />
+            <element signature="n#getUserRowsResourceInfo#0;n#Api_User_InfoCtl#0;n#!!top" />
+            <element signature="n#editUserResourceInfo#0;n#Api_User_InfoCtl#0;n#!!top" />
+            <element signature="n#editReturnUserResourceInfo#0;n#Api_User_InfoCtl#0;n#!!top" />
+            <element signature="n#getUserInfo#0;n#Api_User_InfoCtl#0;n#!!top" />
+            <element signature="n#editCertification#0;n#Api_User_InfoCtl#0;n#!!top" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shop_wap/tmpl/member/member.php">
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayWithdrawCtl/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="30" column="93" lean-forward="true" selection-start-line="30" selection-start-column="93" selection-end-line="30" selection-end-column="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/paybase_list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="60" column="27" lean-forward="true" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/payrecord_list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="36" lean-forward="true" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/IndexCtl/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="255" column="89" selection-start-line="255" selection-start-column="73" selection-end-line="255" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpos/public/misc/jqueryui/jquery-ui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1311">
+          <caret line="1179" column="14" selection-start-line="1179" selection-start-column="1" selection-end-line="1179" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/models/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="789" selection-start-line="789" selection-end-line="789" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayWithdrawCtl/getEditWithdraw.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="21" column="19" lean-forward="true" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PaywayCtl/editpayload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1578" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shares/manage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4020" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shares/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="122" column="10" lean-forward="true" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shared/shared_list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2574" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/static/default/js/stock_check_list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1446" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/static/default/js/seller_order.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="55" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paywithdraw/paywithdraw_list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="146" column="9" selection-start-line="146" selection-start-column="9" selection-end-line="157" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/controllers/Paycen/PayRecordCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayRecordCtl/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="706">
+          <caret line="52" column="74" selection-start-line="52" selection-start-column="74" selection-end-line="52" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/libraries/__init__.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="672" column="5" lean-forward="true" selection-start-line="672" selection-start-column="5" selection-end-line="672" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayWithdrawCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="86" column="36" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/paycard_manage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="46" column="84" lean-forward="true" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Controller.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
-          <caret line="70" column="21" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
+          <caret line="19" column="23" lean-forward="true" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="96" selection-start-line="96" selection-end-line="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayBaseCtl/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/delete_user_list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="27" column="74" selection-start-line="27" selection-start-column="74" selection-end-line="27" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop_admin/libraries/Yf/Model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="554">
+          <caret line="873" column="20" lean-forward="true" selection-start-line="873" selection-start-column="20" selection-end-line="873" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayRecordCtl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="90" column="43" selection-start-line="90" selection-start-column="34" selection-end-line="90" selection-end-column="43" />
+        <state relative-caret-position="242">
+          <caret line="299" selection-start-line="299" selection-end-line="299" />
           <folding>
-            <element signature="n#getDepositAmountByUserId#0;n#Api_Paycen_PayRecordCtl#0;n#!!top" />
-            <element signature="n#getBtOrder#0;n#Api_Paycen_PayRecordCtl#0;n#!!top" />
+            <element signature="n#shares_profit#0;n#Api_Paycen_PayRecordCtl#0;n#!!top" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/rebateOrder.php">
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayRecordCtl/deleteUser_index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="36" column="125" selection-start-line="36" selection-start-column="107" selection-end-line="36" selection-end-column="125" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/Card/BaseModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="21" column="31" lean-forward="true" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paybase/paybase_list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2046">
+          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/User/BaseModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="542">
+          <caret line="72" column="50" selection-start-line="72" selection-start-column="50" selection-end-line="72" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/payinfo_list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-264">
+          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ucenter_admin/ucenter_admin/views/default/User/BaseCtl/allUser.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="31" column="59" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/user/manage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="106" column="56" selection-start-line="106" selection-start-column="48" selection-end-line="106" selection-end-column="56" />
+          <folding>
+            <element signature="e#73#79#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayBaseCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayInfoCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-123">
+          <caret line="61" column="40" lean-forward="true" selection-start-line="61" selection-start-column="40" selection-end-line="61" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="40" column="92" selection-start-line="40" selection-start-column="89" selection-end-line="40" selection-end-column="92" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/User/InfoModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="169" column="38" selection-start-line="121" selection-start-column="8" selection-end-line="169" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ucenter/ucenter/controllers/Api/UserCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="38" column="43" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ucenter/ucenter/models/User/InfoDetailModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="51" column="21" selection-start-line="51" selection-start-column="21" selection-end-line="51" selection-end-column="21" />
+          <folding>
+            <element signature="n#sync#0;n#User_InfoDetailModel#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="36" column="50" lean-forward="true" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/models/Order/BaseModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
-          <caret line="101" column="39" selection-start-line="101" selection-start-column="39" selection-end-line="101" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/static/default/js/stock_orderGoods.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1006">
-          <caret line="139" column="49" lean-forward="true" selection-start-line="139" selection-start-column="49" selection-end-line="139" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/static/default/js/stock_check_detail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="959">
-          <caret line="112" lean-forward="true" selection-start-line="112" selection-end-line="112" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/static/default/js/stock_check.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="194" column="2" lean-forward="true" selection-start-line="194" selection-start-column="2" selection-end-line="194" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/static/default/js/stock_check_list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1601">
-          <caret line="131" lean-forward="true" selection-start-line="131" selection-end-line="131" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_admin/shop_admin/views/default/User/SharesCtl/addSharesDividend.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="541">
-          <caret line="51" column="10" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/send.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="427" column="23" selection-start-line="427" selection-start-column="23" selection-end-line="427" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ucenter_admin/libraries/Yf/Model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="884" column="83" selection-start-line="884" selection-start-column="83" selection-end-line="884" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Buyer/UserCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="1711" column="53" selection-start-line="1711" selection-start-column="53" selection-end-line="1711" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shares/manage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="76" column="17" selection-start-line="76" selection-start-column="17" selection-end-line="76" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="183" column="65" selection-start-line="183" selection-start-column="65" selection-end-line="184" selection-end-column="61" />
-          <folding>
-            <element signature="n#createSearchCondi#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#add#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#listShop#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#listGoods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#chooseSendAddress#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#send#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#stock_orderGoods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#editBuyerAddress#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#physicalInfo#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#cancelOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#confirmOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#hideOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#restoreOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#stock_check_list#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#stock_check_log#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#stock_check_detail#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#check_goods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#user_stock#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#setAlarm#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#stock_check#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#stock_goods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-            <element signature="n#stock_self_use#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/physical.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1188">
-          <caret line="114" column="17" lean-forward="true" selection-start-line="114" selection-start-column="17" selection-end-line="114" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Api/User/SharesCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="75" column="73" lean-forward="true" selection-start-line="75" selection-start-column="73" selection-end-line="75" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/libraries/Yf/Model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="885" column="5" selection-start-line="885" selection-start-column="5" selection-end-line="885" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ucenter/libraries/Yf/Model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="890" column="68" selection-start-line="890" selection-start-column="68" selection-end-line="890" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/models/User/GradeLog.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="20" column="25" selection-start-line="20" selection-start-column="15" selection-end-line="20" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/models/User/GradeLogModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="51" column="17" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="17" />
+          <caret line="1079" column="49" selection-start-line="1079" selection-start-column="49" selection-end-line="1079" selection-end-column="49" />
         </state>
       </provider>
     </entry>

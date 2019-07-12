@@ -198,7 +198,7 @@ sub { vertical-align: text-bottom }
 .header-nav li.cur a { padding: 0.1rem 0.05rem 0 0.05rem; color: #F60;}
 .header-r { position: absolute; z-index: 1; top: 0; right: 0; font-size: 0; text-align: right; }
 .header-r a.text { position: relative; z-index: 1; display: inline-block; white-space: nowrap; width: 1.6rem; height: 0.95rem; padding: 0.6rem 0.7rem 0.4rem 0; font-size: 0.7rem; line-height: 0.975rem; color: #F60;}
-.header-r a { position: relative; z-index: 1; display: inline-block; vertical-align: top; width: 0.95rem; height: 0.95rem; padding: 0.5rem 0.5rem; }
+.header-r a, .header-b a { position: relative; z-index: 1; display: inline-block; vertical-align: top; width: 0.95rem; height: 0.95rem; padding: 0.5rem 0.5rem; }
 .header-r a i { display: block; height:100%;margin:0 auto; }
 .header-r a sup { display: none !important; position: absolute; z-index: 1; top: 0.3rem; right: 0.3rem; width: 0.36rem; height: 0.36rem; background-color: #F60; border-radius: 100%; }
 .header-r a i.more { background-image: url(../images/bbc-bg48.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 100%; opacity: 0.65; }
@@ -209,6 +209,7 @@ sub { vertical-align: text-bottom }
 .header-r a.msg-log { width: 2.45rem; height: 1.95rem;  padding: 0;}
 .header-r a.msg-log i { background-image: url(../images/msg_log_b.png); background-repeat: no-repeat; background-position:50% 50%; background-size:70%; opacity: 0.7;}
 .dpm{display: block; width: 7rem; overflow:  hidden; white-space: nowrap; -o-text-overflow: ellipsis; text-overflow:  ellipsis;}
+.header-b { position: absolute; z-index: 1; top: 5rem; right: 0; font-size: 0; text-align: right; }
 
 @keyframes headerFixed {
 from {

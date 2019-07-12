@@ -168,5 +168,74 @@ class User_InfoDetailModel extends User_InfoDetail
         return $data_rows;
     }
 
+    public function getUserDetailListByKeys($user_keys, $cond_row=array(),$order_row=array(), $page=1, $rows=100)
+    {
+        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM " . $this->_tableName;
+
+        if ($cond_row) {
+            foreach ($cond_row as $k=>$v)
+            {
+                $k_row = explode(':', $k);
+
+                if (count($k_row) > 1)
+                {
+                    $this->sql->setWhere($k_row[0], $v, $k_row[1]);
+                }
+                else
+                {
+                    $this->sql->setWhere($k, $v);
+                }
+            }
+        }
+        if ($order_row) {
+            foreach ($order_row as $k => $v) {
+                $this->sql->setOrder($k, $v);
+            }
+        }
+
+        //需要分页如何高效，易扩展
+        $offset = $rows * ($page - 1);
+        $this->sql->setLimit($offset, $rows);
+
+        $where = $this->sql->getWhere();
+
+        if ($user_keys) {
+            $where .= ' AND (user_truename LIKE '.'\'%'.$user_keys.'%\''.' 
+                            OR '. 'user_name LIKE'.'\'%'.$user_keys.'%\''.' 
+                            OR '. 'user_mobile LIKE' .'\'%'.$user_keys.'%\')';
+        }
+
+        $limit = $this->sql->getLimit();
+        $order = $this->sql->getOrder();
+
+        $sql = $sql . $where . $order . $limit;
+
+        $common_rows = $this->sql->getAll($sql);
+
+        //读取影响的函数, 和记录封装到一起.
+        $total = $this->getFoundRows();
+
+        $data = array();
+        $data['page'] = $page;
+        $data['total'] = ceil_r($total / $rows);  //total page
+        $data['totalsize'] = $total;
+        $data['records'] = count($common_rows);
+        $data['items'] = $common_rows;
+
+        $User_InfoModel = new User_InfoModel();
+        $user_id_row = array_column($data['items'], 'user_id');
+        $user_base_rows = $User_InfoModel->getByWhere(array('user_id:IN'=>$user_id_row));
+        foreach ($data['items'] as $k => $item)
+        {
+            $item['user_reg_time'] = date('Y-m-d H:i:s', $item['user_reg_time']);
+            $item['user_lastlogin_time'] = date('Y-m-d H:i:s', $item['user_lastlogin_time']);
+
+            $item['user_gender1'] = _(User_InfoDetailModel::$userSex[$item['user_gender']]);
+            $item['user_state'] = $user_base_rows[$item['user_id']]['user_state'];
+
+            $data['items'][$k] = $item;
+        }
+        return $data;
+    }
 }
 ?>

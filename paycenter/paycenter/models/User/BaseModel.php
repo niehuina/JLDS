@@ -71,14 +71,10 @@ class User_BaseModel extends User_Base
     {
         $getBaseList = $this->listByWhere($cond_row, $order_row, $page, $rows, $sort);
         $user_resource = new User_ResourceModel();
-        $user_InfoModel = new User_InfoModel();
         foreach ($getBaseList['items'] as $key => $value) {
             $user_resource_list = $user_resource->getone($value['user_id']);
             $getBaseList['items'][$key] = array_merge($getBaseList['items'][$key], $user_resource_list);
-            $getBaseList['items'][$key]['user_delete'] = $value['user_delete'] == 0 ? "正常" : "未启用";
-
-//            $user_info = $user_InfoModel->getOne($value['user_id']);
-//            $getBaseList['items'][$key]['user_mobile'] = $user_info['user_mobile'];
+            $getBaseList['items'][$key]['user_delete'] = $value['user_delete'] == 0 ? "正常" : "已退出";
         }
 
         return $getBaseList;

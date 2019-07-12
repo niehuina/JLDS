@@ -547,11 +547,13 @@ class Api_User_InfoCtl extends Yf_AppController
         $user_info = $this->userInfoModel->getOne($user_id);
         $user_parent_id = $user_info['user_parent_id'];
 
+        //获取该用户的直属下级用户
         $user_list = $this->userInfoModel->getKeyByWhere(['user_parent_id'=>$user_id]);
+
         $this->userInfoModel->sql->startTransactionDb();
-        $flag = true;
-        foreach ($user_list as $user_id){
-            $flag1 = $this->userInfoModel->editInfo($user_id, ['user_parent_id'=>$user_parent_id]);
+        $flag = $this->userInfoModel->editInfo($user_id, ['user_statu'=>1]); //不可再登录
+        foreach ($user_list as $userId){
+            $flag1 = $this->userInfoModel->editInfo($userId, ['user_parent_id'=>$user_parent_id]);
             $flag = $flag && $flag1;
         }
 

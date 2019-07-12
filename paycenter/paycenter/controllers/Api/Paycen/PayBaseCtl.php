@@ -23,15 +23,14 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
 
     function getPayBaseList()
     {
-        $username = request_string('userName');   //用户名称
+        $user_keys = request_string('user_keys');   //用户名称
         $cond_row = array();
-        if ($username) {
-            $cond_row = array("user_account" => $username);
-        }
-        $User_BaseModel = new User_BaseModel();
+        $cond_row['user_base.user_delete'] = 0;
+        $User_InfoModel = new User_InfoModel();
         $page = request_int('page', 1);
         $rows = request_int('rows', 20);
-        $data = $User_BaseModel->getPayBaseList($cond_row, ['user_id'=>'asc'], $page, $rows);
+
+        $data = $User_InfoModel->getUserInfoListByKeys($user_keys, $cond_row, ['user_id' => 'desc'], $page, $rows);
         if ($data) {
             $msg = 'success';
             $status = 200;
@@ -137,9 +136,9 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
 
             //用户股金是否已达标升级所需，如果未记录，则查询总股金是否达标
             $user_resource = $User_ResourceModel->getOne($data['user_id']);
-            if($user_resource['user_pay_shares_date'] == "") {
+            if ($user_resource['user_pay_shares_date'] == "") {
                 //用户总股金
-                $user_total_shares = $user_resource['user_shares']*1;
+                $user_total_shares = $user_resource['user_shares'] * 1;
 
                 //获取用户升级信息
                 $key = Yf_Registry::get('shop_api_key');
@@ -152,11 +151,11 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
                 if ($rs['status'] == "200") {
                     $user_grade = $rs['data'];
                     $user_grade_shares = $user_grade['user_grade_shares'] * 1;
-                    if ($user_total_shares >= $user_grade_shares){
+                    if ($user_total_shares >= $user_grade_shares) {
                         $user_pay_shares_date = date("Y-m-d");
 
                         //修改用户股金达标的日期
-                        $flag2 = $User_ResourceModel->editResource($data['user_id'], ['user_pay_shares_date'=>$user_pay_shares_date]);
+                        $flag2 = $User_ResourceModel->editResource($data['user_id'], ['user_pay_shares_date' => $user_pay_shares_date]);
                         $flag = $flag && $flag2;
                     }
                 }
@@ -168,8 +167,8 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
             $status = 200;
         } else {
             $User_ResourceModel->sql->rollBackDb();
-            $m      = $User_ResourceModel->msg->getMessages();
-            $msg    = $m ? $m[0] : __('failure');
+            $m = $User_ResourceModel->msg->getMessages();
+            $msg = $m ? $m[0] : __('failure');
             $status = 250;
         }
 
@@ -231,7 +230,7 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
             $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=updateUserGradeToGPartner&typ=json', $url), $formvars);
             if ($rs['status'] == "200") {
                 $flag = $flag && true;
-            }else{
+            } else {
                 $flag = false;
             }
         }
@@ -241,8 +240,8 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
             $status = 200;
         } else {
             $User_ResourceModel->sql->rollBackDb();
-            $m      = $User_ResourceModel->msg->getMessages();
-            $msg    = $m ? $m[0] : __('failure');
+            $m = $User_ResourceModel->msg->getMessages();
+            $msg = $m ? $m[0] : __('failure');
             $status = 250;
         }
 

@@ -1,5 +1,4 @@
-<?php if (!defined('ROOT_PATH'))
-{
+<?php if (!defined('ROOT_PATH')) {
     exit('No Permission');
 }
 
@@ -24,101 +23,97 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
     //获取卡片列表
     public function getCardBaseList()
     {
-        $cardname  = request_string('cardName');   //卡片名称
+        $cardname = request_string('cardName');   //卡片名称
         $beginDate = request_string('beginDate');
-        $endDate   = request_string('endDate');
-        $appid     = request_int('appid');
+        $endDate = request_string('endDate');
+        $appid = request_int('appid');
 
         $page = request_string('page', 1);
         $rows = request_string('rows', 20);
 
         $Card_BaseModel = new Card_BaseModel();
-        $data           = $Card_BaseModel->getBaseList($cardname, $appid, $beginDate, $endDate, $page, $rows);
+        $data = $Card_BaseModel->getBaseList($cardname, $appid, $beginDate, $endDate, $page, $rows);
 
 
         $Card_InfoModel = new Card_InfoModel();
-        foreach ($data['items'] as $key => $val)
-        {
-            $card_used_num                        = $Card_InfoModel->getCardusednumBy($val['card_id']);
+        foreach ($data['items'] as $key => $val) {
+            $card_used_num = $Card_InfoModel->getCardusednumBy($val['card_id']);
             $data['items'][$key]['card_used_num'] = $card_used_num;
 
-            $card_new_num                        = $Card_InfoModel->getCardnewnumBy($val['card_id']);
+            $card_new_num = $Card_InfoModel->getCardnewnumBy($val['card_id']);
             $data['items'][$key]['card_new_num'] = $card_new_num;
         }
 
-        if ($data)
-        {
-            $msg    = 'success';
+        if ($data) {
+            $msg = 'success';
             $status = 200;
-        }
-        else
-        {
-            $msg    = 'failure';
+        } else {
+            $msg = 'failure';
             $status = 250;
         }
         fb($data);
         $this->data->addBody(-140, $data, $msg, $status);
     }
+
     //实名验证中的数据
-    function getInfoListIdentity() {
-        $page = request_int('page',1);
-        $rows = request_int('rows',20);
-        $username  = request_string('userName');   //用户名称
-          $cond_row = array();
-          if($username){
-                $cond_row['user_nickname:LIKE'] = '%' . $username . '%';
-          }
-		   $cond_row['user_identity_statu:not in'] = '0';
-        $order_row['user_active_time'] = 'DESC';
-          $User_InfoModel = new User_InfoModel();
-          $data           = $User_InfoModel->getInfoList($cond_row,$order_row,$page,$rows);
-            if ($data)
-            {
-                $msg    = 'success';
-                $status = 200;
-            }
-            else
-            {
-                $msg    = 'failure';
-                $status = 250;
-            }
+    function getInfoListIdentity()
+    {
+        $page = request_int('page', 1);
+        $rows = request_int('rows', 20);
+        $status = request_string('status');   //认证状态
+        $user_keys = request_string('user_keys');   //用户名称
+        $cond_row = array();
+        $cond_row['user_base.user_delete'] = 0;
+        if($status){
+            $cond_row['user_info.user_identity_statu'] = $status;
+        }else{
+            $cond_row['user_info.user_identity_statu:not in'] = '0';
+        }
+        $order_row['user_info.user_active_time'] = 'DESC';
+        $User_InfoModel = new User_InfoModel();
+        $data = $User_InfoModel->getUserInfoListByKeys($user_keys, $cond_row, $order_row, $page, $rows);
+        if ($data) {
+            $msg = 'success';
+            $status = 200;
+        } else {
+            $msg = 'failure';
+            $status = 250;
+        }
         $this->data->addBody(-140, $data, $msg, $status);
     }
 
     //    展示info表中的数据
-    function getInfoList() {
+    function getInfoList()
+    {
         $page = request_string('page', 1);
         $rows = request_string('rows', 20);
-        $card_id  = request_string('cardName');   //卡片名称
+        $card_id = request_string('cardName');   //卡片名称
         $beginDate = request_string('beginDate'); //卡片生成时间
         $User_InfoModel = new  Card_InfoModel();
-        $data      = $User_InfoModel->getInfoList($card_id,$beginDate,$page,$rows);
-        if(!isset($data['items']) || !$data['items']){
+        $data = $User_InfoModel->getInfoList($card_id, $beginDate, $page, $rows);
+        if (!isset($data['items']) || !$data['items']) {
             return $this->data->addBody(-140, array(), '没有数据', 250);
         }
-        foreach ($data['items'] as $k=>$value){
-            if($value['card_fetch_time'] == '0000-00-00 00:00:00' || !$value['card_fetch_time']){
+        foreach ($data['items'] as $k => $value) {
+            if ($value['card_fetch_time'] == '0000-00-00 00:00:00' || !$value['card_fetch_time']) {
                 $data['items'][$k]['card_fetch_time'] = '';
             }
         }
         //从paycard分配数据到info表中************
         $Card_BaseModel = new Card_BaseModel();
-        $datas          = $Card_BaseModel->getBaseList();
+        $datas = $Card_BaseModel->getBaseList();
 
-        foreach($datas['items'] as $key=>$val){
-            $paydata[]=$val['card_id'];
+        foreach ($datas['items'] as $key => $val) {
+            $paydata[] = $val['card_id'];
         }
-        $pdata=json_encode($paydata);
-        $data['card_id']=$pdata;
+        $pdata = json_encode($paydata);
+        $data['card_id'] = $pdata;
 
-        if ($data)
-        {
-            $msg    = 'success';
+        if ($data) {
+            $msg = 'success';
             $status = 200;
-        }
-        else
-        {
-            $msg    = 'failure';
+        } else {
+            $msg = 'failure';
             $status = 250;
         }
         $this->data->addBody(-140, $data, $msg, $status);
@@ -129,75 +124,66 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
     {
         $card_id = request_int('card_id');
 
-        $Buyer_TestModel           = new Card_InfoModel();
-        $Card_BaseModel            = new Card_BaseModel();
+        $Buyer_TestModel = new Card_InfoModel();
+        $Card_BaseModel = new Card_BaseModel();
 
         $card_base = $Card_BaseModel->getOne($card_id);
-        $card_prize_row = json_decode($card_base['card_prize'],true);
-         $money = $card_prize_row['m'];      //卡片价格
-         $num = $card_base['card_num'];  //卡片最高数量
+        $card_prize_row = json_decode($card_base['card_prize'], true);
+        $money = $card_prize_row['m'];      //卡片价格
+        $num = $card_base['card_num'];  //卡片最高数量
 
-         $all_card = $Buyer_TestModel->getCardnumBy($card_id);
+        $all_card = $Buyer_TestModel->getCardnumBy($card_id);
 
-         $data                      = array();
-         $data['card_id']           = $card_id;                  //卡id
-         $length                  = request_string('card_sum');                //生成卡的数量
+        $data = array();
+        $data['card_id'] = $card_id;                  //卡id
+        $length = request_string('card_sum');                //生成卡的数量
 
-         if(($length+$all_card)>$num)
-         {
-             $msg    = '只能生成'.$num .'张卡片';
-             $status = 250;
-         }
-         else
-         {
-             for ($i=1; $i<=$length;$i++){
-                 $data['card_code']=$data['card_id'].Text_Password::create(4,unpronounceable,1234567890);
-                 $data['card_password'] = Text_Password::create(6,unpronounceable,1234567890);
-                 $data['card_money'] = $money;
-                 $flag = $Buyer_TestModel->addInfo($data, true);
-             }
+        if (($length + $all_card) > $num) {
+            $msg = '只能生成' . $num . '张卡片';
+            $status = 250;
+        } else {
+            for ($i = 1; $i <= $length; $i++) {
+                $data['card_code'] = $data['card_id'] . Text_Password::create(4, unpronounceable, 1234567890);
+                $data['card_password'] = Text_Password::create(6, unpronounceable, 1234567890);
+                $data['card_money'] = $money;
+                $flag = $Buyer_TestModel->addInfo($data, true);
+            }
 
-             if ($flag)
-             {
-                 $msg    = 'failure';
-                 $status = 250;
-             }
-             else
-             {
-                 $msg    = 'success';
-                 $status = 200;
-             }
-         }
+            if ($flag) {
+                $msg = 'failure';
+                $status = 250;
+            } else {
+                $msg = 'success';
+                $status = 200;
+            }
+        }
 
-         $data = array();
+        $data = array();
 
-         $this->data->addBody(-140, $data, $msg, $status);
+        $this->data->addBody(-140, $data, $msg, $status);
 
 
     }
+
     /*
      * 删除购物卡
      */
     public function remove()
     {
-        $Card_InfoModel     = new Card_InfoModel();
+        $Card_InfoModel = new Card_InfoModel();
 
         $card_code = request_int('card_code');
-        if ($card_code)
-        {
+        if ($card_code) {
             $flag = $Card_InfoModel->delCardByCid($card_code);
 
 
         }
-        if ($flag)
-        {
-            $msg    = 'success';
+        if ($flag) {
+            $msg = 'success';
             $status = 200;
-        }
-        else
-        {
+        } else {
 
-            $msg    = 'failure';
+            $msg = 'failure';
             $status = 250;
 
         }
@@ -205,23 +191,22 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         $data['card_code'] = $card_code;
         $this->data->addBody(-140, $data, $msg, $status);
     }
-    function getEditInfo(){
+
+    function getEditInfo()
+    {
         $user_id = request_int("user_id");
-          $User_InfoModel = new User_InfoModel();
-          $data           = $User_InfoModel->getOne($user_id);
-          if ($data)
-            {
-                $msg    = 'success';
-                $status = 200;
-            }
-            else
-            {
-                $msg    = 'failure';
-                $status = 250;
-            }
+        $User_InfoModel = new User_InfoModel();
+        $data = $User_InfoModel->getOne($user_id);
+        if ($data) {
+            $msg = 'success';
+            $status = 200;
+        } else {
+            $msg = 'failure';
+            $status = 250;
+        }
         $this->data->addBody(-140, $data, $msg, $status);
     }
-    
+
     function editInfoRow()
     {
         $user_id = request_int("user_id");
@@ -230,8 +215,7 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
 
         $cond_row = array();
         $re_flag = true;
-        if($type == 'bt')
-        {
+        if ($type == 'bt') {
             $cond_row['user_bt_status'] = $status;
             $cond_row['user_btverify_time'] = get_date_time();
 
@@ -255,55 +239,48 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
             {
                 $re_flag = false;
             }*/
-        }
-        else
-        {
+        } else {
             $cond_row['user_identity_statu'] = $status;
         }
 
         $User_InfoModel = new User_InfoModel();
-        $flag           = $User_InfoModel->editInfo($user_id,$cond_row);
-        if ($flag && $re_flag)
-        {
-            $msg    = 'success';
+        $flag = $User_InfoModel->editInfo($user_id, $cond_row);
+        if ($flag && $re_flag) {
+            $msg = 'success';
             $status = 200;
-        }
-        else
-        {
-            $msg    = 'failure';
+        } else {
+            $msg = 'failure';
             $status = 250;
         }
-        $data =array();
+        $data = array();
         $this->data->addBody(-140, $data, $msg, $status);
     }
+
     //修改充值卡
     public function editBases()
     {
-        $Card_InfoModel     = new Card_InfoModel();
-        $card_code                 = request_int('card_code');
-        $data                      = array();
-        $data['card_id']           = request_int('card_id');                  //卡id
-        $data['user_id']           = request_string('user_id');
-        $data['card_code']         = request_string('card_code');
-        $data['card_password']     = request_string('card_password');
-        $data['card_fetch_time']   = request_string('card_fetch_time');
-        $data['card_media_id']     = request_string('card_media_id');
-        $data['server_id']         = request_string('server_id');
-        $data['user_account']      = request_string('user_account');
-        $data['card_time']         = request_string('card_time');
-        $data['card_money']        = request_string('card_money');
-        $data['card_froze_money']  = request_string('card_froze_money');
+        $Card_InfoModel = new Card_InfoModel();
+        $card_code = request_int('card_code');
+        $data = array();
+        $data['card_id'] = request_int('card_id');                  //卡id
+        $data['user_id'] = request_string('user_id');
+        $data['card_code'] = request_string('card_code');
+        $data['card_password'] = request_string('card_password');
+        $data['card_fetch_time'] = request_string('card_fetch_time');
+        $data['card_media_id'] = request_string('card_media_id');
+        $data['server_id'] = request_string('server_id');
+        $data['user_account'] = request_string('user_account');
+        $data['card_time'] = request_string('card_time');
+        $data['card_money'] = request_string('card_money');
+        $data['card_froze_money'] = request_string('card_froze_money');
         $flag = $Card_InfoModel->editInfo($card_code, $data, false);
 
-        if ($flag)
-        {
-            $msg    = 'success';
+        if ($flag) {
+            $msg = 'success';
             $status = 200;
-        }
-        else
-        {
+        } else {
 
-            $msg    = 'failure';
+            $msg = 'failure';
             $status = 250;
 
         }
@@ -312,52 +289,46 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
     }
 
     //白条实名认证中的数据
-   public function getBtInfoList()
-   {
+    public function getBtInfoList()
+    {
         $status = request_int('status');
         $beginDate = request_string('beginDate');
         $endDate = request_string('endDate');
         $searchName = request_string('searchName');
         $searchContent = request_string('searchContent');
 
-       $page = request_int('page',1);
-       $rows = request_int('rows',20);
+        $page = request_int('page', 1);
+        $rows = request_int('rows', 20);
 
         $cond_row = array();
 
         //申请时间
-        if($beginDate){
+        if ($beginDate) {
             $cond_row['user_btapply_time:>='] = $beginDate;
         }
-        if($endDate){
+        if ($endDate) {
             $cond_row['user_btapply_time:<='] = $endDate;
         }
 
         //查询标题与查询内容结合
-        if($searchName && $searchContent)
-        {
+        if ($searchName && $searchContent) {
             $cond_row[$searchName] = $searchContent;
         }
 
         //审核状态
-        if($status > 0){
+        if ($status > 0) {
             $cond_row['user_bt_status'] = $status;
-        }
-        else
-        {
+        } else {
             $cond_row['user_bt_status:not in'] = User_InfoModel::BT_VERIFY_NO;
         }
 
         $User_InfoModel = new User_InfoModel();
-        $data           = $User_InfoModel->getInfoList($cond_row,array(),$page,$rows);
-        if ($data)
-        {
-            $msg    = 'success';
+        $data = $User_InfoModel->getInfoList($cond_row, array(), $page, $rows);
+        if ($data) {
+            $msg = 'success';
             $status = 200;
-        }
-        else
-        {
-            $msg    = 'failure';
+        } else {
+            $msg = 'failure';
             $status = 250;
         }
         $this->data->addBody(-140, $data, $msg, $status);
@@ -367,8 +338,8 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
     public function getBtLimitList()
     {
         //查找已经成功申请白条用户
-        $page = request_int('page',1);
-        $rows = request_int('rows',20);
+        $page = request_int('page', 1);
+        $rows = request_int('rows', 20);
 
         $status = request_int('status');
         $beginDate = request_string('beginDate');
@@ -376,76 +347,69 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         $searchName = request_string('searchName');
         $searchContent = request_string('searchContent');
 
-        $page = request_int('page',1);
-        $rows = request_int('rows',20);
+        $page = request_int('page', 1);
+        $rows = request_int('rows', 20);
 
         $cond_row = array();
 
         //申请时间
-        if($beginDate){
+        if ($beginDate) {
             $cond_row['user_btapply_time:>='] = $beginDate;
         }
-        if($endDate){
+        if ($endDate) {
             $cond_row['user_btapply_time:<='] = $endDate;
         }
 
         //查询标题与查询内容结合
-        if($searchName && $searchContent)
-        {
+        if ($searchName && $searchContent) {
             $cond_row[$searchName] = $searchContent;
         }
 
         //额度设置状态
         $User_ResourceModel = new User_ResourceModel();
-        if($status == 1){
+        if ($status == 1) {
             //查找戳所有还未设置信用额度的用户id
-            $user_reso = $User_ResourceModel->getByWhere(array('user_credit_limit'=>0));
-            $user_id_row = array_column($user_reso,'user_id');
+            $user_reso = $User_ResourceModel->getByWhere(array('user_credit_limit' => 0));
+            $user_id_row = array_column($user_reso, 'user_id');
             $cond_row['user_id:IN'] = array_values($user_id_row);
         }
-        if($status == 2)
-        {
+        if ($status == 2) {
             //查找戳所有还未设置信用额度的用户id
-            $user_reso = $User_ResourceModel->getByWhere(array('user_credit_limit:>'=>0));
-            $user_id_row = array_column($user_reso,'user_id');
-            $cond_row['user_id:IN'] =array_values($user_id_row);
+            $user_reso = $User_ResourceModel->getByWhere(array('user_credit_limit:>' => 0));
+            $user_id_row = array_column($user_reso, 'user_id');
+            $cond_row['user_id:IN'] = array_values($user_id_row);
         }
 
         //查找已经成功申请白条用户
         $User_InfoModel = new User_InfoModel();
         $cond_row['user_bt_status'] = User_InfoModel::BT_VERIFY_PASS;
-        $data           = $User_InfoModel->getInfoList($cond_row,array(),$page,$rows);
+        $data = $User_InfoModel->getInfoList($cond_row, array(), $page, $rows);
 
         $items = $data['items'];
-        if($items)
-        {
-            $user_id = array_column($items,'user_id');
+        if ($items) {
+            $user_id = array_column($items, 'user_id');
 
             //查找信用额度
             $user_res = $User_ResourceModel->getResource($user_id);
 
             //账号累计消费金额
             $Consume_RecordModel = new Consume_RecordModel();
-            $last_three=mktime(0,0,0,date('m')-2,1,date('y'));
-            $last_three = date('Y-m-d H:i:s',$last_three);
+            $last_three = mktime(0, 0, 0, date('m') - 2, 1, date('y'));
+            $last_three = date('Y-m-d H:i:s', $last_three);
             $now_time = get_date_time();
 
-            foreach($items as $key => $val)
-            {
+            foreach ($items as $key => $val) {
                 $sumall = current($Consume_RecordModel->sumMonetary($val['user_id']));
-                $sum3 = current($Consume_RecordModel->sumMonetary($val['user_id'],$last_three,$now_time));
+                $sum3 = current($Consume_RecordModel->sumMonetary($val['user_id'], $last_three, $now_time));
 
                 $items[$key]['user_sumall'] = $sumall['SUM(record_money)'];
                 $items[$key]['user_sum3'] = $sum3['SUM(record_money)'];
                 $items[$key]['user_credit_cycle'] = $user_res[$val['user_id']]['user_credit_cycle'];
                 $items[$key]['user_credit_limit'] = $user_res[$val['user_id']]['user_credit_limit'];
 
-                if($user_res[$val['user_id']]['user_credit_limit'] > 0)
-                {
+                if ($user_res[$val['user_id']]['user_credit_limit'] > 0) {
                     $items[$key]['user_credit_active'] = '已激活';
-                }
-                else
-                {
+                } else {
                     $items[$key]['user_credit_active'] = '未激活';
                 }
 
@@ -463,7 +427,7 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         $User_ResourceModel = new User_ResourceModel();
 
         $User_InfoModel = new User_InfoModel();
-        $data           = $User_InfoModel->getOne($user_id);
+        $data = $User_InfoModel->getOne($user_id);
 
         $user_res = $User_ResourceModel->getOne($user_id);
         $user_res['user_name'] = $data['user_nickname'];
@@ -475,7 +439,7 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
     {
         $user_id = request_int('user_id');
         $user_credit_limit = request_float('user_credit_limit');
-        $user_credit_cycle = request_int('user_credit_cycle','1');
+        $user_credit_cycle = request_int('user_credit_cycle', '1');
 
         $User_ResourceModel = new User_ResourceModel();
 
@@ -485,31 +449,25 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         $duiff_credit = $user_credit_limit - $user_resource['user_credit_limit'];
         $user_new_credit_availability = $user_resource['user_credit_availability'] + $duiff_credit;
 
-        if($user_new_credit_availability >= 0)
-        {
+        if ($user_new_credit_availability >= 0) {
             $edit_row = array();
             $edit_row['user_credit_limit'] = $user_credit_limit;
             $edit_row['user_credit_cycle'] = $user_credit_cycle;
             $edit_row['user_credit_availability'] = $user_new_credit_availability;
 
-            $edit_flag = $User_ResourceModel->editResource($user_id,$edit_row);
-        }
-        else
-        {
+            $edit_flag = $User_ResourceModel->editResource($user_id, $edit_row);
+        } else {
             $edit_flag = false;
         }
 
-        if ($edit_flag)
-        {
-            $msg    = 'success';
+        if ($edit_flag) {
+            $msg = 'success';
             $status = 200;
-        }
-        else
-        {
-            $msg    = 'failure';
+        } else {
+            $msg = 'failure';
             $status = 250;
         }
-        $data =array();
+        $data = array();
         $this->data->addBody(-140, $data, $msg, $status);
 
     }
@@ -524,78 +482,70 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         $searchName = request_string('searchName');
         $searchContent = request_string('searchContent');
 
-        $page = request_int('page',1);
-        $rows = request_int('rows',20);
+        $page = request_int('page', 1);
+        $rows = request_int('rows', 20);
 
         $cond_row = array();
 
         //申请时间
-        if($beginDate){
+        if ($beginDate) {
             $cond_row['user_btapply_time:>='] = $beginDate;
         }
-        if($endDate){
+        if ($endDate) {
             $cond_row['user_btapply_time:<='] = $endDate;
         }
 
         //查询标题与查询内容结合
-        if($searchName && $searchContent)
-        {
+        if ($searchName && $searchContent) {
             $cond_row[$searchName] = $searchContent;
         }
 
         //还款状态
         $User_ResourceModel = new User_ResourceModel();
         //已还清
-        if($status == 1){
+        if ($status == 1) {
             //查找戳所有已还清的用户id
             $sql = ' and user_credit_limit = user_credit_availability';
             $user_reso = $User_ResourceModel->getCreditReturnUserId($sql);
-            $user_id_row = array_column($user_reso,'user_id');
+            $user_id_row = array_column($user_reso, 'user_id');
             $cond_row['user_id:IN'] = array_values($user_id_row);
         }
         //未还清
-        if($status == 2)
-        {
+        if ($status == 2) {
             //查找戳所有未还清的用户id
             $sql = ' and user_credit_limit > user_credit_availability';
             $user_reso = $User_ResourceModel->getCreditReturnUserId($sql);
-            $user_id_row = array_column($user_reso,'user_id');
+            $user_id_row = array_column($user_reso, 'user_id');
             $cond_row['user_id:IN'] = array_values($user_id_row);
         }
 
-        if($status == 0)
-        {
+        if ($status == 0) {
             $user_reso = $User_ResourceModel->getCreditReturnUserId();
-            $user_id_row = array_column($user_reso,'user_id');
-            $cond_row['user_id:IN'] =array_values($user_id_row);
+            $user_id_row = array_column($user_reso, 'user_id');
+            $cond_row['user_id:IN'] = array_values($user_id_row);
         }
 
         //查找已经成功申请白条用户并且已经设置信用额度的用户
         $User_InfoModel = new User_InfoModel();
         $cond_row['user_bt_status'] = User_InfoModel::BT_VERIFY_PASS;
-        $data           = $User_InfoModel->getInfoList($cond_row,array(),$page,$rows);
+        $data = $User_InfoModel->getInfoList($cond_row, array(), $page, $rows);
 
         $items = $data['items'];
-        if($items)
-        {
-            $user_id = array_column($items,'user_id');
+        if ($items) {
+            $user_id = array_column($items, 'user_id');
 
             //查找信用额度
             $user_res = $User_ResourceModel->getResource($user_id);
 
-            foreach($items as $key => $val)
-            {
+            foreach ($items as $key => $val) {
                 $items[$key]['user_credit_limit'] = $user_res[$val['user_id']]['user_credit_limit'];
-                $items[$key]['user_credit_debt'] = bcsub($user_res[$val['user_id']]['user_credit_limit'],$user_res[$val['user_id']]['user_credit_availability'],2);
+                $items[$key]['user_credit_debt'] = bcsub($user_res[$val['user_id']]['user_credit_limit'], $user_res[$val['user_id']]['user_credit_availability'], 2);
                 $items[$key]['user_credit_return'] = $user_res[$val['user_id']]['user_credit_return'];
 
 
-                if($items[$key]['user_credit_debt'] > 0)
-                {
+                if ($items[$key]['user_credit_debt'] > 0) {
                     $items[$key]['user_credit_status'] = '未还清';
-                }
-                else
-                {
+                } else {
                     $items[$key]['user_credit_status'] = '已还清';
                 }
 
@@ -624,15 +574,14 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         $rs_row = array();
 
         //计算用户的欠款
-        $user_credit_debt = bcsub($user_res['user_credit_limit'],$user_res['user_credit_availability'],2);
+        $user_credit_debt = bcsub($user_res['user_credit_limit'], $user_res['user_credit_availability'], 2);
 
         //还款金额大于0，并且小于等于欠款金额
-        if($user_return_credit > 0 && $user_return_credit <= $user_credit_debt)
-        {
+        if ($user_return_credit > 0 && $user_return_credit <= $user_credit_debt) {
             //1.修改白条支付订单的还款情况
             $Consume_TradeModel = new Consume_TradeModel();
-            $edit_flag2 = $Consume_TradeModel->returnCredit($user_id,$user_return_credit);
-            check_rs($edit_flag2,$rs_row);
+            $edit_flag2 = $Consume_TradeModel->returnCredit($user_id, $user_return_credit);
+            check_rs($edit_flag2, $rs_row);
 
             //获取用户信息info
             $User_InfoModel = new User_InfoModel();
@@ -641,24 +590,24 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
             //2.添加还款信息- 流水记录
             $Consume_RecordModel = new Consume_RecordModel();
             $Trade_TypeModel = new Trade_TypeModel();
-            $record_add_buy_row                  = array();
-            $record_add_buy_row['user_id']       = $user_id;
+            $record_add_buy_row = array();
+            $record_add_buy_row['user_id'] = $user_id;
             $record_add_buy_row['user_nickname'] = $user_info['user_nickname'];
-            $record_add_buy_row['record_money']  = $user_return_credit;
-            $record_add_buy_row['record_date']   = date('Y-m-d');
-            $record_add_buy_row['record_year']	   = date('Y');
-            $record_add_buy_row['record_month']	= date('m');
-            $record_add_buy_row['record_day']		=date('d');
-            $record_add_buy_row['record_title']  = $Trade_TypeModel->trade_type[Trade_TypeModel::CREDIT_RETURN];
-            $record_add_buy_row['record_time']   = date('Y-m-d H:i:s');
+            $record_add_buy_row['record_money'] = $user_return_credit;
+            $record_add_buy_row['record_date'] = date('Y-m-d');
+            $record_add_buy_row['record_year'] = date('Y');
+            $record_add_buy_row['record_month'] = date('m');
+            $record_add_buy_row['record_day'] = date('d');
+            $record_add_buy_row['record_title'] = $Trade_TypeModel->trade_type[Trade_TypeModel::CREDIT_RETURN];
+            $record_add_buy_row['record_time'] = date('Y-m-d H:i:s');
             $record_add_buy_row['trade_type_id'] = Trade_TypeModel::CREDIT_RETURN;
-            $record_add_buy_row['user_type']     = 2;	//付款方
+            $record_add_buy_row['user_type'] = 2;    //付款方
             $record_add_buy_row['record_status'] = RecordStatusModel::RECORD_FINISH;
             $record_add_buy_row['record_paytime'] = date('Y-m-d H:i:s');
-            $record_add_buy_row['credit_remain'] = bcsub($user_credit_debt,$user_return_credit,2);
+            $record_add_buy_row['credit_remain'] = bcsub($user_credit_debt, $user_return_credit, 2);
 
             $add_flag = $Consume_RecordModel->addRecord($record_add_buy_row);
-            check_rs($add_flag,$rs_row);
+            check_rs($add_flag, $rs_row);
 
             $cond_row = array();
             $user_credit_availability = $user_res['user_credit_availability'] + $user_return_credit;
@@ -667,26 +616,22 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
             //3.修改用户的信用信息
             $cond_row['user_credit_availability'] = $user_credit_availability;
             $cond_row['user_credit_return'] = $user_return_credit;
-            $edit_flag = $User_ResourceModel->editResource($user_id,$cond_row);
-            check_rs($edit_flag,$rs_row);
+            $edit_flag = $User_ResourceModel->editResource($user_id, $cond_row);
+            check_rs($edit_flag, $rs_row);
 
             $flag = is_ok($rs_row);
-        }else
-        {
+        } else {
             $flag = false;
         }
 
 
-        if($flag && $User_ResourceModel->sql->commitDb())
-        {
-            $msg    = _('还款成功');
+        if ($flag && $User_ResourceModel->sql->commitDb()) {
+            $msg = _('还款成功');
             $status = 200;
-        }
-        else
-        {
+        } else {
             $User_ResourceModel->sql->rollBackDb();
             $status = 250;
-            $msg    = _('还款失败');
+            $msg = _('还款失败');
         }
         $data = array();
 
@@ -702,32 +647,29 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         $searchName = request_string('searchName');
         $searchContent = request_string('searchContent');
 
-        $page = request_int('page',1);
-        $rows = request_int('rows',20);
+        $page = request_int('page', 1);
+        $rows = request_int('rows', 20);
 
         $cond_row = array();
 
         //还款时间
-        if($beginDate){
+        if ($beginDate) {
             $cond_row['record_paytime:>='] = $beginDate;
         }
-        if($endDate){
+        if ($endDate) {
             $cond_row['record_paytime:<='] = $endDate;
         }
 
         //查询标题与查询内容结合
         $User_InfoModel = new User_InfoModel();
-        if($searchName && $searchContent)
-        {
-            if($searchName == 'user_nickname')
-            {
+        if ($searchName && $searchContent) {
+            if ($searchName == 'user_nickname') {
                 $cond_row['user_nickname'] = $searchContent;
-            }else
-            {
+            } else {
                 //通过真实姓名与手机号获取用户id
                 $user_cond_row[$searchName] = $searchContent;
                 $user = $User_InfoModel->getByWhere($user_cond_row);
-                $user_id_row = array_column($user,'user_id');
+                $user_id_row = array_column($user, 'user_id');
                 $cond_row['user_id:IN'] = array_values($user_id_row);
             }
         }
@@ -735,25 +677,23 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         //还款状态
         $User_ResourceModel = new User_ResourceModel();
         //已还款（已还清）
-        if($status == 1){
+        if ($status == 1) {
             $cond_row['credit_remain'] = 0;
         }
         //待还清（未还款）
-        if($status == 2)
-        {
+        if ($status == 2) {
             $cond_row['credit_remain:>'] = 0;
         }
 
         $cond_row['trade_type_id'] = Trade_TypeModel::CREDIT_RETURN;
 
         $Consume_RecordModel = new Consume_RecordModel();
-        $data = $Consume_RecordModel->listByWhere($cond_row,array(),$page,$rows);
+        $data = $Consume_RecordModel->listByWhere($cond_row, array(), $page, $rows);
 
         $items = $data['items'];
         fb($items);
-        if($items)
-        {
-            $user_id = array_column($items,'user_id');
+        if ($items) {
+            $user_id = array_column($items, 'user_id');
 
             //查找用户信息
             $user_infos = $User_InfoModel->getInfo($user_id);
@@ -763,16 +703,12 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
             $user_res = $User_ResourceModel->getResource($user_id);
             fb($user_res);
 
-            foreach($items as $key => $val)
-            {
+            foreach ($items as $key => $val) {
                 $items[$key]['user_realname'] = $user_infos[$val['user_id']]['user_realname'];
                 $items[$key]['user_mobile'] = $user_infos[$val['user_id']]['user_mobile'];
-                if($items[$key]['credit_remain'] > 0)
-                {
+                if ($items[$key]['credit_remain'] > 0) {
                     $items[$key]['credit_status'] = '待还款';
-                }
-                else
-                {
+                } else {
                     $items[$key]['credit_status'] = '已还款';
                 }
             }
@@ -792,32 +728,29 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         $searchName = request_string('searchName');
         $searchContent = request_string('searchContent');
 
-        $page = request_int('page',1);
-        $rows = request_int('rows',20);
+        $page = request_int('page', 1);
+        $rows = request_int('rows', 20);
 
         $cond_row = array();
 
         //订单日期
-        if($beginDate){
+        if ($beginDate) {
             $cond_row['trade_create_time:>='] = $beginDate;
         }
-        if($endDate){
+        if ($endDate) {
             $cond_row['trade_create_time:<='] = $endDate;
         }
 
         //查询标题与查询内容结合
         $User_InfoModel = new User_InfoModel();
-        if($searchName && $searchContent)
-        {
-            if($searchName == 'order_id')
-            {
+        if ($searchName && $searchContent) {
+            if ($searchName == 'order_id') {
                 $cond_row['order_id'] = $searchContent;
-            }else
-            {
+            } else {
                 //通过真实姓名与账号名获取用户id
                 $user_cond_row[$searchName] = $searchContent;
                 $user = $User_InfoModel->getByWhere($user_cond_row);
-                $user_id_row = array_column($user,'user_id');
+                $user_id_row = array_column($user, 'user_id');
                 $cond_row['pay_user_id:IN'] = array_values($user_id_row);
             }
         }
@@ -857,38 +790,30 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         $cond_row['payment_channel_id'] = Payment_ChannelModel::BAITIAO;
 
 
-        $data = $Consume_TradeModel->listByWhere($cond_row,array('trade_create_time'=>'desc'),$page,$rows);
+        $data = $Consume_TradeModel->listByWhere($cond_row, array('trade_create_time' => 'desc'), $page, $rows);
 
         $items = $data['items'];
         fb($items);
-        if($items)
-        {
-            $user_id = array_column($items,'pay_user_id');
+        if ($items) {
+            $user_id = array_column($items, 'pay_user_id');
 
             //查找用户信息
             $user_infos = $User_InfoModel->getInfo($user_id);
             fb($user_infos);
             $user_resource_model = new User_ResourceModel();
-            $user_resource  = $user_resource_model->getResource($user_id);
-            foreach($items as $key => $val)
-            {
+            $user_resource = $user_resource_model->getResource($user_id);
+            foreach ($items as $key => $val) {
                 $items[$key]['user_realname'] = $user_infos[$val['pay_user_id']]['user_realname'];
                 $items[$key]['user_nickname'] = $user_infos[$val['pay_user_id']]['user_nickname'];
-                $items[$key]['return_remain'] = bcsub($val['order_payment_amount'],$val['trade_payment_amount'],2);
-                if($items[$key]['return_remain'] == 0)
-                {
+                $items[$key]['return_remain'] = bcsub($val['order_payment_amount'], $val['trade_payment_amount'], 2);
+                if ($items[$key]['return_remain'] == 0) {
                     $items[$key]['credit_status'] = '已还款';
-                }
-                else
-                {
+                } else {
                     $second = strtotime($val['trade_create_time']);
-                    $diff_day =  (time() - $second) / 86400;
-                    if($diff_day > $user_resource[$val['pay_user_id']]['user_credit_cycle'])
-                    {
+                    $diff_day = (time() - $second) / 86400;
+                    if ($diff_day > $user_resource[$val['pay_user_id']]['user_credit_cycle']) {
                         $items[$key]['credit_status'] = '已延期';
-                    }
-                    else
-                    {
+                    } else {
                         $items[$key]['credit_status'] = '待还款';
                     }
 
@@ -902,43 +827,39 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
     }
 
     //实名验证中的数据
-    function getMinimumLivingList() {
-        $page = request_int('page',1);
-        $rows = request_int('rows',20);
-        $username  = request_string('userName');   //用户名称
+    function getMinimumLivingList()
+    {
+        $page = request_int('page', 1);
+        $rows = request_int('rows', 20);
+        $username = request_string('userName');   //用户名称
         $cond_row = array();
-        if($username){
+        if ($username) {
             $cond_row['user_nickname:LIKE'] = '%' . $username . '%';
         }
         $cond_row['user_minimum_living_status:not in'] = '0';
         $order_row['user_id'] = 'DESC';
         $User_InfoModel = new User_InfoModel();
-        $data           = $User_InfoModel->getInfoList($cond_row,$order_row,$page,$rows);
-        if ($data)
-        {
-            $msg    = 'success';
+        $data = $User_InfoModel->getInfoList($cond_row, $order_row, $page, $rows);
+        if ($data) {
+            $msg = 'success';
             $status = 200;
-        }
-        else
-        {
-            $msg    = 'failure';
+        } else {
+            $msg = 'failure';
             $status = 250;
         }
         $this->data->addBody(-140, $data, $msg, $status);
     }
 
-    function getMinEditInfo(){
+    function getMinEditInfo()
+    {
         $user_id = request_int("user_id");
         $User_InfoModel = new User_InfoModel();
-        $data           = $User_InfoModel->getOne($user_id);
-        if ($data)
-        {
-            $msg    = 'success';
+        $data = $User_InfoModel->getOne($user_id);
+        if ($data) {
+            $msg = 'success';
             $status = 200;
-        }
-        else
-        {
-            $msg    = 'failure';
+        } else {
+            $msg = 'failure';
             $status = 250;
         }
         $this->data->addBody(-140, $data, $msg, $status);
@@ -954,18 +875,15 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         $cond_row['user_minimum_living_status'] = $status;
 
         $User_InfoModel = new User_InfoModel();
-        $flag           = $User_InfoModel->editInfo($user_id,$cond_row);
-        if ($flag && $re_flag)
-        {
-            $msg    = 'success';
+        $flag = $User_InfoModel->editInfo($user_id, $cond_row);
+        if ($flag && $re_flag) {
+            $msg = 'success';
             $status = 200;
-        }
-        else
-        {
-            $msg    = 'failure';
+        } else {
+            $msg = 'failure';
             $status = 250;
         }
-        $data =array();
+        $data = array();
         $this->data->addBody(-140, $data, $msg, $status);
     }
 

@@ -65,24 +65,38 @@ include __DIR__ . '/../../includes/header.php';
                 </div>
             </div>
         </div>
-        <div class="wallet-list">
-            <ul class="borb1">
-                <li class="borr1">
-                    <a href="profit_buyer_order.html"><i class="cc-17"></i><p>订单差价返利</p></a>
-                </li>
-                <li>
-                    <a href="profit_order_rabate.html"><i class="cc-18"></i><p>订单提成返利</p></a>
-                </li>
-            </ul>
-            <ul class="">
-                <li class="borr1">
-                    <a href="profit_shares.html"><i class="cc-19"></i><p>股金分红</p></a>
-                </li>
-                <li>
-                    <a href="profit_stock_order.html"><i class="cc-20"></i><p>备货差额返利</p></a>
-                </li>
-            </ul>
-        </div>
+        <ul class="nctouch-default-list mt5 v2 v3 v4">
+            <li>
+                <a href="profit_buyer_order.html">
+                    <h4>订单差价返利</h4>
+                    <span class="arrow-r"></span></a>
+                </a>
+            </li>
+        </ul>
+        <ul class="nctouch-default-list mt5 v3 v4">
+            <li>
+                <a href="profit_order_rabate.html">
+                    <h4>订单提成返利</h4>
+                    <span class="arrow-r"></span></a>
+                </a>
+            </li>
+        </ul>
+        <ul class="nctouch-default-list mt5 v3 v4">
+            <li>
+                <a href="profit_shares.html">
+                    <h4>股金年度分红</h4>
+                    <span class="arrow-r"></span></a>
+                </a>
+            </li>
+        </ul>
+        <ul class="nctouch-default-list mt5 v4">
+            <li>
+                <a href="profit_stock_order.html">
+                    <h4>备货差额返利</h4>
+                    <span class="arrow-r"></span></a>
+                </a>
+            </li>
+        </ul>
     </div>
 
     <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>

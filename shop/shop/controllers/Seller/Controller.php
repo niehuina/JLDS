@@ -250,7 +250,7 @@ class Seller_Controller extends Yf_AppController
 
 	private function getCurrentMenu($seller_function_list)
 	{
-		$current_menu = isset($seller_function_list[request_string('ctl')])?$seller_function_list[request_string('ctl')]:array();
+		$current_menu = isset($seller_function_list[request_string('ctl').'_'.request_string('met')])?$seller_function_list[request_string('ctl').'_'.request_string('met')]:$seller_function_list[request_string('ctl')];
 		if(empty($current_menu))
 		{
 			$current_menu = array(
@@ -280,7 +280,9 @@ class Seller_Controller extends Yf_AppController
 				array('name' => '已售订单管理', 'ctl'=>'Seller_Trade_Order', 'met'=>'physical'),
 				array('name' => '服务兑码订单', 'ctl'=>'Seller_Trade_Order', 'met'=>'virtual'),
 				array('name' => '门店自提订单', 'ctl'=>'Seller_Trade_Order', 'met'=>'chain'),
-				array('name' => '发货', 'ctl'=>'Seller_Trade_Deliver', 'met'=>'deliver'),
+				array('name' => '普通发货', 'ctl'=>'Seller_Trade_Deliver', 'met'=>'deliver'),
+                array('name' => '创建备货订单', 'ctl'=>'Seller_Stock_Order', 'met'=>'add'),
+                array('name' => '备货订单', 'ctl'=>'Seller_Stock_Order', 'met'=>'physical'),
 				array('name' => '发货设置', 'ctl'=>'Seller_Trade_Deliver', 'met'=>'deliverSetting'),
 				array('name' => '运单模板', 'ctl'=>'Seller_Trade_Waybill', 'met'=>'waybillManage'),
 				array('name' => '评价管理', 'ctl'=>'Seller_Goods_Evaluation', 'met'=>'evaluation'),
@@ -346,7 +348,7 @@ class Seller_Controller extends Yf_AppController
 		$format_menu = array();
 		foreach ($menu_list as $key => $menu_value) {
 			foreach ($menu_value['sub'] as $submenu_value) {
-				$format_menu[$submenu_value['ctl']] = array(
+				$format_menu[$submenu_value['ctl'].'_'.$submenu_value['met']] = array(
 					'model' => $key,
 					'model_name' => $menu_value['name'],
 					'name' => $submenu_value['name'],

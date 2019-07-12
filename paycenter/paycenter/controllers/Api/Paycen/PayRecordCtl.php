@@ -280,6 +280,74 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         $data['total_amount'] = $total_amount;
         $this->data->addBody(-140, $data, $msg, $status);
     }
+
+
+    public function deleteUser_index()
+    {
+
+    }
+
+    /**
+     * 获取退出用户
+     * @throws Exception
+     */
+    public function getUserDeleteResourceInfo()
+    {
+        $status = request_int('status');
+        $user_keys = request_int('user_keys');
+        $user_cond_row['user_base.user_delete'] = 1;
+        $user_cond_row['user_base.exit_settle_status'] = $status;
+
+        $page = request_int('page', 1);
+        $rows = request_int('rows', 20);
+        $User_InfoModel = new User_InfoModel();
+        $data = $User_InfoModel->getUserInfoListByKeys($user_keys, $user_cond_row, ['user_id'=>'desc'], $page, $rows);
+
+        if ($data) {
+            $msg = 'success';
+            $status = 200;
+        } else {
+            $msg = 'failure';
+            $status = 250;
+        }
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
+
+    public function editExitUserResource()
+    {
+        $user_id = request_int('user_id');
+
+        $User_BaseModel = new User_BaseModel();
+        $User_ResourceModel = new User_ResourceModel();
+        $Consume_RecordModel = new Consume_RecordModel();
+
+        $rs_row = array();
+        $User_ResourceModel->sql->startTransactionDb();
+        $record_edit['record_status'] = RecordStatusModel::IN_HAND; //处理中
+        $record_edit['record_paytime'] = get_date_time();
+        $flag1 = $Consume_RecordModel->editRecord($user_id, $record_edit);
+        check_rs($flag1, $rs_row);
+
+        $user_resource_edit['user_money'] = 0;
+        $user_resource_edit['user_money_frozen'] = 0;
+        $flag2 = $User_ResourceModel->editResource($user_id, $user_resource_edit);
+        check_rs($flag2, $rs_row);
+
+        $flag3 = $User_BaseModel->editBase($user_id, ['exit_settle_status'=>1]);
+        check_rs($flag3, $rs_row);
+
+        if(is_ok($rs_row) && $User_ResourceModel->sql->commitDb()){
+            Yf_Log::log("退出用户id：{$user_id}结算成功", Yf_Log::LOG, 'user_delete_settle');
+            $msg = 'success';
+            $status = 200;
+        } else {
+            $User_ResourceModel->sql->rollBackDb();
+            Yf_Log::log("退出用户id：{$user_id}结算失败！", Yf_Log::LOG, 'user_delete_settle');
+            $msg = 'failure';
+            $status = 250;
+        }
+        $this->data->addBody(-140, array(), $msg, $status);
+    }
 }
 
 ?>

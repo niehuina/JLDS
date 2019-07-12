@@ -219,7 +219,7 @@ class Api_Pay_PayCtl extends Api_Controller
         if($uorder)
         {
             $inorder_row = explode(',',$uorder['inorder']);
-            $flag = $Consume_TradeModel->remove($inorder_row);
+            $flag = $Consume_TradeModel->removeTrade($inorder_row);
             check_rs($flag,$rs_row);
             fb($inorder_row);
 
@@ -229,7 +229,7 @@ class Api_Pay_PayCtl extends Api_Controller
                 $Consume_RecordModel = new Consume_RecordModel();
                 $recorder_row = $Consume_RecordModel->getByWhere(array('order_id:IN' => $inorder_row));
                 $recorder_id_row = array_column($recorder_row,'consume_record_id');
-                $flag = $Consume_RecordModel->remove($recorder_id_row);
+                $flag = $Consume_RecordModel->removeRecord($recorder_id_row);
                 check_rs($flag,$rs_row);
 
                 //删除单个订单的合并支付订单
@@ -244,12 +244,12 @@ class Api_Pay_PayCtl extends Api_Controller
             }
 
 
-            $flag = $Union_OrderModel->remove($uorder_id_row);
+            $flag = $Union_OrderModel->removeUnionOrder($uorder_id_row);
             check_rs($flag,$rs_row);
         }
 
         //删除多个订单的合并支付订单
-        $flag = $Union_OrderModel->remove($uorderid);
+        $flag = $Union_OrderModel->removeUnionOrder($uorderid);
         check_rs($flag,$rs_row);
 
         $flag = is_ok($rs_row);
@@ -923,15 +923,15 @@ class Api_Pay_PayCtl extends Api_Controller
                 'record_time' => date('Y-m-d H:i:s'),
                 'trade_type_id' => $trade_type,
                 'user_type' => '1',
-                'record_status' => RecordStatusModel::RECORD_FINISH,
-                'record_paytime' => date('Y-m-d H:i:s'),
+                'record_status' => RecordStatusModel::IN_HAND,
+//                'record_paytime' => date('Y-m-d H:i:s'),
             );
             $flag1       = $Consume_RecordModel->addRecord($record_row2, true);
 
             if ($flag1)
             {
                 //修改收款方的金额
-                $user_resource_row['user_money'] = $user_resource['user_money'] + $amount;
+                $user_resource_row['user_money_frozen'] = $user_resource['user_money_frozen'] + $amount;
                 $flag                            = $User_ResourceModel->editResource($user_id, $user_resource_row);
             }
             else

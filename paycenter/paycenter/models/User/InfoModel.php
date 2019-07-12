@@ -113,5 +113,73 @@ class User_InfoModel extends User_Info
 		return $data;
 	}
 
+	public function getUserInfoListByKeys($user_keys, $cond_row=array(),$order_row=array(), $page=1, $rows=100)
+    {
+        $sql = "SELECT SQL_CALC_FOUND_ROWS user_info.*, user_base.* "
+                . " FROM " . $this->_tableName . " as user_info "
+                . " LEFT JOIN pay_user_base user_base on user_base.user_id = user_info.user_id";
+
+        if ($cond_row) {
+            foreach ($cond_row as $k=>$v)
+            {
+                $k_row = explode(':', $k);
+
+                if (count($k_row) > 1)
+                {
+                    $this->sql->setWhere($k_row[0], $v, $k_row[1]);
+                }
+                else
+                {
+                    $this->sql->setWhere($k, $v);
+                }
+            }
+        }
+        if ($order_row) {
+            foreach ($order_row as $k => $v) {
+                $this->sql->setOrder($k, $v);
+            }
+        }
+
+        //需要分页如何高效，易扩展
+        $offset = $rows * ($page - 1);
+        $this->sql->setLimit($offset, $rows);
+
+        $where = $this->sql->getWhere();
+
+        if ($user_keys) {
+            $where .= ' AND (user_info.user_realname LIKE '.'\'%'.$user_keys.'%\''.' 
+                            OR '. 'user_info.user_nickname LIKE'.'\'%'.$user_keys.'%\''.' 
+                            OR '. 'user_info.user_mobile LIKE' .'\'%'.$user_keys.'%\')';
+        }
+
+        $limit = $this->sql->getLimit();
+        $order = $this->sql->getOrder();
+
+        $sql = $sql . $where . $order . $limit;
+
+        $common_rows = $this->sql->getAll($sql);
+
+        //读取影响的函数, 和记录封装到一起.
+        $total = $this->getFoundRows();
+
+        $data = array();
+        $data['page'] = $page;
+        $data['total'] = ceil_r($total / $rows);  //total page
+        $data['totalsize'] = $total;
+        $data['records'] = count($common_rows);
+        $data['items'] = $common_rows;
+
+        $User_ResourceModel = new User_ResourceModel();
+        foreach ($data['items'] as $k => $item)
+        {
+            $data['items'][$k]['user_delete'] = $item['user_delete'] == 0 ? "正常" : "已退出";
+            $data['items'][$k]['user_identity_statu_con'] = _(self::$user_identity_statu[$item["user_identity_statu"]]);
+
+            $user_resource = $User_ResourceModel->getOne($item['user_id']);
+            $data['items'][$k] = array_merge($data['items'][$k], $user_resource);
+        }
+
+        return $data;
+    }
 }
 ?>

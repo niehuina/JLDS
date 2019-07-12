@@ -1,5 +1,4 @@
-<?php if (!defined('ROOT_PATH'))
-{
+<?php if (!defined('ROOT_PATH')) {
     exit('No Permission');
 }
 
@@ -12,11 +11,17 @@ class Paycen_PayRecordCtl extends AdminController
     {
         parent::__construct($ctl, $met, $typ);
     }
-      public function index()
+
+    public function index()
     {
         include $view = $this->view->getView();
 
-    }   
+    }
+
+    public function deleteUser_index()
+    {
+        include $view = $this->view->getView();
+    }
 }
 
 ?>

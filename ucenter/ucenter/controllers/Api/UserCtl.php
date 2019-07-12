@@ -34,15 +34,9 @@ class Api_UserCtl extends Api_Controller
         $asc = $_REQUEST['asc'];
         $userInfoModel = new User_InfoDetailModel();
 
-        $items = array();
         $cond_row = array();
         $order_row = array();
-
-        if ($skey) {
-            $cond_row['user_name:LIKE'] = '%' . $skey . '%';
-        }
-
-        $data = $userInfoModel->getInfoDetailList($cond_row, $order_row, $page, $rows);
+        $data = $userInfoModel->getUserDetailListByKeys($skey, $cond_row, $order_row, $page, $rows);
 
         if ($data) {
             $msg = 'success';
@@ -157,16 +151,30 @@ class Api_UserCtl extends Api_Controller
             $flag = $userInfoModel->editInfo($user_id, $data);
 
             //如果是用户退出，则要把下属的用户，迁移到该用户的上一级
-            $key = Yf_Registry::get('shop_api_key');
-            $url = Yf_Registry::get('shop_api_url');
-            $shop_app_id = Yf_Registry::get('shop_app_id');
-            $formvars = array();
-            $formvars['app_id'] = $shop_app_id;
-            $formvars['user_id'] = $data['user_id'];
+            if($status == 4) {
+                $key = Yf_Registry::get('shop_api_key');
+                $url = Yf_Registry::get('shop_api_url');
+                $shop_app_id = Yf_Registry::get('shop_app_id');
+                $formvars = array();
+                $formvars['app_id'] = $shop_app_id;
+                $formvars['user_id'] = $user_id;
 
-            $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=changeUserParentId&typ=json', $url), $formvars);
+                $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=changeUserParentId&typ=json', $url), $formvars);
+                if($rs['status'] != "200")  $flag = false;
 
-            if (false !== $flag && $rs['status'] == "200" && $userInfoModel->sql->commitDb()) {
+                //更新paycenter用户状态
+                $key = Yf_Registry::get('paycenter_api_key');
+                $url = Yf_Registry::get('paycenter_api_url');
+                $app_id = Yf_Registry::get('paycenter_app_id');
+                $formvars = array();
+                $formvars['app_id'] = $app_id;
+                $formvars['user_id'] = $user_id;
+                $formvars['user_delete'] = 1;
+                $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=editUserDelete&typ=json', $url), $formvars);
+                if($rs['status'] != "200")  $flag = false;
+            }
+
+            if (false !== $flag && $userInfoModel->sql->commitDb()) {
                 $msg = 'success';
                 $status = 200;
             } else {

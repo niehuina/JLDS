@@ -106,6 +106,7 @@ class User_GradeModel extends User_Grade
 //			return $flag;
 //		}
 
+        Yf_Log::log('updateGradeVip:', Yf_Log::LOG, 'debug');
         return $this->updateGradeVip($user_id);
 	}
 
@@ -120,9 +121,9 @@ class User_GradeModel extends User_Grade
         $User_InfoModel = new User_InfoModel();
         $User_GradeLogModel = new User_GradeLogModel();
 
-        $user = $User_InfoModel->getInfo($user_id);
+        $user = $User_InfoModel->getOne($user_id);
         //当前等级的下个等级
-        $user_grade = $user[$user_id]['user_grade'] * 1 + 1;
+        $user_grade = $user['user_grade'] * 1 + 1;
         $Grade = $this->getGrade($user_grade);
 
         $can_update_grade = false;
@@ -137,6 +138,7 @@ class User_GradeModel extends User_Grade
             $cond_row['order_status'] = Order_StateModel::ORDER_FINISH;
             $cond_row['order_refund_status'] = Order_StateModel::ORDER_REFUND_NO;
             $order_sum_amount = $order_Base->getSumOrderPaymentAmount($cond_row);
+            Yf_Log::log('order_sum_amount:'.$order_sum_amount, Yf_Log::LOG, 'debug');
 
             //2.获取用户的储值金额
             $formvars = array();
@@ -157,35 +159,39 @@ class User_GradeModel extends User_Grade
 
         if($can_update_grade){
             //更新用户级别
-            $cond_row['user_grade'] = $user_grade;
-            $cond_row['user_grade_update_date'] = get_date_time();
-            $flag                   = $User_InfoModel->editInfo($user_id, $cond_row);
+            $u_row['user_grade'] = $user_grade;
+            $u_row['user_grade_update_date'] = get_date_time();
+            $flag                   = $User_InfoModel->editInfo($user_id, $u_row);
 
             //添加用户晋级log
             $log['user_id'] = $user_id;
-            $log['user_grade_pre'] = $user[$user_id]['user_grade'];
+            $log['user_grade_pre'] = $user['user_grade'];
             $log['user_grade_to'] = $user_grade;
             $log['log_date_time'] = get_date_time();
             $flag1 = $User_GradeLogModel->addGradeLog($log);
 
             //检查上级会员是否可以晋级
-            $user_parent_id = $user[$user_id]['user_parent_id'];
+            $user_parent_id = $user['user_parent_id'];
             if($user_parent_id){
-                $user_grade_parent = $user_grade+1;
-                $can_update_grade_parent = $this->checkUpdateGradeToPartner($user_parent_id, $user_grade_parent, $Grade);
+                $user_parent = $User_InfoModel->getInfo($user_id);
+                //检查如果上级是会员才升级
+                if($user_parent['user_grade'] == 2){
+                    $user_grade_parent = $user_grade+1;
+                    $can_update_grade_parent = $this->checkUpdateGradeToPartner($user_parent_id, $user_grade_parent, $Grade);
 
-                if($can_update_grade_parent){
-                    //上级会员晋级为合伙人
-                    $cond_row_parent['user_grade'] = $user_grade_parent;
-                    $cond_row_parent['user_grade_update_date'] = get_date_time();
-                    $flag_p                 = $User_InfoModel->editInfo($user_parent_id, $cond_row_parent);
+                    if($can_update_grade_parent){
+                        //上级会员晋级为合伙人
+                        $cond_row_parent['user_grade'] = $user_grade_parent;
+                        $cond_row_parent['user_grade_update_date'] = get_date_time();
+                        $flag_p                 = $User_InfoModel->editInfo($user_parent_id, $cond_row_parent);
 
-                    //添加用户晋级log
-                    $log['user_id'] = $user_id;
-                    $log['user_grade_pre'] = $user_grade;
-                    $log['user_grade_to'] = $user_grade_parent;
-                    $log['log_date_time'] = get_date_time();
-                    $flag1_p = $User_GradeLogModel->addGradeLog($log);
+                        //添加用户晋级log
+                        $log['user_id'] = $user_id;
+                        $log['user_grade_pre'] = $user_grade;
+                        $log['user_grade_to'] = $user_grade_parent;
+                        $log['log_date_time'] = get_date_time();
+                        $flag1_p = $User_GradeLogModel->addGradeLog($log);
+                    }
                 }
             }
 
@@ -317,12 +323,15 @@ class User_GradeModel extends User_Grade
             $flag = $User_InfoModel->editInfo($user_id, $cond_row);
 
             //添加用户晋级log
+            $User_GradeLogModel = new User_GradeLogModel();
             $log['user_id'] = $user_id;
             $log['user_grade_pre'] = $user[$user_id]['user_grade'];
             $log['user_grade_to'] = $user_grade;
             $log['log_date_time'] = get_date_time();
-            $User_GradeLogModel = new User_GradeLogModel();
             $flag1 = $User_GradeLogModel->addGradeLog($log);
+
+            $user_parent_g_partner_id = $User_InfoModel->getParentId($user_id);
+            $flag2 = $User_InfoModel->edit($user_parent_g_partner_id, ['current_year_partner_count'=>1], true);
 
             return $flag;
         } else {

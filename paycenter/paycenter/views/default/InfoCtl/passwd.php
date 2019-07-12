@@ -91,11 +91,11 @@ include $this->view->getTplPath() . '/' . 'header.php';
             <dl>
                 <dt><em>*</em>设置密码：</dt>
                 <dd>
-					<input type="password" class="text" maxlength="30" name="password" id="password">
+					<input type="password" class="text" maxlength="6" name="password" id="password">
                 </dd>
                 <dt><em>*</em>重复密码：</dt>
                 <dd>
-                    <input type="password" class="text" maxlength="30" name="repeat_password" id="repeat_password">
+                    <input type="password" class="text" maxlength="6" name="repeat_password" id="repeat_password">
                 </dd>
             </dl>
 

@@ -40,6 +40,7 @@ class Api_Paycen_PayWithdrawCtl extends Api_Controller
                 $uid_str = array_shift($uid);
                 $where = array('user_id'=>$uid_str);
             }
+            $where['user_delete'] = 0;
             $UserModel = new User_BaseModel();
             $user_info = $UserModel->getPayBaseList($where);
             $user_account_array = array();

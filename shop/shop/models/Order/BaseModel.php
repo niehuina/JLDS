@@ -122,7 +122,6 @@ class Order_BaseModel extends Order_Base
             '3' => __("商家拒绝退款"),
         );
 
-
     }
 
     /**
@@ -564,9 +563,9 @@ class Order_BaseModel extends Order_Base
         $offset = request_int('firstRow', 0);
         $page = ceil_r($offset / $rows);
 
-        $User_InfoModel = new User_InfoModel();
-        $user_children_ids = $User_InfoModel->getUserChildren(Perm::$userId);
-        $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
+//        $User_InfoModel = new User_InfoModel();
+//        $user_children_ids = $User_InfoModel->getUserChildren(Perm::$userId);
+//        $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
 
         $data = $this->listByWhere($cond_row, $order_row, $page, $rows);
         $Order_StateModel = new Order_StateModel();
@@ -792,12 +791,10 @@ class Order_BaseModel extends Order_Base
         $chain_name = request_string('chain_name'); //门店名称
 
         if (!empty($query_start_date)) {
-            $query_start_date = $query_start_date;
             $condition['order_create_time:>='] = $query_start_date;
         }
 
         if (!empty($query_end_date)) {
-            $query_end_date = $query_end_date;
             $condition['order_create_time:<='] = $query_end_date;
         }
 
@@ -816,7 +813,7 @@ class Order_BaseModel extends Order_Base
         //门店名字
         if ($chain_name) {
             $chain_model = new Chain_BaseModel;
-            $chain_rows = $chain_model->getByWhere(['chain_name:LIKE'=> '%'.$chain_name.'%']);
+            $chain_rows = $chain_model->getByWhere(['entity_name:LIKE'=> '%'.$chain_name.'%']);
             $chain_ids = empty($chain_rows) ? [] : array_keys($chain_rows);
             $condition['chain_id:IN'] = $chain_ids;
         }
@@ -1080,6 +1077,7 @@ class Order_BaseModel extends Order_Base
         if(!isset($condi['shop_id']) || !$condi['shop_id']) {
             $condi['shop_id'] = Perm::$shopId;
         }
+        $condi['seller_user_id'] = Perm::$userId;
 //        if(!isset($condi['order_is_virtual']) || !$condi['order_is_virtual']){
 //            $condi['order_is_virtual'] = 0;
 //        }
@@ -1110,6 +1108,7 @@ class Order_BaseModel extends Order_Base
     //订单支付成功后修改订单状态
     public function editOrderStatusAferPay($order_id = null, $uorder_id = null)
     {
+        Yf_Log::log('editOrderStatusAferPay 1', Yf_Log::LOG, 'debug');
         $flag = false;
         //查找订单信息
         $order_base = $this->getOne($order_id);
@@ -1224,6 +1223,7 @@ class Order_BaseModel extends Order_Base
                 $message->sendMessage('The use of vouchers to remind', Perm::$userId, Perm::$row['user_account'], $order_id = NULL, $shop_name = NULL, 0, MessageModel::USER_MESSAGE);
             }*/
         }
+        Yf_Log::log('editOrderStatusAferPay 0', Yf_Log::LOG, 'debug');
         return $flag;
     }
 
@@ -1282,20 +1282,23 @@ class Order_BaseModel extends Order_Base
         $order_payment_amount = $order_base['order_payment_amount'];
 
         $condition['order_status'] = Order_StateModel::ORDER_FINISH;
-
         $condition['order_finished_time'] = get_date_time();
 
+        $Order_GoodsModel = new Order_GoodsModel();
+        $order_goods_data = $Order_GoodsModel->getByWhere(array('order_id'=>$order_id));
+        if(Web_ConfigModel::value('Plugin_Directseller'))
+        {
+            //确认收货以后将总佣金写入商品订单表
+            $order_directseller_commission = array_sum(array_column($order_goods_data,'directseller_commission_0')) + array_sum(array_column($order_goods_data,'directseller_commission_1')) + array_sum(array_column($order_goods_data,'directseller_commission_2'));
+            $condition['order_directseller_commission'] = $order_directseller_commission;
+            //END
+        }
         $flag = $this->editBase($order_id, $condition);
 
         //修改订单商品表中的订单状态
         $edit_row['order_goods_status'] = Order_StateModel::ORDER_FINISH;
-
-        $Order_GoodsModel = new Order_GoodsModel();
-
         $order_goods_id = $Order_GoodsModel->getKeyByWhere(array('order_id' => $order_id));
-
         $Order_GoodsModel->editGoods($order_goods_id, $edit_row);
-
 
         //远程修改paycenter中的订单状态
         $key      = Yf_Registry::get('shop_api_key');
@@ -1310,10 +1313,49 @@ class Order_BaseModel extends Order_Base
 
         $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=confirmOrder&typ=json', $url), $formvars);
 
+        //个人仓库
+        $User_Stock_Model = new User_StockModel();
+        $user_stock_list = $User_Stock_Model->getByWhere(['user_id'=>$order_base['buyer_user_id']]);
+        $goods_id_array = array_reduce($user_stock_list, function($carry,$item){
+            $carry[$item['goods_id']] = $item['stock_id'];
+            return $carry;
+        });
 
-        /*
-        *  经验与成长值
-        */
+        foreach($order_goods_data as $i=>$order_goods){
+            $goods_id = $order_goods['goods_id'];
+            if(array_key_exists($goods_id, $goods_id_array)){
+                $stock_row = array();
+                $stock_row['goods_stock'] = $order_goods['order_goods_num'];
+
+                //修改用户仓储商品数量
+                $stock_id = $goods_id_array[$goods_id];
+                $s_flag = $User_Stock_Model->editUserStock($stock_id,$stock_row, true);
+                check_rs($s_flag,$rs_row);
+            }else{
+                $stock_row = array();
+                $stock_row['user_id'] = $order_base['buyer_user_id'];
+                $stock_row['user_name'] = $order_base['buyer_user_name'];
+                $stock_row['goods_id'] = $order_goods['goods_id'];
+                $stock_row['common_id'] = $order_goods['common_id'];
+                $stock_row['goods_name'] = $order_goods['goods_name'];
+                $stock_row['goods_stock'] = $order_goods['order_goods_num'];
+                $stock_row['alarm_stock'] = 0;
+                $stock_row['stock_date_time'] = get_date_time();
+
+                //添加到用户仓储
+                $s_flag = $User_Stock_Model->addUserStock($stock_row);
+                check_rs($s_flag,$rs_row);
+            }
+        }
+
+        $this->confirmOrder_user_log($order_payment_amount, $order_base['buyer_user_id'], $order_base['buyer_user_name']);
+    }
+
+    /**
+    *  confirm_order经验与成长值
+    */
+    public function confirmOrder_user_log($order_payment_amount, $buyer_user_id, $buyer_user_name)
+    {
         $user_points = Web_ConfigModel::value("points_recharge");//订单每多少获取多少积分
         $user_points_amount = Web_ConfigModel::value("points_order");//订单每多少获取多少积分
 
@@ -1337,19 +1379,20 @@ class Order_BaseModel extends Order_Base
 
         $User_ResourceModel = new User_ResourceModel();
         //获取积分经验值
-        $ce = $User_ResourceModel->getResource($order_base['buyer_user_id']);
+        $ce = $User_ResourceModel->getResource($buyer_user_id);
 
-        $resource_row['user_points'] = $ce[$order_base['buyer_user_id']]['user_points'] * 1 + $user_points * 1;
-        $resource_row['user_growth'] = $ce[$order_base['buyer_user_id']]['user_growth'] * 1 + $user_grade * 1;
+        $resource_row['user_points'] = $ce[$buyer_user_id]['user_points'] * 1 + $user_points * 1;
+        $resource_row['user_growth'] = $ce[$buyer_user_id]['user_growth'] * 1 + $user_grade * 1;
 
-        $res_flag = $User_ResourceModel->editResource($order_base['buyer_user_id'], $resource_row);
+        $res_flag = $User_ResourceModel->editResource($buyer_user_id, $resource_row);
 
-        $User_GradeModel = new User_GradeModel;
+        $User_GradeModel = new User_GradeModel();
         //升级判断
-        $res_flag = $User_GradeModel->upGrade($order_base['buyer_user_id'], $resource_row['user_growth']);
+        $res_flag = $User_GradeModel->upGrade($buyer_user_id, $resource_row['user_growth']);
+
         //积分
-        $points_row['user_id'] = $order_base['buyer_user_id'];
-        $points_row['user_name'] = $order_base['buyer_user_name'];
+        $points_row['user_id'] = $buyer_user_id;
+        $points_row['user_name'] = $buyer_user_name;
         $points_row['class_id'] = Points_LogModel::ONBUY;
         $points_row['points_log_points'] = $user_points;
         $points_row['points_log_time'] = get_date_time();
@@ -1361,15 +1404,15 @@ class Order_BaseModel extends Order_Base
         $Points_LogModel->addLog($points_row);
 
         //成长值
-        $grade_row['user_id'] = $order_base['buyer_user_id'];
-        $grade_row['user_name'] = $order_base['buyer_user_name'];
+        $grade_row['user_id'] = $buyer_user_id;
+        $grade_row['user_name'] = $buyer_user_name;
         $grade_row['class_id'] = Grade_LogModel::ONBUY;
         $grade_row['grade_log_grade'] = $user_grade;
         $grade_row['grade_log_time'] = get_date_time();
         $grade_row['grade_log_desc'] = '确认收货';
         $grade_row['grade_log_flag'] = 'confirmorder';
 
-        $Grade_LogModel = new Grade_LogModel;
+        $Grade_LogModel = new Grade_LogModel();
         $Grade_LogModel->addLog($grade_row);
     }
 	

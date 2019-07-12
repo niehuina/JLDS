@@ -17,7 +17,6 @@ include __DIR__.'/../../includes/header.php';
     <title>我的商城</title>
     <link rel="stylesheet" type="text/css" href="../../css/base.css">
     <link rel="stylesheet" type="text/css" href="../../css/nctouch_member.css">
-    <link rel="stylesheet" type="text/css" href="../../css/nctouch_directseller.css">
 
     <style>
         .nctouch-main-layout{
@@ -54,7 +53,7 @@ include __DIR__.'/../../includes/header.php';
 </header>
 <div class="scroller-body">
     <div class="scroller-box">
-        <div class="member-top"></div>
+        <div class="member-top member-top1"></div>
         <div class="nctouch-main-layout">
             <ul class="nctouch-default-list mt5">
                 <li>

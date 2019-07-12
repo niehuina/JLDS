@@ -4,8 +4,6 @@ include TPL_PATH . '/' . 'header.php';
 ?>
 
     </head>
-
-
     <div class="wrapper page">
         <p class="warn_xiaoma"><span></span><em></em></p>
         <div class="explanation" id="explanation">
@@ -18,14 +16,16 @@ include TPL_PATH . '/' . 'header.php';
                 <li></li>
             </ul>
         </div>
+
         <div class="fixed-bar">
             <div class="item-title">
                 <div class="subject">
-                    <h3>支付会员管理</h3>
-                    <h5>支付会员相关信息总览</h5>
+                    <h3>用户退出结算</h3>
+                    <h5>已退出用户结算管理</h5>
                 </div>
                 <ul class="tab-base nc-row">
-                    <li><a class="current"><span>支付会员管理</span></a></li>
+                    <li><a class="current" data-status="0" href="javascript:void(0);"><span>未结算</span></a></li>
+                    <li><a data-status="1" href="javascript:void(0);"><span>已结算</span></a></li>
                 </ul>
             </div>
         </div>
@@ -34,8 +34,7 @@ include TPL_PATH . '/' . 'header.php';
                 <div class="fl">
                     <ul class="ul-inline">
                         <li>
-                            <input type="text" id="userName" class="ui-input ui-input-ph con" value="请输入用户账号/用户姓名/用户手机号">
-<!--                            <input type="text" id="userMobile" class="ui-input ui-input-ph con" value="请输入用户手机号">-->
+                            <input type="text" id="userName" class="ui-input ui-input-ph con" placeholder="请输入用户账号/用户姓名/用户手机号">
                         </li>
                         <li><a class="ui-btn" id="search">查询<i class="iconfont icon-btn02"></i></a></li>
                     </ul>
@@ -53,7 +52,7 @@ include TPL_PATH . '/' . 'header.php';
         </div>
 
     </div>
-    <script src="./admin/static/default/js/controllers/paybase/paybase_list.js"></script>
+    <script src="./admin/static/default/js/controllers/payrecord/delete_user_list.js"></script>
 <?php
 include TPL_PATH . '/' . 'footer.php';
 ?>

@@ -212,6 +212,7 @@ class Api_Trade_OrderCtl extends Api_Controller
 		//开启事物
 		$this->tradeOrderModel->sql->startTransactionDb();
 
+        Yf_Log::log($order_id, Yf_Log::LOG, 'debug');
 		if (is_array($order_id))
 		{
 			$order_id = array_filter($order_id);
@@ -258,6 +259,7 @@ class Api_Trade_OrderCtl extends Api_Controller
 				$buyer_user_id = $order_base['buyer_user_id'];
 				$buyer_user_name = $order_base['buyer_user_name'];
 			}
+            Yf_Log::log('editOrderRowSatus foreach end', Yf_Log::LOG, 'debug');
 		}
 		else
 		{
@@ -288,7 +290,7 @@ class Api_Trade_OrderCtl extends Api_Controller
             $this->Order_BaseModel->editBase($order_id,array('payment_name'=>$payment_name));
         }
 
-
+        Yf_Log::log('editOrderRowSatus commitdb start', Yf_Log::LOG, 'debug');
 		if ($flag && $this->tradeOrderModel->sql->commitDb())
 			{
 			/**
@@ -319,6 +321,8 @@ class Api_Trade_OrderCtl extends Api_Controller
 			$msg    = $m ? $m[0] : __('failure');
 			$status = 250;
 		}
+
+        Yf_Log::log('editOrderRowSatus commitdb end', Yf_Log::LOG, 'debug');
 		$data = array();
 		$this->data->addBody(-140, $data, $flag, $status);
 

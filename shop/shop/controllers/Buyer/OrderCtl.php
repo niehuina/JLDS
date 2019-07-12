@@ -330,25 +330,23 @@ class Buyer_OrderCtl extends Buyer_Controller
 				$order_payment_amount = $order_base['order_payment_amount'];
 
 				$condition['order_status'] = Order_StateModel::ORDER_FINISH;
-
 				$condition['order_finished_time'] = get_date_time();
 				//判断是否是货到付款订单，如果是货到付款订单，则将支付时间一起修改
 				if($order_base['payment_id'] == PaymentChannlModel::PAY_CONFIRM)
 				{
 					$condition['payment_time'] = get_date_time();
 				}
-				if(Web_ConfigModel::value('Plugin_Directseller'))
+
+                $order_goods_data = $Order_GoodsModel->getByWhere(array('order_id'=>$order_id));
+                if(Web_ConfigModel::value('Plugin_Directseller'))
 				{
-					//确认收货以后将总佣金写入商品订单表
-					$order_goods_data = $Order_GoodsModel->getByWhere(array('order_id'=>$order_id));
-					
+                    //确认收货以后将总佣金写入商品订单表
 					$order_directseller_commission = array_sum(array_column($order_goods_data,'directseller_commission_0')) + array_sum(array_column($order_goods_data,'directseller_commission_1')) + array_sum(array_column($order_goods_data,'directseller_commission_2'));
 					$condition['order_directseller_commission'] = $order_directseller_commission;
 				}
 
 				$edit_flag = $Order_BaseModel->editBase($order_id, $condition);
 				check_rs($edit_flag,$rs_row);
-
 
 				//修改订单商品表中的订单状态
 				$edit_row['order_goods_status'] = Order_StateModel::ORDER_FINISH;
@@ -383,14 +381,49 @@ class Buyer_OrderCtl extends Buyer_Controller
 
 				$rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=confirmOrder&typ=json', $url), $formvars);
 
+
 				if($rs['status'] == 250)
 				{
 					$rs_flag = false;
 					check_rs($rs_flag,$rs_row);
 				}
 
+                //个人仓库
+                $User_Stock_Model = new User_StockModel();
+                $user_stock_list = $User_Stock_Model->getByWhere(['user_id'=>$order_base['buyer_user_id']]);
+                $goods_id_array = array_reduce($user_stock_list, function($carry,$item){
+                    $carry[$item['goods_id']] = $item['stock_id'];
+                    return $carry;
+                });
 
-				//查看是否是用户购买的分销商从供货商处分销的支持代发货的商品，如果是改变订单状态
+                foreach($order_goods_data as $i=>$order_goods){
+                    $goods_id = $order_goods['goods_id'];
+                    if(array_key_exists($goods_id, $goods_id_array)){
+                        $stock_row = array();
+                        $stock_row['goods_stock'] = $order_goods['order_goods_num'];
+
+                        //修改用户仓储商品数量
+                        $stock_id = $goods_id_array[$goods_id];
+                        $s_flag = $User_Stock_Model->editUserStock($stock_id,$stock_row, true);
+                        check_rs($s_flag,$rs_row);
+                    }else{
+                        $stock_row = array();
+                        $stock_row['user_id'] = $order_base['buyer_user_id'];
+                        $stock_row['user_name'] = $order_base['buyer_user_name'];
+                        $stock_row['goods_id'] = $order_goods['goods_id'];
+                        $stock_row['common_id'] = $order_goods['common_id'];
+                        $stock_row['goods_name'] = $order_goods['goods_name'];
+                        $stock_row['goods_stock'] = $order_goods['order_goods_num'];
+                        $stock_row['alarm_stock'] = 0;
+                        $stock_row['stock_date_time'] = get_date_time();
+
+                        //添加到用户仓储
+                        $s_flag = $User_Stock_Model->addUserStock($stock_row);
+                        check_rs($s_flag,$rs_row);
+                    }
+                }
+
+                //查看是否是用户购买的分销商从供货商处分销的支持代发货的商品，如果是改变订单状态
 				$sp_order = $Order_BaseModel->getByWhere(array('order_source_id'=>$order_id));
 				if(!empty($sp_order)){
 					foreach ($sp_order as $k => $value) {
@@ -484,6 +517,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 				{
 					$this->add_product($order_id);
 				}
+
 			}
 			else
 			{
@@ -1210,6 +1244,8 @@ class Buyer_OrderCtl extends Buyer_Controller
 		//获取用户的折扣信息
 		$User_InfoModel = new User_InfoModel();
 		$user_info      = $User_InfoModel->getOne($user_id);
+		$user_parent_g_partner_id = $User_InfoModel->getParentId($user_id);
+        $user_parent_g_partner = $User_InfoModel->getOne($user_parent_g_partner_id);
 
 		//分销商购买不计算会员折扣
 		$User_GradeMode = new User_GradeModel();
@@ -1721,6 +1757,10 @@ class Buyer_OrderCtl extends Buyer_Controller
 			$order_row['voucher_price']          = $val['voucher_price'];    //代金券面额
 			$order_row['voucher_code']           = $val['voucher_code'];    //代金券编码
 			$order_row['order_from']             = $order_from;    //订单来源
+            if($user_parent_g_partner_id != $user_id){
+                $order_row['seller_user_id']         = $user_parent_g_partner['user_id'];
+                $order_row['seller_user_name']       = $user_parent_g_partner['user_name'];
+            }
 
 			//平台红包及其优惠信息
 			$order_row['redpacket_code']         = isset($val['redpacket_code'])?$val['redpacket_code']:0;    	//红包编码
@@ -1906,7 +1946,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 				fb($flag2);*/
 				$flag = $flag && $flag2;
 				//删除商品库存
-				$flag3 = $Goods_BaseModel->delStock($v['goods_id'], $v['goods_num'], $user_id);
+				$flag3 = $Goods_BaseModel->delStock($v['goods_id'], $v['goods_num'], $order_row['seller_user_id']);
 
 				$trade_title = $v['goods_base']['goods_name'];
 
@@ -1992,7 +2032,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 					$flag = $flag && $flag2;
 
 					//删除商品库存
-					$flag3 = $Goods_BaseModel->delStock($v['goods_id'], 1);
+					$flag3 = $Goods_BaseModel->delStock($v['goods_id'], 1, $order_row['seller_user_id']);
 					/*	fb("====flag3===");
                         fb($flag3);*/
 					$flag = $flag && $flag3;
@@ -2046,7 +2086,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 				fb($flag2);*/
 				$flag = $flag && $flag2;
 				//删除商品库存
-				$flag3 = $Goods_BaseModel->delStock($val['mansong_info']['gift_goods_id'], 1);
+				$flag3 = $Goods_BaseModel->delStock($val['mansong_info']['gift_goods_id'], 1, $order_row['seller_user_id']);
 				/*	fb("====flag3===");
 					fb($flag3);*/
 				$flag = $flag && $flag3;
@@ -3173,99 +3213,65 @@ class Buyer_OrderCtl extends Buyer_Controller
 		{
 			foreach ($order_list as $key => $val)
 			{
-
 				$order_id = $val;
 
 				$order_base           = $Order_BaseModel->getOne($order_id);
 				$order_payment_amount = $order_base['order_payment_amount'];
 
 				$condition['order_status'] = Order_StateModel::ORDER_FINISH;
-
 				$condition['order_finished_time'] = get_date_time();
-				
-				if(Web_ConfigModel::value('Plugin_Directseller'))
+                $flag = $Order_BaseModel->editBase($order_id, $condition);
+
+                $order_goods_data = $Order_GoodsModel->getByWhere(array('order_id'=>$order_id));
+                if(Web_ConfigModel::value('Plugin_Directseller'))
 				{
 					//确认收货以后将总佣金写入商品订单表
-					$order_goods_data = $Order_GoodsModel->getByWhere(array('order_id'=>$order_id));
-					
 					$order_directseller_commission = array_sum(array_column($order_goods_data,'directseller_commission_0')) + array_sum(array_column($order_goods_data,'directseller_commission_1')) + array_sum(array_column($order_goods_data,'directseller_commission_2'));
 					$condition['order_directseller_commission'] = $order_directseller_commission;
 					//END 
 				}
 
-				$flag = $Order_BaseModel->editBase($order_id, $condition);
-
 				//修改订单商品表中的订单状态
 				$edit_row['order_goods_status'] = Order_StateModel::ORDER_FINISH;
-
 				$order_goods_id = $Order_GoodsModel->getKeyByWhere(array('order_id' => $order_id));
-
 				$Order_GoodsModel->editGoods($order_goods_id, $edit_row);
 
+                //个人仓库
+                $User_Stock_Model = new User_StockModel();
+                $user_stock_list = $User_Stock_Model->getByWhere(['user_id'=>$order_base['buyer_user_id']]);
+                $goods_id_array = array_reduce($user_stock_list, function($carry,$item){
+                    $carry[$item['goods_id']] = $item['stock_id'];
+                    return $carry;
+                });
 
-				/*
-				*  经验与成长值
-				*/
-				$user_points        = Web_ConfigModel::value("points_recharge");//订单每多少获取多少积分
-				$user_points_amount = Web_ConfigModel::value("points_order");//订单每多少获取多少积分
+                foreach($order_goods_data as $i=>$order_goods){
+                    $goods_id = $order_goods['goods_id'];
+                    if(array_key_exists($goods_id, $goods_id_array)){
+                        $stock_row = array();
+                        $stock_row['goods_stock'] = $order_goods['order_goods_num'];
 
-				if ($order_payment_amount / $user_points < $user_points_amount)
-				{
-					$user_points = floor($order_payment_amount / $user_points);
-				}
-				else
-				{
-					$user_points = $user_points_amount;
-				}
+                        //修改用户仓储商品数量
+                        $stock_id = $goods_id_array[$goods_id];
+                        $s_flag = $User_Stock_Model->editUserStock($stock_id,$stock_row, true);
+                        check_rs($s_flag,$rs_row);
+                    }else{
+                        $stock_row = array();
+                        $stock_row['user_id'] = $order_base['buyer_user_id'];
+                        $stock_row['user_name'] = $order_base['buyer_user_name'];
+                        $stock_row['goods_id'] = $order_goods['goods_id'];
+                        $stock_row['common_id'] = $order_goods['common_id'];
+                        $stock_row['goods_name'] = $order_goods['goods_name'];
+                        $stock_row['goods_stock'] = $order_goods['order_goods_num'];
+                        $stock_row['alarm_stock'] = 0;
+                        $stock_row['stock_date_time'] = get_date_time();
 
-				$user_grade        = Web_ConfigModel::value("grade_recharge");//订单每多少获取多少积分
-				$user_grade_amount = Web_ConfigModel::value("grade_order");//订单每多少获取多少成长值
+                        //添加到用户仓储
+                        $s_flag = $User_Stock_Model->addUserStock($stock_row);
+                        check_rs($s_flag,$rs_row);
+                    }
+                }
 
-				if ($order_payment_amount / $user_grade > $user_grade_amount)
-				{
-					$user_grade = floor($order_payment_amount / $user_grade);
-				}
-				else
-				{
-					$user_grade = $user_grade_amount;
-				}
-
-				$User_ResourceModel = new User_ResourceModel();
-				//获取积分经验值
-				$ce = $User_ResourceModel->getResource($order_base['buyer_user_id']);
-
-				$resource_row['user_points'] = $ce[$order_base['buyer_user_id']]['user_points'] * 1 + $user_points * 1;
-				$resource_row['user_growth'] = $ce[$order_base['buyer_user_id']]['user_growth'] * 1 + $user_grade * 1;
-
-				$res_flag = $User_ResourceModel->editResource($order_base['buyer_user_id'], $resource_row);
-
-				$User_GradeModel = new User_GradeModel;
-				//升级判断
-				$res_flag = $User_GradeModel->upGrade($order_base['buyer_user_id'], $resource_row['user_growth']);
-				//积分
-				$points_row['user_id']           = $order_base['buyer_user_id'];
-				$points_row['user_name']         = $order_base['buyer_user_name'];
-				$points_row['class_id']          = Points_LogModel::ONBUY;
-				$points_row['points_log_points'] = $user_points;
-				$points_row['points_log_time']   = get_date_time();
-				$points_row['points_log_desc']   = '确认收货';
-				$points_row['points_log_flag']   = 'confirmorder';
-
-				$Points_LogModel = new Points_LogModel();
-
-				$Points_LogModel->addLog($points_row);
-
-				//成长值
-				$grade_row['user_id']         = $order_base['buyer_user_id'];
-				$grade_row['user_name']       = $order_base['buyer_user_name'];
-				$grade_row['class_id']        = Grade_LogModel::ONBUY;
-				$grade_row['grade_log_grade'] = $user_grade;
-				$grade_row['grade_log_time']  = get_date_time();
-				$grade_row['grade_log_desc']  = '确认收货';
-				$grade_row['grade_log_flag']  = 'confirmorder';
-
-				$Grade_LogModel = new Grade_LogModel;
-				$Grade_LogModel->addLog($grade_row);
+				$Order_BaseModel->confirmOrder_user_log($order_payment_amount, $order_base['buyer_user_id'], $order_base['buyer_user_name']);
 
 				//分销商进货
 				$Shop_BaseModel = new Shop_BaseModel();
@@ -3281,7 +3287,6 @@ class Buyer_OrderCtl extends Buyer_Controller
 			$flag = true;
 		}
 
-
 		if ($flag && $Order_BaseModel->sql->commitDb())
 		{
             /**
@@ -3291,7 +3296,7 @@ class Buyer_OrderCtl extends Buyer_Controller
             if(is_array($order_list)){
                 $analytics_data['order_id'] = $order_list;
                 $analytics_data['status'] =  Order_StateModel::ORDER_FINISH;
-		Yf_Plugin_Manager::getInstance()->trigger('analyticsUpdateOrderStatus',$analytics_data);
+		        Yf_Plugin_Manager::getInstance()->trigger('analyticsUpdateOrderStatus',$analytics_data);
             }
             /******************************************************************/
 			$status = 200;

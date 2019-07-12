@@ -85,9 +85,9 @@ class MessageModel extends Message
 	{
 		$send_row['code'] = $code;
 		
-		$this->messageTemplateModel = new Message_TemplateModel();
+		$messageTemplateModel = new Message_TemplateModel();
 
-		$de = $this->messageTemplateModel->getTemplateDetail($send_row);
+		$de = $messageTemplateModel->getTemplateDetail($send_row);
 		
 		$user_row['user_id'] = $message_user_id;
 		
@@ -98,9 +98,9 @@ class MessageModel extends Message
         $flag = false;
 		if ($message_mold == 0)
 		{
-			$this->messageSettingModel = new Message_SettingModel();
+            $messageTemplateModel = new Message_SettingModel();
 			
-			$message = $this->messageSettingModel->getSettingDetail($user_row);
+			$message = $messageTemplateModel->getSettingDetail($user_row);
 //            echo '<pre>';print_r([$message, $user_row, $member]);exit;
 			if($message)
             {
@@ -224,7 +224,7 @@ class MessageModel extends Message
                         $im_code = '白条还款提醒';
                         break;
                 }
-                if($im_code)
+                if($im_code && Web_ConfigModel::value("im_statu"))
                 {
                     $User_BaseModel = new User_BaseModel();
                     $user_base = $User_BaseModel->getOneByWhere(['user_id'=>$message_user_id]);

@@ -432,6 +432,97 @@ class Api_User_InfoCtl extends Api_Controller
 		$this->data->addBody(-140, $data, $msg, $status);
 
 	}
+
+    /**
+     * 修改用户状态
+     */
+	public function editUserDelete()
+    {
+        $user_id = request_int('user_id');
+        $user_delete = request_int('user_delete', '');
+        $edit_base_row = array();
+        $edit_base_row['user_delete'] = $user_delete;
+        $flag = $this->userBaseModel->editBase($user_id, $edit_base_row);
+        if ($flag !== false && $this->userInfoModel->sql->commitDb())
+        {
+            $status = 200;
+            $msg    = _('success');
+        }
+        else
+        {
+            $this->userInfoModel->sql->rollBackDb();
+
+            $status = 250;
+            $msg    = _('failure');
+        }
+        $data = array();
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
+
+    /**
+     * 将可以结算的入账记录，从账户冻结余额中转移到账户余额中
+     */
+    public function editUserMoneyFrozen()
+    {
+        $Consume_RecordModel = new Consume_RecordModel();
+        $User_ResourceModel = new User_ResourceModel();
+
+        $time = time()-7*24*60*60;
+        $N = date('Y-m-d H:i:s',$time);
+        $cond_row['user_type'] = 1; //入账
+        $cond_row['record_status'] = RecordStatusModel::IN_HAND; //处理中
+        $cond_row['trade_type_id:in'] = [
+            Trade_TypeModel::STOCK_ORDER_PROFIT,
+            Trade_TypeModel::BUYER_ORDER_PROFIT,
+            Trade_TypeModel::BUYER_ORDER_REBATE
+        ];
+        $cond_row['record_time:<='] = $N;
+        $order_row['record_time'] = 'asc';
+
+        $record_user_list = $Consume_RecordModel->getByWhere($cond_row, $order_row, 'user_id');
+//        $total_user = $Consume_RecordModel->getFoundRows();
+//        $rows = 500;
+//        $total_page = $total_user/$rows;
+//        for($i=1; $i<=$total_page; $i=$i+1) {
+//
+//        }
+        $user_ids = array_column($record_user_list, 'user_id');
+        foreach ($user_ids as $user_id){
+            $search_row = array();
+            $search_row = $cond_row;
+            $search_row['user_id'] = $user_id;
+            $record_count = $Consume_RecordModel->get_count($search_row);
+            if($record_count <= 0) continue;
+            $user_resource = $User_ResourceModel->getOne($user_id);
+
+            $rows = 500;
+            $total_page = $record_count/$rows;
+            for($i=1; $i<=$total_page; $i=$i+1){
+                $User_ResourceModel->sql->startTransactionDb();
+                $list = $Consume_RecordModel->listByWhere($cond_row, $order_row, $i, $rows);
+                $record_amount_array = array_column($list['items'], 'record_money');
+                $record_amount = array_sum($record_amount_array);
+
+                $user_resource_edit['user_money'] = $user_resource['user_money'] + $record_amount;
+                $user_resource_edit['user_money_frozen'] = $user_resource['user_money_frozen'] - $record_amount;
+                $flag1 = $User_ResourceModel->editResource($user_id, $user_resource_edit);
+
+                $record_ids = array_column($list['items'], 'consume_record_id');
+                $record_edit['record_status'] = RecordStatusModel::IN_HAND; //处理中
+                $record_edit['record_paytime'] = get_date_time();
+                $flag2 = $Consume_RecordModel->editRecord($record_ids, $record_edit);
+
+                if($flag1 && $flag2 && $User_ResourceModel->sql->commitDb()){
+                    Yf_Log::log("用户id：{$user_id}结算金额￥{$record_amount}成功", Yf_Log::LOG, 'user_settle');
+                }else{
+                    $User_ResourceModel->sql->rollBackDb();
+                    Yf_Log::log("用户id：{$user_id}结算金额￥{$record_amount}失败！", Yf_Log::LOG, 'user_settle');
+                }
+            }
+        }
+
+        $this->data->addBody(-140, array());
+    }
 }
 
 ?>

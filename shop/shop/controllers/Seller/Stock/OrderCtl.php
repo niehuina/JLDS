@@ -790,8 +790,6 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
                 $User_Stock_Model = new User_StockModel();
                 $user_stock_list = $User_Stock_Model->getByWhere(['user_id'=>$order_base['shop_user_id']]);
-//                $goods_id_array = array($user_stock_list, 'goods_id');
-
                 $goods_id_array = array_reduce($user_stock_list, function($carry,$item){
                     $carry[$item['goods_id']] = $item['stock_id'];
                     return $carry;
