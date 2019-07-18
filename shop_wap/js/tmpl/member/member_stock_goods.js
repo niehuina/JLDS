@@ -40,7 +40,7 @@ function get_list()
     param.k = getCookie("key");
     param.u = getCookie('id');
 
-    $.getJSON(ApiUrl + "/index.php?ctl=Seller_Stock_Order&met=stock_goods&typ=json&ua=wap", param, function (e)
+    $.getJSON(SiteUrl + "/index.php?ctl=Seller_Stock_Order&met=stock_goods&typ=json&ua=wap", param, function (e)
     {
         if (!e)
         {

@@ -55,10 +55,14 @@ class Plugin_Directseller implements Yf_Plugin_Interface
 	public function regDone($user_id)
 	{
 		$rec = $_COOKIE['recserialize'];
-		$b= (strpos($rec,"u"));
-		$e= (strpos($rec,"s"));
-		$data['user_parent_id'] = substr($rec,$b+1,$e-1); 
-		
+        if($rec) {
+            $b = (strpos($rec, "u"));
+            $e = (strpos($rec, "s"));
+            $data['user_parent_id'] = substr($rec, $b + 1, $e - 1);
+        }else{
+            $data['user_parent_id'] = Web_ConfigModel::value('shop_user_id');
+        }
+
 		/* $User_BaseModel = new User_BaseModel();
 		$User_BaseModel->editBase($userid,$data); */
 		

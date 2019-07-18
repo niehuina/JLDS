@@ -113,6 +113,7 @@ var THISPAGE = {
         var _self = this;
 
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.order_id = $("#orderId").val();
             queryConditions.return_code = $("#returnCode").val();
             queryConditions.buyer_user_account = $("#buyerName").val();
@@ -121,6 +122,7 @@ var THISPAGE = {
 
         $("#btn-refresh").click(function ()
         {
+            queryConditions.page = 1;
             queryConditions.order_id = '';
             queryConditions.return_code = '';
             queryConditions.buyer_user_account = '';

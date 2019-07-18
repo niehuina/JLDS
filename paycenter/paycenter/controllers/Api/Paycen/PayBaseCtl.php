@@ -30,7 +30,7 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
         $page = request_int('page', 1);
         $rows = request_int('rows', 20);
 
-        $data = $User_InfoModel->getUserInfoListByKeys($user_keys, $cond_row, ['user_id' => 'desc'], $page, $rows);
+        $data = $User_InfoModel->getUserInfoListByKeys($user_keys, $cond_row, ['user_base.user_id' => 'desc'], $page, $rows);
         if ($data) {
             $msg = 'success';
             $status = 200;
@@ -153,6 +153,8 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
                     $user_grade_shares = $user_grade['user_grade_shares'] * 1;
                     if ($user_total_shares >= $user_grade_shares) {
                         $user_pay_shares_date = date("Y-m-d");
+
+                        $rs1 = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=updateUserToVIP&typ=json', $url), $formvars);
 
                         //修改用户股金达标的日期
                         $flag2 = $User_ResourceModel->editResource($data['user_id'], ['user_pay_shares_date' => $user_pay_shares_date]);

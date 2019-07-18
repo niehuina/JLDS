@@ -26,11 +26,26 @@ class User_InfoModel extends User_Info
 	 */
 	public function getInfoList($cond_row = array(), $order_row = array(), $page = 1, $rows = 100)
 	{
-		$data = $this->listByWhere($cond_row, $order_row, $page, $rows);
+		$data = $this->listByWhere($cond_row, $order_row, $page, $rows, false);
+        $User_GradeModel = new User_GradeModel();
+        $shopBaseModel = new Shop_BaseModel();
 		foreach ($data["items"] as $key => $value)
 		{
 			$data["items"][$key]["user_sex"] = __(User_InfoModel::$userSex[$value["user_sex"]]);
+			$user_grade_info = $User_GradeModel->getOne($value['user_grade']);
+			$data['items'][$key]['user_grade'] = $user_grade_info['user_grade_name'];
+			if($value['user_parent_id']){
+			    $user_parent = $this->getOne($value['user_parent_id']);
+                $data["items"][$key]['user_parent'] = $user_parent['user_realname'];
+            }else{
+                $data["items"][$key]['user_parent'] = '';
+            }
+            $shop_info = 	$shopBaseModel->getOneByWhere(array('user_id'=>$value['user_id']));
+            if(!empty($shop_info)){
+                $data['items'][$key]['shop_type'] = $shop_info['shop_type'];
+            }
 		}
+        $data['items'] = array_values($data['items']);
 		return $data;
 	}
 

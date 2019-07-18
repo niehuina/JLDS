@@ -426,12 +426,21 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		$field['order_goods_pic']   = $goods['goods_image'];        //商品图片
 
 		$field['order_amount']        = $order['order_payment_amount'];     //订单实际支付金额
+
 		$field['seller_user_id']      = $order['shop_id'];               //店铺id
 		$field['seller_user_account'] = $order['shop_name'];            //店铺名称
 		$field['buyer_user_id']       = $order['buyer_user_id'];        //买家id
 		$field['buyer_user_account']  = $order['buyer_user_name'];     //买家名称
 		$field['return_add_time']     = get_date_time();                 //退款、退货申请提交时间
 		$field['order_is_virtual']    = $order['order_is_virtual'];     //该笔订单是否为服务订单
+
+        $Shop_BaseModel = new Shop_BaseModel();
+        $user_parent_g_partner_id = $order['seller_user_id'];//下单时的高级合伙人
+        $user_parent_g_shop = $Shop_BaseModel->getOneByWhere(['user_id'=>$user_parent_g_partner_id]);
+        if($user_parent_g_shop['shop_id'] != $order['shop_id']){
+            $field['seller_user_id']         = $user_parent_g_shop['shop_id'];
+            $field['seller_user_account']    = $user_parent_g_shop['shop_name'];
+        }
 
 		//如果传递过来的订单号和根据商品id查到的订单号不符，报错
 		if($goods['order_id'] !== $order_id)

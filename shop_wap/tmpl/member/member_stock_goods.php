@@ -77,7 +77,6 @@ include __DIR__ . '/../../includes/header.php';
         </div>
     </div>
     <div class="fix-block-r">
-        <a href="./views_list.html" class="browse-btn"><i></i></a>
         <a href="javascript:void(0);" class="gotop-btn gotop hide" id="goTopBtn"><i></i></a>
     </div>
     </body>
@@ -116,21 +115,21 @@ include __DIR__ . '/../../includes/header.php';
                 </dd>
             </dl>
         </li>
-        <%}%><%}%>
+        <%}%>
 
         <% if (hasmore) {%>
         <li class="loading">
             <div class="spinner"><i></i></div>
             商品数据读取中...
-        </li><%}else {%>
+        </li><%} %>
+        <%}else {%>
         <div class="nctouch-norecord search">
             <div class="norecord-ico"><i></i></div>
             <dl>
                 <dt>没有找到任何相关信息</dt>
-                <dd>选择或搜索其它商品分类/名称...</dd>
             </dl>
-            <a href="javascript:history.go(-1)" class="btn">重新选择</a>
-        </div><%}%>
+        </div>
+        <%}%>
     </script>
     <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
     <script type="text/javascript" src="../../js/common.js"></script>

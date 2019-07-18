@@ -7,6 +7,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 ?>
 <style>
     .dis_flag{display:inline-block;width:40px;background:red;color:#FFF;font-size:12px;text-align:center;}
+    .table-list-style th{padding: 10px 8px;}
 </style>
 <div class="search fn-clear">
     <a class="button btn_stock_check" style="float: left;" href="index.php?ctl=Seller_Stock_Order&met=stock_check&typ=e"><i class="iconfont icon-querendingdan"></i><?= __('库存盘点') ?></a>
@@ -41,10 +42,10 @@ if (!empty($goods)){
         <table class="table-list-style" width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <th class="tl">
-                    <label class="checkbox"><input class="checkall" type="checkbox"/></label><?=__('商品名称')?>
+                    <?=__('商品名称')?>
                 </th>
                 <th width="60"><?=__('价格')?></th>
-                <th width="60"><?=__('VIP价格')?></th>
+                <th width="60"><?=__('会员价格')?></th>
                 <th width="60"><?=__('股东价格')?></th>
                 <th width="80"><?=__('库存')?></th>
                 <th width="100"><?=__('操作')?></th>
@@ -55,12 +56,7 @@ if (!empty($goods)){
                 ?>
                 <tr id="tr_common_id_<?= $item['common_id']; ?>">
                     <td class="tl th" colspan="99">
-                        <label class="checkbox">
-                            <input <?php if(isset($item['disabled_up'])&&$item['disabled_up']) echo 'disabled'; ?>
-                                    class="checkitem" type="checkbox" name="chk[]" value="<?= $item['common_id'] ?>"
-                                    is_virtual="<?= $item['common_is_virtual'] ?>"
-                                    common_virtual_date="<?= $item['common_virtual_date'] ?>" />
-                        </label><?=__('平台货号')?>:<?= $item['common_id']; ?>
+                        <?=__('平台货号')?>:<?= $item['common_id']; ?>
                         <?php if(isset($item['disabled_up'])&&$item['disabled_up']) echo '<span style="color:red;">（'.__('供应商下架商品').'）</span>'; ?>
                     </td>
                 </tr>
@@ -68,7 +64,6 @@ if (!empty($goods)){
                     <td class="tl">
                         <dl class="fn-clear fn_dl">
                             <dt>
-                                <i date-type="ajax_goods_list" data-id="237" class="iconfont icon-jia disb"></i>
                                 <a href="index.php?ctl=<?=$ctl?>&met=goods&gid=<?= $stock_info['goods_id'] ?>"
                                    target="_blank"><img width="60" src="<?= $item['common_image'] ?>"></a>
                             </dt>

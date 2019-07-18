@@ -120,7 +120,8 @@ var THISPAGE = {
         });
 
         $('#search').click(function(){
-            
+
+            queryConditions.page = 1;
             queryConditions.user_account = $('#user_account').val();
             queryConditions.delivery_real_name = $('#delivery_real_name').val();
             queryConditions.delivery_name = $('#delivery_name').val();
@@ -129,6 +130,7 @@ var THISPAGE = {
 
         $("#btn-refresh").click(function ()
         {
+            queryConditions.page = 1;
             queryConditions.user_account = '';
             queryConditions.delivery_real_name = '';
             queryConditions.delivery_name = '';

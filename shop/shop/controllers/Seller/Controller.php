@@ -88,6 +88,7 @@ class Seller_Controller extends Yf_AppController
                 unset($seller_menu['seller_menu']['goods']);
                 unset($seller_menu['seller_menu']['promotion']);
                 unset($seller_menu['seller_menu']['distribution']);
+                unset($seller_menu['seller_menu']['message']);
             }
 
 			self::$menu  = $seller_menu['seller_menu'];
@@ -250,7 +251,7 @@ class Seller_Controller extends Yf_AppController
 
 	private function getCurrentMenu($seller_function_list)
 	{
-		$current_menu = isset($seller_function_list[request_string('ctl').'_'.request_string('met')])?$seller_function_list[request_string('ctl').'_'.request_string('met')]:$seller_function_list[request_string('ctl')];
+		$current_menu = isset($seller_function_list[request_string('ctl')])?$seller_function_list[request_string('ctl')]:'';
 		if(empty($current_menu))
 		{
 			$current_menu = array(
@@ -274,12 +275,12 @@ class Seller_Controller extends Yf_AppController
 				array('name' => '关联版式', 'ctl'=>'Seller_Goods', 'met'=>'format'),
 				array('name' => '商品规格', 'ctl' => 'Seller_Goods_Spec', 'met' => 'spec'),
 				array('name' => '图片空间', 'ctl'=>'Seller_Album', 'met'=>'index'),
-				array('name' => '淘宝导入', 'ctl'=>'Seller_Goods_TBImport', 'met'=>'importFile'),
+//				array('name' => '淘宝导入', 'ctl'=>'Seller_Goods_TBImport', 'met'=>'importFile'),
 			)),
 			'order' => array('name' => '订单物流', 'sub' => array(
 				array('name' => '已售订单管理', 'ctl'=>'Seller_Trade_Order', 'met'=>'physical'),
-				array('name' => '服务兑码订单', 'ctl'=>'Seller_Trade_Order', 'met'=>'virtual'),
-				array('name' => '门店自提订单', 'ctl'=>'Seller_Trade_Order', 'met'=>'chain'),
+//				array('name' => '服务兑码订单', 'ctl'=>'Seller_Trade_Order', 'met'=>'virtual'),
+//				array('name' => '门店自提订单', 'ctl'=>'Seller_Trade_Order', 'met'=>'chain'),
 				array('name' => '普通发货', 'ctl'=>'Seller_Trade_Deliver', 'met'=>'deliver'),
                 array('name' => '创建备货订单', 'ctl'=>'Seller_Stock_Order', 'met'=>'add'),
                 array('name' => '备货订单', 'ctl'=>'Seller_Stock_Order', 'met'=>'physical'),
@@ -288,16 +289,16 @@ class Seller_Controller extends Yf_AppController
 				array('name' => '评价管理', 'ctl'=>'Seller_Goods_Evaluation', 'met'=>'evaluation'),
 				array('name' => '物流工具', 'ctl'=>'Seller_Transport', 'met'=>'transport'),
 			)),
-			'promotion' => array('name' => '促销', 'sub' => array(
-				array('name' => '团购管理', 'ctl'=>'Seller_Promotion_GroupBuy', 'met'=>'index'),
-				array('name' => '加价购', 'ctl'=>'Seller_Promotion_Increase', 'met'=>'index'),
-				array('name' => '限时折扣', 'ctl'=>'Seller_Promotion_Discount', 'met'=>'index'),
-				array('name' => '满即送', 'ctl'=>'Seller_Promotion_MeetConditionGift', 'met'=>'index'),
-				array('name' => '代金券管理', 'ctl'=>'Seller_Promotion_Voucher', 'met'=>'index'),
-			)),
-			'distribution' => array('name' => '分销', 'sub' => array(
-				array('name' => '分销设置', 'ctl'=>'Distribution_Seller_Setting', 'met'=>'index'),
-			)),
+//			'promotion' => array('name' => '促销', 'sub' => array(
+//				array('name' => '团购管理', 'ctl'=>'Seller_Promotion_GroupBuy', 'met'=>'index'),
+//				array('name' => '加价购', 'ctl'=>'Seller_Promotion_Increase', 'met'=>'index'),
+//				array('name' => '限时折扣', 'ctl'=>'Seller_Promotion_Discount', 'met'=>'index'),
+//				array('name' => '满即送', 'ctl'=>'Seller_Promotion_MeetConditionGift', 'met'=>'index'),
+//				array('name' => '代金券管理', 'ctl'=>'Seller_Promotion_Voucher', 'met'=>'index'),
+//			)),
+//			'distribution' => array('name' => '分销', 'sub' => array(
+//				array('name' => '分销设置', 'ctl'=>'Distribution_Seller_Setting', 'met'=>'index'),
+//			)),
 			'shop' => array('name' => '店铺', 'sub' => array(
 				array('name' => '店铺设置', 'ctl'=>'Seller_Shop_Setshop', 'met'=>'index'),
 				array('name' => '店铺导航', 'ctl'=>'Seller_Shop_Nav', 'met'=>'nav'),
@@ -329,11 +330,11 @@ class Seller_Controller extends Yf_AppController
 				array('name' => '客服设置', 'ctl'=>'Seller_Message', 'met'=>'index'),
 				array('name' => '系统消息', 'ctl'=>'Seller_Message', 'met'=>'message'),
 			)),
-			'account' => array('name' => '账号', 'sub' => array(
-				array('name' => '账号列表', 'ctl'=>'Seller_Seller_Account', 'met'=>'accountList'),
-				array('name' => '账号组', 'ctl'=>'Seller_Seller_Group', 'met'=>'groupList'),
-				array('name' => '账号日志', 'ctl'=>'Seller_Seller_Log', 'met'=>'logList')
-			))
+//			'account' => array('name' => '账号', 'sub' => array(
+//				array('name' => '账号列表', 'ctl'=>'Seller_Seller_Account', 'met'=>'accountList'),
+//				array('name' => '账号组', 'ctl'=>'Seller_Seller_Group', 'met'=>'groupList'),
+//				array('name' => '账号日志', 'ctl'=>'Seller_Seller_Log', 'met'=>'logList')
+//			))
 		);
 		
 		if(!Web_ConfigModel::value('Plugin_Directseller')||@$this->shopBase['shop_type'] == 2)

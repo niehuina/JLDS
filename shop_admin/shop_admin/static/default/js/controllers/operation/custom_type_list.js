@@ -128,6 +128,7 @@ var THISPAGE = {
 	});
 	
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.search_name = _self.$_searchName.val() === '请输入相关数据...' ? '' : _self.$_searchName.val();
             queryConditions.user_type = $source.getValue();
             THISPAGE.reloadData(queryConditions);
@@ -135,6 +136,7 @@ var THISPAGE = {
 
         $("#btn-refresh").click(function ()
         {
+            queryConditions.page = 1;
             queryConditions.search_name='';
             queryConditions.user_type='';
             THISPAGE.reloadData(queryConditions);

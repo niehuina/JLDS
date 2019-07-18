@@ -119,6 +119,7 @@ var THISPAGE = {
         });
   
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.userName = _self.$_userName.val() === '请输入会员名称' ? '' : _self.$_userName.val();
 //            queryConditions.beginDate = _self.$_beginDate.val();
 //            queryConditions.endDate = _self.$_endDate.val();

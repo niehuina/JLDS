@@ -897,11 +897,11 @@ class Goods_GoodsCtl extends Controller
  
 			if(Web_ConfigModel::value('Plugin_Directseller'))
 			{			
-				$goods_detail['recImages'] = '';
-				//推荐者上传的图片
-				$PluginManager = Yf_Plugin_Manager::getInstance();
-				$data = $PluginManager->trigger('rec_goods');
-				$goods_detail['recImages'] = isset($data['Plugin_Directseller_recGoods']) ? $data['Plugin_Directseller_recGoods'] : ''; 
+//				$goods_detail['recImages'] = '';
+//				//推荐者上传的图片
+//				$PluginManager = Yf_Plugin_Manager::getInstance();
+//				$data = $PluginManager->trigger('rec_goods');
+//				$goods_detail['recImages'] = isset($data['Plugin_Directseller_recGoods']) ? $data['Plugin_Directseller_recGoods'] : '';
 				//--END 
 			}
  

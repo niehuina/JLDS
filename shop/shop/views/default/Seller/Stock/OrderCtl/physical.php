@@ -9,9 +9,12 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 <link href="<?= $this->view->css_com ?>/jquery/plugins/dialog/green.css?ver=<?=VER?>" rel="stylesheet">
 <script src="<?= $this->view->js_com ?>/plugins/jquery.dialog.js" charset="utf-8"></script>
 <script type='text/jade' id='thrid_opt'>
+    <?php if(self::$is_partner){ ?>
+    <?php } else{ ?>
     <a class="bbc_seller_btns button add button_blue" href="<?= Yf_Registry::get('index_page') ?>?ctl=Seller_Stock_Order&met=add&typ=e">
         <i class="iconfont icon-jia"></i><?=__('创建备货订单')?>
     </a>
+    <?php } ?>
 </script>
 <style>
     .dis_flag{display:inline-block;width:40px;background:red;color:#FFF;font-size:12px;text-align:center;}
@@ -39,17 +42,9 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 <input type="text" class="text w70 hasDatepicker heigh" placeholder="<?=__('起始时间')?>" name="query_start_date" id="query_start_date" value="<?=$_GET['query_start_date']?>" readonly="readonly"><label class="add-on"><i class="iconfont icon-rili"></i></label><span class="rili_ge">–</span>
                 <input id="query_end_date" class="text w70 hasDatepicker heigh" placeholder="<?=__('结束时间')?>" type="text" name="query_end_date" value="<?=$_GET['query_end_date']?>" readonly="readonly"><label class="add-on"><i class="iconfont icon-rili"></i></label>
             </td>
-            <th><?=__('买家')?></th>
-            <td class="w100">
-                <input type="text" class="text w80" placeholder="<?=__('买家昵称')?>" id="query_buyer_name" name="query_buyer_name" value="<?php if (!empty($condition['buyer_user_name:LIKE'])) {
-                    echo str_replace('%', '', $condition['buyer_user_name:LIKE']);
-                } ?>">
-            </td>
             <th><?=__('订单编号')?></th>
             <td class="w160">
-                <input type="text" class="text w150 heigh" placeholder="<?=__('请输入订单编号')?>" id="query_order_sn" name="query_order_sn" value="<?php if (!empty($condition['order_id'])) {
-                    echo $condition['query_order_sn'];
-                } ?>">
+                <input type="text" class="text w150 heigh" placeholder="<?=__('请输入订单编号')?>" id="query_order_sn" name="query_order_sn" value="<?=$_GET['query_order_sn']?>">
             </td>
             <td class="w70 tc">
                 <a onclick="formSub()" class="button btn_search_goods" href="javascript:void(0);"><i class="iconfont icon-btnsearch"></i><?=__('搜索')?></a>
@@ -87,7 +82,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <em><?= $val['shop_user_name']; ?></em>
                 </td>
                 <td>
-                    <em><?= $val['order_payment_amount']; ?></em>
+                    <em><?= $val['order_payment_amount_vip']; ?></em>
                 </td>
                 <td>
                     <em><?= $val['order_status_html']; ?></em>

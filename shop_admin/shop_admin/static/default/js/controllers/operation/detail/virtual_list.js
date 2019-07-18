@@ -112,6 +112,7 @@ var THISPAGE = {
         var _self = this;
 
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.order_id = $("#orderId").val();
             queryConditions.buyer_user_account = $("#buyerName").val();
             THISPAGE.reloadData(queryConditions);
@@ -119,6 +120,7 @@ var THISPAGE = {
 
         $("#btn-refresh").click(function ()
         {
+            queryConditions.page = 1;
             queryConditions.order_id = '';
             queryConditions.buyer_user_account = '';
             THISPAGE.reloadData(queryConditions);

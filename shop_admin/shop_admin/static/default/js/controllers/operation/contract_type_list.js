@@ -116,6 +116,7 @@ var THISPAGE = {
 	
         $("#btn-refresh").click(function ()
         {
+            queryConditions.page = 1;
             queryConditions.grid ='';
             THISPAGE.reloadData(queryConditions);
             _self.$_searchName.val('请输入相关数据...');

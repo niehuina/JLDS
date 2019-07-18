@@ -142,6 +142,7 @@ var THISPAGE = {
         });
         
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.search_name = _self.$_searchName.val() === '请输入相关数据...' ? '' : _self.$_searchName.val();
             queryConditions.user_type = $source.getValue();
             queryConditions.shop_class = $shop_class.getValue();

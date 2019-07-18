@@ -11,7 +11,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
 	<div class="i-block account_mes">
 		<h4>记录详情</h4>
         <dl class="detail">
-            <dt><?php if($re['trade_type_id']==4){?>提现<?php }elseif($re['trade_type_id']==3){?>充值<?php }elseif($re['trade_type_id']==2){?>转账<?php }else{?>购物<?php }?></dt>
+            <dt><?=$re['trade_type']?></dt>
 			<?php if($re['trade_type_id']==4){?>
 			<?php foreach($data as $k=>$v){ ?>
             <?php if($v['orderid']){?>

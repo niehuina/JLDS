@@ -426,7 +426,7 @@ else
 					var form_ser = $(this.content.order_confirm_form).serialize();
 
 					$.post(url + 'json', form_ser, function (data) {
-						if ( data.status == 200 ) {
+						if (data.status == 200 ) {
 							Public.tips.success('确认收货成功！');
 							window.location.reload();
 							//$.dialog.alert('确认收货成功'), window.location.reload();

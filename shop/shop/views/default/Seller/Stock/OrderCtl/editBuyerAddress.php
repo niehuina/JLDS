@@ -85,11 +85,11 @@
             valid: function(form) {
                 $.post(parent.SITE_URL + '?ctl=Seller_Stock_Order&met=editBuyerAddress&typ=json', $('#address_form').serialize(), function (data) {
                     if ( data.status == 200 ) {
-                        parent.Public.tips( { content:'success', type: 3 } );
+                        parent.Public.tips( { content:'编辑收货人信息成功', type: 3 } );
                         callback(data.data);
                         api.close();
                     } else {
-                        parent.Public.tips( { content:'failure', type: 1 } );
+                        parent.Public.tips( { content:'编辑收货人信息失败', type: 1 } );
                     }
                 })
             }

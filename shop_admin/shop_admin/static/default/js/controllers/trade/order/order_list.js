@@ -248,6 +248,7 @@
 			
 			//搜索
 			$('#search').click(function(){
+				queryConditions.page = 1;
 				queryConditions.order_id = $('#order_id').val();
 				queryConditions.buyer_name = $('#buyer_name').val();
 				queryConditions.shop_name = $('#shop_name').val();
@@ -266,6 +267,7 @@
 			//刷新
 			$("#btn-refresh").click(function ()
 			{
+				queryConditions.page = 1;
 				THISPAGE.reloadData(queryConditions);
 				_self.$_searchName.placeholder('请输入相关数据...');
 				_self.$_searchName.val('');

@@ -102,6 +102,7 @@ var THISPAGE = {
         });
   
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.user_keys = _self.$_userName.val() === '请输入用户账号/用户姓名/用户手机号' ? '' : _self.$_userName.val();
             THISPAGE.reloadData(queryConditions);
         });
@@ -129,6 +130,7 @@ var handle = {
                         {
                             if(data && 200 == data.status) {
                                 Public.tips({content: "操作成功！"});
+                                queryConditions.page = 1;
                                 THISPAGE.reloadData(queryConditions);
                             } else {
                                 Public.tips({type: 1, content: "操作失败！"});
@@ -149,6 +151,7 @@ $(function(){
     $(".tab-base li").click(function () {
         $(".tab-base li a").removeClass('current');
         $(this).find('a').addClass('current');
+        queryConditions.page = 1;
         THISPAGE.reloadData(queryConditions);
     })
 });

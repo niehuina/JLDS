@@ -8,6 +8,8 @@
  */
 class Buyer_CartCtl extends Controller
 {
+    public $cartModel = null;
+
 	/**
 	 * Constructor
 	 *
@@ -309,6 +311,7 @@ class Buyer_CartCtl extends Controller
 			}
             //获取商品运费
             $Transport_TemplateModel = new Transport_TemplateModel();
+            $city_id = null;
             $transport_cost = $Transport_TemplateModel->cartTransportCost($city_id, $cart_id);
 		}
 

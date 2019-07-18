@@ -131,9 +131,9 @@ class Message_RecordCtl extends Yf_AppController
                     $items[$key]['user_gender']='男';
                 }
                 $user_reg_time = $value['user_reg_time'];
-                $items[$key]['user_reg_time'] = date('Y-m-d h:i:s',$user_reg_time);
+                $items[$key]['user_reg_time'] = date('Y-m-d H:i:s',$user_reg_time);
                 $user_lastlogin_time = $value['user_lastlogin_time'];
-                $items[$key]['user_lastlogin_time'] = date('Y-m-d h:i:s',$user_lastlogin_time);
+                $items[$key]['user_lastlogin_time'] = date('Y-m-d H:i:s',$user_lastlogin_time);
             }
         }
         unset($data['items']);

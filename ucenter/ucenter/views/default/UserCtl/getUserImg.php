@@ -107,6 +107,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
             valid:function(form){
                 //表单验证通过，提交表单
                 $.ajax({
+                    type:'POST',
                     url: ajax_url,
                     data:$("#form").serialize(),
                     success:function(a){
@@ -114,7 +115,6 @@ include $this->view->getTplPath() . '/' . 'header.php';
                         {
 							Public.tips.success("<?=_('操作成功')?>");
                             setTimeout('location.href= SITE_URL +"?ctl=User&met=getUserImg"',1000);//成功后跳转
-
                         }
                         else
                         {

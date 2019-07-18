@@ -483,8 +483,9 @@ class LoginCtl extends Yf_AppController
 			if($act == 'reg')
 			{
                 
-                $Reg_OptionModel = new Reg_OptionModel();
-                $reg_opt_rows = $Reg_OptionModel->getByWhere(array('reg_option_active'=>1));
+//                $Reg_OptionModel = new Reg_OptionModel();
+//                $reg_opt_rows = $Reg_OptionModel->getByWhere(array('reg_option_active'=>1));
+                $reg_opt_rows = array();
                 
                 
              
@@ -850,7 +851,8 @@ class LoginCtl extends Yf_AppController
 	{
         $option_value_row = request_row('option');
         $Reg_OptionModel = new Reg_OptionModel();
-        $reg_opt_rows = $Reg_OptionModel->getByWhere(array('reg_option_active'=>1));
+//        $reg_opt_rows = $Reg_OptionModel->getByWhere(array('reg_option_active'=>1));
+        $reg_opt_rows = array();
         
         foreach ($reg_opt_rows as $reg_option_id=>$reg_opt_row)
         {
@@ -870,7 +872,6 @@ class LoginCtl extends Yf_AppController
 
 		$user_name = request_string('user_account', null);
 		$password  = request_string('user_password', null);
-
 
 		$user_code = request_string('user_code');
 		$mobile    = request_string('mobile');

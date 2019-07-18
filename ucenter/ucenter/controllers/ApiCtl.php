@@ -382,6 +382,7 @@ class ApiCtl extends Yf_AppController
 				array_push($rs_row, $flag);
 
 				$arr_field_user_info_detail = array();
+                $arr_field_user_info_detail['user_id'] = $user_id;
 				$arr_field_user_info_detail['user_name'] = $user_name;
 				$arr_field_user_info_detail['user_mobile'] = $user_mobile;
 				$arr_field_user_info_detail['user_reg_time'] = $now_time;
@@ -581,6 +582,7 @@ class ApiCtl extends Yf_AppController
 				array_push($rs_row, $flag);
 
 				$arr_field_user_info_detail = array();
+                $arr_field_user_info_detail['user_id'] = $user_id;
 				$arr_field_user_info_detail['user_name'] = $user_name;
 				$arr_field_user_info_detail['user_mobile'] = $user_mobile;
 				$arr_field_user_info_detail['user_reg_time'] = $now_time;
@@ -1247,6 +1249,7 @@ class ApiCtl extends Yf_AppController
 				array_push($rs_row, $flag);
 
 				$arr_field_user_info_detail = array();
+                $arr_field_user_info_detail['user_id'] = $user_id;
 				$arr_field_user_info_detail['user_name'] = $user_name;
 				$arr_field_user_info_detail['user_mobile'] = $user_name;
 				$arr_field_user_info_detail['user_reg_time'] = $now_time;
@@ -1362,7 +1365,6 @@ class ApiCtl extends Yf_AppController
 		{
 			$this->data->setError('请输入密码');
 		}
-
 		$User_BindConnectModel = new User_BindConnectModel();
 		$User_InfoModel = new User_InfoModel();
 		$User_InfoDetailModel = new User_InfoDetailModel();
@@ -1414,6 +1416,7 @@ class ApiCtl extends Yf_AppController
 			}
 		}
 
+        Yf_Log::log($user_info_row, Yf_Log::LOG, 'debug');
 
 		if(!$user_info_row)
 		{

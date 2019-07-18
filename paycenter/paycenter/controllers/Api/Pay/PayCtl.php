@@ -139,7 +139,6 @@ class Api_Pay_PayCtl extends Api_Controller
         $Consume_RecordModel->addRecord($record_add_seller_row);
 
 
-
         if ($flag && $Consume_TradeModel->sql->commitDb())
         {
             $msg    = 'success';
@@ -886,7 +885,7 @@ class Api_Pay_PayCtl extends Api_Controller
         $amount   = request_row('user_money');        //付款金额
         $reason   = request_row('reason');  //付款说明
         $order_id = request_row('order_id');
-        $trade_type = request_row('trade_type', 10);
+        $trade_type = request_row('trade_type', 14);
  
         //交易明细表
         $Consume_RecordModel = new Consume_RecordModel();
@@ -1244,7 +1243,7 @@ class Api_Pay_PayCtl extends Api_Controller
 //
 //        $Consume_RecordModel->addRecord($record_add_seller_row);
 
-        //4.进去用户的备货金
+        //4.减去用户的备货金
         $User_ResourceModel = new User_ResourceModel();
         $flag4= $User_ResourceModel->editResource($buy_id, ['user_stocks'=>-1*$order_payment_amount], true);
         $flag = $flag && $flag4;
@@ -1266,6 +1265,60 @@ class Api_Pay_PayCtl extends Api_Controller
 
         $this->data->addBody(-140, $data, $msg, $status);
 
+    }
+
+    //取消备货订单
+    public function cancelOrderForStock()
+    {
+        $buy_id = request_row('buy_id');
+        if(request_string('type') == 'row')
+        {
+            $order_id = request_row('order_id');
+        }
+        else
+        {
+            $order_id[] = request_string('order_id');
+        }
+
+        $Consume_TradeModel = new Consume_TradeModel();
+        //开启事物
+        $Consume_TradeModel->sql->startTransactionDb();
+        $payment_amount = request_float('payment_amount');
+        if($payment_amount){
+            //1.修改订单表（consume_trade）
+            $Consume_TradeModel->editTrade($order_id,array('order_state_id' => Union_OrderModel::CANCEL));
+
+            //2.修改交易明细(consume_record)
+            $Consume_RecordModel = new Consume_RecordModel();
+            $record_row = $Consume_RecordModel->getByWhere(array('order_id:IN' => $order_id));
+            $record_id_row = array_column($record_row,'consume_record_id');
+            $Consume_RecordModel->editRecord($record_id_row,array('record_status' => RecordStatusModel::RECORD_CANCEL));
+
+            //3.合并支付表
+            $Union_OrderModel = new Union_OrderModel();
+            $union_row = $Union_OrderModel->getByWhere(array('inorder:IN' => $order_id));
+            $uorder_id = array_column($union_row,'union_order_id');
+            $flag = $Union_OrderModel->editUnionOrder($uorder_id,array('order_state_id' => Union_OrderModel::CANCEL));
+
+            //4.加上用户的备货金
+            $User_ResourceModel = new User_ResourceModel();
+            $flag4= $User_ResourceModel->editResource($buy_id, ['user_stocks'=>$payment_amount], true);
+            $flag = $flag && $flag4;
+        }
+        if ($flag && $Consume_TradeModel->sql->commitDb())
+        {
+            $msg    = 'success';
+            $status = 200;
+        }
+        else
+        {
+            $Consume_TradeModel->sql->rollBackDb();
+            $m      = $Consume_TradeModel->msg->getMessages();
+            $msg    = $m ? $m[0] : _('failure');
+            $status = 250;
+        }
+        $data = array();
+        $this->data->addBody(-140, $data, $msg, $status);
     }
 
     //确认收货

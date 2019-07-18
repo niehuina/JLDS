@@ -100,10 +100,10 @@
 			<dl>
                                 <p></p>
 				<dt><a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Order&met=physical"><?=__('我的订单')?></a></dt>
-				<dd class="rel_nav">
-					<a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Order&met=physical"><?=__('实物订单')?></a>
-					<a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Order&met=virtual"><?=__('服务订单')?></a>
-				</dd>
+<!--				<dd class="rel_nav">-->
+<!--					<a href="--><?//= Yf_Registry::get('url') ?><!--?ctl=Buyer_Order&met=physical">--><?//=__('实物订单')?><!--</a>-->
+<!--					<a href="--><?//= Yf_Registry::get('url') ?><!--?ctl=Buyer_Order&met=virtual">--><?//=__('服务订单')?><!--</a>-->
+<!--				</dd>-->
 			</dl>
 
 			<dl>

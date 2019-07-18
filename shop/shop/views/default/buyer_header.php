@@ -94,7 +94,6 @@
 					<li><a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Message&met=message"><?=__('消息')?></a>
 						<?php if($this->countMessage['countMessage'] > 0){?><i class="bbuyer_news"><?=$this->countMessage['countMessage']?></i><?php }?>
 					</li>
-					<?php if(Web_ConfigModel::value('Plugin_Directseller')){ ?><li><a href="<?= Yf_Registry::get('url') ?>?ctl=Distribution_Buyer_Directseller&met=index&typ=e"><?=__('分销中心')?></a></li><?php }?>
 				</ul>
 			</div>
 		</div>

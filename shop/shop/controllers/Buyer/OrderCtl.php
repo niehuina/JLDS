@@ -1329,7 +1329,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 
                 if(Web_ConfigModel::value('Plugin_Directseller'))
                 {
-                    $val['directseller_flag'] = 0;//$common_base['common_is_directseller'];
+                    $val['directseller_flag'] = $common_base['common_is_directseller'];
                     if($common_base['common_is_directseller'])
                     {
                         //产品佣金
@@ -1660,14 +1660,14 @@ class Buyer_OrderCtl extends Buyer_Controller
 
 		//查找收货地址
         if($isShopAddr=="false"){
-            $User_AddressModel = new User_AddressModel();
             $city_id = 0;
-            if($address_id)
-            {
-                $user_address = $User_AddressModel->getOne($address_id);
-
-                $city_id = $user_address['user_address_city_id'];
-            }
+//            if($address_id)
+//            {
+//                $User_AddressModel = new User_AddressModel();
+//                $user_address = $User_AddressModel->getOne($address_id);
+//
+//                $city_id = $user_address['user_address_city_id'];
+//            }
 
             $Transport_TemplateModel = new Transport_TemplateModel();
             $transport_cost      = $Transport_TemplateModel->cartTransportCost($city_id, $cart_id);
@@ -1923,6 +1923,10 @@ class Buyer_OrderCtl extends Buyer_Controller
 					}
 					$order_goods_row['directseller_id'] = $user_parent_id;
 				}
+
+                if($user_parent_g_partner_id != $user_id){
+                    $order_goods_row['seller_user_id']         = $user_parent_g_partner['user_id'];
+                }
 
 				$flag2 = $Order_GoodsModel->addGoods($order_goods_row);
 

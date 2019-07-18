@@ -28,17 +28,17 @@ var THISPAGE = {
         queryConditions.beginDate = this.$_beginDate.val();
         queryConditions.endDate = this.$_endDate.val();
         var colModel = [
-            {name:'order_id', label:'商户订单id', width:200, align:"center"},
-            {name:'user_nickname', label:'用户帐号', width:150,align:'center'},
-            {name:'record_money',label:'金额',  width:150,align:'center'},
-            {name:'record_title', label:'标题', width:110, align:"center"},
+            {name:'order_id', label:'商户订单id', width:250, align:"center"},
+            {name:'user_nickname', label:'用户姓名', width:150,align:'center'},
+            {name:'record_money',label:'金额',  width:120,align:'center'},
+            {name:'record_title', label:'标题', width:180, align:"center"},
             {name:'trade_type', label:'交易类型', width:110, align:"center"},
-            {name:'user_type_con', label:'用户类型', width:110, align:"center"},
-            {name:'record_status_con', label:'付款状态', width:110, align:"center"},
-            {name:'record_payorder', label:'支付单号', width:200, align:"center"},
-            {name:'record_paytime', label:'支付时间', width:80, align:"center"},
-            {name:'record_date', label:'日期', width:110, align:"center"},
-            {name:'record_desc', label:'描述', width:280, align:"center"},
+            {name:'user_type_con', label:'用户类型', width:80, align:"center"},
+            {name:'record_status_con', label:'付款状态', width:80, align:"center"},
+            {name:'record_payorder', label:'支付单号', width:150, align:"center"},
+            {name:'record_paytime', label:'支付时间', width:140, align:"center"},
+            {name:'record_date', label:'日期', width:90, align:"center"},
+            {name:'record_desc', label:'描述', width:200, align:"center"},
         ];
         this.mod_PageConfig.gridReg('grid', colModel);
         colModel = this.mod_PageConfig.conf.grids['grid'].colModel;
@@ -103,6 +103,7 @@ var THISPAGE = {
     
      
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.userName = _self.$_userName.val() === '请输入用户账户' ? '' : _self.$_userName.val();
             queryConditions.payOrder = _self.$_payOrder.val() === '请输入支付单号' ? '' : _self.$_payOrder.val();
 //            queryConditions.beginDate = _self.$_beginDate.val();
@@ -141,6 +142,18 @@ $(function(){
         }, {
             id: "5",
             name: "退款"
+        }, {
+            id: "13",
+            name: "备货差价返利"
+        }, {
+            id: "14",
+            name: "订单差价返利"
+        }, {
+            id: "15",
+            name: "订单提成返利"
+        }, {
+            id: "16",
+            name: "股金分红"
         }],
         value: "id",
         text: "name",

@@ -187,9 +187,9 @@ class Seller_IndexCtl extends Seller_Controller
 				$start_yes_date   = date("Y-m-d", strtotime("-1 days"));
 				$start_week_date  = date("Y-m-d", strtotime("-7 days"));
 
-				$today = $this->shopBaseModel->getShopSales(Perm::$shopId,$start_today_date);
-				$week = $this->shopBaseModel->getShopSales(Perm::$shopId,$start_week_date);
-				$month = $this->shopBaseModel->getShopSales(Perm::$shopId,$start_date);
+				$today = $this->shopBaseModel->getShopSales(Perm::$userId,$start_today_date);
+				$week = $this->shopBaseModel->getShopSales(Perm::$userId,$start_week_date);
+				$month = $this->shopBaseModel->getShopSales(Perm::$userId,$start_date);
 				
 				
 				$Analysis_ShopGeneralModel = new Analysis_ShopGeneralModel();
@@ -209,7 +209,7 @@ class Seller_IndexCtl extends Seller_Controller
 //				$total['month']['cashes'] = $analysis_data_row['order_cash'];
 
 				//单品销量
-				$shop_top_rows = $Analysis_ShopGeneralModel->getShopGoodsTop(Perm::$shopId, $start_date);
+				$shop_top_rows = $Analysis_ShopGeneralModel->getShopGoodsTop(Perm::$userId, $start_date);
 
 				//2.店铺信息
 				$shop_detail = $this->shopBaseModel->getShopDetail($shop['shop_id']);

@@ -54,6 +54,7 @@ class Stock_OrderModel extends Stock_Order
 
     public function getOrderUserList($cond_row = array(), $order_row = array(), $page = 1, $rows = 100)
     {
+        $cond_row['shop_user_id'] = Perm::$userId;
         $data = $this->listByWhere($cond_row, $order_row, $page, $rows);
 
         $url = Yf_Registry::get('url');

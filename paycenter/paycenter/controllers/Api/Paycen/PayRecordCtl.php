@@ -121,7 +121,7 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
     {
         $deposit_user_id  = request_string('user_id');   //用户Id
         $cond_row = array();
-        $cond_row['deposit_user_id'] = $deposit_user_id;
+        $cond_row['deposit_buyer_id'] = $deposit_user_id;
         $cond_row['deposit_trade_status'] = Consume_DepositModel::TRADE_STATUS_SUCCESS;
         $consume_DepositModel = new Consume_DepositModel();
         $data           = $consume_DepositModel->getByWhere($cond_row);
@@ -301,7 +301,7 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         $page = request_int('page', 1);
         $rows = request_int('rows', 20);
         $User_InfoModel = new User_InfoModel();
-        $data = $User_InfoModel->getUserInfoListByKeys($user_keys, $user_cond_row, ['user_id'=>'desc'], $page, $rows);
+        $data = $User_InfoModel->getUserInfoListByKeys($user_keys, $user_cond_row, ['user_base.user_id'=>'desc'], $page, $rows);
 
         if ($data) {
             $msg = 'success';

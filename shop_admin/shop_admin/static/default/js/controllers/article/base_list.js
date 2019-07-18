@@ -23,6 +23,7 @@ var THISPAGE = {
     addEvent: function(){
         var _self = this;
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.article_group = $source.getValue();
             THISPAGE.reloadData(queryConditions);
         });

@@ -204,6 +204,7 @@ $(function(){
 
             //搜索
             $('#search').click(function(){
+                queryConditions.page = 1;
 				queryConditions.voucher_t_state = $source.getValue();
                 queryConditions.voucher_t_title = _self.$_voucher_t_title.val();
                 queryConditions.shop_name = _self.$_shop_name.val();

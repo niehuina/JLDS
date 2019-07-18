@@ -40,6 +40,7 @@ class Trade_TypeModel
         '15' => 'buyer_order_rebate',
         '16' => 'shares_profit'
 	);
+    public $trade_type = null;
     public function __construct()
 	{
 		$this->trade_type = array(

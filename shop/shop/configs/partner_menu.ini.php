@@ -161,15 +161,6 @@ $seller_menu = array(
                     )
                 )
             ),
-            120011 => array(
-                'menu_id' => '120011',
-                'menu_parent_id' => '12000',
-                'menu_name' => __('创建备货订单'),
-                'menu_icon' => '',
-                'menu_url_ctl' => 'Seller_Stock_Order',
-                'menu_url_met' => 'add',
-                'menu_url_parem' => '',
-            ),
             120012 => array(
                 'menu_id' => '120012',
                 'menu_parent_id' => '12000',

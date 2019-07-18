@@ -106,6 +106,7 @@
 			});
 
 			$('#search').click(function(){
+				queryConditions.page = 1;
 				queryConditions.consult_question = $('#consult_question').val();
 				queryConditions.user_account = $('#user_account').val();
 				queryConditions.start_time = $('#start_time').val();
@@ -116,6 +117,7 @@
 			//刷新
 			$("#btn-refresh").click(function ()
 			{
+				queryConditions.page = 1;
 				queryConditions.consult_question ='';
 				queryConditions.user_account ='';
 				queryConditions.start_time ='';

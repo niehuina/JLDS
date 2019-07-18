@@ -53,10 +53,11 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 <input type="hidden" name="action" value="<?php if ( !empty($order_data) ) { echo 'edit'; } ?>"/>
                 <input type="hidden" id="user_id" name="user_id" value="<?php echo $user_id ?>" />
                 <input type="hidden" id="shop_id" name="shop_id" value="<?php echo $shop_id ?>" />
+                <input type="hidden" id="user_stocks" value="<?php echo $user_resouce['user_stocks'] ?>" />
                 <dl>
                     <dt><?=__('合伙人姓名')?>：</dt>
                     <dd>
-                        <?php echo $user_info['user_realname'] ?>
+                        <?php echo $g_partner_info['user_realname'] ?>
                     </dd>
                 </dl>
                 <dl>
@@ -65,11 +66,11 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                         <?php echo $user_resouce['user_stocks'] ?>
                     </dd>
                 </dl>
-                <h3><i class="iconfont icon-edit"></i><?=__('选择发货地址')?></h3>
+                <h3><i class="iconfont icon-edit"></i><?=__('选择收货人地址')?></h3>
                 <dl>
-                    <dt><?=__('我的发货信息')?>：</dt>
+                    <dt><?=__('收货人信息')?>：</dt>
                     <dd>
-                        <a href="javascript:void(0);" dialog_id="edit_send_address" data-shop_id="<?= $shop_id; ?>"
+                        <a href="javascript:void(0);" dialog_id="edit_send_address" data-user_id="<?= $user_id; ?>"
                            class="ncbtn-mini fl bbc_seller_btns"><?=__('选择')?></a>
                     </dd>
                 </dl>
@@ -84,12 +85,13 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <dt><i>*</i><?=__('所在地区')?>：</dt>
                     <dd>
                         <input type="hidden" name="user_address_area" id="t" value="<?=$user_address['user_address_area']?>" />
-                        <input type="hidden" name="province_id" id="id_1" value="<?=$user_address['user_address_province_id']?>" />
-                        <input type="hidden" name="city_id" id="id_2" value="<?=$user_address['user_address_city_id']?>" />
-                        <input type="hidden" name="area_id" id="id_3" value="<?=$user_address['user_address_area_id']?>" />
-                        <?php if($user_address['user_address_area']){ ?>
-                            <div id="d_1"><?=$user_address['user_address_area'] ?>&nbsp;&nbsp;<a href="javascript:sd();"><?=__('编辑')?></a></div>
+                        <input type="hidden" name="user_province_id" id="id_1" value="<?=$user_address['user_address_province_id']?>" />
+                        <input type="hidden" name="user_city_id" id="id_2" value="<?=$user_address['user_address_city_id']?>" />
+                        <input type="hidden" name="user_area_id" id="id_3" value="<?=$user_address['user_address_area_id']?>" />
+                        <div id="d_1"><?php if($user_address['user_address_area']){ ?>
+                            <?=$user_address['user_address_area'] ?>&nbsp;&nbsp;<a href="javascript:sd();"><?=__('编辑')?></a>
                         <?php } ?>
+                        </div>
 
                         <div id="d_2"  class="<?php if($user_address['user_address_area']) echo 'hidden';?>">
                             <select id="select_1" name="select_1" onChange="district(this);">
@@ -106,7 +108,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 <dl>
                     <dt><i>*</i><?=__('街道地址')?>：</dt>
                     <dd>
-                        <input type="text"  class="text w450" id="order_address_address" name="order_address_address"
+                        <input type="text"  class="text w450" id="user_address_address" name="order_address_address"
                                value="<?=$user_address['user_address_address']?>" />
                         <p class="hint"><?=__('不必重复填写地区')?></p>
                     </dd>
@@ -120,8 +122,11 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 </dl>
                 <h3>
                     <i class="iconfont icon-edit"></i><?=__('选择商品')?>(<?=__('商品总金额:')?>
-                    <em id="total_amount_show" class="bbc_seller_color">￥0.00</em>)
+                    <em id="total_amount_show" class="bbc_seller_color">￥0.00</em>
+                    <?=__('配送费:')?>
+                    <em id="shipping_fee_show" class="bbc_seller_color">￥0.00</em>)
                     <input type="hidden" id="total_amount" name="total_amount" value="0">
+                    <input type="hidden" id="shipping_fee" name="shipping_fee" value="0">
                 </h3>
                 <div class="goods-category-list fn-clear clearfix">
                     <div>
@@ -133,6 +138,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     </div>
                 </div>
                 <input type="hidden" id="select_goods_list" name="select_goods_list" />
+                <input type="button" class="button bbc_seller_submit_btns" id="button_get_shipping_fee" value="<?=__('计算配送费')?>">
                 <input type="button" class="button bbc_sellerGray_submit_btns" id="button_next_step" value="<?=__('提交')?>">
             </form>
         </div>
@@ -140,7 +146,6 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 </div>
 <script type="text/javascript" src="<?=$this->view->js?>/district.js"></script>
 <script type="text/javascript" src="<?=$this->view->js?>/order_add_step2.js" charset="utf-8"></script>
-
 
 
 <?php

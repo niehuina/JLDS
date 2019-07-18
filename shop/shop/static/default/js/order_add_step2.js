@@ -25,7 +25,7 @@ function cbkCheck(obj) {
         computeTotalAmountMinus(goods_id);
         delete select_goods_list[goods_id];
     }
-    disabledButton();
+    //disabledButton();
 }
 
 function selectAllCheck(isCompute) {
@@ -50,9 +50,61 @@ function selectAllCheck(isCompute) {
             flag = false;
         }
     });
+
     if(flag){
         $("#select_goods_list").val(JSON.stringify(select_goods_list));
     }
+    return flag;
+}
+
+function getShippingFee() {
+    var flag = true;
+    var order_price = $("#total_amount").val();
+    var city_id = $("#id_2").val();
+    if(!city_id){
+        Public.tips.error('收货人地址未设置！');
+        flag = false;
+        return flag;
+    }
+    if(Object.keys(select_goods_list).length == 0){
+        Public.tips.error('未选择商品！');
+        flag = false;
+        return flag;
+    }
+
+    var user_stocks = $("#user_stocks").val();
+    if (order_price*1 > user_stocks*1) {
+        Public.tips.error('商品总金额不能超过合伙人备货金！');
+        flag = false;
+        return flag;
+    }
+
+    var url = "index.php?ctl=Seller_Stock_Order&met=getTransport&typ=json";
+    var form_ser = {
+        'select_goods_list': JSON.stringify(select_goods_list),
+        'order_price': order_price,
+        'city_id':city_id
+    };
+    $.getJSON(url, form_ser, function (result) {
+        if (result.status == 200) {
+            var cost = result.data.cost;
+            if(cost===cost+''){
+                $("#shipping_fee_show").text("￥"+cost);
+            }else{
+                $("#shipping_fee_show").text("￥"+cost.toFixed(2));
+            }
+            $("#shipping_fee").val(cost);
+
+            if (order_price*1 + cost*1 > user_stocks*1) {
+                Public.tips.error('订单总金额不能超过合伙人备货金！');
+                flag = false;
+                return flag;
+            }
+        } else {
+            Public.tips.error('计算配送费失败！');
+            flag = false;
+        }
+    })
     return flag;
 }
 
@@ -73,18 +125,18 @@ function computeTotalAmountPlus(goods_id, new_goods_amount, old_goods_amount) {
     old_goods_amount = old_goods_amount ? old_goods_amount : 0;
     var curChk = $("#"+goods_id+"").find(":checkbox");
     if(curChk.prop("checked")){
-        var total_amount = $("#total_amount").text();
+        var total_amount = $("#total_amount").val();
         total_amount = total_amount*1 - old_goods_amount*1 + new_goods_amount*1;
         $("#total_amount_show").text("￥"+total_amount.toFixed(2));
-        $("#total_amount").text(total_amount);
+        $("#total_amount").val(total_amount);
     }
 }
 function computeTotalAmountMinus(goods_id, goods_amount) {
     goods_amount = goods_amount ? goods_amount : $("#"+goods_id).children().last().text();
-    var total_amount = $("#total_amount").text();
+    var total_amount = $("#total_amount").val();
     total_amount = total_amount*1 - goods_amount*1;
     $("#total_amount_show").text("￥"+total_amount.toFixed(2));
-    $("#total_amount").text(total_amount);
+    $("#total_amount").val(total_amount);
 }
 
 function initGrid() {
@@ -239,9 +291,15 @@ function initGrid() {
             $("#jqgh_goods_grid_cb").click();   //div标签
             $("#goods_grid_cb").click();   //th标签
         },
+        beforeSelectRow: function (rowid, e) {
+            var $myGrid = $(this),
+                i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),
+                cm = $myGrid.jqGrid('getGridParam', 'colModel');
+            return (cm[i].name === 'cb');
+        },
         beforeRequest: function() {
             var flag = selectAllCheck(false);
-            disabledButton();
+            //disabledButton();
             return flag;
         },
     });
@@ -252,6 +310,13 @@ function initGrid() {
 $(function () {
     initGrid();
 
+    $("#button_get_shipping_fee").click(function () {
+        var flag = getShippingFee();
+        if(flag){
+            disabledButton();
+        }
+    })
+    
     $("#button_next_step").click(function () {
         var flag = selectAllCheck(false);
         if(flag) {
@@ -259,17 +324,11 @@ $(function () {
             var form_ser = $("#form").serialize();
             $.post(url, form_ser, function (data) {
                 if (data.status == 200) {
-                    parent.Public.tips({
-                        content: '创建备货订单成功',
-                        type: 3
-                    });
+                    Public.tips.success('创建备货订单成功！');
                     window.location.href = SITE_URL + "?ctl=Seller_Stock_Order&met=physical";
                     return true;
                 } else {
-                    parent.Public.tips({
-                        content: '创建备货订单失败',
-                        type: 1
-                    });
+                    Public.tips.error('创建备货订单失败！');
                     return false;
                 }
             })
@@ -278,7 +337,10 @@ $(function () {
 });
 
 function disabledButton(){
-    if(Object.keys(select_goods_list).length > 0){
+    var user_stocks = $("#user_stocks").val();
+    var total_amount = $("#total_amount").val();
+
+    if(Object.keys(select_goods_list).length > 0 && total_amount <= user_stocks){
         $('#button_next_step').attr('disabled',false).addClass('bbc_seller_submit_btns').removeClass('bbc_sellerGray_submit_btns');
     }else {
         $('#button_next_step').attr('disabled',true).removeClass('bbc_seller_submit_btns').addClass('bbc_sellerGray_submit_btns');
@@ -289,7 +351,7 @@ function disabledButton(){
 $('a[dialog_id="edit_send_address"]').on('click', function () {
 
     var user_id = $("#user_id").val(),
-        url = SITE_URL + '?ctl=Seller_Stock_Order&met=chooseSendAddress&typ=';
+        url = SITE_URL + '?ctl=Seller_Stock_Order&met=chooseBuyerAddress&typ=';
 
     $.dialog({
         title: '选择发货地址',
@@ -299,12 +361,13 @@ $('a[dialog_id="edit_send_address"]').on('click', function () {
         lock: true,
         drag: false,
         data: { callback: function ( send_address, win ) {
-                $("#order_address_name").val(send_address.user_address_name);
-                $("#d_1").html(send_address.user_address_area + '&nbsp;&nbsp;<a href="javascript:sd();">编辑</a>');
-                $("#order_address_address").val(send_address.user_address_address);
-                $("#order_address_phone").val(send_address.user_address_phone);
-                $("#t").val(send_address.user_address_span);
-                $("#seller_address_span").text(send_address.user_address_span);
+                $("#order_address_name").val(send_address.order_seller_name);
+                $("#d_2").addClass("hidden");
+                $("#d_1").html(send_address.seller_address_area + '&nbsp;&nbsp;<a href="javascript:sd();">编辑</a>');
+                $("#order_address_address").val(send_address.order_seller_address);
+                $("#order_address_phone").val(send_address.order_seller_contact);
+                $("#t").val(send_address.seller_address_area);
+                $("#seller_address_span").text(send_address.seller_address_span);
                 win.api.close();
             }
         }

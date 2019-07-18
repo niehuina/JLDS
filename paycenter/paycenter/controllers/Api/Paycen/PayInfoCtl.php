@@ -212,6 +212,7 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
         $user_id = request_int("user_id");
         $status = request_int("status");
         $type = request_string('type');
+        $real_name = request_string('real_name');
 
         $cond_row = array();
         $re_flag = true;
@@ -240,12 +241,44 @@ class Api_Paycen_PayInfoCtl extends Api_Controller
                 $re_flag = false;
             }*/
         } else {
+            //远程修改shop中的用户真实姓名
+            $key = Yf_Registry::get('shop_api_key');
+            $url = Yf_Registry::get('shop_api_url');
+            $shop_app_id = Yf_Registry::get('shop_app_id');
+
+            $formvars = array();
+            $formvars['app_id'] = $shop_app_id;
+            $formvars['user_id'] = $user_id;
+            $formvars['user_realname'] = $real_name;
+
+            $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=editUserRealName&typ=json', $url), $formvars);
+            if($rs['status'] == 200)
+            {
+                $re_flag = true;
+            }
+            else
+            {
+                $re_flag = false;
+            }
+
+            //远程修改ucenter中的用户真实姓名
+            $key = Yf_Registry::get('ucenter_api_key');
+            $url = Yf_Registry::get('ucenter_api_url');
+            $ucenter_app_id = Yf_Registry::get('ucenter_app_id');
+            $formvars = array();
+            $formvars['app_id']	= $ucenter_app_id;
+            $formvars['user_id'] = $user_id;
+            $formvars['user_realname'] = $real_name;
+            $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User&met=editUserDetailTrueName&typ=json',$url), $formvars);
+            if($rs['status'] != 200) $re_flag = false;
+
             $cond_row['user_identity_statu'] = $status;
         }
 
         $User_InfoModel = new User_InfoModel();
         $flag = $User_InfoModel->editInfo($user_id, $cond_row);
-        if ($flag && $re_flag) {
+
+        if ($flag !== false && $re_flag) {
             $msg = 'success';
             $status = 200;
         } else {

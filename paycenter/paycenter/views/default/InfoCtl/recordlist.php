@@ -39,7 +39,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
 					<span class="<?php if($type==3){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?><?php if($status){?>&status=<?=$status?><?php }?>&type=3<?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('充值')?></a></span>
 					<span class="<?php if($type==2){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?><?php if($status){?>&status=<?=$status?><?php }?>&type=2<?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('转账')?></a></span>
 					<span class="<?php if($type==4){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?><?php if($status){?>&status=<?=$status?><?php }?>&type=4<?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('提现')?></a></span>
-					<span class="<?php if($type==10){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?><?php if($status){?>&status=<?=$status?><?php }?>&type=10<?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('佣金')?></a></span>
+					<span class="<?php if($type==13){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?><?php if($status){?>&status=<?=$status?><?php }?>&type=13<?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('返利')?></a></span>
 				</div>
 			</div>
 			<div class="Second clearfix">
@@ -48,15 +48,10 @@ include $this->view->getTplPath() . '/' . 'header.php';
 					<span class="<?php if(empty($status)){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?><?php if($type){?>&type=<?=$type?><?php }?><?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('全部')?></a></span>
 					<span class="<?php if($status== 'doing'){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?>&status=doing<?php if($type){?>&type=<?=$type?><?php }?><?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('进行中')?></a></span>
 					<span class="<?php if($status== 'waitpay'){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?>&status=waitpay<?php if($type){?>&type=<?=$type?><?php }?><?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('未付款')?></a></span>
-
 					<span class="<?php if($status== 'waitsend'){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?>&status=waitsend<?php if($type){?>&type=<?=$type?><?php }?><?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('等待发货')?></a></span>
-
 					<span class="<?php if($status== 'waitconfirm'){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?>&status=waitconfirm<?php if($type){?>&type=<?=$type?><?php }?><?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('未确认收货')?></a></span>
-
 					<span class="<?php if($status== 'retund'){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?>&status=retund<?php if($type){?>&type=<?=$type?><?php }?><?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('退款')?></a></span>
-
 					<span class="<?php if($status== 'success'){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?>&status=success<?php if($type){?>&type=<?=$type?><?php }?><?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('成功')?></a></span>
-
 					<span class="<?php if(!empty($status)&&$status== 'cancel'){?>btn btn_active<?php }?>"><a href="<?=Yf_Registry::get('url')?>?ctl=Info&met=recordlist<?php if($time){?>&time=<?=$time?><?php }?>&status=cancel<?php if($type){?>&type=<?=$type?><?php }?><?php if($record_delete){?>&record_delete=<?=$record_delete?><?php }?>"><?=_('取消')?></a ></span>
 				</div>
 			</div>
@@ -93,22 +88,23 @@ include $this->view->getTplPath() . '/' . 'header.php';
 									$("#search_form").submit();
 								});
 								$('#start_date').datetimepicker({
-								controlType: 'select',
-								format: "Y-m-d",
-								timepicker: false
+                                    controlType: 'select',
+                                    format: "Y-m-d",
+                                    timepicker: false,
 								});
 
 								$('#end_date').datetimepicker({
 									controlType: 'select',
 									format: "Y-m-d",
-									timepicker: false
+									timepicker: false,
+                                    maxDate: new Date()
 								});
 								jQuery(function(){
 									 jQuery('#start_date').datetimepicker({
 									  format:'Y-m-d',
 									  onShow:function( ct ){
 									   this.setOptions({
-										maxDate:jQuery('#end_date').val()?jQuery('#end_date').val():false
+										maxDate:jQuery('#end_date').val()?jQuery('#end_date').val():new Date()
 									   })
 									  },
 									  timepicker:false

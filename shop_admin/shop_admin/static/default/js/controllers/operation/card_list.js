@@ -157,6 +157,7 @@ var THISPAGE = {
         //     });
         //搜索
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.cardName = $('#card_name').val() === '购物卡名称' ? '' : $('#card_name').val();
             queryConditions.beginDate = $('#start_time').val();
             queryConditions.endDate = $('#end_time').val();

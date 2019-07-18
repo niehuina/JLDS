@@ -61,7 +61,7 @@ class UserServer_UserServerCtl extends Yf_AppController
 			$userlist[$k]['user_name'] = $v['user_name'];
 			$userlist[$k]['app_id'] = $v['app_id'];
 			$userlist[$k]['server_id'] = $v['server_id'];
-			$userlist[$k]['active_time'] = date('Y-m-d h:i:s',time());;
+			$userlist[$k]['active_time'] = date('Y-m-d H:i:s',time());;
 		}
 		//fb($userlist);
 		//$username = $userlist['user_name'];

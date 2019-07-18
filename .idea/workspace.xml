@@ -1,68 +1,207 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" line="247" />
-    <bookmark url="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" line="38" />
+    <bookmark url="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" line="291" />
+    <bookmark url="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" line="40" />
     <bookmark url="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Controller.php" line="84" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8fcead4a-e539-4ffc-b779-bc3b47ff5f2d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/delete_user_list.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayRecordCtl/deleteUser_index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop/shop/task/crons/settleStockOrder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop/shop/task/crons/settleUserRecord.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../init_php/.idea/init_php.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/chooseBuyerAddress.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/libraries/rand_func.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/libraries/rand_func.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/configs/db.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/configs/db.ini.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Pay/PayCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Pay/PayCtl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayBaseCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayBaseCtl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayInfoCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayInfoCtl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayRecordCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayRecordCtl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayWithdrawCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayWithdrawCtl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/User/InfoCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/User/InfoCtl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/models/Consume/RecordModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/models/Consume/RecordModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/models/User/BaseModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/models/User/BaseModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/models/User/InfoModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/models/User/InfoModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/passwd.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/passwd.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/pay.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/pay.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/controllers/Paycen/PayRecordCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/controllers/Paycen/PayRecordCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/InfoCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/InfoCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/User/BankCardCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/User/BankCardCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/controllers/User/IndexCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/controllers/User/IndexCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/models/Trade/TypeModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/models/Trade/TypeModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/static/default/css/palyCenter.css" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/static/default/css/palyCenter.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/certification.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/certification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/main.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/recorddetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/recorddetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/recordlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/recordlist.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/configs/db.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/configs/db.ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/controllers/LoginCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/controllers/LoginCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/controllers/Message/RecordCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/controllers/Message/RecordCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btinfo_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btinfo_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btlimit_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btlimit_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btorder_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btorder_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btreturn_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btreturn_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btreturnlist_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btreturnlist_list.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paybase/paybase_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paybase/paybase_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paycard/card_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paycard/card_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paycard/paycard_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paycard/paycard_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/minimum_living_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/minimum_living_list.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/payinfo_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/payinfo_list.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/views/default/IndexCtl/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/views/default/IndexCtl/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayBaseCtl/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayBaseCtl/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/delete_user_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/delete_user_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/payrecord_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/payrecord_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paywithdraw/paywithdraw_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paywithdraw/paywithdraw_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/getEditInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/getEditInfo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paycenter_admin/libraries/rand_func.php" beforeDir="false" afterPath="$PROJECT_DIR$/paycenter_admin/libraries/rand_func.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/libraries/Yf/Page.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/libraries/Yf/Page.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/libraries/rand_func.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/libraries/rand_func.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/messages/zh_CN/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/messages/zh_CN/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/configs/buyer_menu.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/configs/buyer_menu.ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/configs/config.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/configs/config.ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/configs/db.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/configs/db.ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/configs/partner_menu.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/configs/partner_menu.ini.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/configs/plugin.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/configs/plugin.ini.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Api/Trade/OrderCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Api/Trade/OrderCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/configs/self_partner_menu.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/configs/self_partner_menu.ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/configs/seller_menu.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/configs/seller_menu.ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/configs/time_api.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/configs/time_api.ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Api/Shop/SelfsupportCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Api/Shop/SelfsupportCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Api/User/GradeCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Api/User/GradeCtl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Api/User/InfoCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Api/User/InfoCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Buyer/CartCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Buyer/CartCtl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Buyer/OrderCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Buyer/OrderCtl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Buyer/UserCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Buyer/UserCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Buyer/Service/ReturnCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Buyer/Service/ReturnCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Goods/GoodsCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Goods/GoodsCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/IndexCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/IndexCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Plugin/Directseller.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Plugin/Directseller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Seller/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Seller/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Seller/GoodsCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Seller/GoodsCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Seller/IndexCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Seller/IndexCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Seller/Service/ReturnCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Seller/Service/ReturnCtl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/DeliverCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/DeliverCtl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/data/logs/2019-05-17/check_url_with_encrypt.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/data/logs/2019-05-17/db_exec.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/data/logs/2019-05-17/db_query.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/Analysis/ShopGeneralModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/Analysis/ShopGeneralModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/CartModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/CartModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/models/Goods/BaseModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/Goods/BaseModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/shop/models/MessageModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/MessageModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/Goods/CommonModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/Goods/CommonModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/models/Order/BaseModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/Order/BaseModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/Perm.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/Perm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/Shop/BaseModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/Shop/BaseModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/Stock/OrderModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/Stock/OrderModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/Transport/TemplateModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/Transport/TemplateModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/models/User/GradeModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/User/GradeModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/User/InfoModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/User/InfoModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/models/User/StockModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/models/User/StockModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/static/default/css/buyer.css" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/static/default/css/buyer.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/static/default/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/static/default/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/static/default/js/order_add_step2.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/static/default/js/order_add_step2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/static/default/js/stock_check.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/static/default/js/stock_check.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/static/default/js/stock_check_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/static/default/js/stock_check_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/static/default/js/stock_orderGoods.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/static/default/js/stock_orderGoods.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/static/default/js/stock_self_use.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/static/default/js/stock_self_use.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/task/crons/directsellerOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/task/crons/directsellerOrder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/shop/task/crons/rebateOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/task/crons/rebateOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/shop/task/crons/settlement.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/task/crons/settlement.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/shop/task/init.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/task/init.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_admin/libraries/Yf/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/libraries/Yf/Model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/css/nctouch_member.css" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/css/nctouch_member.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/task/crons/settleStockOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/task/crons/settleStockOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Buyer/CartCtl/confirm.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Buyer/CartCtl/confirm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Buyer/OrderCtl/details.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Buyer/OrderCtl/details.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Buyer/OrderCtl/physical.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Buyer/OrderCtl/physical.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Goods/GoodsCtl/goods.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Goods/GoodsCtl/goods.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Seller/IndexCtl/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Seller/IndexCtl/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Seller/Shop/SetshopCtl/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Seller/Shop/SetshopCtl/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/chooseSendAddress.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/chooseSendAddress.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/deliverAddress.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/editBuyerAddress.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/editBuyerAddress.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/physical.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/physical.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/selectGoods.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/selectGoods.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/user_stock.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/user_stock.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/Seller/Trade/OrderCtl/send.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/Seller/Trade/OrderCtl/send.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/buyer_header.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/buyer_header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/shop/views/default/site_nav.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop/shop/views/default/site_nav.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/libraries/rand_func.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/libraries/rand_func.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/configs/db.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/configs/db.ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/configs/time_api.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/configs/time_api.ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/controllers/LoginCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/controllers/LoginCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/article/base_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/article/base_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/logistics/tpl/tpl_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/logistics/tpl/tpl_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/card_info_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/card_info_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/card_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/card_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/contract_cash_log_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/contract_cash_log_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/contract_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/contract_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/contract_log_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/contract_log_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/contract_service_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/contract_service_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/contract_type_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/contract_type_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/custom_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/custom_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/custom_type_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/custom_type_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/delivery_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/delivery_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/detail/order_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/detail/order_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/detail/return_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/detail/return_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/detail/shopfee_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/detail/shopfee_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/detail/virtual_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/detail/virtual_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/settlement_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/operation/settlement_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/discount/discount_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/discount/discount_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/groupbuy/group_buy_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/groupbuy/group_buy_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/increaseprice/increase_price_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/increaseprice/increase_price_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/mansong/mansong_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/mansong/mansong_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/points/points_goods_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/points/points_goods_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/points/points_order_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/points/points_order_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/redpacket/redpacket_temp_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/redpacket/redpacket_temp_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/voucher/vouchertemp_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/voucher/vouchertemp_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/index/shop_category_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/index/shop_category_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/index/shop_editCategory_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/index/shop_editCategory_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/index/shop_index_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/index/shop_index_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/index/shop_reopen_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/index/shop_reopen_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/index/shop_settlement_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/index/shop_settlement_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/join/shop_Pay_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/join/shop_Pay_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/join/shop_join_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/join/shop_join_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/selfsupport/shop_selfsupport_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/shop/selfsupport/shop_selfsupport_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/distributor_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/distributor_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/goods_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/goods_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/order_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/order_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/shop_category_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/shop_category_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/shop_editCategory_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/shop_editCategory_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/shop_index_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/shop_index_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/shop_reopen_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/shop_reopen_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/shop_settlement_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/index/shop_settlement_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/join/shop_Pay_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/join/shop_Pay_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/join/shop_join_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/join/shop_join_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/selfsupport/supplier_selfsupport_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/supplier/selfsupport/supplier_selfsupport_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/complain/complain_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/complain/complain_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/complain/subject_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/complain/subject_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/consult/consult_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/consult/consult_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/consult/consult_type_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/consult/consult_type_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/order/order_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/order/order_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/report/report_do_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/report/report_do_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/report/report_done_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/report/report_done_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/report/subject_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/report/subject_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/report/type_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/report/type_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/return/return_all_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/return/return_all_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/return/return_reason_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/return/return_reason_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/return/return_wait_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/trade/return/return_wait_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/grade/log_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/grade/log_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/info/info_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/info/info_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/message/message_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/message/message_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/points/log_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/points/log_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shares/list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shares/list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/tag/tag_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/tag/tag_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/views/default/Shop/SelfsupportCtl/getShopAddRow.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/views/default/Shop/SelfsupportCtl/getShopAddRow.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_admin/shop_admin/views/default/Shop/SelfsupportCtl/getShopEditRow.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_admin/shop_admin/views/default/Shop/SelfsupportCtl/getShopEditRow.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop_wap/images/G4.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/shop_wap/images/G5.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/shop_wap/images/g6.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/shop_wap/images/g7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member_profit.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member_profit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/member/member.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/member/member.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/member/member_stock.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/member/member_stock.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/profit/member_profit.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/profit/member_profit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member_stock_goods.js" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/js/tmpl/member/member_stock_goods.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/member/member_stock_goods.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/member/member_stock_goods.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/profit/profit_buyer_order.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/profit/profit_buyer_order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop_wap/tmpl/profit/profit_stock_order.php" beforeDir="false" afterPath="$PROJECT_DIR$/shop_wap/tmpl/profit/profit_stock_order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter/libraries/rand_func.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/libraries/rand_func.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter/ucenter/configs/db.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/ucenter/configs/db.ini.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ucenter/ucenter/controllers/Api/UserCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/ucenter/controllers/Api/UserCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter/ucenter/controllers/ApiCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/ucenter/controllers/ApiCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter/ucenter/controllers/LoginCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/ucenter/controllers/LoginCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter/ucenter/controllers/UserCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/ucenter/controllers/UserCtl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ucenter/ucenter/models/User/InfoDetailModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/ucenter/models/User/InfoDetailModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/message/manage.js" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/user/manage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/views/default/User/BaseCtl/allUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/views/default/User/BaseCtl/allUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter/ucenter/views/default/LoginCtl/regist.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/ucenter/views/default/LoginCtl/regist.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter/ucenter/views/default/UserCtl/getUserImg.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/ucenter/views/default/UserCtl/getUserImg.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter/ucenter/views/default/UserCtl/getUserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter/ucenter/views/default/UserCtl/getUserInfo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter_admin/libraries/rand_func.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter_admin/libraries/rand_func.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/configs/db.ini.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/configs/db.ini.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/controllers/LoginCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/controllers/LoginCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/controllers/Service/IdeaCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/controllers/Service/IdeaCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/controllers/UserServer/UserServerCtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/ucenter_admin/ucenter_admin/controllers/UserServer/UserServerCtl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpos/configs/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/webpos/configs/db.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webpos/public/misc/AdminLTE-2.3.11/plugins/select2/select2.full.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpos/public/misc/AdminLTE-2.3.11/plugins/select2/select2.full.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webpos/public/misc/AdminLTE-2.3.11/plugins/select2/select2.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpos/public/misc/AdminLTE-2.3.11/plugins/select2/select2.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webpos/public/misc/toastr.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpos/public/misc/toastr.min.js" afterDir="false" />
@@ -97,97 +236,114 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayBaseCtl.php">
+        <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/payinfo_list.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-264">
-              <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ucenter_admin/ucenter_admin/views/default/User/BaseCtl/allUser.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="31" column="59" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="59" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/user/manage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="106" column="56" selection-start-line="106" selection-start-column="48" selection-end-line="106" selection-end-column="56" />
+            <state relative-caret-position="330">
+              <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
               <folding>
-                <element signature="e#73#79#1" expanded="true" />
+                <element signature="n#listShop#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#listGoods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#chooseBuyerAddress#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#chooseSendAddress#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#send#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#stock_orderGoods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#editBuyerAddress#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#physicalInfo#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#cancelOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#confirmOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#hideOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#restoreOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#stock_check_list#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#stock_check_log#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#stock_check_detail#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#check_goods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#setAlarm#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#stock_check#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#stock_goods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#stock_self_use#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+                <element signature="n#get_order_profit#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ucenter/ucenter/controllers/Api/UserCtl.php">
+        <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/send.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="38" column="43" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
+            <state relative-caret-position="273">
+              <caret line="302" selection-start-line="302" selection-end-line="302" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ucenter/ucenter/models/User/InfoDetailModel.php">
+        <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Trade/OrderCtl/send.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="51" column="21" selection-start-line="51" selection-start-column="21" selection-end-line="51" selection-end-column="21" />
-              <folding>
-                <element signature="n#sync#0;n#User_InfoDetailModel#0;n#!!top" />
-              </folding>
+            <state relative-caret-position="181">
+              <caret line="89" column="56" selection-start-line="89" selection-start-column="56" selection-end-line="89" selection-end-column="56" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/index.php">
+        <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/rebateOrder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="40" column="92" selection-start-line="40" selection-start-column="89" selection-end-line="40" selection-end-column="92" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/User/InfoModel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="169" column="38" selection-start-line="121" selection-start-column="8" selection-end-line="169" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="36" column="50" lean-forward="true" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
+            <state relative-caret-position="423">
+              <caret line="55" column="54" selection-start-line="55" selection-start-column="54" selection-end-line="55" selection-end-column="54" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/shop/shop/models/Order/BaseModel.php">
+        <entry file="file://$PROJECT_DIR$/ucenter/ucenter/views/default/header.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="1079" column="49" selection-start-line="1079" selection-start-column="49" selection-end-line="1079" selection-end-column="49" />
+            <state relative-caret-position="242">
+              <caret line="11" column="19" lean-forward="true" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ucenter/ucenter/controllers/IndexCtl.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="179">
+              <caret line="10" column="9" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shop/shop/views/default/IndexCtl/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shop/shop/views/default/header.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="78">
+              <caret line="157" column="23" selection-start-line="157" selection-start-column="23" selection-end-line="157" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shop/shop/controllers/IndexCtl.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="614">
+              <caret line="415" column="37" selection-start-line="415" selection-start-column="37" selection-end-line="415" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shop/shop/models/Base/CronModel.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="76" column="29" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -204,36 +360,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getWhe</find>
-      <find>select_goods_list</find>
-      <find>group</find>
-      <find>getRecordAmountByUserId</find>
-      <find>/cc/</find>
-      <find>goods.png</find>
-      <find>select_</find>
-      <find>confirmO</find>
-      <find>editOrderRowSatus</find>
-      <find>Yf_Registry::get('im_api_url')</find>
-      <find>order_payment_amount</find>
-      <find>Perm::$shopId</find>
+      <find>$user_parent_g_partner_id</find>
+      <find>相关商品交易</find>
+      <find>账号</find>
+      <find>detail()</find>
+      <find>getOrderNum</find>
+      <find>send</find>
+      <find>$shop_base</find>
+      <find>deilve_able</find>
+      <find>bbc_seller_btns</find>
+      <find>发货设置</find>
+      <find>tabmenu</find>
+      <find>user_nickname</find>
+      <find>淘宝导入</find>
+      <find>服务兑码订单</find>
+      <find>request_string('ctl')</find>
+      <find>客服消息</find>
       <find>send()</find>
-      <find>buyer_user_id</find>
-      <find>deliver</find>
-      <find>confirmOrderAu</find>
-      <find>confirmOrderAuto</find>
-      <find>confirmOrder</find>
-      <find>addOrder</find>
-      <find>pay_password</find>
-      <find>checkPassword</find>
-      <find>paycenter</find>
-      <find>changeUserParentId</find>
-      <find>addbase</find>
-      <find>directsellerOrder</find>
-      <find>$N = date('Y-m-d H:i:s',$time);</find>
-      <find>refundTransferMoney</find>
-      <find>record_paytime</find>
-      <find>editUserMoneyFrozen</find>
-      <find>getInfoListIdentity</find>
+      <find>ajax_goods_list</find>
+      <find>我的订单</find>
+      <find>交易中心</find>
+      <find>children_order_total_amount</find>
+      <find>$today</find>
+      <find>seller_user</find>
+      <find>$shop_top_rows</find>
+      <find>checkTask</find>
+      <find>getCartNum</find>
+      <find>getUserLoginInfo</find>
+      <find>toolBar</find>
+      <find>toolbar</find>
+      <find>$app_rows</find>
     </findStrings>
     <replaceStrings>
       <replace>localhost:8018</replace>
@@ -251,38 +407,41 @@
       <replace>/js/libs/zepto.js</replace>
       <replace>/libs/zepto.min.js</replace>
       <replace>js/libs/zepto.min.js</replace>
+      <replace>'password' =&gt; 'root',</replace>
+      <replace>'host' =&gt; '192.168.1.66',</replace>
+      <replace>Y-m-d H:i:s</replace>
     </replaceStrings>
     <dirStrings>
-      <dir>D:\Project\JLDS\web\ucenter\ucenter\models</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\configs</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\static</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\static\default\js</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\views</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\controllers\Buyer</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\controllers</dir>
-      <dir>D:\Project\JLDS\web\shop_admin\shop_admin\views</dir>
-      <dir>D:\Project\JLDS\web\shop_admin\shop_admin\controllers</dir>
-      <dir>D:\Project\JLDS\web\shop_admin\shop_admin\static\default\js\controllers</dir>
-      <dir>D:\Project\JLDS\web\shop_admin\shop_admin\views\default</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\controllers\Api</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\views\default\Seller\Stock\OrderCtl</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\task</dir>
-      <dir>D:\Project\JLDS\web\shop_wap\js\tmpl\member</dir>
-      <dir>D:\Project\JLDS\web\shop_wap\js</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\models</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\static\default</dir>
-      <dir>D:\Project\JLDS\web\shop\shop</dir>
-      <dir>D:\Project\JLDS\web\ucenter\ucenter\controllers</dir>
-      <dir>D:\Project\JLDS\web\paycenter_admin\admin</dir>
-      <dir>D:\Project\JLDS\web\shop\shop\task\crons</dir>
-      <dir>D:\Project\JLDS\web\paycenter</dir>
-      <dir>D:\Project\JLDS\web\paycenter\paycenter</dir>
-      <dir>D:\Project\JLDS\web\shop</dir>
-      <dir>D:\Project\JLDS\web\ucenter</dir>
-      <dir>D:\Project\JLDS\web\ucenter_admin</dir>
-      <dir>D:\Project\JLDS\web\shop_admin</dir>
-      <dir>D:\Project\JLDS\web\shop_wap</dir>
       <dir>D:\Project\JLDS\web\paycenter\paycenter\controllers</dir>
+      <dir>D:\Project\JLDS\web\ucenter\ucenter\models</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\controllers\Api\Seller</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\controllers\Api\Shop</dir>
+      <dir>D:\Project\JLDS\web\ucenter\ucenter</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\models</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\views\default\Seller\Stock\OrderCtl</dir>
+      <dir>D:\Project\JLDS\web\shop_wap</dir>
+      <dir>D:\Project\JLDS\web\ucenter\ucenter\configs</dir>
+      <dir>D:\Project\JLDS\web\shop_admin</dir>
+      <dir>D:\Project\JLDS\web\ucenter</dir>
+      <dir>D:\Project\JLDS\web</dir>
+      <dir>D:\Project\JLDS\web\paycenter\paycenter\views\default\InfoCtl</dir>
+      <dir>D:\Project\JLDS\web\paycenter\paycenter</dir>
+      <dir>D:\Project\JLDS\web\shop_admin\shop_admin</dir>
+      <dir>D:\Project\JLDS\web\shop_admin\shop_admin\static</dir>
+      <dir>D:\Project\JLDS\web\paycenter_admin</dir>
+      <dir>D:\Project\JLDS\web\paycenter</dir>
+      <dir>D:\Project\JLDS\web\ucenter_admin</dir>
+      <dir>D:\Project\JLDS\web\paycenter\paycenter\controllers\Api\Paycen</dir>
+      <dir>D:\Project\JLDS\web\ucenter\ucenter\controllers</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\views\default\Buyer</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\configs</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\views\default\Seller</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\controllers\Seller</dir>
+      <dir>D:\Project\JLDS\web\shop</dir>
+      <dir>D:\Project\JLDS\web\shop\shop</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\views</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\controllers</dir>
+      <dir>D:\Project\JLDS\web\shop\shop\static</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -291,57 +450,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/shop_wap/css/nctouch_member.css" />
-        <option value="$PROJECT_DIR$/shop_wap/tmpl/member/member_stock.php" />
-        <option value="$PROJECT_DIR$/shop_wap/css/base.css" />
-        <option value="$PROJECT_DIR$/shop_wap/tmpl/member/member.php" />
-        <option value="$PROJECT_DIR$/shop_wap/js/tmpl/member/member.js" />
-        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" />
-        <option value="$PROJECT_DIR$/shop/shop/controllers/Api/Trade/OrderCtl.php" />
-        <option value="$PROJECT_DIR$/shop/shop/models/MessageModel.php" />
-        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/DeliverCtl.php" />
-        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php" />
-        <option value="$PROJECT_DIR$/shop/shop/controllers/Api/Seller/Trade/OrderCtl.php" />
-        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Controller.php" />
-        <option value="$PROJECT_DIR$/ucenter/ucenter/models/User/Info.php" />
-        <option value="$PROJECT_DIR$/shop/shop/models/User/GradeModel.php" />
-        <option value="$PROJECT_DIR$/shop/shop/task/init.php" />
-        <option value="$PROJECT_DIR$/shop/shop/task/crons/settlement.php" />
-        <option value="$PROJECT_DIR$/shop/shop/controllers/Buyer/OrderCtl.php" />
-        <option value="$PROJECT_DIR$/shop/shop/models/Goods/BaseModel.php" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/pay.php" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/views/default/InfoCtl/passwd.php" />
-        <option value="$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/message/manage.js" />
-        <option value="$PROJECT_DIR$/shop/shop/controllers/Api/User/InfoCtl.php" />
-        <option value="$PROJECT_DIR$/shop/shop/task/crons/rebateOrder.php" />
-        <option value="$PROJECT_DIR$/shop/shop/task/crons/settleStockOrder.php" />
-        <option value="$PROJECT_DIR$/shop/shop/task/crons/directsellerOrder.php" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/models/Consume/RecordModel.php" />
-        <option value="$PROJECT_DIR$/shop_admin/libraries/Yf/Model.php" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Pay/PayCtl.php" />
-        <option value="$PROJECT_DIR$/shop/shop/task/crons/settleUserRecord.php" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/User/InfoCtl.php" />
-        <option value="$PROJECT_DIR$/paycenter_admin/admin/views/default/IndexCtl/index.php" />
-        <option value="$PROJECT_DIR$/paycenter_admin/admin/controllers/Paycen/PayRecordCtl.php" />
-        <option value="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayRecordCtl/index.php" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayWithdrawCtl.php" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Controller.php" />
-        <option value="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayBaseCtl/index.php" />
-        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/delete_user_list.js" />
-        <option value="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayRecordCtl/deleteUser_index.php" />
+        <option value="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/redpacket/redpacket_temp_list.js" />
+        <option value="$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/promotion/increaseprice/increase_price_list.js" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btreturnlist_list.js" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btreturn_list.js" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paycard/card_list.js" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btinfo_list.js" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btorder_list.js" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/minimum_living_list.js" />
         <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paybase/paybase_list.js" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayRecordCtl.php" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayBaseCtl.php" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/models/User/InfoModel.php" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayInfoCtl.php" />
-        <option value="$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/index.php" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/btinfo/btlimit_list.js" />
         <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/payinfo_list.js" />
-        <option value="$PROJECT_DIR$/paycenter/paycenter/models/User/BaseModel.php" />
-        <option value="$PROJECT_DIR$/ucenter_admin/ucenter_admin/views/default/User/BaseCtl/allUser.php" />
-        <option value="$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/user/manage.js" />
-        <option value="$PROJECT_DIR$/ucenter/ucenter/controllers/Api/UserCtl.php" />
-        <option value="$PROJECT_DIR$/ucenter/ucenter/models/User/InfoDetailModel.php" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paycard/paycard_list.js" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paywithdraw/paywithdraw_list.js" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/delete_user_list.js" />
+        <option value="$PROJECT_DIR$/shop/shop/models/Goods/BaseModel.php" />
+        <option value="$PROJECT_DIR$/shop/shop/models/User/GradeModel.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Api/User/GradeCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Api/User/InfoCtl.php" />
+        <option value="$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayBaseCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Api/Shop/SelfsupportCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Buyer/CartCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Shop/SetshopCtl/index.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Api/Shop/ManageCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/views/default/Buyer/CartCtl/confirm.php" />
+        <option value="$PROJECT_DIR$/shop/shop/models/Transport/TemplateModel.php" />
+        <option value="$PROJECT_DIR$/shop/shop/views/default/Goods/GoodsCtl/goods.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/GoodsCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/editBuyerAddress.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Service/ReturnCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Buyer/Service/ReturnCtl.php" />
         <option value="$PROJECT_DIR$/shop/shop/models/Order/BaseModel.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php" />
+        <option value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/payrecord_list.js" />
+        <option value="$PROJECT_DIR$/shop/shop/configs/seller_menu.ini.php" />
+        <option value="$PROJECT_DIR$/shop/shop/configs/self_partner_menu.ini.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/Controller.php" />
+        <option value="$PROJECT_DIR$/shop/libraries/Yf/Page.php" />
+        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/user_stock.php" />
+        <option value="$PROJECT_DIR$/shop/shop/views/default/site_nav.php" />
+        <option value="$PROJECT_DIR$/shop/shop/views/default/buyer_header.php" />
+        <option value="$PROJECT_DIR$/shop/shop/configs/buyer_menu.ini.php" />
+        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/IndexCtl/index.php" />
+        <option value="$PROJECT_DIR$/shop/shop/models/Shop/BaseModel.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Seller/IndexCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/controllers/Buyer/OrderCtl.php" />
+        <option value="$PROJECT_DIR$/shop/shop/models/Analysis/ShopGeneralModel.php" />
+        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/send.php" />
+        <option value="$PROJECT_DIR$/shop/shop/views/default/Seller/Trade/OrderCtl/send.php" />
+        <option value="$PROJECT_DIR$/shop/shop/task/crons/rebateOrder.php" />
+        <option value="$PROJECT_DIR$/shop/shop/static/default/js/common.js" />
       </list>
     </option>
   </component>
@@ -350,6 +509,7 @@
       <server host="localhost" id="be3414c8-438b-4d64-8558-1164ce372b3a" name="shop_admin" port="8002" />
       <server host="localhost" id="882df0eb-82b1-49ea-a1c0-3fd07fb989db" name="shop" port="8001" />
       <server host="localhost" id="2997336b-3d9c-4195-b79d-02f3ad1b8eee" name="paycenter" port="8005" />
+      <server host="localhost" id="9d73319d-a426-4359-888e-27617d0c037f" name="ucenter" port="8003" />
     </servers>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
@@ -408,37 +568,35 @@
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
+              <item name="ucenter" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
+              <item name="ucenter" type="462c0819:PsiDirectoryNode" />
+              <item name="ucenter" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
+              <item name="ucenter" type="462c0819:PsiDirectoryNode" />
+              <item name="ucenter" type="462c0819:PsiDirectoryNode" />
               <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-              <item name="Seller" type="462c0819:PsiDirectoryNode" />
+              <item name="ucenter" type="462c0819:PsiDirectoryNode" />
+              <item name="ucenter" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-              <item name="Seller" type="462c0819:PsiDirectoryNode" />
-              <item name="Trade" type="462c0819:PsiDirectoryNode" />
+              <item name="ucenter" type="462c0819:PsiDirectoryNode" />
+              <item name="ucenter" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="default" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -450,26 +608,26 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../EjtPlatform/SourceCode/web" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Project\JLDS\web\ucenter_admin\ucenter_admin\static\default\js\controllers\user" />
-      <recent name="D:\Project\JLDS\web\shop_wap\tmpl\profit" />
-      <recent name="D:\Project\JLDS\web\shop_admin\shop_admin\views\default\ConfigCtl" />
-      <recent name="D:\Project\JLDS\web\shop_admin\shop_admin\views\default\User\SharesCtl" />
-      <recent name="D:\Project\JLDS\web\shop_admin\shop_admin\controllers\User" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Project\JLDS\web\paycenter_admin\admin\static\default\js\controllers\payrecord" />
       <recent name="D:\Project\JLDS\web\ucenter_admin\ucenter_admin\static\default\js\controllers\user" />
       <recent name="D:\Project\JLDS\web\shop_wap\js\tmpl\member" />
       <recent name="D:\Project\JLDS\web\shop_wap\tmpl\member" />
       <recent name="D:\Project\JLDS\web\shop_wap\js\tmpl" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Project\JLDS\web\ucenter_admin\ucenter_admin\static\default\js\controllers\user" />
+      <recent name="D:\Project\JLDS\web\shop_wap\tmpl\profit" />
+      <recent name="D:\Project\JLDS\web\shop_admin\shop_admin\views\default\ConfigCtl" />
+      <recent name="D:\Project\JLDS\web\shop_admin\shop_admin\views\default\User\SharesCtl" />
+      <recent name="D:\Project\JLDS\web\shop_admin\shop_admin\controllers\User" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -484,7 +642,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="PHP Web Page.paycenter_8005">
+  <component name="RunManager" selected="PHP Web Page.shop_8001">
     <configuration name="paycenter_8005" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="paycenter">
       <method v="2" />
     </configuration>
@@ -494,10 +652,14 @@
     <configuration name="shop_admin8002" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="shop_admin">
       <method v="2" />
     </configuration>
+    <configuration name="ucenter_8003" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="ucenter">
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="PHP Web Page.shop_admin8002" />
       <item itemvalue="PHP Web Page.shop_8001" />
       <item itemvalue="PHP Web Page.paycenter_8005" />
+      <item itemvalue="PHP Web Page.ucenter_8003" />
     </list>
   </component>
   <component name="SvnConfiguration" cleanupOnStartRun="true">
@@ -530,24 +692,26 @@
       <workItem from="1561959482979" duration="2589000" />
       <workItem from="1562046496996" duration="19605000" />
       <workItem from="1562132262235" duration="174701000" />
-      <workItem from="1562813638474" duration="32601000" />
+      <workItem from="1562813638474" duration="44147000" />
+      <workItem from="1563256732231" duration="19313000" />
+      <workItem from="1563328513899" duration="37422000" />
+      <workItem from="1563409421757" duration="43390000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1001669000" />
+    <option name="totallyTimeSpent" value="1113340000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="54" y="-8" width="1874" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49577466" visible="true" weight="0.21531631" />
-      <window_info id="Structure" order="1" sideWeight="0.5042254" side_tool="true" weight="0.18615879" />
-      <window_info id="Favorites" order="2" sideWeight="0.50111854" side_tool="true" weight="0.23043944" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49419355" visible="true" weight="0.17203107" />
+      <window_info id="Favorites" order="1" sideWeight="0.50111854" side_tool="true" weight="0.23043944" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49947917" visible="true" weight="0.30638298" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49947917" visible="true" weight="0.20744681" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.108510636" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.13510638" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -562,6 +726,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" weight="0.3299356" />
+      <window_info anchor="right" x="865" y="344" width="251" height="391" id="Structure" order="4" sideWeight="0.50580645" visible="true" weight="0.09600444" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -571,19 +736,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/shop/shop/models/Perm.php</url>
-          <line>291</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/shop/libraries/Yf/Sql.php</url>
           <line>73</line>
           <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/shop/shop/models/CartModel.php</url>
-          <line>265</line>
-          <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/shop/shop/controllers/Api/Trade/OrderCtl.php</url>
@@ -591,15 +746,21 @@
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php</url>
-          <line>1394</line>
-          <option name="timeStamp" value="63" />
+          <url>file://$PROJECT_DIR$/shop/shop/controllers/Goods/GoodsCtl.php</url>
+          <line>1382</line>
+          <option name="timeStamp" value="72" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/shop/shop/controllers/Goods/GoodsCtl.php</url>
+          <line>1385</line>
+          <option name="timeStamp" value="82" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PhpWebAppRunConfigurationType">
         <watch expression="$this-&gt;user_info" />
+        <watch expression="$data['order_status']" />
       </configuration>
     </watches-manager>
   </component>
@@ -613,377 +774,392 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/baitiao.php">
+    <entry file="file://$PROJECT_DIR$/shop/shop/static/default/js/cart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="67" column="118" selection-start-line="57" selection-start-column="4" selection-end-line="67" selection-end-column="118" />
+        <state relative-caret-position="225">
+          <caret line="417" column="49" selection-start-line="417" selection-start-column="49" selection-end-line="417" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/User/RechargeCtl.php">
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Buyer/CartCtl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-308">
-          <caret line="19" column="32" lean-forward="true" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+        <state relative-caret-position="93">
+          <caret line="92" column="32" selection-start-line="92" selection-start-column="20" selection-end-line="92" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/Consume/RecordModel.php">
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Goods/GoodsCtl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="292" column="7" lean-forward="true" selection-start-line="292" selection-start-column="7" selection-end-line="292" selection-end-column="7" />
+        <state relative-caret-position="-726">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/GoodsCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="538" column="51" lean-forward="true" selection-start-line="538" selection-start-column="51" selection-end-line="538" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/models/CartModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="511">
+          <caret line="420" column="54" lean-forward="true" selection-start-line="420" selection-start-column="54" selection-end-line="420" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/editBuyerAddress.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Trade/OrderCtl/physicalInfo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-435">
+          <caret line="56" column="18" selection-start-line="56" selection-start-column="18" selection-end-line="56" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Service/ReturnCtl/detail.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="531">
+          <caret line="122" column="62" selection-start-line="122" selection-start-column="62" selection-end-line="122" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Shop/IndexCtl/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-528" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/ShopCtl/default/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11154" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/configs/partner_menu.ini.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="16" column="29" lean-forward="true" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Buyer/Service/ReturnCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="613">
+          <caret line="265" column="46" lean-forward="true" selection-start-line="265" selection-start-column="46" selection-end-line="265" selection-end-column="46" />
           <folding>
-            <element signature="n#getRecordList#0;n#Consume_RecordModel#0;n#!!top" />
-            <element signature="n#getRecordList1#0;n#Consume_RecordModel#0;n#!!top" />
-            <element signature="n#getRecordListByType#0;n#Consume_RecordModel#0;n#!!top" />
-            <element signature="n#getRecordByOid#0;n#Consume_RecordModel#0;n#!!top" />
-            <element signature="n#sumMonetary#0;n#Consume_RecordModel#0;n#!!top" />
-            <element signature="n#cancelTrade#0;n#Consume_RecordModel#0;n#!!top" />
+            <element signature="n#virtualReturn#0;n#Buyer_Service_ReturnCtl#0;n#!!top" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/RecordStatusModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="33" lean-forward="true" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/settlement.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="631">
-          <caret line="105" selection-start-line="105" selection-end-line="105" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/settleStockOrder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="46" column="30" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/Trade/TypeModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="21" column="43" lean-forward="true" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/controllers/Paycen/PayInfoCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Pay/PayCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1885">
-          <caret line="1344" column="2" lean-forward="true" selection-start-line="1344" selection-start-column="2" selection-end-line="1344" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/settleUserRecord.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="35" column="62" selection-start-line="35" selection-start-column="62" selection-end-line="35" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/User/InfoCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="519" column="17" selection-start-line="514" selection-start-column="16" selection-end-line="519" selection-end-column="17" />
-          <folding>
-            <element signature="n#getUserResourceInfo#0;n#Api_User_InfoCtl#0;n#!!top" />
-            <element signature="n#getUserRowsResourceInfo#0;n#Api_User_InfoCtl#0;n#!!top" />
-            <element signature="n#editUserResourceInfo#0;n#Api_User_InfoCtl#0;n#!!top" />
-            <element signature="n#editReturnUserResourceInfo#0;n#Api_User_InfoCtl#0;n#!!top" />
-            <element signature="n#getUserInfo#0;n#Api_User_InfoCtl#0;n#!!top" />
-            <element signature="n#editCertification#0;n#Api_User_InfoCtl#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayWithdrawCtl/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="30" column="93" lean-forward="true" selection-start-line="30" selection-start-column="93" selection-end-line="30" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/paybase_list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="60" column="27" lean-forward="true" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/payrecord_list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="36" lean-forward="true" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/IndexCtl/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="255" column="89" selection-start-line="255" selection-start-column="73" selection-end-line="255" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webpos/public/misc/jqueryui/jquery-ui.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1311">
-          <caret line="1179" column="14" selection-start-line="1179" selection-start-column="1" selection-end-line="1179" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/models/common.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="789" selection-start-line="789" selection-end-line="789" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayWithdrawCtl/getEditWithdraw.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="21" column="19" lean-forward="true" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PaywayCtl/editpayload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1578" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shares/manage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4020" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shares/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="122" column="10" lean-forward="true" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_admin/shop_admin/static/default/js/controllers/user/shared/shared_list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2574" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/static/default/js/stock_check_list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1446" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/static/default/js/seller_order.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="55" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paywithdraw/paywithdraw_list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="146" column="9" selection-start-line="146" selection-start-column="9" selection-end-line="157" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/controllers/Paycen/PayRecordCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayRecordCtl/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="706">
-          <caret line="52" column="74" selection-start-line="52" selection-start-column="74" selection-end-line="52" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/libraries/__init__.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="672" column="5" lean-forward="true" selection-start-line="672" selection-start-column="5" selection-end-line="672" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayWithdrawCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="86" column="36" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/paycard_manage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="46" column="84" lean-forward="true" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="19" column="23" lean-forward="true" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="96" selection-start-line="96" selection-end-line="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayBaseCtl/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/delete_user_list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="27" column="74" selection-start-line="27" selection-start-column="74" selection-end-line="27" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shop_admin/libraries/Yf/Model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="554">
-          <caret line="873" column="20" lean-forward="true" selection-start-line="873" selection-start-column="20" selection-end-line="873" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayRecordCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="299" selection-start-line="299" selection-end-line="299" />
-          <folding>
-            <element signature="n#shares_profit#0;n#Api_Paycen_PayRecordCtl#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayRecordCtl/deleteUser_index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="36" column="125" selection-start-line="36" selection-start-column="107" selection-end-line="36" selection-end-column="125" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/Card/BaseModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="21" column="31" lean-forward="true" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/paybase/paybase_list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2046">
-          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/User/BaseModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="72" column="50" selection-start-line="72" selection-start-column="50" selection-end-line="72" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payinfo/payinfo_list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-264">
-          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ucenter_admin/ucenter_admin/views/default/User/BaseCtl/allUser.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="31" column="59" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ucenter_admin/ucenter_admin/static/default/js/controllers/user/manage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="106" column="56" selection-start-line="106" selection-start-column="48" selection-end-line="106" selection-end-column="56" />
-          <folding>
-            <element signature="e#73#79#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayBaseCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayInfoCtl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-123">
-          <caret line="61" column="40" lean-forward="true" selection-start-line="61" selection-start-column="40" selection-end-line="61" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/views/default/Paycen/PayInfoCtl/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="40" column="92" selection-start-line="40" selection-start-column="89" selection-end-line="40" selection-end-column="92" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/User/InfoModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="169" column="38" selection-start-line="121" selection-start-column="8" selection-end-line="169" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ucenter/ucenter/controllers/Api/UserCtl.php">
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Buyer/OrderCtl/orderCancel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
-          <caret line="38" column="43" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
+          <caret line="101" column="45" selection-start-line="101" selection-start-column="38" selection-end-line="101" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ucenter/ucenter/models/User/InfoDetailModel.php">
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Buyer/Service/ReturnCtl/add.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="51" column="21" selection-start-line="51" selection-start-column="21" selection-end-line="51" selection-end-column="21" />
+        <state relative-caret-position="396">
+          <caret line="75" column="75" selection-start-line="75" selection-start-column="69" selection-end-line="75" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Buyer/Service/ReturnCtl/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1320">
+          <caret line="60" column="19" lean-forward="true" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
           <folding>
-            <element signature="n#sync#0;n#User_InfoDetailModel#0;n#!!top" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php">
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Service/ReturnCtl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="36" column="50" lean-forward="true" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
+        <state relative-caret-position="176">
+          <caret line="8" column="49" selection-start-line="8" selection-start-column="49" selection-end-line="8" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/shop/shop/models/Order/BaseModel.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="547" column="42" selection-start-line="547" selection-start-column="33" selection-end-line="547" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/directsellerOrder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="52" selection-start-line="52" selection-end-line="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter_admin/admin/static/default/js/controllers/payrecord/payrecord_list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="28" column="55" selection-start-line="28" selection-start-column="55" selection-end-line="28" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/Trade/TypeModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="51" column="27" lean-forward="true" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/models/Consume/RecordModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1804">
+          <caret line="104" column="17" lean-forward="true" selection-start-line="104" selection-start-column="17" selection-end-line="104" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paycenter/paycenter/controllers/Api/Paycen/PayRecordCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="36" column="26" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/configs/self_partner_menu.ini.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/selectGoods.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-902">
+          <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="336" column="14" selection-start-line="336" selection-start-column="14" selection-end-line="336" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Trade/OrderCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/libraries/Yf/Page.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/site_nav.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="111" column="17" selection-start-line="111" selection-start-column="17" selection-end-line="111" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Buyer/OrderCtl/physical.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="55" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/configs/buyer_menu.ini.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2189">
+          <caret line="368" column="38" lean-forward="true" selection-start-line="368" selection-start-column="38" selection-end-line="368" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/buyer_header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4136">
+          <caret line="272" column="4" lean-forward="true" selection-start-line="272" selection-start-column="4" selection-end-line="272" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/physical.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1034">
+          <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/models/Shop/BaseModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="567" column="20" selection-start-line="567" selection-start-column="13" selection-end-line="567" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/seller_header.php">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
-          <caret line="1079" column="49" selection-start-line="1079" selection-start-column="49" selection-end-line="1079" selection-end-column="49" />
+          <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/IndexCtl/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="187" column="45" selection-start-line="187" selection-start-column="31" selection-end-line="187" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/models/Analysis/ShopGeneralModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="57" column="32" selection-start-line="57" selection-start-column="32" selection-end-line="57" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Buyer/OrderCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="1913" column="65" selection-start-line="1913" selection-start-column="65" selection-end-line="1913" selection-end-column="65" />
+          <folding>
+            <element signature="n#subPhysical#0;n#Buyer_OrderCtl#0;n#!!top" />
+            <element signature="n#confirmOrder#0;n#Buyer_OrderCtl#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/IndexCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="211" column="68" selection-start-line="211" selection-start-column="68" selection-end-line="211" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/user_stock.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/Seller/Stock/OrderCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+          <folding>
+            <element signature="n#listShop#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#listGoods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#chooseBuyerAddress#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#chooseSendAddress#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#send#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#stock_orderGoods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#editBuyerAddress#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#physicalInfo#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#cancelOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#confirmOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#hideOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#restoreOrder#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#stock_check_list#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#stock_check_log#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#stock_check_detail#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#check_goods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#setAlarm#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#stock_check#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#stock_goods#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#stock_self_use#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+            <element signature="n#get_order_profit#0;n#Seller_Stock_OrderCtl#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Stock/OrderCtl/send.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="302" selection-start-line="302" selection-end-line="302" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/libraries/Yf/Plugin/Manager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2332">
+          <caret line="106" selection-start-line="106" selection-end-line="106" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/Seller/Trade/OrderCtl/send.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="89" column="56" selection-start-line="89" selection-start-column="56" selection-end-line="89" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/IndexCtl/toolbar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4862">
+          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/IndexCtl/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/views/default/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="157" column="23" selection-start-line="157" selection-start-column="23" selection-end-line="157" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/controllers/IndexCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="614">
+          <caret line="415" column="37" selection-start-line="415" selection-start-column="37" selection-end-line="415" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/models/Base/CronModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="76" column="29" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop/shop/task/crons/rebateOrder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="55" column="54" selection-start-line="55" selection-start-column="54" selection-end-line="55" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ucenter/ucenter/controllers/IndexCtl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="10" column="9" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ucenter/ucenter/views/default/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="19" lean-forward="true" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
         </state>
       </provider>
     </entry>

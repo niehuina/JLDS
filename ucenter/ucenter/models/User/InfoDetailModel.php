@@ -129,7 +129,7 @@ class User_InfoDetailModel extends User_InfoDetail
 
         //同步， 需要同步启用的
         $cond_row = array();
-        $cond_row['app_id:IN'] = array(102, 103, 105);
+        $cond_row['app_id:IN'] = array(102, 105);
 
         $Base_App = new Base_AppModel();
         $base_app_rows = $Base_App->getByWhere($cond_row);

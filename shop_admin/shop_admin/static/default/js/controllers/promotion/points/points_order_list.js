@@ -160,6 +160,7 @@ var THISPAGE = {
 
         //搜索
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.points_order_rid = $.trim(_self.$_points_order_rid.val());
             queryConditions.points_buyername = $.trim(_self.$_points_buyername.val());
             THISPAGE.reloadData(queryConditions);

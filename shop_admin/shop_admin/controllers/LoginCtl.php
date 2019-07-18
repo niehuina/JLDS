@@ -144,8 +144,8 @@ class LoginCtl extends AdminController
 	{
 		session_start();
 		//===============================
-		$width  = $_GET['w'] ? $_GET['w'] : "80";
-		$height = $_GET['h'] ? $_GET['h'] : "33";
+		$width=isset($_GET['w'])?$_GET['w']:"80";
+		$height=isset($_GET['h'])?$_GET['h']:"33";
 		$image  = new ValidationCode($width, $height, '4');
 		$image->outImg();
 		$_SESSION["auth"] = $image->checkcode;

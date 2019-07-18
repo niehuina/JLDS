@@ -118,7 +118,7 @@ function initGrid() {
         multiselect: true,
         multiboxonly: false,
         gridview: !0,
-        rowNum: 5,
+        rowNum: 15,
         colNames: a,
         colModel: b,
         shrinkToFit: false,
@@ -195,6 +195,12 @@ function initGrid() {
             $("#jqgh_goods_grid_cb").click();   //div标签
             $("#goods_grid_cb").click();   //th标签
 
+        },
+        beforeSelectRow: function (rowid, e) {
+            var $myGrid = $(this),
+                i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),
+                cm = $myGrid.jqGrid('getGridParam', 'colModel');
+            return (cm[i].name === 'cb');
         },
         beforeRequest: function () {
             var flag = selectAllCheck();

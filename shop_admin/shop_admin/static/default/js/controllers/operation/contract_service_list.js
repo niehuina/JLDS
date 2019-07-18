@@ -103,6 +103,7 @@ var THISPAGE = {
 
         $('#search').click(function(){
 
+            queryConditions.page = 1;
             queryConditions.shopName = $('#shopName').val();
             THISPAGE.reloadData(queryConditions);
         });
@@ -121,6 +122,7 @@ var THISPAGE = {
 	
         $("#btn-refresh").click(function ()
         {
+            queryConditions.page = 1;
             queryConditions.shopName ='';
             THISPAGE.reloadData(queryConditions);
             _self.$_searchName.val('');

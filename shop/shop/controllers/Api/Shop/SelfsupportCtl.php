@@ -106,6 +106,7 @@ class Api_Shop_SelfsupportCtl extends Api_Controller
 			$user_info_row['user_realname'] = @$init_rs['data']['user_truename'];
 			$user_info_row['user_name']     = isset($init_rs['data']['nickname']) ? $init_rs['data']['nickname'] : $data['user_account'];
 			$user_info_row['user_mobile']   = @$init_rs['data']['user_mobile'];
+            $user_info_row['user_grade']    = 4;
 			$User_InfoModel                 = new User_InfoModel();
 			$info_flag                      = $User_InfoModel->addInfo($user_info_row);
             check_rs($info_flag, $rs_row);
@@ -138,11 +139,11 @@ class Api_Shop_SelfsupportCtl extends Api_Controller
             $datas['user_id']           = $user_id;
             $datas['shop_all_class']    = "1";
             $datas['shop_self_support'] = "true";
-            $datas['shop_create_time']  = date("y-m-d h-i-s", time());
-            $datas['shop_settlement_last_time'] = date("y-m-d h-i-s", time());
+            $datas['shop_create_time']  = get_date_time();
+            $datas['shop_settlement_last_time'] = get_date_time();
             $datas['shop_status']       = "3";
-            $datas['shop_organization']       = request_string("shop_organization");
-            $datas['shop_saler_id']           = request_string("saler_id");
+//            $datas['shop_organization']       = request_string("shop_organization");
+//            $datas['shop_saler_id']           = request_string("saler_id");
             $check_shop_name = $this->shopBaseModel->getByWhere(array('shop_name'=>$datas['shop_name']));
             if($check_shop_name){
                 check_rs(false, $rs_row);
@@ -170,11 +171,13 @@ class Api_Shop_SelfsupportCtl extends Api_Controller
             $seller_flag      = $Seller_BaseModel->addBase($seller_base);
             check_rs($seller_flag, $rs_row);
 
-            $config_key = 'self_shop_id';
-            $edit_row['config_value'] = $shop_id;
             $Web_ConfigModel = new Web_ConfigModel();
-            $config_flag = $Web_ConfigModel->editConfig($config_key, $edit_row);
-            check_rs($config_flag, $rs_row);
+            $edit_row['config_value'] = $shop_id;
+            $config_flag1 = $Web_ConfigModel->editConfig('self_shop_id', $edit_row);
+            check_rs($config_flag1, $rs_row);
+            $edit_row['config_value'] = $datas['user_id'];
+            $config_flag2 = $Web_ConfigModel->editConfig('self_user_id', $edit_row);
+            check_rs($config_flag2, $rs_row);
 
             if (is_ok($rs_row) && $this->UserBaseModel->sql->commitDb()){
                 $status = 200;
@@ -263,13 +266,13 @@ class Api_Shop_SelfsupportCtl extends Api_Controller
         $district_name = $Base_DistrictModel->getAllName($data['district_id']);
         $data['district_name'] = $district_name;
 
-        $data['organizaion_list'] = $this->getOrganizationList($shop_id);
+        //$data['organizaion_list'] = $this->getOrganizationList($shop_id);
 		$this->data->addBody(-140, $data);
 	}
 
 	public function getShopAddRow(){
-        $data['organizaion_list'] = $this->getOrganizationList();
-        $this->data->addBody(-140, $data);
+        //$data['organizaion_list'] = $this->getOrganizationList();
+        $this->data->addBody(-140, array());
     }
 
 	public function EditShopBase()
@@ -278,8 +281,8 @@ class Api_Shop_SelfsupportCtl extends Api_Controller
 		$shop_base['shop_name']      = request_string("shop_name");
 		$shop_base['shop_all_class'] = request_int("shop_all_class");
 		$shop_base['shop_status']    = request_int("shop_status");
-        $shop_base['shop_organization']    = request_string("shop_organization");
-        $shop_base['shop_saler_id']        = request_string("saler_id");
+//        $shop_base['shop_organization']    = request_string("shop_organization");
+//        $shop_base['shop_saler_id']        = request_string("saler_id");
         $new_district_id = request_int("new_district_id",0);
         if($new_district_id == 0){
             $new_district_id = request_int("district_id",0);

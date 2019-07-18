@@ -208,7 +208,9 @@ include $this->view->getTplPath() . '/' . 'header.php';
                                                value="<?= $goods_detail['goods_base']['promotion_price'] ?>"
                                                id="goods_price"/>
                                     <?php else: ?>
-                                        <input type="hidden" name="goods_price" value="<?= $goods_detail['goods_base']['goods_price'] ?>" id="goods_price"/>
+                                        <input type="hidden" name="goods_price"
+                                               value="<?= $goods_detail['goods_base']['goods_price'] ?>"
+                                               id="goods_price"/>
                                         <strong class="color-db0a07 bbc_color"><?= format_money($goods_detail['goods_base']['goods_price']) ?></strong>
 
                                     <?php endif; ?>
@@ -1532,8 +1534,6 @@ include $this->view->getTplPath() . '/' . 'header.php';
                         $('#store-free-time').show();
                     }
                 }
-
-
             }
         });
         <?php }?>
@@ -1578,6 +1578,9 @@ include $this->view->getTplPath() . '/' . 'header.php';
             var goods_price = $('#goods_price').val();
             var num = $('#nums').val();
             var shipping = <?=$goods_detail['shop_base']['shop_free_shipping']?>;
+
+            $('#transport_all_money').html('<?=__('免运费')?>');
+            return;
 
             if (shipping > 0 && goods_price * num > shipping) {
                 $('#transport_all_money').html('<?=__('免运费')?>');

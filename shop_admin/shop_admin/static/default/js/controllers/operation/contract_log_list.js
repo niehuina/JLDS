@@ -93,6 +93,7 @@ var THISPAGE = {
         var _self = this;
         $("#btn-refresh").click(function ()
         {
+            queryConditions.page = 1;
             THISPAGE.reloadData(queryConditions);
         });
 

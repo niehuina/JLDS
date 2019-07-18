@@ -273,6 +273,7 @@ $(function(){
             var _self = this;
             //搜索
             $('#search').click(function(){
+                queryConditions.page = 1;
 				queryConditions.redpacket_t_state = $source.getValue();
                 queryConditions.redpacket_t_title = _self.$_redpacket_t_title.val();
                 queryConditions.shop_name = _self.$_shop_name.val();

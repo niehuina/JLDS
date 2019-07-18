@@ -9,6 +9,10 @@
 class UserCtl extends Yf_AppController
 {
 	public $userInfoModel = null;
+    public $userPrivacyModel = null;
+    public $userGradeModel = null;
+    public $userBaseModel = null;
+    public $messageTemplateModel = null;
 
 	/**
 	 * Constructor
@@ -97,12 +101,14 @@ class UserCtl extends Yf_AppController
 		$district           = $baseDistrictModel->getDistrictTree($district_parent_id);
 
 		//扩展字段
-		$User_OptionModel = new User_OptionModel();
-		$user_option_rows = $User_OptionModel->getByWhere(array('user_id' => $user_id));
+//		$User_OptionModel = new User_OptionModel();
+//		$user_option_rows = $User_OptionModel->getByWhere(array('user_id' => $user_id));
+        $user_option_rows= array();
 		fb($user_option_rows);
 
-		$Reg_OptionModel = new Reg_OptionModel();
-		$reg_opt_rows    = $Reg_OptionModel->getByWhere(array('reg_option_active' => 1));
+//		$Reg_OptionModel = new Reg_OptionModel();
+//		$reg_opt_rows    = $Reg_OptionModel->getByWhere(array('reg_option_active' => 1));
+        $reg_opt_rows= array();
 		fb($reg_opt_rows);
 
 		$option_rows = array();
@@ -201,7 +207,11 @@ class UserCtl extends Yf_AppController
 		
 		$this->userInfoModel    = new User_InfoDetailModel();
 		$this->userPrivacyModel = new User_PrivacyModel();
-		
+
+        //开启事物
+        $rs_row = array();
+        $this->userInfoModel->sql->startTransactionDb();
+
 		if (!$this->userPrivacyModel->getOne($user_id))
 		{
 			$this->userPrivacyModel->addPrivacy(array('user_id' => $user_id));
@@ -212,10 +222,6 @@ class UserCtl extends Yf_AppController
 			$this->userInfoModel->addInfoDetail(array('user_id' => $user_id,'user_name' => $user_name));
 		}
 
-		//开启事物
-		$rs_row = array();
-		$this->userInfoModel->sql->startTransactionDb();
-		
 		//$flagPrivacy = $this->userPrivacyModel->editPrivacy($user_id, $rows);
 		//check_rs($flagPrivacy, $rs_row);
 		$flag = $this->userInfoModel->editInfoDetail($user_id, $edit_user_row);

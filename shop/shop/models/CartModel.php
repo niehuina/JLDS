@@ -215,11 +215,10 @@ class CartModel extends Cart
 		}
 
         $user_info_model = new User_InfoModel();
-        $user_info = $user_info_model->getOne($user_id);
-        $user_parent_id = $user_info['user_parent_id'];
+        $user_grade = Perm::$row['user_grade'];
+        $user_parent_id = Perm::$row['user_parent_id'];
         $user_parent = $user_info_model->getOne($user_parent_id);
-        $user_grade = $user_info['user_grade'];
-        $bt_info = $user_info_model->getPayerCenterInfo();
+//        $bt_info = $user_info_model->getPayerCenterInfo();
 		foreach ($cart_row as $key => $val)
 		{
 			$shop_base  = array();
@@ -256,12 +255,12 @@ class CartModel extends Cart
                 $val['down_price'] = $val['old_price'] - $val['now_price'];
             }
 
-            //低保用户价格
-            if( $bt_info['data']['user_minimum_living_status']){
-                if( $goods_base['common_base']['common_dibao_price'] > 0 ){
-                    $val['now_price']  =    $goods_base['common_base']['common_dibao_price'];
-                }
-            }
+//            //低保用户价格
+//            if( $bt_info['data']['user_minimum_living_status']){
+//                if( $goods_base['common_base']['common_dibao_price'] > 0 ){
+//                    $val['now_price']  =    $goods_base['common_base']['common_dibao_price'];
+//                }
+//            }
 			$IsHaveBuy = 0;
 			if ($user_id)
 			{
@@ -407,14 +406,14 @@ class CartModel extends Cart
 
                 $order_price = $goods_base['goods_base']['goods_price'];
                 $order_price_dis = $goods_base['goods_base']['goods_price_vip'];
-                if($user_info['user_grade'] == 2){
+                if($user_grade == 2){
                     $order_price = $goods_base['goods_base']['goods_price_vip'];
-                }else if($user_info['user_grade'] == "3" || $user_info['user_grade'] == 4){
+                }else if($user_grade== "3" || $user_grade == 4){
                     $order_price = $goods_base['goods_base']['goods_price_partner'];
                 }
                 if($user_parent['user_grade'] == 2){
                     $order_price_dis = $goods_base['goods_base']['goods_price_vip'];
-                }else if($user_info['user_grade'] == "3" || $user_info['user_grade'] == 4){
+                }else if($user_parent['user_grade'] == "3" || $user_parent['user_grade'] == 4){
                     $order_price_dis = $goods_base['goods_base']['goods_price_partner'];
                 }
 
@@ -910,7 +909,7 @@ class CartModel extends Cart
 		$Discount_GoodsModel = new Discount_GoodsModel();
 		$GroupBuy_BaseModel = new GroupBuy_BaseModel();
 		$goods_data = $Discount_GoodsModel->getOneByWhere(['goods_id'=>$cart_base['goods_id']]);
-		
+
 		//如果是显示折扣商品，则返回折扣后的总价
 		if($goods_data)
 		{
@@ -928,7 +927,20 @@ class CartModel extends Cart
 			{
 				$goods_base = $Goods_BaseModel->getOne($cart_base['goods_id']);
 				//计算商品的活动价格
-				$price = $cart_base['goods_num'] * $goods_base['goods_price'];
+				//$price = $cart_base['goods_num'] * $goods_base['goods_price'];
+
+//                $user_info_model = new User_InfoModel();
+//                $user_info = $user_info_model->getOne(Perm::$userId);
+//                $user_grade = $user_info['user_grade'];
+                $user_grade = Perm::$row['user_grade'];
+
+                if($user_grade == '1'){
+                    $price  = $cart_base['goods_num'] * $goods_base['goods_price'];
+                }else if($user_grade == '2'){
+                    $price  = $cart_base['goods_num'] * $goods_base['goods_price_vip'];
+                }else if($user_grade == '3' || $user_grade == '4'){
+                    $price  = $cart_base['goods_num'] * $goods_base['goods_price_partner'];
+                }
 			}
 		}
 //		echo '<pre>';print_r($data);exit;

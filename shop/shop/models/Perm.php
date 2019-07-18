@@ -16,8 +16,7 @@ class Perm
 	);
 	public static $row        = array();  //当前用户信息
 	public static $shopId     = 0;
-	public static 
-		$chainId    = 0;  //门店id
+	public static $chainId    = 0;  //门店id
 
 	/**
 	 * 初始化登录的用户信息cookie
@@ -46,6 +45,9 @@ class Perm
 				$user_key = $user_row_default['user_key'];
 			}
             $user_info_model = new User_InfoModel();
+			$user_info = $user_info_model->getOne($id);
+            $user_row_default['user_grade'] = $user_info['user_grade'];
+            $user_row_default['user_parent_id'] = $user_info['user_parent_id'];
             $bt_info = $user_info_model->getPayerCenterInfo();
             $user_row_default['user_minimum_living_status'] = $bt_info['data']['user_minimum_living_status'];
 			//Perm::$row = $user_row_default;
@@ -168,7 +170,8 @@ class Perm
 	public static function checkUserPerm()
 	{
 		//登录通过
-		$user_row = self::getUserByCookie();Yf_Log::log($user_row, Yf_Log::LOG, 'debug_user_perm');
+		$user_row = self::getUserByCookie();
+		Yf_Log::log($user_row, Yf_Log::LOG, 'debug_user_perm');
 		if (array_key_exists('user_id', $user_row))
 		{
 			self::$userId = $user_row['user_id'];

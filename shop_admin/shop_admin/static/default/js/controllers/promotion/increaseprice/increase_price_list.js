@@ -110,6 +110,7 @@ var THISPAGE = {
 
         //搜索
         $('#search').click(function(){
+            queryConditions.page = 1;
 			queryConditions.increase_state = $source.getValue();
             queryConditions.increase_name = _self.$_increase_name.val();
             queryConditions.shop_name = _self.$_shop_name.val();

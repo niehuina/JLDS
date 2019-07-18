@@ -42,7 +42,7 @@ class Service_IdeaCtl extends Yf_AppController
             $rows[$key]['idea_id'] = $value['idea_id'];
             $rows[$key]['title'] = $value['title'];
             $rows[$key]['idea'] = $value['idea'];
-            $rows[$key]['creat_time'] = date('Y-m-d h:i:s',$value['creat_time']);
+            $rows[$key]['creat_time'] = date('Y-m-d H:i:s',$value['creat_time']);
             $creat_id = $value['creat_id'];
             if($creat_id)
             {
@@ -65,7 +65,7 @@ class Service_IdeaCtl extends Yf_AppController
             elseif($idea_status==1)
             {
                 $rows[$key]['status'] = '已回复';
-                $rows[$key]['respon_time'] = date('Y-m-d h:i:s',$value['respon_time']);
+                $rows[$key]['respon_time'] = date('Y-m-d H:i:s',$value['respon_time']);
                 $rows[$key]['respon_id'] = $value['respon_id'];
                 $rows[$key]['respon'] = $value['respon'];
             }
@@ -104,7 +104,7 @@ class Service_IdeaCtl extends Yf_AppController
             if($creat_time)
             {
                 unset($data1['creat_time']);
-                $data1['creat_time'] = date('Y-m-d h:i:s',$creat_time);
+                $data1['creat_time'] = date('Y-m-d H:i:s',$creat_time);
             }
 
             if($data1)

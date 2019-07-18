@@ -128,7 +128,8 @@ var THISPAGE = {
         var _self = this;
 
         $('#search').click(function(){
-            
+
+            queryConditions.page = 1;
             queryConditions.settleId = $('#settleId').val();
             queryConditions.shopName = $('#shopName').val();
             queryConditions.state = $source.getValue();
@@ -149,6 +150,7 @@ var THISPAGE = {
 
         $("#btn-refresh").click(function ()
         {
+            queryConditions.page = 1;
             queryConditions.settleId = '';
             queryConditions.shopName = '';
             queryConditions.state = '';

@@ -377,6 +377,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
                 {
                     //表单验证通过，提交表单
                     $.ajax({
+                        type:'POST',
                         url: ajax_url,
                         data: $("#form").serialize(),
                         success: function (a)

@@ -468,7 +468,7 @@ class User_IndexCtl extends Yf_AppController
 					'record_month'=>date("m"),
 					'record_day'=>date("d"),
 					'record_title'=>$reason,
-					'record_time'=>date('Y-m-d h:i:s'),
+					'record_time'=>date('Y-m-d H:i:s'),
 					'trade_type_id'=>'4',
 					'user_type'=>'2',
 				);
@@ -566,7 +566,7 @@ class User_IndexCtl extends Yf_AppController
 							'record_month'=>date("m"),
 							'record_day'=>date("d"),
 							'record_title'=>$reason,
-							'record_time'=>date('Y-m-d h:i:s'),
+							'record_time'=>date('Y-m-d H:i:s'),
 							'trade_type_id'=>'2',
 							'user_type'=>'2',
 						);
@@ -582,7 +582,7 @@ class User_IndexCtl extends Yf_AppController
 							'record_month'=>date("m"),
 							'record_day'=>date("d"),
 							'record_title'=>$reason,
-							'record_time'=>date('Y-m-d h:i:s'),
+							'record_time'=>date('Y-m-d H:i:s'),
 							'trade_type_id'=>'2',
 							'user_type'=>'1',
 						);

@@ -132,7 +132,7 @@ class User_BankCardCtl extends Yf_AppController
 
         //插入交易明细表
         $flow_id = date("Ymdhis") . rand(0, 9);
-        $add_time = date('Y-m-d h:i:s', time());
+        $add_time = date('Y-m-d H:i:s', time());
         $record_row = array(
             'order_id' => $flow_id,
             'user_id' => $user_id,
@@ -142,7 +142,7 @@ class User_BankCardCtl extends Yf_AppController
             'record_month' => date("m"),
             'record_day' => date("d"),
             'record_title' => _('提现'),
-            'record_time' => date('Y-m-d h:i:s'),
+            'record_time' => date('Y-m-d H:i:s'),
             'trade_type_id' => '4',
             'user_type' => '2',
         );

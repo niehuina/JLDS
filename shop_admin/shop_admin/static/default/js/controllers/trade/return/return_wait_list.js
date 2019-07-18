@@ -141,6 +141,7 @@ function operFmatter (val, opt, row) {
 
 			$('#search').click(function(){
 
+				queryConditions.page = 1;
 				queryConditions.return_code = $('#return_code').val();
 				queryConditions.seller_user_account = $('#seller_user_account').val();
 				queryConditions.buyer_user_account = $('#buyer_user_account').val();
@@ -165,6 +166,7 @@ function operFmatter (val, opt, row) {
 			//刷新
 			$("#btn-refresh").click(function ()
 			{
+				queryConditions.page = 1;
 				queryConditions.return_code = '';
 				queryConditions.seller_user_account ='';
 				queryConditions.buyer_user_account ='';

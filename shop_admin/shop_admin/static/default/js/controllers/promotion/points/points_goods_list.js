@@ -153,6 +153,7 @@ var THISPAGE = {
         //搜索
         $('#search').click(function()
         {
+            queryConditions.page = 1;
             queryConditions.points_goods_name = $.trim(_self.$_points_goods_name.val());
             THISPAGE.reloadData(queryConditions);
         });

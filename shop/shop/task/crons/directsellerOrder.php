@@ -45,19 +45,20 @@ if ($data['items']) {
     foreach ($data['items'] as $key => $val) {
 
         $directseller_member[0] = $val['directseller_id'];     //直属一级
-        $directseller_member[1] = $val['directseller_p_id'];   //直属二级
-        $directseller_member[2] = $val['directseller_gp_id'];  //直属三级
+//        $directseller_member[1] = $val['directseller_p_id'];   //直属二级
+//        $directseller_member[2] = $val['directseller_gp_id'];  //直属三级
 
         $condition['directseller_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
         $flag = $Order_BaseModel->editBase($val['order_id'], $condition);
 
-        $directseller_commission = array(0, 0, 0);  //三级分佣数组
+//        $directseller_commission = array(0, 0, 0);  //三级分佣数组
+        $directseller_commission = array(0);
         //将佣金结算给对应的上级
         foreach ($val['goods_list'] as $k => $v) {
             if ($v['goods_refund_status'] == 0 && $v['directseller_flag']) {
                 $directseller_commission[0] += $v['directseller_commission_0'];  //一级分佣
-                $directseller_commission[1] += $v['directseller_commission_1'];  //二级级分佣
-                $directseller_commission[2] += $v['directseller_commission_2'];  //三级分佣
+//                $directseller_commission[1] += $v['directseller_commission_1'];  //二级级分佣
+//                $directseller_commission[2] += $v['directseller_commission_2'];  //三级分佣
             }
 
             $goods_field['directseller_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
@@ -67,6 +68,7 @@ if ($data['items']) {
         //print_r($directseller_member);
         foreach ($directseller_member as $ks => $vs) {
             if ($vs) {
+                if($directseller_commission[$ks] == 0) continue;
                 $user_info = $User_InfoModel->getOne($vs);
                 $edit_row['user_directseller_commission'] = $user_info['user_directseller_commission'] + $directseller_commission[$ks];
                 $User_InfoModel->editInfo($vs, $edit_row);
@@ -81,7 +83,8 @@ if ($data['items']) {
                 $formvars['order_id'] = $val['order_id'];
                 $formvars['user_id'] = $vs;
                 $formvars['user_money'] = $directseller_commission[$ks];
-                $formvars['reason'] = '订单' . $val['order_id'] . '佣金结算';
+                $formvars['reason'] = '订单差价返还';
+                $formvars['trade_type'] = 14;
                 $formvars['app_id'] = $paycenter_app_id;
                 $formvars['type'] = 'row';
 

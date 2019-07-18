@@ -1,6 +1,0 @@
-17:07:37 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] SELECT SQL_CALC_FOUND_ROWS * FROM yf_web_config WHERE 1   AND config_key="subsite_is_open" LIMIT 500 
-17:07:37 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] SELECT  SQL_CALC_FOUND_ROWS config_key FROM yf_web_config WHERE 1   AND config_type="plugin" LIMIT 500 
-17:07:37 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] SELECT SQL_CALC_FOUND_ROWS * FROM yf_web_config WHERE 1   AND config_key IN ("Plugin_Analytics","Plugin_Cron","Plugin_Log","Plugin_Perm","Plugin_Xhprof") LIMIT 500 
-17:07:38 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] SELECT SQL_CALC_FOUND_ROWS * FROM yf_web_config WHERE 1   AND config_key="subsite_is_open" LIMIT 500 
-17:07:38 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] SELECT SQL_CALC_FOUND_ROWS * FROM yf_web_config WHERE 1   AND config_key="subsite_is_open" LIMIT 500 
-17:07:39 05/17/19 FILE=D:/Project/JLDS/web/shop/index.php [debug] SELECT SQL_CALC_FOUND_ROWS * FROM yf_web_config WHERE 1   AND config_key="subsite_is_open" LIMIT 500 

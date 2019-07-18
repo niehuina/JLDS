@@ -116,7 +116,7 @@ class User_GradeModel extends User_Grade
      * @return bool|null
      * @throws Exception
      */
-    public function updateGradeVip($user_id)
+    public function updateGradeVip($user_id, $is_need_search=true)
     {
         $User_InfoModel = new User_InfoModel();
         $User_GradeLogModel = new User_GradeLogModel();
@@ -128,19 +128,20 @@ class User_GradeModel extends User_Grade
 
         $can_update_grade = false;
 
-        //远程paycenter参数
-        $key = Yf_Registry::get('paycenter_api_key');
-        $url = Yf_Registry::get('paycenter_api_url');
-        $paycenter_app_id = Yf_Registry::get('paycenter_app_id');
-        if($user_grade == 2){//用户升级成为会员
+        if($user_grade == 2 && $is_need_search){//用户升级成为会员
             //1.获取用户的非账户余额支付的订单金额
             $order_Base = new Order_BaseModel();
+            $cond_row['buyer_user_id'] = $user_id;
             $cond_row['order_status'] = Order_StateModel::ORDER_FINISH;
             $cond_row['order_refund_status'] = Order_StateModel::ORDER_REFUND_NO;
             $order_sum_amount = $order_Base->getSumOrderPaymentAmount($cond_row);
             Yf_Log::log('order_sum_amount:'.$order_sum_amount, Yf_Log::LOG, 'debug');
 
             //2.获取用户的储值金额
+            //远程paycenter参数
+            $key = Yf_Registry::get('paycenter_api_key');
+            $url = Yf_Registry::get('paycenter_api_url');
+            $paycenter_app_id = Yf_Registry::get('paycenter_app_id');
             $formvars = array();
             $formvars['app_id'] = $paycenter_app_id;
             $formvars['user_id'] = $user_id;
@@ -151,10 +152,12 @@ class User_GradeModel extends User_Grade
             }
 
             //获取升级会员需要的金额
-            $user_grade_trade = $Grade [$user_grade]['user_grade_trade'] * 1;
+            $user_grade_trade = $Grade[$user_grade]['user_grade_trade'] * 1;
 
             //判断是否可以升级，用户的消费金额+储值金额 >= 升级所需要的金额
             $can_update_grade = $order_sum_amount + $user_deposit_amount >= $user_grade_trade;
+        }else if($user_grade == 2){
+            $can_update_grade = !$is_need_search;
         }
 
         if($can_update_grade){
@@ -236,6 +239,10 @@ class User_GradeModel extends User_Grade
             $log['log_date_time'] = get_date_time();
             $flag1 = $User_GradeLogModel->addGradeLog($log);
 
+            //更新上级高级合伙人的当前年度的发展合伙人数量
+            $user_parent_g_partner_id = $User_InfoModel->getParentId($user_id);
+            $flag2 = $User_InfoModel->edit($user_parent_g_partner_id, ['current_year_partner_count'=>1], true);
+
             return $flag;
         }else{
             return null;
@@ -294,12 +301,13 @@ class User_GradeModel extends User_Grade
      * @param $user_stocks
      * @return bool|null
      */
-    public function updateGradeToPartner($user_id, $user_shares, $user_stocks)
+    public function updateGradeToGPartner($user_id, $user_shares, $user_stocks)
     {
         $User_InfoModel = new User_InfoModel();
         $user = $User_InfoModel->getInfo($user_id);
+        $user_info = current($user);
 
-        if($user[$user_id]['user_grade']*1 == 4){
+        if($user_info['user_grade']*1 == 4){
             return true;
         }
 
@@ -320,18 +328,38 @@ class User_GradeModel extends User_Grade
             //更新用户级别
             $cond_row['user_grade'] = $user_grade;
             $cond_row['user_grade_update_date'] = get_date_time();
+            $cond_row['user_parent_id'] = 0;
             $flag = $User_InfoModel->editInfo($user_id, $cond_row);
 
             //添加用户晋级log
             $User_GradeLogModel = new User_GradeLogModel();
             $log['user_id'] = $user_id;
-            $log['user_grade_pre'] = $user[$user_id]['user_grade'];
+            $log['user_grade_pre'] = $user_info['user_grade'];
             $log['user_grade_to'] = $user_grade;
             $log['log_date_time'] = get_date_time();
             $flag1 = $User_GradeLogModel->addGradeLog($log);
 
-            $user_parent_g_partner_id = $User_InfoModel->getParentId($user_id);
-            $flag2 = $User_InfoModel->edit($user_parent_g_partner_id, ['current_year_partner_count'=>1], true);
+            //添加店铺
+            $Shop_BaseModel = new Shop_BaseModel();
+            $new_shop['user_id'] = $user_id;
+            $new_shop['user_name'] = $user_info['user_name'];
+            $new_shop['shop_name'] = $user_info['user_name'].'的店铺';
+            $new_shop['shop_all_class'] = 1;
+            $new_shop['shop_self_support'] = Shop_BaseModel::SELF_SUPPORT_FALSE;
+            $new_shop['shop_create_time'] = get_date_time();
+            $new_shop['shop_status'] = Shop_BaseModel::SHOP_STATUS_OPEN;
+            $Number_SeqModel  = new Number_SeqModel();
+            $shop_id          = $Number_SeqModel->createSeq('shop_id', 4, false);
+            $new_shop['shop_id'] = $shop_id;
+            $shop_flag = $Shop_BaseModel->addBase($new_shop);
+
+            $Seller_BaseModel = new Seller_BaseModel();
+            $new_seller['shop_id'] = $shop_id;
+            $new_seller['user_id'] = $user_id;
+            $new_seller['seller_group_id'] = 0;
+            $new_seller['seller_is_admin'] = 1;
+            $new_seller['rights_group_id'] = 0;
+            $flag2 = $Seller_BaseModel->addBase($new_seller);
 
             return $flag;
         } else {

@@ -39,46 +39,46 @@ $buyer_menu = array(
 													),
 										),
 									),
-									1000012 => array(
-										'menu_id' => '1000012',
-										'menu_parent_id' => '100001',
-										'menu_name' => __('服务兑换订单'),
-										'menu_icon' => '',
-										'menu_url_ctl' => 'Buyer_Order',
-										'menu_url_met' => 'virtual',
-										'menu_url_parem' => '',
-										'sub' => array(
-													10000121 => array(
-														'menu_id' => '10000121',
-														'menu_parent_id' => '1000012',
-														'menu_name' => __('服务兑换订单'),
-														'menu_icon' => '',
-														'menu_url_ctl' => 'Buyer_Order',
-														'menu_url_met' => 'virtual',
-														'menu_url_parem' => '',
-													)
-										),
-									),
-                                    1000014 => array(
-                                        'menu_id' => '1000014',
-                                        'menu_parent_id' => '100001',
-                                        'menu_name' => __('门店自提订单'),
-                                        'menu_icon' => '',
-                                        'menu_url_ctl' => 'Buyer_Order',
-                                        'menu_url_met' => 'chain',
-                                        'menu_url_parem' => '',
-                                        'sub' => array(
-                                            10000141 => array(
-                                                'menu_id' => '10000141',
-                                                'menu_parent_id' => '1000014',
-                                                'menu_name' => __('门店自提订单'),
-                                                'menu_icon' => '',
-                                                'menu_url_ctl' => 'Buyer_Order',
-                                                'menu_url_met' => 'chain',
-                                                'menu_url_parem' => '',
-                                            )
-                                        ),
-                                    ),
+//									1000012 => array(
+//										'menu_id' => '1000012',
+//										'menu_parent_id' => '100001',
+//										'menu_name' => __('服务兑换订单'),
+//										'menu_icon' => '',
+//										'menu_url_ctl' => 'Buyer_Order',
+//										'menu_url_met' => 'virtual',
+//										'menu_url_parem' => '',
+//										'sub' => array(
+//													10000121 => array(
+//														'menu_id' => '10000121',
+//														'menu_parent_id' => '1000012',
+//														'menu_name' => __('服务兑换订单'),
+//														'menu_icon' => '',
+//														'menu_url_ctl' => 'Buyer_Order',
+//														'menu_url_met' => 'virtual',
+//														'menu_url_parem' => '',
+//													)
+//										),
+//									),
+//                                    1000014 => array(
+//                                        'menu_id' => '1000014',
+//                                        'menu_parent_id' => '100001',
+//                                        'menu_name' => __('门店自提订单'),
+//                                        'menu_icon' => '',
+//                                        'menu_url_ctl' => 'Buyer_Order',
+//                                        'menu_url_met' => 'chain',
+//                                        'menu_url_parem' => '',
+//                                        'sub' => array(
+//                                            10000141 => array(
+//                                                'menu_id' => '10000141',
+//                                                'menu_parent_id' => '1000014',
+//                                                'menu_name' => __('门店自提订单'),
+//                                                'menu_icon' => '',
+//                                                'menu_url_ctl' => 'Buyer_Order',
+//                                                'menu_url_met' => 'chain',
+//                                                'menu_url_parem' => '',
+//                                            )
+//                                        ),
+//                                    ),
 									1000013 => array(
 										'menu_id' => '1000013',
 										'menu_parent_id' => '100001',
@@ -357,82 +357,82 @@ $buyer_menu = array(
 										'menu_url_parem' => '',
 
 									),
-									1000046 => array(
-										'menu_id' => '1000046',
-										'menu_parent_id' => '100004',
-										'menu_name' => __('子账号设置'),
-										'menu_icon' => '',
-										'menu_url_ctl' => 'Buyer_User',
-										'menu_url_met' => 'getSubUser',
-										'menu_url_parem' => '',
-
-									),
+//									1000046 => array(
+//										'menu_id' => '1000046',
+//										'menu_parent_id' => '100004',
+//										'menu_name' => __('子账号设置'),
+//										'menu_icon' => '',
+//										'menu_url_ctl' => 'Buyer_User',
+//										'menu_url_met' => 'getSubUser',
+//										'menu_url_parem' => '',
+//
+//									),
 						),
 					),
-					100005 => array(
-						'menu_id' => '100005',
-						'menu_parent_id' => '10000',
-						'menu_name' => __('财产中心'),
-						'menu_icon' => '',
-						'menu_url_ctl' => 'Buyer_Property',
-						'menu_url_met' => 'cash',
-						'menu_url_parem' => '',
-						'sub' => array(
-
-									1000052 => array(
-										'menu_id' => '1000052',
-										'menu_parent_id' => '100005',
-										'menu_name' => __('我的代金券'),
-										'menu_icon' => '',
-										'menu_url_ctl' => 'Buyer_Voucher',
-										'menu_url_met' => 'voucher',
-										'menu_url_parem' => '',
-										'sub' => array(
-													10000521 => array(
-														'menu_id' => '10000521',
-														'menu_parent_id' => '1000052',
-														'menu_name' => __('我的代金券'),
-														'menu_icon' => '',
-														'menu_url_ctl' => 'Buyer_Voucher',
-														'menu_url_met' => 'voucher',
-														'menu_url_parem' => '',
-
-													),
-
-										),
-									),
-									1000053 => array(
-										'menu_id' => '1000053',
-										'menu_parent_id' => '100005',
-										'menu_name' => __('我的红包'),
-										'menu_icon' => '',
-										'menu_url_ctl' => 'Buyer_RedPacket',
-										'menu_url_met' => 'redPacket',
-										'menu_url_parem' => '',
-									),
-									1000054 => array(
-										'menu_id' => '1000054',
-										'menu_parent_id' => '100005',
-										'menu_name' => __('我的积分'),
-										'menu_icon' => '',
-										'menu_url_ctl' => 'Buyer_Points',
-										'menu_url_met' => 'points',
-										'menu_url_parem' => '',
-
-									),
-                                    1000055 => array(
-										'menu_id' => '1000055',
-										'menu_parent_id' => '100005',
-										'menu_name' => __('我的白条'),
-										'menu_icon' => '',
-										'menu_url_ctl' => 'Buyer_Index',
-										'menu_url_met' => 'btpage',
-										'menu_url_parem' => '',
-
-									),
-
-						),
-					),
+//					100005 => array(
+//						'menu_id' => '100005',
+//						'menu_parent_id' => '10000',
+//						'menu_name' => __('财产中心'),
+//						'menu_icon' => '',
+//						'menu_url_ctl' => 'Buyer_Property',
+//						'menu_url_met' => 'cash',
+//						'menu_url_parem' => '',
+//						'sub' => array(
+//
+//									1000052 => array(
+//										'menu_id' => '1000052',
+//										'menu_parent_id' => '100005',
+//										'menu_name' => __('我的代金券'),
+//										'menu_icon' => '',
+//										'menu_url_ctl' => 'Buyer_Voucher',
+//										'menu_url_met' => 'voucher',
+//										'menu_url_parem' => '',
+//										'sub' => array(
+//													10000521 => array(
+//														'menu_id' => '10000521',
+//														'menu_parent_id' => '1000052',
+//														'menu_name' => __('我的代金券'),
+//														'menu_icon' => '',
+//														'menu_url_ctl' => 'Buyer_Voucher',
+//														'menu_url_met' => 'voucher',
+//														'menu_url_parem' => '',
+//
+//													),
+//
+//										),
+//									),
+//									1000053 => array(
+//										'menu_id' => '1000053',
+//										'menu_parent_id' => '100005',
+//										'menu_name' => __('我的红包'),
+//										'menu_icon' => '',
+//										'menu_url_ctl' => 'Buyer_RedPacket',
+//										'menu_url_met' => 'redPacket',
+//										'menu_url_parem' => '',
+//									),
+//									1000054 => array(
+//										'menu_id' => '1000054',
+//										'menu_parent_id' => '100005',
+//										'menu_name' => __('我的积分'),
+//										'menu_icon' => '',
+//										'menu_url_ctl' => 'Buyer_Points',
+//										'menu_url_met' => 'points',
+//										'menu_url_parem' => '',
+//
+//									),
+//                                    1000055 => array(
+//										'menu_id' => '1000055',
+//										'menu_parent_id' => '100005',
+//										'menu_name' => __('我的白条'),
+//										'menu_icon' => '',
+//										'menu_url_ctl' => 'Buyer_Index',
+//										'menu_url_met' => 'btpage',
+//										'menu_url_parem' => '',
+//
+//									),
+//
+//						),
+//					),
 				),
 	),
 

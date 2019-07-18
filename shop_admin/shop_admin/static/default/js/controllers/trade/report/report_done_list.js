@@ -99,6 +99,7 @@ var queryConditions = {"otyp":urlParam.otyp},
 
 			$('#search').click(function(){
 
+				queryConditions.page = 1;
 				queryConditions.goods_name = $('#goods_name').val();
 				queryConditions.shop_name = $('#shop_name').val();
 				queryConditions.user_account = $('#user_account').val();
@@ -119,6 +120,7 @@ var queryConditions = {"otyp":urlParam.otyp},
 			//刷新
 			$("#btn-refresh").click(function ()
 			{
+				queryConditions.page = 1;
 				queryConditions.goods_name = '';
 				queryConditions.shop_name = '';
 				queryConditions.user_account = '';

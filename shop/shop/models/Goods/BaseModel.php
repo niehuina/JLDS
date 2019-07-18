@@ -137,16 +137,17 @@ class Goods_BaseModel extends Goods_Base
 	public function delStock($goods_id, $num, $seller_user_id = null)
 	{
         if($seller_user_id != null){
-            if($seller_user_id){
-                //获取消费者对应的高级合伙人的库存
-                $flag = $this->editUserStock($goods_id, -1*$num, $seller_user_id);
-
-                if(!is_bool($flag)){
-                    return $flag;
-                }
-
-                $res = $flag;
-            }
+//            if($seller_user_id){
+//                //获取消费者对应的高级合伙人的库存
+//                $flag = $this->editUserStock($goods_id, -1*$num, $seller_user_id);
+//
+//                if(!is_bool($flag)){
+//                    return $flag;
+//                }
+//
+//                $res = $flag;
+//            }
+            return true;
         }else {
 
             $goods_base = $this->getOne($goods_id);
@@ -919,10 +920,7 @@ class Goods_BaseModel extends Goods_Base
 			return array();
 		}
 
-        $user_id = Perm::$userId;
-        $user_info_model = new User_InfoModel();
-        $user_info = $user_info_model->getOne($user_id);
-        $user_grade = $user_info['user_grade'];
+        $user_grade = Perm::$row['user_grade'];
         if($user_grade == '2'){
             $goods_info['goods_price'] = $goods_info['goods_price_vip'];
         }else if($user_grade == '3' || $user_grade == '4'){

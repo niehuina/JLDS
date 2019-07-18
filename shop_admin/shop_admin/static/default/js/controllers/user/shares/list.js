@@ -96,6 +96,7 @@ var THISPAGE = {
         //查询
         $('#search').click(function(){
 
+            queryConditions.page = 1;
             queryConditions.year = _self.$_searchYear.val() === '请输入相关数据...' ? '' : _self.$_searchYear.val();
             THISPAGE.reloadData(queryConditions);
         });

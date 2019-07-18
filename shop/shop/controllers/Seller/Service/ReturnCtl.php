@@ -190,7 +190,11 @@ class Seller_Service_ReturnCtl extends Seller_Controller
 	{
 		$return_id                   = request_int("id");
 		$cond_row['order_return_id'] = $return_id;
-		$cond_row['seller_user_id']  = Perm::$shopId;
+        if(self::$is_partner){
+            $cond_row['seller_user_id']        = Perm::$shopId;
+        }else{
+            $cond_row['seller_user_id']        = Web_ConfigModel::value('self_shop_id');
+        }
 
 		$data = $this->orderReturnModel->getReturn($cond_row);
 		if ($data['return_goods_return'])

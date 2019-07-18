@@ -119,6 +119,7 @@ var THISPAGE = {
 			}
 		});
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.custom_service_question = $('#custom_service_question').val();
             queryConditions.user_account = $('#user_account').val();
             THISPAGE.reloadData(queryConditions);
@@ -126,6 +127,7 @@ var THISPAGE = {
 
         $("#btn-refresh").click(function ()
         {
+            queryConditions.page = 1;
             queryConditions.custom_service_question ='';
             queryConditions.user_account ='';
             THISPAGE.reloadData(queryConditions);

@@ -666,8 +666,22 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 			$data              = $Order_BaseModel->getOrderList($condi);
 			$data              = pos($data['items']);
 
+			$can_send = true;
+            if(self::$is_partner){
+                $User_StockModel = new User_StockModel();
+                foreach ($data['goods_list'] as $key=> $goods){
+                    $user_stock = $User_StockModel->getOneByWhere(['user_id'=>Perm::$userId, 'goods_id'=>$goods['goods_id']]);
+                    $data['goods_list'][$key]['user_stock'] = $user_stock['goods_stock'];
+                    $temp_can_send = $user_stock['goods_stock']*1 >= $goods['order_goods_num'];
+                    if(!$temp_can_send) {
+                        $can_send = false;
+                        break;
+                    }
+                }
+            }
+            $data['can_send'] = $can_send;
 
-			//默认物流公司 url
+            //默认物流公司 url
 			$default_express_url = Yf_Registry::get('url') . '?ctl=Seller_Trade_Deliver&met=express&typ=e';
 			//打印运单URL
 			$print_tpl_url = Yf_Registry::get('url') . '?ctl=Seller_Trade_Waybill&met=printTpl&typ=e&order_id=' . $order_id;
@@ -913,13 +927,21 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 
 		//待付款订单
 		$condi                 = array();
-		$condi['shop_id']      = Perm::$shopId;
+        if(self::$is_partner){
+            $condi['seller_user_id']        = Perm::$userId;
+        }else{
+            $condi['seller_user_id']        = Web_ConfigModel::value('self_user_id');
+        }
 		$condi['order_status'] = Order_StateModel::ORDER_WAIT_PAY;
 		$wait_pay_data         = $orderBaseModel->getByWhere($condi);
 
 		//待发货订单
 		$condi                     = array();
-		$condi['shop_id']          = Perm::$shopId;
+        if(self::$is_partner){
+            $condi['seller_user_id']        = Perm::$userId;
+        }else{
+            $condi['seller_user_id']        = Web_ConfigModel::value('self_user_id');
+        }
 		$condi['order_status:IN']  = array(
 			Order_StateModel::ORDER_PAYED,
 			Order_StateModel::ORDER_WAIT_PREPARE_GOODS
@@ -928,14 +950,22 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 
 		//退款订单
 		$condi                        = array();
-		$condi['seller_user_id']             = Perm::$shopId;
+        if(self::$is_partner){
+            $condi['seller_user_id']        = Perm::$shopId;
+        }else{
+            $condi['seller_user_id']        = Web_ConfigModel::value('self_shop_id');
+        }
 		$condi['return_state'] = Order_ReturnModel::RETURN_WAIT_PASS;
 		$condi['return_type:!='] = Order_ReturnModel::RETURN_TYPE_GOODS;
 		$refund_data                  = $orderReturn->getByWhere($condi);
 
 		//退货订单
 		$condi                        = array();
-		$condi['seller_user_id']             = Perm::$shopId;
+        if(self::$is_partner){
+            $condi['seller_user_id']        = Perm::$shopId;
+        }else{
+            $condi['seller_user_id']        = Web_ConfigModel::value('self_shop_id');
+        }
 		$condi['return_state'] = Order_ReturnModel::RETURN_WAIT_PASS;
 		$condi['return_type'] = Order_ReturnModel::RETURN_TYPE_GOODS;
 		$return_data                  = $orderReturn->getByWhere($condi);

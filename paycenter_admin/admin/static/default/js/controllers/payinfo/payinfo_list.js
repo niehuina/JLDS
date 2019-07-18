@@ -125,6 +125,7 @@ var THISPAGE = {
 
 
         $('#search').click(function () {
+            queryConditions.page = 1;
             queryConditions.status = $source.getValue();
             queryConditions.user_keys = _self.$_userName.val() === '请输入用户账号/用户姓名/用户手机号' ? '' : _self.$_userName.val();
             THISPAGE.reloadData(queryConditions);

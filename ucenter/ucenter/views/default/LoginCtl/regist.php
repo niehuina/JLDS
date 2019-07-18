@@ -374,7 +374,7 @@ extract($_GET);
 <script>
 
     function getIntroducer(obj){
-        if(obj.html() == "清除"){
+        if($(obj).html() == "清除"){
             $("#parent_id").val("");
             $("#intro_keys").val("");
             $("#intro_list").html("");

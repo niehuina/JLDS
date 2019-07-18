@@ -382,19 +382,16 @@ class Api_UserCtl extends Api_Controller
     public function editUserInfo()
     {
         $user_id = request_int('user_id');
-        $User_Info = new User_Info();
-        $user_info = current($User_Info->getInfo($user_id));
-        $user_name = $user_info['user_name'];
         $edit_user_row['user_gender'] = request_int('user_gender');
         $edit_user_row['user_avatar'] = request_string('user_logo');
         $user_delete = request_int('user_delete');
 
         //开启事物
-        $User_InfoDetailModel = new User_InfoDetailModel();
         $rs_row = array();
-        $User_InfoDetailModel->sql->startTransactionDb();
-
+        $User_InfoDetailModel = new User_InfoDetailModel();
         $User_InfoModel = new User_InfoModel();
+
+        $User_InfoDetailModel->sql->startTransactionDb();
         $user_row = $User_InfoModel->getOne($user_id);
         if ($user_delete) {
             $edit_user['user_state'] = 3;
@@ -408,7 +405,7 @@ class Api_UserCtl extends Api_Controller
             }
         }
 
-        $flag = $User_InfoDetailModel->editInfoDetail($user_name, $edit_user_row);
+        $flag = $User_InfoDetailModel->editInfoDetail($user_id, $edit_user_row);
         check_rs($flag, $rs_row);
 
         $flag = is_ok($rs_row);
@@ -416,8 +413,6 @@ class Api_UserCtl extends Api_Controller
         if ($flag && $User_InfoDetailModel->sql->commitDb()) {
             $status = 200;
             $msg = _('success');
-
-
             $User_InfoDetailModel->sync($user_id);
         } else {
             $User_InfoDetailModel->sql->rollBackDb();
@@ -486,6 +481,27 @@ class Api_UserCtl extends Api_Controller
         $this->data->addBody(-140, $data, $msg, $status);
     }
 
+    public function editUserDetailTrueName()
+    {
+        $user_id = request_int('user_id');
+        $user_realname = request_string('user_realname');
+
+        $User_InfoDetailModel = new User_InfoDetailModel();
+        $flag = $User_InfoDetailModel->editInfoDetail($user_id, ['user_truename'=>$user_realname]);
+        if ($flag !== false)
+        {
+            $status = 200;
+            $msg    = __('success');
+        }
+        else
+        {
+            $status = 250;
+            $msg    = __('failure');
+        }
+
+        $data = array();
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
 }
 
 ?>

@@ -139,6 +139,7 @@ var THISPAGE = {
 
         $('#search').click(function ()
         {
+            queryConditions.page = 1;
             queryConditions.searchName = _self.$_searchName.val() === '请输入相关数据...' ? '' : _self.$_searchName.val();
             queryConditions.userType = $source.getValue();
             THISPAGE.reloadData(queryConditions);

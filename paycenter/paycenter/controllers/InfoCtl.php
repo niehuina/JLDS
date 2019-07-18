@@ -181,7 +181,11 @@ class InfoCtl extends Controller
 
         }
         if ($type && ($status != 'retund')) {
-            $cond_row['trade_type_id'] = $type;
+            if($type == 13){
+                $cond_row['trade_type_id:in'] = [13,14,15,16];
+            }else {
+                $cond_row['trade_type_id'] = $type;
+            }
         }
 
         $Yf_Page = new Yf_Page();
@@ -257,8 +261,9 @@ class InfoCtl extends Controller
                 $de = $this->Service_FeeModel->getOne($id);
                 $data[$k]['time_con'] = $de['name'];
             }
-
         }
+        $Trade_TypeModel =  new Trade_TypeModel();
+        $re['trade_type'] = $Trade_TypeModel->trade_type[$re['trade_type_id']];
         include $this->view->getView();
     }
 
@@ -970,7 +975,6 @@ class InfoCtl extends Controller
         }
 
         $flag = $User_InfoModel->editInfo($user_id, $edit);
-        $flag=$User_InfoModel->editRealName($edit['user_realname'],$user_id,request_string('user_name'));
         if ($flag !== false) {
             $msg = 'success';
             $status = 200;
@@ -1118,7 +1122,7 @@ class InfoCtl extends Controller
         $record_add_seller_row['record_year'] = date('Y');
         $record_add_seller_row['record_month'] = date('m');
         $record_add_seller_row['record_day'] = date('d');
-        $record_add_seller_row['record_title'] = '购物';
+        $record_add_seller_row['record_title'] = '销售入账';
         $record_add_seller_row['record_time'] = date('Y-m-d H:i:s');
         $record_add_seller_row['trade_type_id'] = Trade_TypeModel::SHOPPING;
         $record_add_seller_row['user_type'] = 1;    //收款方

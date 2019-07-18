@@ -43,31 +43,31 @@ i{color:red;}
                 </dd>
             </dl>
 
-            <dl class="row">
-                <dt class="tit">
-                    <label for="shop_organization"><i>*</i>组织机构</label>
-                </dt>
-                <dd class="opt">
-
-                    <select id="shop_organization" name="shop_organization" class="sgcategory valid">
-                        <option value="0"><?=__('请选择')?>...</option>
-                        <?php if ( !empty($data['organizaion_list']) ) { ?>
-                            <?php foreach ($data['organizaion_list'] as $key => $val) { ?>
-                                <option  value="<?= $val['code']; ?>"> <?= $val['name']; ?></option>
-                            <?php } ?>
-                        <?php } ?>
-                    </select>
-                </dd>
-            </dl>
-
-            <dl class="row">
-                <dt class="tit">
-                    <label for="shop_saler_id">erp_saler_id</label>
-                </dt>
-                <dd class="opt">
-                    <input id="saler_id" name="saler_id" value="<?=$data['shop_saler_id']?>" class="ui-input w200" type="text"/>
-                </dd>
-            </dl>
+<!--            <dl class="row">-->
+<!--                <dt class="tit">-->
+<!--                    <label for="shop_organization"><i>*</i>组织机构</label>-->
+<!--                </dt>-->
+<!--                <dd class="opt">-->
+<!---->
+<!--                    <select id="shop_organization" name="shop_organization" class="sgcategory valid">-->
+<!--                        <option value="0">--><?//=__('请选择')?><!--...</option>-->
+<!--                        --><?php //if ( !empty($data['organizaion_list']) ) { ?>
+<!--                            --><?php //foreach ($data['organizaion_list'] as $key => $val) { ?>
+<!--                                <option  value="--><?//= $val['code']; ?><!--"> --><?//= $val['name']; ?><!--</option>-->
+<!--                            --><?php //} ?>
+<!--                        --><?php //} ?>
+<!--                    </select>-->
+<!--                </dd>-->
+<!--            </dl>-->
+<!---->
+<!--            <dl class="row">-->
+<!--                <dt class="tit">-->
+<!--                    <label for="shop_saler_id">erp_saler_id</label>-->
+<!--                </dt>-->
+<!--                <dd class="opt">-->
+<!--                    <input id="saler_id" name="saler_id" value="--><?//=$data['shop_saler_id']?><!--" class="ui-input w200" type="text"/>-->
+<!--                </dd>-->
+<!--            </dl>-->
            
             <dl class="row">
                 <dt class="tit">
@@ -126,11 +126,9 @@ function postData(t, e)
             user_name = $.trim($("#user_name").val()), 
             user_password = $.trim($("#user_password").val()), 
             district_id = $("#district_id").val(),
-            shop_organization  = $.trim($("#shop_organization").val()),
-            saler_id = $("#saler_id").val(),
 			n = "Add" == t ? "新增店铺" : "修改店铺";
 			params = rowData.shop_id ? { shop_id: e, shop_name: shop_name, user_name: user_name, user_password:user_password, district_id:district_id, shop_organization:  shop_organization, saler_id: saler_id} : {
-				shop_name: shop_name, user_name: user_name, user_password:user_password, district_id:district_id, shop_organization:  shop_organization, saler_id: saler_id
+				shop_name: shop_name, user_name: user_name, user_password:user_password, district_id:district_id
 			};
 			Public.ajaxPost(SITE_URL +"?ctl=Shop_Selfsupport&met=" + ("Add" == t ? "Add" : "Edit")+ "ShopRow&typ=json", params, function (e)
 			{

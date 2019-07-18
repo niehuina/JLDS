@@ -110,6 +110,7 @@ var THISPAGE = {
 
 
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.searchName = $searchName.getValue();
             queryConditions.searchContent = _self.$_searchContent.val();
             queryConditions.beginDate = _self.$_beginDate.val();

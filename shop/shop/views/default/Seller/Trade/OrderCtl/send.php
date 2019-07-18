@@ -36,6 +36,10 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
     button.ncbtn{
         padding: 3px 7px;
     }
+
+    #texpress1 {
+        border-top: 2px solid #F60;
+    }
 </style>
 </head>
 </body>
@@ -80,7 +84,8 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                             <dt>
                                 <a target="_blank" href="<?= $val['goods_link']; ?>"><?= $val['goods_name']; ?></a>
                             </dt>
-                            <dd><strong>￥<?= $val['order_goods_amount']; ?></strong>&nbsp;x&nbsp;<em><?= $val['order_goods_num']; ?></em>件</dd>
+                            <dd><strong>￥<?= $val['goods_price']; ?></strong>&nbsp;x&nbsp;<em><?= $val['order_goods_num']; ?></em>件</dd>
+                            <dd><strong>库存</strong>&nbsp;x&nbsp;<em><?= $val['user_stock']; ?></em>件</dd>
                             <?php if(isset($val['order_spec_info']) && $val['order_spec_info']){ ?>
                                 <dd><strong><?=__('规格')?>：</strong>&nbsp;&nbsp;<em><?= $val['order_spec_info']; ?></em></dd>
                             <?php }?>
@@ -89,6 +94,11 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     </td>
                     <?php if ( $key == 0 ) { ?>
                     <td class="bdl bdr order-info w500" rowspan="<?= $data['goods_cat_num']; ?>">
+                        <?php if ( !$data['can_send'] ) { ?>
+                        <dl>
+                            <dd class="bbc_seller_btns">库存不足，不能发货</dd>
+                        </dl>
+                        <?php } ?>
                         <dl>
                             <dt><?=__('运费')?>：</dt>
                             <dd><?= $data['shipping_info']; ?></dd>
@@ -248,14 +258,13 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
             </div>
             <input type="hidden" name="daddress_id" id="daddress_id" value="">
             <div class="step-title mt30"><em><?=__('第三步')?></em><?=__('选择物流服务')?></div>
-            <div class="alert alert-success"><?=__('您可以通过"发货设置')?>-&gt;<a href="<?= $default_express_url; ?>" target="_parent"><?=__('默认物流公司')?></a>"<?=__('添加或修改常用货运物流')?>。<?=__('免运可切换下方')?><span class="red"><?=__('[无需物流运输服务]')?></span><?=__('选项卡并操作')?>。
-            </div>
-            <div class="tabmenu">
-                <ul class="tab pngFix">
-                    <li id="eli1" class="active bbc_seller_bg"><a href="javascript:void(0);" onclick="etab(1)"><?=__('自行联系物流公司')?></a></li>
-                    <li id="eli2" class="normal"><a href="javascript:void(0);" onclick="etab(2)"><?=__('无需物流运输服务')?></a></li>
-                </ul>
-            </div>
+            <div class="alert alert-success"><?=__('您可以通过"发货设置')?>-&gt;<a href="<?= $default_express_url; ?>" target="_parent"><?=__('默认物流公司')?></a>"<?=__('添加或修改常用货运物流')?>。</div>
+<!--            <div class="tabmenu ">-->
+<!--                <ul class="tab pngFix">-->
+<!--                    <li id="eli1" class="active bbc_seller_bg"><a href="javascript:void(0);" onclick="etab(1)">--><?//=__('自行联系物流公司')?><!--</a></li>-->
+<!--                    <li id="eli2" class="normal"><a href="javascript:void(0);" onclick="etab(2)">--><?//=__('无需物流运输服务')?><!--</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
             <table class="ncsc-default-table order" id="texpress1">
                 <tbody>
                 <tr>
@@ -271,7 +280,8 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <td class="bdl" style="width: 249px;"><input name="shipping_code" type="text" class="text w200 tip-r" title="<?=__('正确填写物流单号，确保快递跟踪查询信息正确')?>" maxlength="20"></td>
                     <td class="bdl gray"></td>
                     <td class="bdl bdr tc">
-                        <button nc_value="<?= $val['express_id']; ?>" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认')?></button></td>
+                        <button nc_value="<?= $val['express_id']; ?>" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认')?></button>
+                    </td>
                 </tr>
                 <?php } ?>
                 <?php } ?>
@@ -319,6 +329,11 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
     $(function () {
 
         $('.tabmenu > ul').find('li:lt(8)').remove();
+
+        var can_send = <?= $data['can_send']; ?>;
+        if(!can_send){
+            $('button[nc_value]').attr("disabled", "disabled").addClass("button_disabled");
+        }
 
         //设置发货左侧tab优化
         if (getQueryString("ctl") == "Seller_Trade_Order" && getQueryString("met") == "send") {

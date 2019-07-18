@@ -106,6 +106,7 @@ var THISPAGE = {
         //搜索
         $('#search').click(function()
         {
+            queryConditions.page = 1;
 			queryConditions.mansong_state = $source.getValue();
             queryConditions.mansong_name = _self.$_mansong_name.val();
             queryConditions.shop_name = _self.$_shop_name.val();

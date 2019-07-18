@@ -462,7 +462,9 @@ class IndexCtl extends Controller
 
             $vouchers_id_get = array_column($vouchers_get['items'], 'voucher_t_id');
             $voucherTempModel = new Voucher_TempModel();
-            $voucher_row['voucher_t_id:NOT IN']         = $vouchers_id_get;
+            if($vouchers_id_get) {
+                $voucher_row['voucher_t_id:NOT IN'] = $vouchers_id_get;
+            }
             $voucher_row['voucher_t_state'] 		    = Voucher_TempModel::VALID;
             $voucher_row['voucher_t_end_date:>=']       = get_date_time();
             $voucher_order_row['voucher_t_add_date'] = 'ASC';

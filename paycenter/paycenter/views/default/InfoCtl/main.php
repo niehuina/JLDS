@@ -71,8 +71,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
 		<div class="pc_user_mes_rt fr clearfix">
 			<div class="pc_user_mes_rt_percent fl">
 				<div id="myChart" style="width: 100%;height:120px;"></div>
-
-				<p class="pc_account"><?=_('账户总财产：')?><span><?=(format_money($user_resource['user_money'] + $user_resource['user_money_frozen'] + $user_resource['user_recharge_card'] + $user_resource['user_rechange_card_frozen'] + $user_resource['user_credit_availability']))?></span></p>
+                <p class="pc_account"><?=_('账户总财产：')?><span><?=(format_money($user_resource['user_money'] + $user_resource['user_money_frozen'] + $user_resource['user_shares'] + $user_resource['user_stocks']))?></span></p>
 			</div>
 			<div class="pc_user_mes_rt_text fl">
 				<dl class="clearfix dl-public">
@@ -86,13 +85,17 @@ include $this->view->getTplPath() . '/' . 'header.php';
 				</dl>
 				<?php }?>
 				<dl class="clearfix dl-public">
-					<dt class="dt_pad"><span class="pc_col_reprens bgy"></span><?=_('卡余额')?><i>：</i></dt>
-					<dd><?=(format_money($user_resource['user_recharge_card']))?></dd>
-				</dl>
-				<dl class="clearfix dl-public">
 					<dt><span class="pc_col_reprens bgr"></span><?=_('冻结资金：')?></dt>
 					<dd><?=(format_money($user_resource['user_money_frozen']))?></dd>
 				</dl>
+                <dl class="clearfix dl-public">
+                    <dt class="dt_pad"><span class="pc_col_reprens bgy"></span><?=_('股金')?><i>：</i></dt>
+                    <dd><?=(format_money($user_resource['user_shares']))?></dd>
+                </dl>
+                <dl class="clearfix dl-public">
+                    <dt class="dt_pad"><span class="pc_col_reprens bgo"></span><?=_('备货金')?><i>：</i></dt>
+                    <dd><?=(format_money($user_resource['user_stocks']))?></dd>
+                </dl>
 				<dl class="clearfix pc_a_btn dl-public">
                     <dd><a target="_blank" onclick="get_user_identity(event, this)" href="<?=Yf_Registry::get('url')?>?ctl=Info&met=deposit" class="pc_btn"><?=_('充值')?></a></dd>
                     <dd><a target="_blank" onclick="get_user_identity(event, this)" href="<?=Yf_Registry::get('url').'?ctl=Info&met=withdraw&typ=e'?>" class="pc_btn btn_active"><?=_('提现')?></a></dd>
@@ -156,11 +159,12 @@ include $this->view->getTplPath() . '/' . 'header.php';
 				{value:<?=$user_resource['user_money_frozen']?>}
 			];
 			<?php }else{?>
-			var col = ['#4dceff','#ffc24d','#D13030'];
+			var col = ['#4dceff','#D13030','#ffc24d', '#0dbd3b'];
 			var dat = [
 				{value:<?=$user_resource['user_money']?>},
-				{value:<?=$user_resource['user_recharge_card']?>},
-				{value:<?=$user_resource['user_money_frozen']?>}
+				{value:<?=$user_resource['user_money_frozen']?>},
+                {value:<?=$user_resource['user_shares']?>},
+                {value:<?=$user_resource['user_stocks']?>},
 			];
 			<?php }?>
 

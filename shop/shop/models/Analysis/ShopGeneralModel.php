@@ -55,7 +55,7 @@ class Analysis_ShopGeneralModel extends Analysis_ShopGeneral
 	{
 		if ($shop_id)
 		{
-			$shop_id_str = ' shop_id = ' . $shop_id;
+			$shop_id_str = ' seller_user_id = ' . $shop_id;
 		}
 		else
 		{

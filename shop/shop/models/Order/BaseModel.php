@@ -351,7 +351,7 @@ class Order_BaseModel extends Order_Base
 
         //若是待付款订单，计算系统取消订单时间
         if ($data['order_status'] == Order_StateModel::ORDER_WAIT_PAY) {
-            $data['cancel_time'] = date('Y-m-d H:00:00', strtotime($data['order_create_time']) + Yf_Registry::get('wait_pay_time'));
+            $data['cancel_time'] = date('Y-m-d H:i', strtotime($data['order_create_time']) + Yf_Registry::get('wait_pay_time'));
         }
 
         //若是已发货订单，计算系统自动确认收货时间
@@ -661,7 +661,6 @@ class Order_BaseModel extends Order_Base
                         $deilve_able = 0;
                     }
 
-
                     //查找该订单商品是否存在退款/退货
                     $goods_return       = $Order_ReturnModel->getByWhere(array(
                                                                              'order_goods_id' => $v['order_goods_id'],
@@ -835,7 +834,7 @@ class Order_BaseModel extends Order_Base
         switch ($data['order_status']) {
             case Order_StateModel::ORDER_WAIT_PAY :
                 $order_create_time = time($data['order_create_time']);
-                $order_close_data = date('Y-m-d', strtotime('+7days', $order_create_time));
+                $order_close_data = date('Y-m-d H:i:00', $order_create_time + Yf_Registry::get('wait_pay_time'));
                 $data['order_status_text'] = '订单已经提交，等待买家付款';
                 $data['order_status_html'] = "<li>1. 买家尚未对该订单进行支付。</li><li>2. 如果买家未对该笔订单进行支付操作，系统将于<time>$order_close_data</time>自动关闭该订单。</li>";
 
@@ -915,7 +914,8 @@ class Order_BaseModel extends Order_Base
                 $data['order_evaluate'] = "";
                 break;
 
-            case Order_StateModel::ORDER_RECEIVED || Order_StateModel::ORDER_FINISH :
+            case Order_StateModel::ORDER_RECEIVED:
+            case Order_StateModel::ORDER_RECEIVED:
                 $data['order_status_text'] = '已经收货';
                 $data['order_status_html'] = '<li>1. 交易已完成，买家可以对购买的商品及服务进行评价。</li><li>2. 评价后的情况会在商品详细页面中显示，以供其它会员在购买时参考。</li>';
 
@@ -985,8 +985,8 @@ class Order_BaseModel extends Order_Base
         switch ($data['order_status'])
         {
             case Order_StateModel::ORDER_WAIT_PAY :
-                $order_create_time         = time($data['order_create_time']);
-                $order_close_data          = date('Y-m-d', strtotime('+7days', $order_create_time));
+                $order_create_time = time($data['order_create_time']);
+                $order_close_data = date('Y-m-d H:i:00', $order_create_time + Yf_Registry::get('wait_pay_time'));
                 $data['order_status_text'] = '订单已经提交，等待买家付款';
                 $data['order_status_html'] = "<li>1. 买家尚未对该订单进行支付。</li><li>2. 如果买家未对该笔订单进行支付操作，系统将于<time>$order_close_data</time>自动关闭该订单。</li>";
 

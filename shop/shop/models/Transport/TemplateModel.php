@@ -155,7 +155,9 @@ class Transport_TemplateModel extends Transport_Template
                 $data[$key]['con']  = '';
 			}
 			return $data;
-		}
+		}else{
+            $data = array('cost'=>0,'con'=>'');
+        }
 
 		foreach ($cart as $key => $val){
             $order = array('weight'=>0,'count'=>0,'shop_id'=>$val['shop_id'],'price'=>$val['sprice']);

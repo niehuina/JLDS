@@ -94,6 +94,7 @@ var THISPAGE = {
 		
         $("#btn-refresh").click(function ()
         {
+            queryConditions.page = 1;
             THISPAGE.reloadData(queryConditions);
         });
 

@@ -76,7 +76,7 @@ class Api_User_GradeCtl extends Yf_AppController
 	}
 	
 	/**
-	 *编辑等级设置
+	 * 编辑等级设置
 	 *
 	 * @access public
 	 */

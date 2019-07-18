@@ -47,7 +47,7 @@ include __DIR__ . '/../../includes/header.php';
             <div class="container pre">
                 <i class="icon"></i>
                 <dl>
-                    <dt>已返还差额</dt>
+                    <dt>已返利金额</dt>
                     <dd>¥<em id="profit_money"></em></dd>
                 </dl>
             </div>

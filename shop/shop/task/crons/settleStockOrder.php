@@ -60,6 +60,7 @@ if ($data) {
         $formvars['user_id'] = $order['shop_user_id'];
         $formvars['user_money'] = $order['order_commission_fee'];
         $formvars['reason'] = '备货订单' . $val['order_id'] . '差额返还';
+        $formvars['trade_type'] = 13;
         $formvars['app_id'] = $paycenter_app_id;
         $formvars['type'] = 'row';
 

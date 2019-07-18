@@ -69,16 +69,7 @@ class Api_User_InfoCtl extends Yf_AppController
 		}
 		
 		$data = $this->userInfoModel->getInfoList($cond_row, $sort, $page, $rows);
-		
-		$shopBaseModel = new Shop_BaseModel();
-		foreach ($data['items'] as $key => $value) {
-			$shop_info = 	$shopBaseModel->getOneByWhere(array('user_id'=>$value['user_id']));
-			if(!empty($shop_info)){
-				$data['items'][$key]['shop_type'] = $shop_info['shop_type'];
-			}
-		}
-		
-		
+
 		$this->data->addBody(-140, $data);
 
 	}
@@ -305,6 +296,30 @@ class Api_User_InfoCtl extends Yf_AppController
 		$this->data->addBody(-140, $data, $msg, $status);
 	}
 
+	public function editUserRealName()
+    {
+        $user_id = request_int('user_id');
+        $user_realname = request_string('user_realname');
+
+        $edit_row = array();
+        $edit_row['user_realname'] = $user_realname;
+        $update_flag = $this->userInfoModel->editInfo($user_id, $edit_row);
+
+        if ($update_flag !== false)
+        {
+            $status = 200;
+            $msg    = __('success');
+        }
+        else
+        {
+            $status = 250;
+            $msg    = __('failure');
+        }
+
+        $data = array();
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
+
 	/**
 	 * 增加会员
 	 *
@@ -521,6 +536,26 @@ class Api_User_InfoCtl extends Yf_AppController
         $this->data->addBody(-140, $data, $msg, $status);
     }
 
+
+    public function updateUserToVIP()
+    {
+        $user_id = request_int('user_id');
+        $User_GradeModel = new User_GradeModel();
+        $flag = $User_GradeModel->updateGradeVip($user_id, false);
+        if ($flag === false)
+        {
+            $status = 250;
+            $msg    = __('failure');
+        }
+        else
+        {
+
+            $status = 200;
+            $msg    = __('success');
+        }
+        $this->data->addBody(-140, array(), $msg, $status);
+    }
+
     public function updateUserGradeToGPartner()
     {
         $user_id              = request_int('user_id');
@@ -528,7 +563,7 @@ class Api_User_InfoCtl extends Yf_AppController
         $user_stocks          = request_int('user_stocks');
 
         $User_GradeModel = new User_GradeModel();
-        $flag = $User_GradeModel->updateGradeToPartner($user_id, $user_shares, $user_stocks);
+        $flag = $User_GradeModel->updateGradeToGPartner($user_id, $user_shares, $user_stocks);
         Yf_Log::log("flag:".$flag, Yf_Log::LOG, 'debug');
 
         if($flag || empty($flag)) {

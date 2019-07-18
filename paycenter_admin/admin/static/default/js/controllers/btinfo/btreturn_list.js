@@ -100,6 +100,7 @@ var THISPAGE = {
 
 
         $('#search').click(function(){
+            queryConditions.page = 1;
             queryConditions.searchName = $searchName.getValue();
             queryConditions.searchContent = _self.$_searchContent.val();
             queryConditions.status = $status.getValue() === '请选择审核状态' ? '' : $status.getValue();

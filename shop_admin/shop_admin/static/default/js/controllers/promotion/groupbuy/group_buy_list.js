@@ -138,6 +138,7 @@ var THISPAGE = {
         //搜索
         $('#search').click(function()
         {
+            queryConditions.page = 1;
 			queryConditions.groupbuy_state = $source.getValue();
             queryConditions.groupbuy_name = _self.$_groupbuy_name.val();
             queryConditions.goods_name = _self.$_goods_name.val();

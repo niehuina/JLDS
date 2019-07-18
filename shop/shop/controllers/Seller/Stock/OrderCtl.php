@@ -14,6 +14,8 @@ class Seller_Stock_OrderCtl extends Seller_Controller
     public function __construct(&$ctl, $met, $typ)
     {
         parent::__construct($ctl, $met, $typ);
+
+        $is_partner = self::$is_partner;
     }
 
     public function physical()
@@ -83,7 +85,11 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
         $order['order_create_time'] = 'desc';
         $Stock_OrderModel = new Stock_OrderModel();
-        $data = $Stock_OrderModel->getOrderList($condition, $order, $page, $rows);
+        if(self::$self_shop_id == Perm::$shopId) {
+            $data = $Stock_OrderModel->getOrderList($condition, $order, $page, $rows);
+        }else{
+            $data = $Stock_OrderModel->getOrderUserList($condition, $order, $page, $rows);
+        }
 
         $Yf_Page->totalRows = $data['totalsize'];
         $page_nav = $Yf_Page->prompt();
@@ -105,14 +111,14 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         }
 
         if (!empty($query_end_date)) {
-            $condition['order_create_time:<='] = $query_end_date;
+            $condition['order_create_time:<='] = date('Y-m-d 23:59:59',strtotime($query_end_date));
         }
 
         if (!empty($query_buyer_name)) {
             $condition['buyer_user_name:LIKE'] = "%$query_buyer_name%";
         }
 
-        if (!empty($query_order_id)) {
+        if (!empty($query_order_sn)) {
             $condition['stock_order_id'] = $query_order_sn;
         }
 
@@ -136,25 +142,22 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $shop_info = $Shop_BaseModel->getOne($shop_id);
 
             $User_InfoModel = new User_InfoModel();
-            $user_info = $User_InfoModel->getOne($user_id);
+            $g_partner_info = $User_InfoModel->getOne($user_id);
 
             $User_AddressModel = new User_AddressModel();
+            //获取一级地址
             $user_address = $User_AddressModel->getDefaultAddress($user_id);
             if (!$user_address) {
                 $user_address = $User_AddressModel->getAddressList(['user_id' => $user_id]);
                 $user_address = current($user_address);
             }
 
-            //获取一级地址
             $district_parent_id = request_int('pid', 0);
             $baseDistrictModel = new Base_DistrictModel();
             $district = $baseDistrictModel->getDistrictTree($district_parent_id);
 
             //收货人信息
-            if (empty($user_address)) {
-                $user_address['shipper'] = 0;
-                $user_address['shipper_info'] = '还未设置发货地址，请进入发货设置 &gt 地址库中添加';
-            } else {
+            if ($user_address) {
                 $user_address['shipper'] = 1;
                 $user_address['shipper_info'] = $user_address['user_address_contact'] . "&nbsp" . $user_address['user_address_area'] . "&nbsp" . $user_address['user_address_address'] . "&nbsp" . $user_address['user_address_phone'];
             }
@@ -175,6 +178,36 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         include $this->view->getView();
     }
 
+    public function getTransport()
+    {
+        $city_id  = request_int('city_id');
+        $order_price  = request_string('order_price');
+        $select_goods_list = request_string('select_goods_list');
+        $select_goods_list = decode_json($select_goods_list);
+
+        $goods_ids = array_keys($select_goods_list);
+        $cond_row = array();
+        $cond_row['shop_id'] = self::$self_shop_id;;
+        $cond_row['goods_id:in'] = $goods_ids;
+        $order['CONVERT(goods_name USING gbk)'] = 'asc';
+        $Goods_BaseModel = new Goods_BaseModel();
+        $Goods_CommonModel = new Goods_CommonModel();
+        $goods_list = $Goods_BaseModel->getByWhere($cond_row, $order);
+        $order = array('weight'=>0,'count'=>0,'shop_id'=>self::$self_shop_id,'price'=>$order_price);
+        foreach ($select_goods_list as $key => $goods_num) {
+            $goods_base = $goods_list[$key];
+            $goods_common = $Goods_CommonModel->getOne($goods_base['common_id']);
+
+            $order['weight'] += $goods_common['common_cubage'] * $goods_num;
+            $order['count'] += $goods_num;
+        }
+
+        $Transport_TemplateModel = new Transport_TemplateModel();
+        $transport_cost= $Transport_TemplateModel->shopTransportCost($city_id, $order);
+
+        $this->data->addBody(-140, $transport_cost);
+    }
+
     public function addSendOrder()
     {
         $action = request_string('action');
@@ -183,11 +216,12 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         $shop_id = request_int('shop_id');
         $select_goods_list = request_string('select_goods_list');
         $select_goods_list = decode_json($select_goods_list);
-        $order_address_name = request_string('order_address_name');
-        $user_address_area = request_string('user_address_area');
-        $order_address_address = request_string('order_address_address');
-        $order_address_phone = request_string('order_address_phone');
+        $user_address_name = request_string('order_address_name');
+        $user_address_area = request_string('order_address_area');
+        $user_address_address = request_string('order_address_address');
+        $user_address_phone = request_string('order_address_phone');
 //        $order_total_amount  = request_string('total_amount');
+        $shipping_fee  = request_string('shipping_fee');
 
         if (isset($action) && $action == 'edit') {
 
@@ -210,12 +244,21 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $order_row['shop_id'] = $shop_id;
             $order_row['shop_user_id'] = $user_id;
             $order_row['shop_user_name'] = $user_info['user_name'];
-            $order_row['order_receiver_name'] = $order_address_name;
-            $order_row['order_receiver_address'] = $user_address_area . ' ' . $order_address_address;
-            $order_row['order_receiver_phone'] = $order_address_phone;
+            $order_row['order_receiver_name'] = $user_address_name;
+            $order_row['order_receiver_address'] = $user_address_area . ' ' . $user_address_address;
+            $order_row['order_receiver_phone'] = $user_address_phone;
+
+            $User_AddressModel = new User_AddressModel();
+            $user_address['user_id'] = $user_id;
+            $user_address['user_address_contact'] = $user_address_phone;
+            $user_address['user_id'] = $user_id;
+            $user_address['user_id'] = $user_id;
+            $user_address['user_id'] = $user_id;
+            $user_address['user_id'] = $user_id;
+            $user_address['user_id'] = $user_id;
 
             //备货订单物流信息
-//            $order_row['order_shipping_fee'] = 0;
+            $order_row['order_shipping_fee'] = $shipping_fee;
 //            $order_row['order_shipping_time'] = $order_address_phone;
 //            $order_row['order_shipping_method'] = $order_address_phone;
 //            $order_row['order_shipping_express_id'] = $order_address_phone;
@@ -226,10 +269,11 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $order_total_amount = 0;
             $order_total_amount_vip = 0;
             $order_total_amount_partner = 0;
+            $self_shop_id = self::$self_shop_id;
 
             $goods_ids = array_keys($select_goods_list);
             $cond_row = array();
-            $cond_row['shop_id'] = self::$self_shop_id;
+            $cond_row['shop_id'] = $self_shop_id;
             $cond_row['goods_id:in'] = $goods_ids;
             $order['CONVERT(goods_name USING gbk)'] = 'asc';
             $Goods_BaseModel = new Goods_BaseModel();
@@ -237,7 +281,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
             //如果卖家设置了默认地址，则将默认地址信息加入order表
             $Shop_ShippingAddressModel = new Shop_ShippingAddressModel();
-            $address_list              = $Shop_ShippingAddressModel->getByWhere(array('shop_id' => self::$self_shop_id, 'shipping_address_default'=>1));
+            $address_list              = $Shop_ShippingAddressModel->getByWhere(array('shop_id' => $self_shop_id, 'shipping_address_default'=>1));
             if($address_list)
             {
                 $address_list = current($address_list);
@@ -249,8 +293,6 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $rs = array();
             $Stock_OrderModel = new Stock_OrderModel();
             $Stock_OrderGoodsModel = new Stock_OrderGoodsModel();
-            $Goods_BaseModel = new Goods_BaseModel();
-            $Goods_CommonModel = new Goods_CommonModel();
             $Stock_OrderModel->sql->startTransactionDb();
             foreach ($select_goods_list as $key => $goods_num) {
                 $goods_base = $goods_list[$key];
@@ -293,9 +335,9 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                 check_rs($flag2, $rs);
             }
 
-            $order_row['order_payment_amount'] = $order_total_amount;
-            $order_row['order_payment_amount_vip'] = $order_total_amount_vip;
-            $order_row['order_payment_amount_partner'] = $order_total_amount_partner;
+            $order_row['order_payment_amount'] = $order_total_amount + $shipping_fee;
+            $order_row['order_payment_amount_vip'] = $order_total_amount_vip + $shipping_fee;
+            $order_row['order_payment_amount_partner'] = $order_total_amount_partner + $shipping_fee;
             $order_row['order_commission_fee'] = $order_total_amount_vip - $order_total_amount_partner;
             $order_row['order_status'] = Order_StateModel::ORDER_PAYED;
             $flag = $Stock_OrderModel->addOrder($order_row);
@@ -393,6 +435,26 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         }
 
         $this->data->addBody(-140, $goods_list);
+    }
+
+    public function chooseBuyerAddress()
+    {
+        $typ = request_string('typ');
+        $user_id = request_int('user_id');
+
+        if ($typ == 'e')
+        {
+            $User_AddressModel = new User_AddressModel();
+            $address_list = $User_AddressModel->getAddressList(['user_id' => $user_id]);
+            $address_list              = array_values($address_list);
+            foreach ($address_list as $key => $val)
+            {
+                $address_list[$key]['address_info']  = $val['user_address_area'] . " " . $val['user_address_address'];
+                $address_list[$key]['address_value'] = $val['user_address_contact'] . "&nbsp" . $val['user_address_phone'] . "&nbsp" . $val['user_address_area'] . "&nbsp" . $val['user_address_address'];
+            }
+
+            include $this->view->getView();
+        }
     }
 
     public function chooseSendAddress()
@@ -630,7 +692,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
             $flag = $Stock_OrderModel->editOrder($order_id, $update_data);
 
-            if ($flag)
+            if ($flag !== false)
             {
                 $update_data['receiver_info'] = $update_data['order_receiver_name'] . "&nbsp;" . $update_data['order_receiver_address'] . "&nbsp;" . $update_data['order_receiver_phone'];
                 $msg                          = __('success');
@@ -716,7 +778,9 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                 //远程修改paycenter中的订单状态
                 $formvars = array();
                 $formvars['order_id'] = $order_id;
-                $rs = $this->getPayCenterUrl('Api_Pay_Pay', 'cancelOrder', $formvars);
+                $formvars['buy_id'] = $order_base['shop_user_id'];
+                $formvars['payment_amount'] = $order_base['order_payment_amount_vip'];
+                $rs = $this->getPayCenterUrl('Api_Pay_Pay', 'cancelOrderForStock', $formvars);
                 if ($rs['status'] == 200) {
                     $edit_flag3 = true;
                     check_rs($edit_flag3, $rs_row);
@@ -829,8 +893,8 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                 //判断修改用户的备货金
                 $formvars = array();
                 $formvars['order_id']    = $order_id;
+                $formvars['payment'] = 1;
                 $formvars['from_app_id'] = Yf_Registry::get('shop_app_id');
-
                 $rs = $this->getPayCenterUrl('Api_Pay_Pay', 'confirmOrder', $formvars);
                 if($rs['status'] == 250)
                 {
@@ -971,7 +1035,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         }
 
         if (!empty($query_end_date)) {
-            $cond_row['check_date_time:<='] = $query_end_date;
+            $cond_row['check_date_time:<='] = date('Y-m-d 23:59:59',strtotime($query_end_date));
         }
         $Stock_CheckModel = new Stock_CheckModel();
         $cond_row['user_id'] = Perm::$userId;
@@ -1159,23 +1223,23 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             if(is_ok($rs_row) && $User_Stock_Model->sql->commitDb()){
                 $msg =  __('success');
                 $status = 200;
-
-                $redirect = "index.php?ctl=Seller_Stock_Order&met=user_stock&typ=e";
-                location_to(urldecode($redirect));
             }else{
                 $User_Stock_Model->sql->rollBackDb();
                 $m = $User_Stock_Model->msg->getMessages();
                 $msg = $m ? $m[0] : __('failure');
                 $status = 250;
             }
+
+            $this->data->addBody(-140, array(), $msg, $status);
         }
     }
 
     public function stock_goods()
     {
-        $page    = request_int('page', 0);
+        $page    = request_int('page', 1);
         $rows    = request_int('rows', 20);
         $goods_key = request_string('goods_key', '');
+        Yf_Log::log(1, Yf_Log::LOG, 'debug1');
 
         $User_Stock_Model = new User_StockModel();
         $cond_row['user_id'] = Perm::$userId;
@@ -1184,7 +1248,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         }
         $order_row['CONVERT(goods_name USING gbk)'] = 'asc';
         $goods = $User_Stock_Model->getUserStockList($cond_row, $order_row, $page, $rows);
-
+        Yf_Log::log($goods, Yf_Log::LOG, 'debug1');
         $this->data->addBody(-140, $goods);
     }
 

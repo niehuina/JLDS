@@ -145,6 +145,12 @@ function initGrid() {
             }
 
         },
+        beforeSelectRow: function (rowid, e) {
+            var $myGrid = $(this),
+                i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),
+                cm = $myGrid.jqGrid('getGridParam', 'colModel');
+            return (cm[i].name === 'cb');
+        },
         beforeRequest: function () {
             var flag = recordPageAll();
             return flag;

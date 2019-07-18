@@ -71,7 +71,7 @@ function initGrid() {
         multiselect: true,
         multiboxonly: false,
         gridview: !0,
-        rowNum: 5,
+        rowNum: 10,
         colNames: a,
         colModel: b,
         shrinkToFit: false,
