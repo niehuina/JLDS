@@ -33,14 +33,31 @@ $(function () {
                 //渲染页面
                 $(".member-top").html(html);
 
-                var html = '<li><a href="order_list.html?data-state=wait_pay"><i class="cc-01"></i><p>待付款</p></a>' + (result.data.order_count.wait > 0 ? '<b>' + result.data.order_count.wait + '</b>' : '') + '</li>'
-                    + '<li><a href="order_list.html?data-state=order_payed"><i class="cc-02"></i><p>待发货</p></a>' + (result.data.order_count.payed > 0 ? '<b>' + result.data.order_count.payed + '</b>' : '') + '</li>'
-                    + '<li><a href="order_list.html?data-state=wait_confirm_goods"><i class="cc-03"></i><p>待收货</p></a>' + (result.data.order_count.confirm > 0 ? '<b>' + result.data.order_count.confirm + '</b>' : '') + '</li>'
-                    + '<li><a href="order_list.html?data-state=finish"><i class="cc-04"></i><p>待评价</p></a>' + (result.data.order_count.finish > 0 ? '<b>' + result.data.order_count.finish + '</b>' : '') + '</li>'
-                    + '<li><a href="member_refund.html"><i class="cc-05"></i><p>退款/退货</p></a>' + (result.data.order_count.return > 0 ? '<b>' + result.data.order_count.return + '</b>' : '') + '</li>';
+
+                var html = '<a href="../order/order_list.html">' +
+                    '<h3>我的订单</h3>'+
+                    '<h5>查看全部订单<i class="arrow-r"></i></h5>'+
+                    '</a>';
+                $(".order-content").html(html);
+
+                var html = '<li><a href="../order/order_list.html?data-state=wait_pay"><i class="cc-01"></i><p>待付款</p></a>' + (result.data.order_count.wait > 0 ? '<b>' + result.data.order_count.wait + '</b>' : '') + '</li>'
+                    + '<li><a href="../order/order_list.html?data-state=order_payed"><i class="cc-02"></i><p>待发货</p></a>' + (result.data.order_count.payed > 0 ? '<b>' + result.data.order_count.payed + '</b>' : '') + '</li>'
+                    + '<li><a href="../order/order_list.html?data-state=wait_confirm_goods"><i class="cc-03"></i><p>待收货</p></a>' + (result.data.order_count.confirm > 0 ? '<b>' + result.data.order_count.confirm + '</b>' : '') + '</li>'
+                    + '<li><a href="../order/order_list.html?data-state=finish"><i class="cc-04"></i><p>待评价</p></a>' + (result.data.order_count.finish > 0 ? '<b>' + result.data.order_count.finish + '</b>' : '') + '</li>'
+                    + '<li><a href="../order/member_refund.html"><i class="cc-05"></i><p>退款/退货</p></a>' + (result.data.order_count.return > 0 ? '<b>' + result.data.order_count.return + '</b>' : '') + '</li>';
 
                 //渲染页面
                 $("#order_ul").html(html);
+
+                var html = '<dl class="mt5">'+
+                    '<dt>'+
+                    '<a href="member_money.html">'+
+                    '<h3>我的钱包</h3>'+
+                    '<h5>查看明细<i class="arrow-r"></i></h5>'+
+                    '</a>'+
+                    '</dt>'+
+                    '</dl>';
+                $(".member-center").append(html);
 
                 var html = '<dl class="mt5">'+
                     '<dt>'+
@@ -73,6 +90,15 @@ $(function () {
                     $(".member-center").append(html);
                 }
 
+                var html = '<dl class="mt5">' +
+                    '<dt>' +
+                    '<a href="views_list.html">' +
+                    '<img src="../../images/goods_browse_b.png" width="20px" height="20px">' +
+                    '</a>' +
+                    '</dt>' +
+                    '</dl>';
+                $(".header-b").append(html);
+
                 return false;
             }
         });
@@ -80,10 +106,15 @@ $(function () {
         var html = '<div class="mine-head-bg"><div class="member-info">'
             + '<a class="default-avatar logbtn" href="javascript:void(0);" style="display:block;"></a>'
             + '<a class="to-login logbtn" href="javascript:void(0);">点击登录</a>'
-            + '</div></div>'
-            + '<div class="sign"><a class="logbtn" href="javascript:void(0);"><i class="goods-sign"></i><b class="middle">签到</b></a></div>';
+            + '</div></div>';
         //渲染页面
         $(".member-top").html(html);
+
+        var html = '<a class="logbtn"> ' +
+            '<h3>我的订单</h3>'+
+            '<h5>查看全部订单<i class="arrow-r"></i></h5>'+
+            '</a>';
+        $(".order-content").html(html);
 
         var html = '<li><a class="logbtn"><i class="cc-01"></i><p>待付款</p></a></li>'
             + '<li><a class="logbtn"><i class="cc-02"></i><p>待发货</p></a></li>'
@@ -92,6 +123,17 @@ $(function () {
             + '<li><a class="logbtn"><i class="cc-05"></i><p>退款/退货</p></a></li>';
         //渲染页面
         $("#order_ul").html(html);
+
+        var html = '<dl class="mt5">'+
+            '<dt>'+
+            '<a class="logbtn">'+
+            '<h3>我的钱包</h3>'+
+            '<h5>查看明细<i class="arrow-r"></i></h5>'+
+            '</a>'+
+            '</dt>'+
+            '</dl>';
+        $(".member-center").append(html);
+
         return false;
     }
 

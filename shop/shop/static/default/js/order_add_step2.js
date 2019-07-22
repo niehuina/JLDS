@@ -16,6 +16,7 @@ function setGrid(adjustH, adjustW) {
 };
 
 function cbkCheck(obj) {
+    if(obj.tagName == 'TD') obj = $(obj).find(':checkbox')[0];
     var goods_id = $(obj).data("goods_id");
     if(obj.checked == true){
         var order_goods_num = $("#"+goods_id).find("input[name='order_goods_num']").val();
@@ -54,57 +55,6 @@ function selectAllCheck(isCompute) {
     if(flag){
         $("#select_goods_list").val(JSON.stringify(select_goods_list));
     }
-    return flag;
-}
-
-function getShippingFee() {
-    var flag = true;
-    var order_price = $("#total_amount").val();
-    var city_id = $("#id_2").val();
-    if(!city_id){
-        Public.tips.error('收货人地址未设置！');
-        flag = false;
-        return flag;
-    }
-    if(Object.keys(select_goods_list).length == 0){
-        Public.tips.error('未选择商品！');
-        flag = false;
-        return flag;
-    }
-
-    var user_stocks = $("#user_stocks").val();
-    if (order_price*1 > user_stocks*1) {
-        Public.tips.error('商品总金额不能超过合伙人备货金！');
-        flag = false;
-        return flag;
-    }
-
-    var url = "index.php?ctl=Seller_Stock_Order&met=getTransport&typ=json";
-    var form_ser = {
-        'select_goods_list': JSON.stringify(select_goods_list),
-        'order_price': order_price,
-        'city_id':city_id
-    };
-    $.getJSON(url, form_ser, function (result) {
-        if (result.status == 200) {
-            var cost = result.data.cost;
-            if(cost===cost+''){
-                $("#shipping_fee_show").text("￥"+cost);
-            }else{
-                $("#shipping_fee_show").text("￥"+cost.toFixed(2));
-            }
-            $("#shipping_fee").val(cost);
-
-            if (order_price*1 + cost*1 > user_stocks*1) {
-                Public.tips.error('订单总金额不能超过合伙人备货金！');
-                flag = false;
-                return flag;
-            }
-        } else {
-            Public.tips.error('计算配送费失败！');
-            flag = false;
-        }
-    })
     return flag;
 }
 
@@ -253,8 +203,13 @@ function initGrid() {
                     $(order_goods_num_cell).val(select_goods_list[goods_id]);
                 }
 
-                $(curChk).click(function () {
+                $(curChk).click(function (e) {
+                    e.stopPropagation();
                     cbkCheck(this);
+                });
+
+                $(curChk.parent('td')).click(function (e) {
+                    e.stopPropagation();
                 });
             }
 
@@ -311,6 +266,7 @@ $(function () {
     initGrid();
 
     $("#button_get_shipping_fee").click(function () {
+        selectAllCheck(false);
         var flag = getShippingFee();
         if(flag){
             disabledButton();
@@ -319,7 +275,8 @@ $(function () {
     
     $("#button_next_step").click(function () {
         var flag = selectAllCheck(false);
-        if(flag) {
+        var flag2 = getShippingFee();
+        if(flag && flag2) {
             var url = "index.php?ctl=Seller_Stock_Order&met=addSendOrder&typ=json";
             var form_ser = $("#form").serialize();
             $.post(url, form_ser, function (data) {
@@ -336,26 +293,77 @@ $(function () {
     })
 });
 
+function getShippingFee() {
+    var flag = true;
+    var order_price = $("#total_amount").val();
+    var city_id = $("#id_2").val();
+    if(!city_id){
+        Public.tips.error('收货人地址未设置！');
+        flag = false;
+        return flag;
+    }
+    if(Object.keys(select_goods_list).length == 0){
+        Public.tips.error('未选择商品！');
+        flag = false;
+        return flag;
+    }
+
+    var user_stocks = $("#user_stocks").val();
+    if (order_price*1 > user_stocks*1) {
+        Public.tips.error('商品总金额不能超过合伙人备货金！');
+        flag = false;
+        return flag;
+    }
+
+    var url = "index.php?ctl=Seller_Stock_Order&met=getTransport&typ=json";
+    var form_ser = {
+        'select_goods_list': JSON.stringify(select_goods_list),
+        'order_price': order_price,
+        'city_id':city_id
+    };
+    $.getJSON(url, form_ser, function (result) {
+        if (result.status == 200) {
+            var cost = result.data.cost;
+            if(cost===cost+''){
+                $("#shipping_fee_show").text("￥"+cost);
+            }else{
+                $("#shipping_fee_show").text("￥"+cost.toFixed(2));
+            }
+            $("#shipping_fee").val(cost);
+
+            if (order_price*1 + cost*1 > user_stocks*1) {
+                Public.tips.error('订单总金额不能超过合伙人备货金！');
+                flag = false;
+                return flag;
+            }
+        } else {
+            Public.tips.error('计算配送费失败！');
+            flag = false;
+        }
+    })
+    return flag;
+}
+
 function disabledButton(){
     var user_stocks = $("#user_stocks").val();
     var total_amount = $("#total_amount").val();
 
-    if(Object.keys(select_goods_list).length > 0 && total_amount <= user_stocks){
+    if(Object.keys(select_goods_list).length > 0 && total_amount*1 <= user_stocks*1){
         $('#button_next_step').attr('disabled',false).addClass('bbc_seller_submit_btns').removeClass('bbc_sellerGray_submit_btns');
     }else {
         $('#button_next_step').attr('disabled',true).removeClass('bbc_seller_submit_btns').addClass('bbc_sellerGray_submit_btns');
     }
 }
 
-//选择发货地址
+//选择收货地址
 $('a[dialog_id="edit_send_address"]').on('click', function () {
 
-    var user_id = $("#user_id").val(),
+    var user_id = $("#user_id").val(),shop_id = $("#shop_id").val(),
         url = SITE_URL + '?ctl=Seller_Stock_Order&met=chooseBuyerAddress&typ=';
 
     $.dialog({
-        title: '选择发货地址',
-        content: 'url: ' + url + 'e&user_id=' + user_id,
+        title: '选择收货地址',
+        content: 'url: ' + url + 'e&shop_id=' + shop_id,
         height: 400,
         width: 640,
         lock: true,
@@ -363,11 +371,13 @@ $('a[dialog_id="edit_send_address"]').on('click', function () {
         data: { callback: function ( send_address, win ) {
                 $("#order_address_name").val(send_address.order_seller_name);
                 $("#d_2").addClass("hidden");
+                $("#d_1").removeClass('hidden');
                 $("#d_1").html(send_address.seller_address_area + '&nbsp;&nbsp;<a href="javascript:sd();">编辑</a>');
                 $("#order_address_address").val(send_address.order_seller_address);
                 $("#order_address_phone").val(send_address.order_seller_contact);
                 $("#t").val(send_address.seller_address_area);
                 $("#seller_address_span").text(send_address.seller_address_span);
+                $("#id_2").val(send_address.order_seller_city_id);
                 win.api.close();
             }
         }

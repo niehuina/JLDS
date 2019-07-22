@@ -52,7 +52,7 @@ $order_row['order_create_time'] = 'asc';
 
 $flag = true;
 foreach ($partner_list as $key => $user_info) {
-    $user_id = $user['user_id'];
+    $user_id = $user_info['user_id'];
     $user_children_ids = $User_InfoModel->getUserChildren($user_id, 0);
     $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
     $cond_row['rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
@@ -93,8 +93,8 @@ foreach ($partner_list as $key => $user_info) {
         }
 
         $user_order_ids = array_column($user_orders, 'order_id');
-        $edit_row['rebate_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
-        $flag = $Order_BaseModel->editBase($user_order_ids, $edit_row);
+        $order_edit_row['rebate_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
+        $flag = $Order_BaseModel->editBase($user_order_ids, $order_edit_row);
     }
 
     //将需要确认的订单号远程发送给Paycenter修改订单状态
@@ -110,14 +110,14 @@ foreach ($partner_list as $key => $user_info) {
     $current_year = date('Y');
     $formvars['desc'] = "{$current_year}年度累计订单金额{$total_children_order_total_amount},本次提成结算金额{$user_order_amount}";
     $formvars['app_id'] = $paycenter_app_id;
-    $formvars['trade_type'] = 13;
+    $formvars['trade_type'] = 15;
     $formvars['type'] = 'row';
 
     $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=directsellerOrder&typ=json', $url), $formvars);
 }
 
 foreach ($g_partner_list as $key => $user_info) {
-    $user_id = $user['user_id'];
+    $user_id = $user_info['user_id'];
 
     //计算高级合伙人的提成比例
     $grade_order_rebate1 = $user_g_grade['order_rebate1'] * 1;
@@ -146,8 +146,8 @@ foreach ($g_partner_list as $key => $user_info) {
         $order_rebate_value = $user_order_amount * $order_rebate;
 
         $user_order_ids = array_column($user_orders, 'order_id');
-        $edit_row['g_rebate_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
-        $flag = $Order_BaseModel->editBase($user_order_ids, $edit_row);
+        $order_edit_row['g_rebate_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
+        $flag = $Order_BaseModel->editBase($user_order_ids, $order_edit_row);
     }
 
     //将需要确认的订单号远程发送给Paycenter修改订单状态
@@ -162,7 +162,7 @@ foreach ($g_partner_list as $key => $user_info) {
     $formvars['reason'] = '高级合伙人订单提成结算';
     $formvars['desc'] = "订单总额为{$user_order_amount},提成比例{$order_rebate}";
     $formvars['app_id'] = $paycenter_app_id;
-    $formvars['trade_type'] = 13;
+    $formvars['trade_type'] = 15;
     $formvars['type'] = 'row';
 
     $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=directsellerOrder&typ=json', $url), $formvars);

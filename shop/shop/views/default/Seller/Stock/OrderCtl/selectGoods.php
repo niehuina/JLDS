@@ -78,22 +78,22 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <dt><i>*</i><?=__('联系人')?>：</dt>
                     <dd>
                         <input type="text"  class="text w150" id="order_address_name" name="order_address_name"
-                               value="<?=$user_address['user_address_contact']?>" />
+                               value="<?=$user_address['shipping_address_contact']?>" />
                     </dd>
                 </dl>
                 <dl>
                     <dt><i>*</i><?=__('所在地区')?>：</dt>
                     <dd>
-                        <input type="hidden" name="user_address_area" id="t" value="<?=$user_address['user_address_area']?>" />
-                        <input type="hidden" name="user_province_id" id="id_1" value="<?=$user_address['user_address_province_id']?>" />
-                        <input type="hidden" name="user_city_id" id="id_2" value="<?=$user_address['user_address_city_id']?>" />
-                        <input type="hidden" name="user_area_id" id="id_3" value="<?=$user_address['user_address_area_id']?>" />
-                        <div id="d_1"><?php if($user_address['user_address_area']){ ?>
-                            <?=$user_address['user_address_area'] ?>&nbsp;&nbsp;<a href="javascript:sd();"><?=__('编辑')?></a>
+                        <input type="hidden" name="user_address_area" id="t" value="<?=$user_address['shipping_address_area']?>" />
+                        <input type="hidden" name="user_province_id" id="id_1" value="<?=$user_address['shipping_address_province_id']?>" />
+                        <input type="hidden" name="user_city_id" id="id_2" value="<?=$user_address['shipping_address_city_id']?>" />
+                        <input type="hidden" name="user_area_id" id="id_3" value="<?=$user_address['shipping_address_area_id']?>" />
+                        <div id="d_1"><?php if($user_address['shipping_address_area']){ ?>
+                            <?=$user_address['shipping_address_area'] ?>&nbsp;&nbsp;<a href="javascript:sd();"><?=__('编辑')?></a>
                         <?php } ?>
                         </div>
 
-                        <div id="d_2"  class="<?php if($user_address['user_address_area']) echo 'hidden';?>">
+                        <div id="d_2"  class="<?php if($user_address['shipping_address_area']) echo 'hidden';?>">
                             <select id="select_1" name="select_1" onChange="district(this);">
                                 <option value=""><?=__('--请选择--')?></option>
                                 <?php foreach($district['items'] as $key=>$val){ ?>
@@ -109,7 +109,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <dt><i>*</i><?=__('街道地址')?>：</dt>
                     <dd>
                         <input type="text"  class="text w450" id="user_address_address" name="order_address_address"
-                               value="<?=$user_address['user_address_address']?>" />
+                               value="<?=$user_address['shipping_address_address']?>" />
                         <p class="hint"><?=__('不必重复填写地区')?></p>
                     </dd>
                 </dl>
@@ -117,7 +117,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <dt><i>*</i><?=__('电话')?>：</dt>
                     <dd>
                         <input type="text" class="text w200" id="order_address_phone" name="order_address_phone"
-                               maxlength="11" value="<?= $user_address['user_address_phone']?>">
+                               maxlength="11" value="<?= $user_address['shipping_address_phone']?>">
                     </dd>
                 </dl>
                 <h3>
@@ -144,6 +144,10 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
         </div>
     </div>
 </div>
+<script>
+    $('.tabmenu > ul').find('li:lt(5)').remove();
+    $('.tabmenu > ul').find('li:gt(0)').remove();
+</script>
 <script type="text/javascript" src="<?=$this->view->js?>/district.js"></script>
 <script type="text/javascript" src="<?=$this->view->js?>/order_add_step2.js" charset="utf-8"></script>
 

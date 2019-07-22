@@ -56,7 +56,7 @@ $(function () {
                     width: 100,
                     align: 'center',
                     "formatter": function (val, opt, row) {
-                        var html_con = '<span  class="get-user_details ui-label ui-label-success" data-id="' + row.id + '">详细资料</span>';
+                        var html_con = '<span  class="get-user_details ui-label ui-label-success" data-id="' + row.user_id + '">详细资料</span>';
                         return html_con;
                     }
                 },
@@ -138,7 +138,7 @@ $(function () {
                     data = response.data;
                     for (var i = 0; i < data.items.length; i++) {
                         var item = data.items[i];
-                        item['id'] = item.id;
+                        item['id'] = item.user_id;
                         gridData[item.id] = item;
                     }
 
@@ -390,12 +390,12 @@ $(function () {
                 }
                 ;
 
-                return '<span class="set-status ui-label ' + e + '" data-delete="' + a + '" data-id="' + c.id + '">' + d + '</span>'
+                return '<span class="set-status ui-label ' + e + '" data-delete="' + a + '" data-id="' + c.user_id + '">' + d + '</span>'
             },
             operFormatter: function (val, opt, row) {
                 if ((val && val != 4) || row.user_state != 4) {
-                    var html_con = '<span class="set-passwd ui-label ui-label-success" data-id="' + row.id + '">修改密码</span>' +
-                        '&nbsp;<span class="user-exit ui-label ui-label-success" data-id="' + row.id + '">退出</span>';
+                    var html_con = '<span class="set-passwd ui-label ui-label-success" data-id="' + row.user_id + '">修改密码</span>' +
+                        '&nbsp;<span class="user-exit ui-label ui-label-success" data-id="' + row.user_id + '">退出</span>';
                     return html_con;
                 } else {
                     return '';

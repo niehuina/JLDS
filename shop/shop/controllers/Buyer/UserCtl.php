@@ -8,6 +8,16 @@
  */
 class Buyer_UserCtl extends Buyer_Controller
 {
+    public $userInfoModel = null;
+    public $userGradeModel = null;
+    public $userResourceModel = null;
+    public $userAddressModel = null;
+    public $userPrivacyModel = null;
+    public $userBaseModel = null;
+    public $userTagModel = null;
+    public $userTagRecModel = null;
+    public $userFriendModel = null;
+    public $messageTemplateModel = null;
 
     /**
      * Constructor
@@ -1738,6 +1748,137 @@ class Buyer_UserCtl extends Buyer_Controller
         $rs = $this->getPaycenterApi($formvars, 'Api_Paycen_PayRecord', 'getRecordListByUserId');
 
         $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
+    }
+
+
+    public function certificationForWap(){
+        $data['user_id']=request_string('user_id');
+        $rs = $this->getPaycenterApi($data, 'Api_User_Info', 'certificationForWap');
+        $UserInfoModel = new User_InfoModel();
+        $rs['data']['user_name']=$UserInfoModel->getOne($data['user_id'])['user_name'];
+        if($rs['status']==200){
+            $status  = 200;
+            $msg     = __('success');
+        }
+        else
+        {
+            $status = 250;
+            $msg    = __('failure');
+        }
+        $data = array();
+        return $this->data->addBody(-140, $rs['data'], $msg, $status);
+
+    }
+    public function editCertificationForWap(){
+        $user_id = request_string('user_id');
+        $edit['user_realname'] = request_string('realname');
+        $edit['user_identity_card'] = request_string('idcardno');
+        $edit['user_identity_type'] = request_string('type');
+//        $existUser=$User_InfoModel->getByWhere(array('user_identity_card'=>$edit['user_identity_card']));
+//        if(count($existUser)>0 && current($existUser)['user_id']!=$user_id){
+//            return $this->data->addBody(-140, array(), __('身份证号已存在'), 250);
+//        }
+        $edit['user_identity_font_logo'] = request_string('font_logo');
+        $edit['user_identity_face_logo'] = request_string('face_logo');
+        $edit['user_identity_start_time'] = request_string('startDate');
+        $edit['user_identity_end_time'] = request_string('endDate');
+        $edit['user_identity_statu'] = 1;
+        $edit['user_id']=request_string('user_id');
+        $rs = $this->getPaycenterApi($edit, 'Api_User_Info', 'editCertificationForWap');
+
+        //更新shop
+        $UserInfoModel = new User_InfoModel();
+        $edit_row['user_realname']=request_string('realname');
+        $UserInfoModel->editInfo($user_id,$edit_row);
+
+        //更新Ucenter
+        $formvars            = $edit_row;
+        $formvars['user_id']  = $user_id;
+        $rs_ucenter = $this->getUcenterApi($formvars, 'Api_User', 'updateUserInfoForWap');
+        if($rs['status']==200){
+            $status  = 200;
+            $msg     = __('success');
+        }
+        else
+        {
+            $status = 250;
+            $msg    = __('failure');
+        }
+        $data = array();
+        return $this->data->addBody(-140, $data, $msg, $status);
+
+    }
+    public function isExistIdentity()
+    {
+        $user['user_id'] = request_string('user_id');
+        $user['user_identity_card'] = request_string('idcardno');
+        $user['user_identity_type'] = request_string('type');
+        $formvars['us'] = request_int('u');
+        $formvars['ks']       = request_string('k');
+        $rs_check = $this->getPaycenterApi($formvars, 'Login', 'check');
+        $rs = $this->getPaycenterApi($user, 'Api_User_Info', 'isExistIdentity');
+        if($rs['status']==200){
+            $status  = 200;
+            $msg     = __('success');
+        }
+        else
+        {
+            $status = 250;
+            $msg    = __('failure');
+        }
+        return $this->data->addBody(-140, $rs['data']);
+    }
+
+    public function updateUserInfo()
+    {
+        $user_id = request_string('user_id');
+        $user_nickname = request_string('user_name');
+        $user_birthday = request_string('user_birthday');
+        $user_logo=request_string('user_logo');
+
+        if($user_nickname){
+            $edit['user_nickname']     = $user_nickname;
+        }
+        if($user_birthday){
+            $edit['user_birthday']     = $user_birthday;
+        }
+        if($user_logo){
+            $edit['user_logo']     = $user_logo;
+        }
+
+        //ucenter 个人信息下都需要去更改
+        $this->userInfoModel->sql->startTransactionDb();
+        $formvars            = $edit;
+        $formvars['user_id']  = $user_id;
+        $rs = $this->getUcenterApi($formvars, 'Api_User', 'updateUserInfoForWap');
+
+        //paycenter 更改头像昵称
+        if($user_logo || $user_nickname ) {
+            unset($formvars['app_id']);
+            $pay_rs = $this->getPaycenterApi($formvars, 'Api_User_Info', 'updateUserInfoForWap');
+        }
+        //webpos更改
+        if($user_birthday){
+            $web_pos_rs=$this->userInfoModel->updateWebpos($user_id,$user_birthday,'');
+        }
+        //shop更改
+        if($user_logo || $user_birthday) {
+            $flag = $this->userInfoModel->editInfo($user_id, $edit);
+        }
+
+        if ($rs['status']==200){
+            $this->userInfoModel->sql->commitDb();
+            $status                              = 200;
+            $msg                                 = __('success');
+        }
+        else{
+            $this->userInfoModel->sql->rollBackDb();
+            $status = 250;
+            $msg    = __('failure');
+        }
+        $data = array();
+        $this->data->addBody(-140, $data, $msg, $status);
+
     }
 }
 

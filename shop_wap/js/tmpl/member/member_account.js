@@ -7,7 +7,7 @@ $(function () {
     $.ajax({
         type: "get",
         url: ApiUrl + "/index.php?act=member_account&op=get_mobile_info",
-        data: {k: e, u: getCookie('id'),},
+        data: {k: e, u: getCookie('id')},
         dataType: "json",
         success: function (e) {
             if (e.status == 200) {

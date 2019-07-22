@@ -787,7 +787,7 @@ function getCartNum() {
 
 //购物车下拉框
 $(function() {
-    $.cookie("key") && getCartNum();
+    $.cookie("key"); //&& getCartNum();
 
     $(document).on(
         {

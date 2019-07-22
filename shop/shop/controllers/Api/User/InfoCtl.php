@@ -604,6 +604,13 @@ class Api_User_InfoCtl extends Yf_AppController
 
         $this->data->addBody(-140, array(), $msg, $status);
     }
+
+    public function getUserInfoByKeys()
+    {
+        $intro_keys = request_string('intro_keys');
+        $user_list = $this->userInfoModel->getUserInfoByKeys($intro_keys);
+        return $this->data->addBody(-140, $user_list);
+    }
 }
 
 ?>

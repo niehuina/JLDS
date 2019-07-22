@@ -49,7 +49,7 @@ include __DIR__.'/../../includes/header.php';
     <script type="text/javascript" src="../../js/common.js"></script>
     <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
     <script type="text/javascript" src="../../js/tmpl/footer.js"></script>
-    <script type="text/javascript" src="../../js/tmpl/member_version.js"></script>
+    <script type="text/javascript" src="../../js/tmpl/member/member_version.js"></script>
 </body>
 
 </html>

@@ -804,7 +804,7 @@ include __DIR__.'/../../includes/header.php';
 <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
 <script type="text/javascript" src="../..//js/fly/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../../js/fly/zepto.fly.min.js"></script>
-<script type="text/javascript" src="../../js/tmpl/order_payment_common.js"></script>
+<script type="text/javascript" src="../../js/tmpl/order/order_payment_common.js"></script>
 <script type="text/javascript" src="../../js/tmpl/buy_step1.js"></script>
 <script type="text/javascript" src="../../js/tmpl/invoice.js"></script>
 <script type="text/javascript" src="../../js/tmpl/integral_product_buy.js"></script>

@@ -300,6 +300,7 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
     $(function () {
 
         $('.tabmenu > ul').find('li:lt(4)').remove();
+        $('.tabmenu > ul').find('li:gt(0)').remove();
 
         //设置发货左侧tab优化
         if (getQueryString("ctl") == "Seller_Stock_Order" && getQueryString("met") == "send") {
@@ -325,10 +326,10 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
                             if ( data.status == 200 ) {
                                 $('#seller_address_span') .html(send_address.seller_address_span);
                                 $("#seller_address_span").attr('data','1');
-                                parent.Public.tips( { content: 'success', type: 3 } );
+                                parent.Public.tips( { content: '选择发货地址成功', type: 3 } );
                                 win.api.close();
                             } else {
-                                parent.Public.tips( { content: 'failure', type: 1 } );
+                                parent.Public.tips( { content: '选择发货地址成功', type: 1 } );
                             }
                         })
                     }

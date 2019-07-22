@@ -222,7 +222,8 @@ class Stock_OrderModel extends Stock_Order
                 $data['order_evaluate'] = "";
                 break;
 
-            case Order_StateModel::ORDER_RECEIVED || Order_StateModel::ORDER_FINISH :
+            case Order_StateModel::ORDER_RECEIVED:
+            case Order_StateModel::ORDER_FINISH :
                 $data['order_status_text'] = '已经收货';
                 $data['order_status_html'] = '<li>1. 交易已完成，买家可以对购买的商品及服务进行评价。</li><li>2. 评价后的情况会在商品详细页面中显示，以供其它会员在购买时参考。</li>';
 

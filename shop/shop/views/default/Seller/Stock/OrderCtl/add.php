@@ -49,6 +49,10 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
         </form>
     </div>
 </div>
+<script>
+    $('.tabmenu > ul').find('li:lt(5)').remove();
+    $('.tabmenu > ul').find('li:gt(0)').remove();
+</script>
 <script type="text/javascript" src="<?=$this->view->js?>/order_add_step1.js" charset="utf-8"></script>
 
 <?php

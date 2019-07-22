@@ -178,7 +178,14 @@ $user_info = $User_InfoModel->getOne(Perm::$userId);
                 <dd class="admin-permission"><?=__('当前用户')?></dd>
                 <dd class="admin-name"><?=$user_info['user_name']?></dd>
               </dl>
-              <div class="ncsc-admin-function"><a href="<?=Yf_Registry::get('url')?>" title="<?=__('前往商城')?>"><i class="iconfont icon-fangzi"></i></a><a href="<?=Yf_Registry::get('url')?>?ctl=Shop&met=index&id=<?=Perm::$shopId ?>" title="<?=__('前往店铺')?>"><i class="iconfont icon-dianpu2"></i></a><a href="<?=Yf_Registry::get('ucenter_api_url')?>?ctl=User&met=getUserInfo" title="<?=__('基本信息')?>" target="_blank"><i class="iconfont icon-banshou"></i></a><a href="<?=Yf_Registry::get('url')?>?ctl=Login&met=loginout" title="<?=__('安全退出')?>"><i class="iconfont icon-tuichu"></i></a></div>
+              <div class="ncsc-admin-function">
+                  <a href="<?=Yf_Registry::get('url')?>" title="<?=__('前往商城')?>"><i class="iconfont icon-fangzi"></i></a>
+                  <?php if(!self::$is_partner){ ?>
+                  <a href="<?=Yf_Registry::get('url')?>?ctl=Shop&met=index&id=<?=Perm::$shopId ?>" title="<?=__('前往店铺')?>"><i class="iconfont icon-dianpu2"></i></a>
+                  <?php } ?>
+                  <a href="<?=Yf_Registry::get('ucenter_api_url')?>?ctl=User&met=getUserInfo" title="<?=__('基本信息')?>" target="_blank"><i class="iconfont icon-banshou"></i></a>
+                  <a href="<?=Yf_Registry::get('url')?>?ctl=Login&met=loginout" title="<?=__('安全退出')?>"><i class="iconfont icon-tuichu"></i></a>
+              </div>
             </div>
     </div>
 </div>

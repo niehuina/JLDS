@@ -97,7 +97,7 @@ include __DIR__ . '/../../includes/header.php';
                         <div class="input-box">
                             <input type="hidden" id="parent_id" name="parent_id" value="">
                             <input type="text" placeholder="请输入推荐人姓名/手机号" class="inp" id="intro_keys"
-                                   oninput="writeClear($(this));" maxlength="11" style="width: 205px;"/>
+                                   oninput="writeClear($(this));" maxlength="11" style="width: 75%;"/>
                             <!--                                <span class="input-del"></span>-->
                             <button class="btn-mobile" onclick="getIntroducer(this)">查询</button>
                         </div>

@@ -428,10 +428,10 @@ $config['db_cfg_rows'] = array(
 		),
 		'root_rights' => array(
 			array(
-				'host' => '127.0.0.1',
+				'host' => '192.168.1.66',
 				'port' => '3306',
-				'user' => 'test',
-				'password' => 'test',
+				'user' => 'root',
+				'password' => 'root',
 				'database' => 'mysql',
 				'charset' => 'UTF8'
 			)
@@ -642,12 +642,12 @@ if (request_string('typ') != 'json' && !request_string('redirect') && Yf_Utils_D
 	}
 	else if(request_string('ctl') == 'Buyer_Order' && request_string('met') == 'physical' )
 	{
-		$url = $shop_wap_url.'/tmpl/member/order_list.html';
+		$url = $shop_wap_url.'/tmpl/order/order_list.html';
 		location_to($url); 
 	}
     else if(request_string('ctl') == 'Buyer_Order' && request_string('met') == 'virtual' )
 	{
-		$url = $shop_wap_url.'/tmpl/member/vr_order_list.html';
+		$url = $shop_wap_url.'/tmpl/order/vr_order_list.html';
 		location_to($url); 
 	}
 	else if(request_string('ctl') == 'Shop' && request_string('met') == 'index' )

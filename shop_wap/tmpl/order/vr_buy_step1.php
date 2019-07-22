@@ -167,8 +167,8 @@ include __DIR__.'/../../includes/header.php';
 <script type="text/javascript" src="../../js/libs/template.js"></script>
 <script type="text/javascript" src="../../js/common.js"></script>
 <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
-<script type="text/javascript" src="../../js/tmpl/order_payment_common.js"></script>
-<script type="text/javascript" src="../../js/tmpl/vr_buy_step1.js"></script>
+<script type="text/javascript" src="../../js/tmpl/order/order_payment_common.js"></script>
+<script type="text/javascript" src="../../js/tmpl/order/vr_buy_step1.js"></script>
 </body>
 </html>
 <?php 

@@ -1247,6 +1247,9 @@ class Buyer_OrderCtl extends Buyer_Controller
 		$user_parent_g_partner_id = $User_InfoModel->getParentId($user_id);
         $user_parent_g_partner = $User_InfoModel->getOne($user_parent_g_partner_id);
 
+        $Shop_BaseModel = new Shop_BaseModel();
+        $g_partner_shop = $Shop_BaseModel->getOneByWhere(['user_id'=>$user_parent_g_partner_id]);
+
 		//分销商购买不计算会员折扣
 		$User_GradeMode = new User_GradeModel();
 		$user_grade     = $User_GradeMode->getGradeRate($user_info['user_grade']);
@@ -1770,8 +1773,13 @@ class Buyer_OrderCtl extends Buyer_Controller
 
 			//如果卖家设置了默认地址，则将默认地址信息加入order_base表
 			$Shop_ShippingAddressModel = new Shop_ShippingAddressModel();
-			$address_list              = $Shop_ShippingAddressModel->getByWhere(array('shop_id' => $key, 'shipping_address_default'=>1));
-			if($address_list)
+            if($user_parent_g_partner_id != $user_id){
+                $shop_id = $g_partner_shop['shop_id'];
+            }else{
+                $shop_id = $key;
+            }
+            $address_list              = $Shop_ShippingAddressModel->getByWhere(array('shop_id' => $shop_id, 'shipping_address_default'=>1));
+            if($address_list)
 			{
 				$address_list = current($address_list);
 				$order_row['order_seller_address'] = $address_list['shipping_address_area'] . " " . $address_list['shipping_address_address'];

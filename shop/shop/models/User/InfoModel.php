@@ -186,6 +186,28 @@ class User_InfoModel extends User_Info
     {
         return $this->getNum($cond_row);
     }
+
+    public function getUserInfoByKeys($keys)
+    {
+        $where = 'user_grade >= 2 and user_realname = \''.$keys.'\' or user_mobile = \''.$keys.'\'';
+
+        $sql = 'select user_id, user_name, user_realname as user_truename, user_mobile from '.$this->_tableName.' where '.$where;
+        $sql .= $this->sql->getLimit();
+        $data_rows = $this->sql->getAll($sql);
+        return $data_rows;
+    }
+
+    public function updateWebpos($user_id,$bir,$phone)
+    {
+        if($bir) {
+            $sql = "UPDATE `webpos`.`wp_users` SET `bron`=" . strtotime($bir) . " WHERE `ucenter_id`=" . $user_id . "";
+        }
+        if($phone) {
+            $sql = "UPDATE `webpos`.`wp_users` SET `phone`=" . $phone . " WHERE `ucenter_id`=" . $user_id . "";
+        }
+        $flag= $this->sql->exec($sql);
+        return $flag;
+    }
 }
 
 User_InfoModel::$userSex = array(

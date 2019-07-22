@@ -76,7 +76,7 @@ include __DIR__.'/../../includes/header.php';
                             <input type="date" class="inp"  id="endDate"  autocomplete="off"  />
                             <span class="input-del"></span> </div>
                     </li>
-                    <li class="form-item">
+                    <li class="form-item IDImg">
                         <h4>正面照预览</h4>
                         <div class="input-box">
                             <img  height="120"  id="face_logo"/>
@@ -90,7 +90,7 @@ include __DIR__.'/../../includes/header.php';
                             <input type="hidden" id="face_logo_url" value=""  />
                             <span class="input-del"></span> </div>
                     </li>
-                    <li class="form-item">
+                    <li class="form-item IDImg">
                         <h4>背面照预览</h4>
                         <div class="input-box">
                             <img  height="120" id="font_logo" />

@@ -89,6 +89,7 @@ class Seller_Controller extends Yf_AppController
                 unset($seller_menu['seller_menu']['promotion']);
                 unset($seller_menu['seller_menu']['distribution']);
                 unset($seller_menu['seller_menu']['message']);
+                unset($seller_menu['seller_menu']['shop']);
             }
 
 			self::$menu  = $seller_menu['seller_menu'];
@@ -282,7 +283,7 @@ class Seller_Controller extends Yf_AppController
 //				array('name' => '服务兑码订单', 'ctl'=>'Seller_Trade_Order', 'met'=>'virtual'),
 //				array('name' => '门店自提订单', 'ctl'=>'Seller_Trade_Order', 'met'=>'chain'),
 				array('name' => '普通发货', 'ctl'=>'Seller_Trade_Deliver', 'met'=>'deliver'),
-                array('name' => '创建备货订单', 'ctl'=>'Seller_Stock_Order', 'met'=>'add'),
+//                array('name' => '创建备货订单', 'ctl'=>'Seller_Stock_Order', 'met'=>'add'),
                 array('name' => '备货订单', 'ctl'=>'Seller_Stock_Order', 'met'=>'physical'),
 				array('name' => '发货设置', 'ctl'=>'Seller_Trade_Deliver', 'met'=>'deliverSetting'),
 				array('name' => '运单模板', 'ctl'=>'Seller_Trade_Waybill', 'met'=>'waybillManage'),

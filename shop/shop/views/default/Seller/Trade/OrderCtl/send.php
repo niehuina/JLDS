@@ -51,7 +51,12 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
             position: relative;
         }
     </style>
-    <span class="fr mr5"><a href="<?= $print_tpl_url; ?>" class="ncbtn-mini bbc_seller_btns" target="_blank" title="<?=__('打印运单')?>"><?=__('打印运单')?></a></span>
+    <?php if ( !$data['can_send'] ) { ?>
+        <div style="margin: 10px 0;text-align: center;">
+            <dd class="bbc_seller_btns">库存不足，不能发货</dd>
+        </div>
+    <?php } ?>
+    <span class="fr mr5"><button id="print_tpl" data-href="<?= $print_tpl_url; ?>" class="ncbtn bbc_seller_btns" title="<?=__('打印运单')?>"><?=__('打印运单')?></button></span>
     <div class="">
         <div class="step-title"><em><?=__('第一步')?></em><?=__('确认收货信息及交易详情')?></div>
         <form name="deliver_form" method="POST" id="deliver_form">
@@ -94,11 +99,6 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     </td>
                     <?php if ( $key == 0 ) { ?>
                     <td class="bdl bdr order-info w500" rowspan="<?= $data['goods_cat_num']; ?>">
-                        <?php if ( !$data['can_send'] ) { ?>
-                        <dl>
-                            <dd class="bbc_seller_btns">库存不足，不能发货</dd>
-                        </dl>
-                        <?php } ?>
                         <dl>
                             <dt><?=__('运费')?>：</dt>
                             <dd><?= $data['shipping_info']; ?></dd>
@@ -243,7 +243,11 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 
                     <td colspan="20" class="tl bdl bdr" style="padding:8px" id="address">
                         <strong class="fl"><?=__('收货人信息')?>：</strong><span id="buyer_address_span"><?= $data['receiver_info']; ?></span>
-                        <a href="javascript:void(0)" dialog_id="edit_buyer_address" data-order_receiver_name="<?= $data['order_receiver_name']; ?>" data-order_receiver_address="<?= $data['order_receiver_address']; ?>" data-order_receiver_contact="<?= $data['order_receiver_contact']; ?>" data-order_id="<?= $data['order_id']; ?>" class="ncbtn-mini fr bbc_seller_btns"><i class="icon-edit"></i><?=__('编辑')?></a>
+                        <button dialog_id="edit_buyer_address"
+                                data-order_receiver_name="<?= $data['order_receiver_name']; ?>"
+                                data-order_receiver_address="<?= $data['order_receiver_address']; ?>"
+                                data-order_receiver_contact="<?= $data['order_receiver_contact']; ?>"
+                                data-order_id="<?= $data['order_id']; ?>" class="ncbtn fr bbc_seller_btns"><i class="icon-edit"></i><?=__('编辑')?></button>
                     </td>
                 </tr>
                 </tbody>
@@ -251,7 +255,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
             <div class="step-title mt30"><em><?=__('第二步')?></em><?=__('确认发货信息')?></div>
             <div class="deliver-sell-info">
                 <strong class="fl"><?=__('我的发货信息')?>：</strong>
-                <a href="javascript:void(0);" dialog_id="edit_seller_address" data-shop_id="<?= $data['shop_id']; ?>" class="ncbtn-mini fr bbc_seller_btns"><i class="icon-edit"></i><?=__('编辑')?></a>
+                <button dialog_id="edit_seller_address" data-shop_id="<?= $data['shop_id']; ?>" class="ncbtn fr bbc_seller_btns"><i class="icon-edit"></i><?=__('编辑')?></button>
                 <span id="seller_address_span" data="<?= $data['shipper']?>">
                     <?= $data['shipper_info']; ?>
                 </span>
@@ -280,7 +284,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <td class="bdl" style="width: 249px;"><input name="shipping_code" type="text" class="text w200 tip-r" title="<?=__('正确填写物流单号，确保快递跟踪查询信息正确')?>" maxlength="20"></td>
                     <td class="bdl gray"></td>
                     <td class="bdl bdr tc">
-                        <button nc_value="<?= $val['express_id']; ?>" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认')?></button>
+                        <button nc_value="<?= $val['express_id']; ?>" class="ncbtn bbc_seller_btns"><?=__('确认')?></button>
                     </td>
                 </tr>
                 <?php } ?>
@@ -295,7 +299,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 <tr>
                     <td class="bdl tr"><?=__('如果订单中的商品无需物流运送，您可以直接点击确认')?></td>
                     <td class="bdr tl w400"> 
-                        <button nc_type="eb" nc_value="e1000" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认')?></button>
+                        <button nc_type="eb" nc_value="e1000" class="ncbtn bbc_seller_btns"><?=__('确认')?></button>
                     </td>
                 </tr>
                 <tr>
@@ -330,9 +334,9 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
 
         $('.tabmenu > ul').find('li:lt(8)').remove();
 
-        var can_send = <?= $data['can_send']; ?>;
-        if(!can_send){
-            $('button[nc_value]').attr("disabled", "disabled").addClass("button_disabled");
+        if("<?= $data['can_send'] ?>" == "0"){
+            // $('button[nc_value]').attr("disabled", "disabled").addClass("button_disabled");
+            $('button.ncbtn').attr("disabled", "disabled").addClass("button_disabled");
         }
 
         //设置发货左侧tab优化
@@ -345,7 +349,13 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
         }
 
         //选择发货地址
-        $('a[dialog_id="edit_seller_address"]').on('click', function () {
+        $('#print_tpl').on('click', function () {
+            var href = $(this).data('href');
+            window.open(href);
+        });
+
+        //选择发货地址
+        $('button[dialog_id="edit_seller_address"]').on('click', function () {
 
             var order_id = $('#order_id').val(),
                 shop_id = $(this).data('shop_id'),
@@ -364,19 +374,20 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
                             if ( data.status == 200 ) {
                                 $('#seller_address_span') .html(send_address.seller_address_span);
                                 $("#seller_address_span").attr('data','1');
-                                parent.Public.tips( { content: 'success', type: 3 } );
+                                parent.Public.tips( { content: '设置发货地址成功', type: 3 } );
                                 win.api.close();
                             } else {
-                                parent.Public.tips( { content: 'failure', type: 1 } );
+                                parent.Public.tips( { content: '设置发货地址失败', type: 1 } );
                             }
                         })
                     }
                 }
             })
+            return false;
         });
 
         //修改收货人信息
-        $('a[dialog_id="edit_buyer_address"]').on('click', function () {
+        $('button[dialog_id="edit_buyer_address"]').on('click', function () {
 
             var _this = $(this),
                 buyer_address = $('#buyer_address_span').html();
@@ -399,6 +410,7 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
                         }
                     }
             })
+            return false;
         });
 
         //提交表单
@@ -431,6 +443,7 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
                     Public.tips( {content: '<?=__('发货失败')?>', type: 1} );
                 }
             })
+            return false;
         });
 
         <?php if ( $data['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS ) { ?>

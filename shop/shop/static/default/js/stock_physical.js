@@ -37,18 +37,13 @@ $(function () {
         window.location = URL;
     });
 
-
-    function formSub(){
-        $('.search-form').parents('form').submit();
-    }
-
     function createQuery() {
 
-        var url = SITE_URL + '?' + location.href.match(/ctl=\w+&met=\w+/) + '&';
+        var url = SITE_URL + '?' + location.href.match(/ctl=\w+&met=\w+&typ=\w+/) + '&';
 
         $('#query_start_date').val() && (url += 'query_start_date=' + $('#query_start_date').val() + '&');
         $('#query_end_date').val() && (url += 'query_end_date=' + $('#query_end_date').val() + '&');
-        $('#buyer_name').val() && (url += 'query_buyer_name=' + $('#buyer_name').val() + '&');
+        $('#query_buyer_name').val() && (url += 'query_buyer_name=' + $('#query_buyer_name').val() + '&');
         $('#order_sn').val() && (url += 'query_order_sn=' + $('#order_sn').val() + '&');
         $('#skip_off').prop('checked') && (url += 'skip_off=1&');
 
@@ -229,4 +224,9 @@ window.show_logistic = function (order_id, express_id, shipping_code) {
         }
 
     })
+}
+
+function refreshPage() {
+    var url = SITE_URL + '?' + location.href.match(/ctl=\w+&met=\w+/);
+    window.location = url;
 }

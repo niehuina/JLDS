@@ -140,7 +140,7 @@
 
 .member-center {}
 .member-center dl { background-color: #FFF; box-shadow: 0 1px 0 rgba(0,0,0,0.05);}
-.member-center dt { line-height: 0.9rem; display: block; height: 1rem; padding: 0.5rem 0.7rem 0.5rem 0; margin-left: 0.5rem; border-bottom: solid 0.05rem #EEE;}
+.member-center dt { line-height: 0.9rem; display: block; height: 1rem; padding: 0.5rem 0.7rem 0.5rem 0.5rem; /*margin-left: 0.5rem;*/ border-bottom: solid 0.05rem #EEE;}
 .member-center dt:last-child { border-bottom: none;}
 .member-center dt a { display: block;}
 .member-center dt h3 { font-size: 0.7rem; line-height: 1rem; color: #111; vertical-align: top; display: inline-block; height: 1rem;}
@@ -302,7 +302,7 @@ i.cc-10 { background-image: url(../images/bbc-bg23.png); background-size: cover 
 .nctouch-oredr-detail-add dt span { margin-left: 0.3rem;}
 .nctouch-oredr-detail-add dd { display: block; min-height: 0.9rem; max-height: 1.6rem; font-size: 0.6rem; line-height: 0.9rem;}
 .nctouch-oredr-detail-add dd .addr-detail{color:#666;}
-.order-det-overview{margin-left:0.54rem;border-bottom:1px solid #e3e3e3;padding:0.2rem 0;}
+.order-det-overview{padding-left:0.54rem;border-bottom:1px solid #e3e3e3;padding-top:0.2rem;}
 .order-det-overview:last-child{border-bottom:none;}
 .order-det-overview h3{margin-left:0 !important;}
 /*服务订单码列表*/
@@ -565,8 +565,8 @@ i.cc-10 { background-image: url(../images/bbc-bg23.png); background-size: cover 
 .nctouch-pay label span.sel_icon{ width:20px; height:20px; display:none; position:relative; left:45%; bottom:10px;background:url(../images/selected-icon.png) no-repeat; background-size:cover;  }
 
 
-.goods-raty{width: 82%;float: right;margin-top: 0.15rem}
-.goods-raty i { display: inline-block; height: 0.5rem; background-image: url(../images/star_r.png); background-repeat: repeat-x; background-position: 0 0; background-size: contain;}
+.goods-raty{width: 82%;float: right;top: -0.8rem;position: relative;}
+.goods-raty i { display: inline-block; height: 0.5rem; margin-left: 0.25rem; background-image: url(../images/star_r.png); background-repeat: repeat-x; background-position: 0 0; background-size: contain;}
 .goods-raty i.star1 { width: 0.5rem;}
 .goods-raty i.star2 { width: 1rem;}
 .goods-raty i.star3 { width: 1.5rem;}

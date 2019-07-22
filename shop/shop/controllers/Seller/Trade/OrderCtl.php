@@ -666,7 +666,7 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 			$data              = $Order_BaseModel->getOrderList($condi);
 			$data              = pos($data['items']);
 
-			$can_send = true;
+			$can_send = 1;
             if(self::$is_partner){
                 $User_StockModel = new User_StockModel();
                 foreach ($data['goods_list'] as $key=> $goods){
@@ -674,7 +674,7 @@ class Seller_Trade_OrderCtl extends Seller_Controller
                     $data['goods_list'][$key]['user_stock'] = $user_stock['goods_stock'];
                     $temp_can_send = $user_stock['goods_stock']*1 >= $goods['order_goods_num'];
                     if(!$temp_can_send) {
-                        $can_send = false;
+                        $can_send = 0;
                         break;
                     }
                 }
@@ -697,7 +697,6 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 		{
 			//判断该笔订单是否是自己的单子
 			$order_base = $Order_BaseModel->getOne($order_id);
-
 
 			$rs_row = array();
 
@@ -831,7 +830,7 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 
 		if ($typ == 'e')
 		{
-			$shop_id                   = request_int('shop_id');
+            $shop_id = Perm::$shopId;
 			$Shop_ShippingAddressModel = new Shop_ShippingAddressModel();
 			$address_list              = $Shop_ShippingAddressModel->getByWhere(array('shop_id' => $shop_id));
 			$address_list              = array_values($address_list);
@@ -854,7 +853,7 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 			$update_data['order_seller_contact'] = $send_address['order_seller_contact'];
 			$flag                                = $Order_BaseModel->editBase($order_id, $update_data);
 
-			if ($flag || $flag === 0)
+			if ($flag !== false)
 			{
 				$msg    = __('设置成功');
 				$status = 200;
@@ -895,7 +894,7 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 
 			$flag = $Order_BaseModel->editBase($order_id, $update_data);
 
-			if ($flag)
+			if ($flag !== false)
 			{
 				$update_data['receiver_info'] = $update_data['order_receiver_name'] . "&nbsp;" . $update_data['order_receiver_address'] . "&nbsp;" . $update_data['order_receiver_contact'];
 				$msg                          = __('success');

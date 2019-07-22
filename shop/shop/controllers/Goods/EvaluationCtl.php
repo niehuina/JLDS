@@ -9,6 +9,8 @@
 class Goods_EvaluationCtl extends Yf_AppController
 {
 
+    public $goodsImagesModel = null;
+    public $goodsEvaluationModel = null;
 	/**
 	 * Constructor
 	 *
@@ -48,16 +50,21 @@ class Goods_EvaluationCtl extends Yf_AppController
 			return $this->data->addBody(-140, ['request'=> $_REQUEST], __('无效参数'), 250);
 		}
 
-		if (request_int('app') == 1) { //移动端 json格式
-			$evaluation = json_decode($evaluation);
-		}
+//		if (request_int('app') == 1) { //移动端 json格式
+//			$evaluation = json_decode($evaluation);
+//		}
 
 		foreach($evaluation as $key => $val)
 		{
+            $order_goods_id = $val[0];
+            $score = $val[1];
+            $result = $val[2];
+            $content = $val[3];
+            $imageUrl = $val[4];
 
 			//订单商品信息
 			$Order_GoodsModel = new Order_GoodsModel();
-			$order_goods      = $Order_GoodsModel->getOne($val[0]);
+			$order_goods      = $Order_GoodsModel->getOne($order_goods_id);
 
 			//商品信息
 			$Goods_BaseModel = new Goods_BaseModel();
@@ -70,8 +77,9 @@ class Goods_EvaluationCtl extends Yf_AppController
 			$Goods_CommonModel = new Goods_CommonModel();
 
 			$matche_row = array();
+
 			//有违禁词
-			if (Text_Filter::checkBanned($val[3], $matche_row))
+			if (Text_Filter::checkBanned($content, $matche_row))
 			{
 				$data   = array();
 				$msg    = __('含有违禁词');
@@ -84,7 +92,7 @@ class Goods_EvaluationCtl extends Yf_AppController
 			$evaluation_num = $this->goodsEvaluationModel->countGoodsEvaluation($order_goods['goods_id']);
 
 			//星级好评数
-			$goods_evaluation_good_star = ceil(($evaluation_num * $goods_base['goods_evaluation_good_star'] + $val[1]) / ($evaluation_num * 1 + 1));
+			$goods_evaluation_good_star = ceil(($evaluation_num * $goods_base['goods_evaluation_good_star'] + $score) / ($evaluation_num * 1 + 1));
 			$goods_evaluation_count     = $evaluation_num * 1 + 1;
 
 			$edit_row                               = array();
@@ -113,20 +121,17 @@ class Goods_EvaluationCtl extends Yf_AppController
 			$add_row['goods_name']  = $order_goods['goods_name'];//商品名称
 			$add_row['goods_price'] = $order_goods['goods_price'];    //商品价格
 			$add_row['goods_image'] = $order_goods['goods_image'];    //商品图片
-			$add_row['scores']      = $val[1];
-			$add_row['result']      = $val[2];
-			$add_row['content']     = $val[3];
-			$add_row['image']       = $val[4]; //wap端和pc端混乱 pc端这个字段为图片地址
+			$add_row['scores']      = $score;
+			$add_row['result']      = $result;
+			$add_row['content']     = $content;
+			$add_row['image']       = $imageUrl;
 
 			//wap端传递的匿名信息
-			if($val[4])
-			{
-				$add_row['isanonymous'] = $val[4];    //是否匿名
-			}
-			else
-			{
-				$add_row['isanonymous'] = request_int('isanonymous');    //是否匿名
-			}
+            if(request_int('app') == 1){
+                $add_row['isanonymous'] = $val[5];    //是否匿名
+            }else{
+                $add_row['isanonymous'] = request_int('isanonymous');    //是否匿名
+            }
 
 			$add_row['create_time'] = get_date_time();        //创建时间
 			$add_row['status']      = Goods_EvaluationModel::SHOW;

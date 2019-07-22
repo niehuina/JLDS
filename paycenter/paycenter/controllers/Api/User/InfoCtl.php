@@ -443,16 +443,13 @@ class Api_User_InfoCtl extends Api_Controller
         $edit_base_row = array();
         $edit_base_row['user_delete'] = $user_delete;
         $flag = $this->userBaseModel->editBase($user_id, $edit_base_row);
-        if ($flag !== false && $this->userInfoModel->sql->commitDb())
+        if ($flag !== false)
         {
             $status = 200;
             $msg    = _('success');
         }
         else
-        {
-            $this->userInfoModel->sql->rollBackDb();
-
-            $status = 250;
+        {            $status = 250;
             $msg    = _('failure');
         }
         $data = array();
@@ -522,6 +519,98 @@ class Api_User_InfoCtl extends Api_Controller
         }
 
         $this->data->addBody(-140, array());
+    }
+
+
+    public function editCertificationForWap()
+    {
+        //获取用户信息
+        $User_InfoModel = new User_InfoModel();
+        $user_id = request_string('user_id');
+        $edit['user_realname'] = request_string('user_realname');
+        $edit['user_identity_card'] = request_string('user_identity_card');
+        $edit['user_identity_type'] = request_string('user_identity_type');
+//        $existUser=$User_InfoModel->getByWhere(array('user_identity_card'=>$edit['user_identity_card']));
+//        if(count($existUser)>0 && current($existUser)['user_id']!=$user_id){
+//            return $this->data->addBody(-140, array(), __('身份证号已存在'), 250);
+//        }
+        $edit['user_identity_font_logo'] = request_string('user_identity_font_logo');
+        $edit['user_identity_face_logo'] = request_string('user_identity_face_logo');
+        $edit['user_identity_start_time'] = request_string('user_identity_start_time');
+        $edit['user_identity_end_time'] = request_string('user_identity_end_time');
+
+        $edit['user_identity_statu'] = 1;
+
+        $flag = $User_InfoModel->editInfo($user_id, $edit);
+        if ($flag !== false) {
+            $msg = 'success';
+            $status = 200;
+        } else {
+            $msg = 'failure';
+            $status = 250;
+        }
+
+        $data = array();
+        return $this->data->addBody(-140, $data, $msg, $status);
+
+    }
+
+    //实名认证
+    public function certificationForWap()
+    {
+        //获取用户信息
+        $user_id = request_string('user_id');
+        //$user_id = '1';
+        $User_InfoModel = new User_InfoModel();
+        $data = $User_InfoModel->getOne($user_id);
+        return $this->data->addBody(-140, $data);
+    }
+
+    public function isExistIdentity()
+    {
+        $user_id = request_string('user_id');
+        $User_InfoModel = new User_InfoModel();
+        $cond_row['user_identity_card']= request_string('user_identity_card');
+        $cond_row['user_identity_type']=  request_string('user_identity_type');
+        $existUser = $User_InfoModel->getByWhere($cond_row);
+        if (count($existUser) > 0 && current($existUser)['user_id'] != $user_id) {
+            $data['isExist'] = true;
+        } else {
+            $data['isExist'] = false;
+        }
+        return $this->data->addBody(-140, $data);
+    }
+
+    public function updateUserInfoForWap()
+    {
+        $user_id = request_string('user_id');
+        $user_nickname = request_string('user_nickname');
+        $user_logo=request_string('user_logo');
+        $user_mobile=request_string('user_mobile');
+        $User_InfoModel = new User_InfoModel();
+
+        $user=$User_InfoModel->getOne($user_id);
+        if($user_nickname){
+            $edit_row['user_nickname']     = $user_nickname;
+        }
+        if($user_logo){
+            $edit_row['user_avatar']     = $user_logo;
+        }
+        if($user_mobile){
+            $edit_row['user_mobile']     = $user_mobile;
+        }
+        $flag = $User_InfoModel->editInfo($user_id,$edit_row);
+        if ($flag){
+            $status = 200;
+            $msg    = _('success');
+        }
+        else{
+            $status = 250;
+            $msg    = _('failure');
+        }
+
+        $data = array();
+        $this->data->addBody(-140, $data, $msg, $status);
     }
 }
 

@@ -53,7 +53,7 @@ include __DIR__.'/../../includes/header.php';
 <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
 <script type="text/javascript" src="../../js/common.js"></script> 
 <script type="text/javascript" src="../../js/libs/template.js"></script>
-<script type="text/javascript" src="../../js/tmpl/directseller.js"></script>
+<script type="text/javascript" src="../../js/tmpl/directseller/directseller.js"></script>
 </body>
 </html>
 <?php 

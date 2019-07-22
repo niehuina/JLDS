@@ -17,3 +17,7 @@
 .remember-form input[type="checkbox"]{
     margin-top: -0.45rem;
 }
+
+.IDImg {
+    height: 120px;
+}

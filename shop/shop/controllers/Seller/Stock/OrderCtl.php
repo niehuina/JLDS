@@ -115,7 +115,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         }
 
         if (!empty($query_buyer_name)) {
-            $condition['buyer_user_name:LIKE'] = "%$query_buyer_name%";
+            $condition['shop_user_name:LIKE'] = "%$query_buyer_name%";
         }
 
         if (!empty($query_order_sn)) {
@@ -144,23 +144,23 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $User_InfoModel = new User_InfoModel();
             $g_partner_info = $User_InfoModel->getOne($user_id);
 
-            $User_AddressModel = new User_AddressModel();
-            //获取一级地址
-            $user_address = $User_AddressModel->getDefaultAddress($user_id);
-            if (!$user_address) {
-                $user_address = $User_AddressModel->getAddressList(['user_id' => $user_id]);
+            $Shop_ShippingAddressModel = new Shop_ShippingAddressModel();
+            $user_address = $Shop_ShippingAddressModel->getOneByWhere(array('shop_id' => $shop_id, 'shipping_address_default'=>1));
+            if(!$user_address)
+            {
+                $user_address = $Shop_ShippingAddressModel->getByWhere(array('shop_id' => $shop_id));
                 $user_address = current($user_address);
             }
+
+            //收货人信息
+//            if ($user_address) {
+//                $user_address['shipper'] = 1;
+//                $user_address['shipper_info'] = $user_address['shipping_address_contact'] . "&nbsp" . $user_address['shipping_address_area'] . "&nbsp" . $user_address['shipping_address_address'] . "&nbsp" . $user_address['shipping_address_phone'];
+//            }
 
             $district_parent_id = request_int('pid', 0);
             $baseDistrictModel = new Base_DistrictModel();
             $district = $baseDistrictModel->getDistrictTree($district_parent_id);
-
-            //收货人信息
-            if ($user_address) {
-                $user_address['shipper'] = 1;
-                $user_address['shipper_info'] = $user_address['user_address_contact'] . "&nbsp" . $user_address['user_address_area'] . "&nbsp" . $user_address['user_address_address'] . "&nbsp" . $user_address['user_address_phone'];
-            }
 
             //获取用户的资金信息
             $user_resouce = null;
@@ -441,16 +441,17 @@ class Seller_Stock_OrderCtl extends Seller_Controller
     {
         $typ = request_string('typ');
         $user_id = request_int('user_id');
+        $shop_id = request_int('shop_id');
 
         if ($typ == 'e')
         {
-            $User_AddressModel = new User_AddressModel();
-            $address_list = $User_AddressModel->getAddressList(['user_id' => $user_id]);
+            $Shop_ShippingAddressModel = new Shop_ShippingAddressModel();
+            $address_list = $Shop_ShippingAddressModel->getByWhere(array('shop_id' => $shop_id));
             $address_list              = array_values($address_list);
             foreach ($address_list as $key => $val)
             {
-                $address_list[$key]['address_info']  = $val['user_address_area'] . " " . $val['user_address_address'];
-                $address_list[$key]['address_value'] = $val['user_address_contact'] . "&nbsp" . $val['user_address_phone'] . "&nbsp" . $val['user_address_area'] . "&nbsp" . $val['user_address_address'];
+                $address_list[$key]['address_info']  = $val['shipping_address_area'] . " " . $val['shipping_address_address'];
+                $address_list[$key]['address_value'] = $val['shipping_address_contact'] . "&nbsp" . $val['shipping_address_phone'] . "&nbsp" . $val['shipping_address_area'] . "&nbsp" . $val['shipping_address_address'];
             }
 
             include $this->view->getView();
@@ -486,7 +487,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $update_data['order_seller_contact'] = $send_address['order_seller_contact'];
             $flag                                = $Stock_OrderModel->editOrder($order_id, $update_data);
 
-            if ($flag || $flag === 0)
+            if ($flag !== false)
             {
                 $msg    = __('设置成功');
                 $status = 200;

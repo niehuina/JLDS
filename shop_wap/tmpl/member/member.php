@@ -21,11 +21,7 @@ include __DIR__ . '/../../includes/header.php';
     <body>
     <header id="header" class="transparent">
         <div class="header-wrap">
-            <div class="header-l">
-                <!--            <a href="javascript:history.go(-1)">-->
-                <!--                <i class="back back2"></i>-->
-                <!--            </a>-->
-            </div>
+            <div class="header-l"></div>
             <div class="header-title">
                 <h1>我的商城</h1>
             </div>
@@ -34,7 +30,6 @@ include __DIR__ . '/../../includes/header.php';
                 <a href="chat_list.html"><img src="../../images/message_b.png" width="20px" height="20px"></a>
             </div>
             <div class="header-b">
-                <a href="views_list.html"><img src="../../images/goods_browse_b.png" width="20px" height="20px"></a>
             </div>
         </div>
         <div class="nctouch-nav-layout">
@@ -56,24 +51,12 @@ include __DIR__ . '/../../includes/header.php';
         </div>
         <div class="member-center bort1 mt5 ">
             <dl>
-                <dt>
-                    <a href="order_list.html">
-                        <h3>我的订单</h3>
-                        <h5>查看全部订单<i class="arrow-r"></i></h5>
-                    </a>
+                <dt class="order-content">
                 </dt>
                 <dd>
                     <ul id="order_ul">
                     </ul>
                 </dd>
-            </dl>
-            <dl class="mt5 bort1">
-                <dt>
-                    <a href="member_money.html">
-                        <h3>我的钱包</h3>
-                        <h5>查看明细<i class="arrow-r"></i></h5>
-                    </a>
-                </dt>
             </dl>
         </div>
     </div>

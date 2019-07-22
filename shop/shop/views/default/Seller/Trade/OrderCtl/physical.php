@@ -42,7 +42,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 			<td class="w70 tc"><a onclick="formSub()" class="button btn_search_goods" href="javascript:void(0);"><i class="iconfont icon-btnsearch"></i><?=__('搜索')?></a>
 			<input name="ctl" value="Seller_Trade_Order" type="hidden" /><input name="met" value="physical" type="hidden" />
 			</td>
-			<td class="mar"><a class="button refresh" onclick="location.reload()"><i class="iconfont icon-huanyipi"></i></a><td>
+			<td class="mar"><a class="button refresh" href="javascript:refreshPage();"><i class="iconfont icon-huanyipi"></i></a><td>
 		</tr>
 		</tbody>
 	</table>
@@ -345,5 +345,10 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
 		})
 	}
 
+
+    function refreshPage() {
+        var url = SITE_URL + '?' + location.href.match(/ctl=\w+&met=\w+/);
+        window.location = url;
+    }
 
 </script>

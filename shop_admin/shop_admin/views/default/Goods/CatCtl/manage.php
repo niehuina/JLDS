@@ -37,25 +37,25 @@ body{background: #fff;}
                 <input id="cat_logo" name="setting[cat_logo]" value="" class="ui-input w400" type="hidden"/>
             </dd>
         </dl>
-        <dl class="row">
-            <dt class="tit">
-                <label>发布服务商品</label>
-            </dt>
-            <dd class="opt">
-                <div style="float: left;width:50%;">
-                <label>
-                    <input type="checkbox" class="checkbox" name="cat_is_virtual" id="cat_is_virtual" value="">允许
-                </label>
-                <p class="notic mb10">勾选允许发布服务商品后，在发布该分类的商品时可选择交易类型为“服务兑换码”形式。</p>
-                </div>
-                <!--<div style="float: right; width:50%;">
-                    <label for="t_gc_virtual">
-                        <input id="t_gc_virtual" type="checkbox" class="checkbox" value="1" name="t_gc_virtual">关联到子分类
-                    </label>
-                <p class="notic">勾选关联到子分类后，该分类下的子分类交易类型也将被设定为“服务兑换码”形式。</p>
-                </div>-->
-            </dd>
-        </dl>
+<!--        <dl class="row">-->
+<!--            <dt class="tit">-->
+<!--                <label>发布服务商品</label>-->
+<!--            </dt>-->
+<!--            <dd class="opt">-->
+<!--                <div style="float: left;width:50%;">-->
+<!--                <label>-->
+<!--                    <input type="checkbox" class="checkbox" name="cat_is_virtual" id="cat_is_virtual" value="">允许-->
+<!--                </label>-->
+<!--                <p class="notic mb10">勾选允许发布服务商品后，在发布该分类的商品时可选择交易类型为“服务兑换码”形式。</p>-->
+<!--                </div>-->
+<!--                <div style="float: right; width:50%;">-->
+<!--                    <label for="t_gc_virtual">-->
+<!--                        <input id="t_gc_virtual" type="checkbox" class="checkbox" value="1" name="t_gc_virtual">关联到子分类-->
+<!--                    </label>-->
+<!--                <p class="notic">勾选关联到子分类后，该分类下的子分类交易类型也将被设定为“服务兑换码”形式。</p>-->
+<!--                </div>-->
+<!--            </dd>-->
+<!--        </dl>-->
         <!--
         <dl class="row">
             <dt class="tit">
@@ -84,11 +84,11 @@ body{background: #fff;}
 <!--                    <i>%</i> <span class="err"></span>-->
 <!--                    <p class="notic mb10">分佣比例必须为0-100的整数。</p>-->
 <!--                </div>-->
-<!--                <!--<div style="float: right;width:50%;">-->
+<!--                <div style="float: right;width:50%;">-->
 <!--                    <label for="t_commis_rate">-->
 <!--                    <input id="t_commis_rate" class="checkbox" type="checkbox" value="1" name="t_commis_rate">关联到子分类</label>-->
 <!--                    <p class="notic">勾选关联到子分类后，该分类下的子分类分佣比利也将按此继承设定。</p>-->
-<!--                </div>-->-->
+<!--                </div>-->
 <!--            </dd>-->
 <!--        </dl>-->
         <dl class="row">

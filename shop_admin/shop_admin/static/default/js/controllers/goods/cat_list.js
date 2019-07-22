@@ -380,17 +380,17 @@ var colModel = [{
     "width": 100,
     "sortable": false
 }, {
-    "name": "cat_is_virtual",
-    "index": "cat_is_virtual",
-    "label": "服务产品",
-    "classes": "ui-ellipsis",
-    "align": "center",
-    "title": false,
-    "fixed": true,
-    "width": 100,
-    "formatter": handle.virtualFmatter,
-    "sortable": false
-}, {
+//     "name": "cat_is_virtual",
+//     "index": "cat_is_virtual",
+//     "label": "服务产品",
+//     "classes": "ui-ellipsis",
+//     "align": "center",
+//     "title": false,
+//     "fixed": true,
+//     "width": 100,
+//     "formatter": handle.virtualFmatter,
+//     "sortable": false
+// }, {
     "name": "cat_parent_id",
     "index": "cat_parent_id",
     "label": "父类",

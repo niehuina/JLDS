@@ -47,7 +47,7 @@ function initGrid(check_id) {
         rownumbers: true,
         multiboxonly: false,
         gridview: !0,
-        rowNum: 5,
+        rowNum: 15,
         colNames: a,
         colModel: b,
         shrinkToFit: false,

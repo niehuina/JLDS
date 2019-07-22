@@ -15,8 +15,8 @@
             <table class="ncsc-default-table">
                 <thead>
                 <tr>
-                    <th class="w80"><?=__('发货人')?></th>
-                    <th><?=__('发货地址')?></th>
+                    <th class="w80"><?=__('收货人')?></th>
+                    <th><?=__('收货地址')?></th>
                     <th class="w100"><?=__('电话')?></th>
                     <th class="w100"><?=__('操作')?></th>
                 </tr>
@@ -30,7 +30,12 @@
                             <td><?= $val['address_info']; ?></td>
                             <td class="tc"><?= $val['shipping_address_phone']; ?></td>
                             <td class="tc">
-                                <a href="javascript:void(0);" nc_type="select" class="ncbtn bbc_seller_btns margint4" address_id="<?= $val['shipping_address_id']; ?>" address_area="<?= $val['shipping_address_area']; ?>" address_address="<?= $val['shipping_address_address']; ?>" address_value="<?= $val['address_value']; ?>"><?=__('选择')?></a>
+                                <a href="javascript:void(0);" nc_type="select" class="ncbtn bbc_seller_btns margint4"
+                                   address_id="<?= $val['shipping_address_id']; ?>"
+                                   address_city_id="<?= $val['shipping_address_city_id']; ?>"
+                                   address_area="<?= $val['shipping_address_area']; ?>"
+                                   address_address="<?= $val['shipping_address_address']; ?>"
+                                   address_value="<?= $val['address_value']; ?>"><?=__('选择')?></a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -59,6 +64,7 @@
 
                 send_address.order_seller_name = this_tr.children(':eq(0)').html();
                 send_address.order_seller_address = $(this).attr('address_address');
+                send_address.order_seller_city_id = $(this).attr('address_city_id');
                 send_address.order_seller_contact = this_tr.children(':eq(2)').html();
                 send_address.seller_address_area = $(this).attr('address_area');
                 send_address.seller_address_span = $(this).attr('address_value');

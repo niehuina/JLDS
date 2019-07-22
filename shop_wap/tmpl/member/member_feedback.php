@@ -44,7 +44,7 @@ include __DIR__.'/../../includes/header.php';
     <script type="text/javascript" src="../../js/common.js"></script>
     <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
     <script type="text/javascript" src="../../js/tmpl/footer.js"></script>
-    <script type="text/javascript" src="../../js/tmpl/member_feedback.js"></script>
+    <script type="text/javascript" src="../../js/tmpl/member/member_feedback.js"></script>
 </body>
 
 </html>

@@ -130,7 +130,7 @@ class Api_Pay_PayCtl extends Api_Controller
         $record_add_seller_row['record_year']	   = date('Y');
         $record_add_seller_row['record_month']	= date('m');
         $record_add_seller_row['record_day']		=date('d');
-        $record_add_seller_row['record_title']  = $Trade_TypeModel->trade_type[Trade_TypeModel::SHOPPING];
+        $record_add_seller_row['record_title']  = '销售入账';
         $record_add_seller_row['record_time']   = date('Y-m-d H:i:s');
         $record_add_seller_row['trade_type_id'] = Trade_TypeModel::SHOPPING;
         $record_add_seller_row['user_type']     = 1;	//收款方
@@ -891,6 +891,7 @@ class Api_Pay_PayCtl extends Api_Controller
         $Consume_RecordModel = new Consume_RecordModel();
         //用户信息表
         $User_BaseModel = new User_BaseModel();
+        $user_base = $User_BaseModel->getOne($user_id);
         //用户资源表
         $User_ResourceModel = new User_ResourceModel();
 
@@ -912,6 +913,7 @@ class Api_Pay_PayCtl extends Api_Controller
             $record_row2 = array(
                 'order_id' => $order_id,
                 'user_id' => $user_id,
+                'user_nickname' => $user_base['user_account'],
                 'record_money' => $amount,
                 'record_date' => date("Y-m-d"),
                 'record_year' => date("Y"),

@@ -1336,6 +1336,11 @@ class LoginCtl extends Yf_AppController
 					$this->data->setError('用户已经锁定,禁止登录!');
 					return false;
 				}
+                if (4 == $user_info_row['user_state'])
+                {
+                    $this->data->setError('用户已经退出,禁止登录!');
+                    return false;
+                }
 
 				//$session_id = uniqid();
 				$session_id = $user_info_row['session_id'];
@@ -2258,14 +2263,16 @@ class LoginCtl extends Yf_AppController
     {
         $intro_keys = request_string('intro_keys');
 
-        $User_InfoDetailModel = new User_InfoDetailModel();
+        $key = Yf_Registry::get('shop_api_key');
+        $url = Yf_Registry::get('shop_api_url');
+        $shop_app_id = Yf_Registry::get('shop_app_id');
+        $formvars = array();
+        $formvars['app_id'] = $shop_app_id;
+        $formvars['intro_keys'] = $intro_keys;
 
-        $user_list = $User_InfoDetailModel->getInfoDetailListByKeys($intro_keys);
-
-        return $this->data->addBody(-140, $user_list);
+        $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=getUserInfoByKeys&typ=json', $url), $formvars);
+        return $this->data->addBody(-140, $rs['data'], $rs['msg'],$rs['status']);
     }
-
-
 
     public function getRegisterDocument()
     {

@@ -51,7 +51,7 @@ include __DIR__ . '/../../includes/header.php';
                 </a>
             </li>
             <li>
-                <a href="member_birthday.php">
+                <a href="member_birthday.html">
                     <h4>生日</h4>
                     <span style="float: right; margin-right: 50px" id="user_birthday"></span>
                     <span class="arrow-r"></span>

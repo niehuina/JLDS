@@ -1921,6 +1921,7 @@ class UserCtl extends Yf_AppController
 		$rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=getUserInfo&typ=json', $url), $formvars);
 		return $rs;
 	}
+
 }
 
 ?>

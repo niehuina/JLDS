@@ -502,6 +502,34 @@ class Api_UserCtl extends Api_Controller
         $data = array();
         $this->data->addBody(-140, $data, $msg, $status);
     }
+
+    public function updateUserInfoForWap()
+    {
+        $user_id = request_string('user_id');
+        $user_nickname = request_string('user_nickname');
+        $user_birthday = request_string('user_birthday');
+        $user_logo = request_string('user_logo');
+        $user_realname = request_string('user_realname');
+        $User_InfoModel = new User_InfoModel();
+        $User_infoDetailModel = new User_InfoDetail();
+
+        $user = $User_InfoModel->getOne($user_id);
+        if ($user_nickname) {
+            $edit_row['nickname'] = $user_nickname;
+        }
+        if ($user_birthday) {
+            $edit_row['user_birth'] = $user_birthday;
+        }
+        if ($user_logo) {
+            $edit_row['user_avatar'] = $user_logo;
+        }
+        if ($user_realname) {
+            $edit_row['user_truename'] = $user_realname;
+        }
+        $flag = $User_infoDetailModel->editInfoDetail($user_id, $edit_row);
+        $data = array();
+        $this->data->addBody(-140, $data, '', 200);
+    }
 }
 
 ?>

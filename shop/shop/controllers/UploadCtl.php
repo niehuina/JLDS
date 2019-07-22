@@ -663,6 +663,16 @@ class UploadCtl extends Yf_AppController
 
 		$this->data->addBody(-140, $result_info, "success", 200);
 	}
+
+    public function uploadBase64Image()
+    {
+        $config = array(
+            "pathFormat" => $this->config['imagePathFormat'],
+            "maxSize" => $this->config['imageMaxSize'],
+            "allowFiles" => $this->config['imageAllowFiles']
+        );
+        $this->uploadFile('image', $config, 'base64');
+    }
 }
 
 ?>
