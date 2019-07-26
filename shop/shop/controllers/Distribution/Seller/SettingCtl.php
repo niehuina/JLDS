@@ -79,7 +79,7 @@ class Distribution_Seller_SettingCtl extends Seller_Controller
 		}
 		if(request_string('end_date'))
 		{
-			$cond_row['directseller_create_time:<='] = request_string('end_date');
+			$cond_row['directseller_create_time:<='] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 		}
 		if(request_int('state'))
 		{
@@ -355,7 +355,7 @@ class Distribution_Seller_SettingCtl extends Seller_Controller
 		//结束时间
 		if (request_string('end_date'))
 		{
-			$cond_row['order_create_time:<'] = request_string('end_date');
+			$cond_row['order_create_time:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 		}
 		
 		//买家

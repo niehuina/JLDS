@@ -281,6 +281,8 @@ $wb = $connect_rows['weibo']['status'];
 
 			if(data.status == 200)
 			{
+                $.cookie('passwordErrorCount', 0);
+
 				k = data.data.k;
 				u = data.data.user_id;
 

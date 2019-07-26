@@ -117,7 +117,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 			}
 			if (request_string('end_date'))
 			{
-				$order_row['order_create_time:<'] = request_string('end_date');
+				$order_row['order_create_time:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 			}
 			if ($search_str)
 			{
@@ -246,7 +246,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 			}
 			if (request_string('end_date'))
 			{
-				$order_row['order_create_time:<'] = request_string('end_date');
+				$order_row['order_create_time:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 			}
 			if (request_string('orderkey'))
 			{
@@ -387,41 +387,6 @@ class Buyer_OrderCtl extends Buyer_Controller
 					$rs_flag = false;
 					check_rs($rs_flag,$rs_row);
 				}
-
-                //个人仓库
-                $User_Stock_Model = new User_StockModel();
-                $user_stock_list = $User_Stock_Model->getByWhere(['user_id'=>$order_base['buyer_user_id']]);
-                $goods_id_array = array_reduce($user_stock_list, function($carry,$item){
-                    $carry[$item['goods_id']] = $item['stock_id'];
-                    return $carry;
-                });
-
-                foreach($order_goods_data as $i=>$order_goods){
-                    $goods_id = $order_goods['goods_id'];
-                    if(array_key_exists($goods_id, $goods_id_array)){
-                        $stock_row = array();
-                        $stock_row['goods_stock'] = $order_goods['order_goods_num'];
-
-                        //修改用户仓储商品数量
-                        $stock_id = $goods_id_array[$goods_id];
-                        $s_flag = $User_Stock_Model->editUserStock($stock_id,$stock_row, true);
-                        check_rs($s_flag,$rs_row);
-                    }else{
-                        $stock_row = array();
-                        $stock_row['user_id'] = $order_base['buyer_user_id'];
-                        $stock_row['user_name'] = $order_base['buyer_user_name'];
-                        $stock_row['goods_id'] = $order_goods['goods_id'];
-                        $stock_row['common_id'] = $order_goods['common_id'];
-                        $stock_row['goods_name'] = $order_goods['goods_name'];
-                        $stock_row['goods_stock'] = $order_goods['order_goods_num'];
-                        $stock_row['alarm_stock'] = 0;
-                        $stock_row['stock_date_time'] = get_date_time();
-
-                        //添加到用户仓储
-                        $s_flag = $User_Stock_Model->addUserStock($stock_row);
-                        check_rs($s_flag,$rs_row);
-                    }
-                }
 
                 //查看是否是用户购买的分销商从供货商处分销的支持代发货的商品，如果是改变订单状态
 				$sp_order = $Order_BaseModel->getByWhere(array('order_source_id'=>$order_id));
@@ -760,7 +725,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 			}
 			if (request_string('end_date'))
 			{
-				$order_row['order_create_time:<'] = request_string('end_date');
+				$order_row['order_create_time:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 			}
 			if (request_string('orderkey'))
 			{
@@ -852,7 +817,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 			}
 			if (request_string('end_date'))
 			{
-				$order_row['order_create_time:<'] = request_string('end_date');
+				$order_row['order_create_time:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 			}
 			if (request_string('orderkey'))
 			{
@@ -1958,13 +1923,13 @@ class Buyer_OrderCtl extends Buyer_Controller
 				fb($flag2);*/
 				$flag = $flag && $flag2;
 				//删除商品库存
-				$flag3 = $Goods_BaseModel->delStock($v['goods_id'], $v['goods_num'], $order_row['seller_user_id']);
+				//$flag3 = $Goods_BaseModel->delStock($v['goods_id'], $v['goods_num'], $order_row['seller_user_id']);
 
 				$trade_title = $v['goods_base']['goods_name'];
 
 				/*	fb("====flag3===");
 					fb($flag3);*/
-				$flag = $flag && $flag3;
+//				$flag = $flag && $flag3;
 				//从购物车中删除商品
 				if(isset($v['cart_id']))
 				{
@@ -2044,10 +2009,10 @@ class Buyer_OrderCtl extends Buyer_Controller
 					$flag = $flag && $flag2;
 
 					//删除商品库存
-					$flag3 = $Goods_BaseModel->delStock($v['goods_id'], 1, $order_row['seller_user_id']);
+					//$flag3 = $Goods_BaseModel->delStock($v['goods_id'], 1, $order_row['seller_user_id']);
 					/*	fb("====flag3===");
                         fb($flag3);*/
-					$flag = $flag && $flag3;
+					//$flag = $flag && $flag3;
 				}
 			}
 
@@ -2098,10 +2063,10 @@ class Buyer_OrderCtl extends Buyer_Controller
 				fb($flag2);*/
 				$flag = $flag && $flag2;
 				//删除商品库存
-				$flag3 = $Goods_BaseModel->delStock($val['mansong_info']['gift_goods_id'], 1, $order_row['seller_user_id']);
+				//$flag3 = $Goods_BaseModel->delStock($val['mansong_info']['gift_goods_id'], 1, $order_row['seller_user_id']);
 				/*	fb("====flag3===");
 					fb($flag3);*/
-				$flag = $flag && $flag3;
+				//$flag = $flag && $flag3;
 			}
 
 			//支付中心生成订单
@@ -2986,8 +2951,8 @@ class Buyer_OrderCtl extends Buyer_Controller
 		$flag  = $flag && $flag2;
 
 		//删除商品库存
-		$flag3 = $Goods_BaseModel->delStock($goods_id, $goods_num);
-		$flag  = $flag && $flag3;
+		//$flag3 = $Goods_BaseModel->delStock($goods_id, $goods_num);
+		//$flag  = $flag && $flag3;
 
 		if (isset($redemp_goods_rows))
 		{
@@ -3042,10 +3007,10 @@ class Buyer_OrderCtl extends Buyer_Controller
 				$flag = $flag && $flag2;
 
 				//删除商品库存
-				$flag3 = $Goods_BaseModel->delStock($v['goods_id'], 1);
+				//$flag3 = $Goods_BaseModel->delStock($v['goods_id'], 1);
 					/*fb("====flag3===");
                     fb($flag3);*/
-				$flag = $flag && $flag3;
+				//$flag = $flag && $flag3;
 
 			}
 		}
@@ -3100,10 +3065,10 @@ class Buyer_OrderCtl extends Buyer_Controller
 			$flag = $flag && $flag2;
 
 			//删除商品库存
-			$flag3 = $Goods_BaseModel->delStock($data['mansong_info']['gift_goods_id'], 1);
+			//$flag3 = $Goods_BaseModel->delStock($data['mansong_info']['gift_goods_id'], 1);
 			/*	fb("====flag3===");
                 fb($flag3);*/
-			$flag = $flag && $flag3;
+			//$flag = $flag && $flag3;
 
 		}
 		fb($flag);
@@ -3436,8 +3401,8 @@ class Buyer_OrderCtl extends Buyer_Controller
 					$edit_flag2 = $Chain_GoodsModel->editGoods($chain_goods_id, $goods_stock);
 					check_rs($edit_flag2, $rs_row);
 				}else{
-					$edit_flag2 = $Goods_BaseModel->returnGoodsStock($order_goods_id);
-					check_rs($edit_flag2, $rs_row);
+					//$edit_flag2 = $Goods_BaseModel->returnGoodsStock($order_goods_id);
+					//check_rs($edit_flag2, $rs_row);
 				}
 
 				//将需要取消的订单号远程发送给Paycenter修改订单状态
@@ -3485,8 +3450,8 @@ class Buyer_OrderCtl extends Buyer_Controller
 							check_rs($edit_goods_flag, $rs_row);
 
 						}else{
-							$edit_goods_flag = $Goods_BaseModel->returnGoodsStock($order_goods_id);
-                            check_rs($edit_goods_flag, $rs_row);
+							//$edit_goods_flag = $Goods_BaseModel->returnGoodsStock($order_goods_id);
+                            //check_rs($edit_goods_flag, $rs_row);
 						}
                         
 						$formvars['order_id']    = $value['order_id'];
@@ -3616,7 +3581,7 @@ class Buyer_OrderCtl extends Buyer_Controller
             }
             if (request_string('end_date'))
             {
-                $order_row['order_create_time:<'] = request_string('end_date');
+                $order_row['order_create_time:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
             }
             if (request_string('orderkey'))
             {
@@ -4367,7 +4332,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 				$flag = $flag && $flag1;
 
 				//删除商品库存
-				$flag2 = $Goods_BaseModel->delStock($supplier_goodsbaseinfo['goods_base']['goods_id'], $goods_num);
+				//$flag2 = $Goods_BaseModel->delStock($supplier_goodsbaseinfo['goods_base']['goods_id'], $goods_num);
 
 				$trade_title = $supplier_goodsbaseinfo['goods_base']['goods_name'];
 
@@ -4947,12 +4912,12 @@ class Buyer_OrderCtl extends Buyer_Controller
             return $this->data->addBody(-140, array('code'=>13), __('订单提交失败'), 250);
         }
         //删除商品库存
-        $flag3 = $Goods_BaseModel->delStock($goods_info['base']['goods_id'], $goods_num);
+        //$flag3 = $Goods_BaseModel->delStock($goods_info['base']['goods_id'], $goods_num);
        
-        if(!$flag3){
-            $this->tradeOrderModel->sql->rollBackDb();
-            return $this->data->addBody(-140, array('code'=>23), __('订单提交失败'), 250);
-        }
+//        if(!$flag3){
+//            $this->tradeOrderModel->sql->rollBackDb();
+//            return $this->data->addBody(-140, array('code'=>23), __('订单提交失败'), 250);
+//        }
         $trade_title = $goods_info['base']['goods_name'];
        
         //支付中心生成订单
@@ -5129,8 +5094,10 @@ class Buyer_OrderCtl extends Buyer_Controller
         $page    = request_int('curpage', 1);
         $rows    = request_int('page', 20);
         $status    = request_int('status', 0);
-        $cond_row['directseller_id:>'] = 0;
-        $cond_row['order_is_settlement'] = $status;
+        $user_id    = request_int('user_id', 1);
+        $cond_row['directseller_id'] = $user_id;
+        $cond_row['directseller_is_settlement'] = 0;
+        $cond_row['order_status'] = Order_StateModel::ORDER_FINISH;
         $order_row['order_create_time'] = 'desc';
         $order_list = $OrderModel->listByWhere($cond_row, $order_row, $page, $rows);
 
@@ -5153,6 +5120,7 @@ class Buyer_OrderCtl extends Buyer_Controller
         $formvars['user_id'] = Perm::$userId;
         $formvars['trade_type_id'] = 14;
         $formvars['user_type'] = 1;
+        $formvars['status'] = 2;
         $rs = $this->getPaycenterApi($formvars, 'Api_Paycen_PayRecord', 'getRecordAmountByUserId');
         if($rs['data']){
             $order_list['amount'] = $rs['data']['amount'];

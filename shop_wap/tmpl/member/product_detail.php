@@ -294,8 +294,9 @@ include __DIR__.'/../../includes/header.php';
                                             <div class="goods-detail-bottom"><a href="javascript:void(0);" id="goodsBody1">点击查看商品详情</a></div>
                                             <div class="goods-detail-foot">
                                                 <div class="otreh-handle">
-                                                    <a href="javascript:void(0);" class="kefu"><i></i><p>客服</p></a>
-                                                    <a href="../tmpl/cart_list.html" class="cart"><i></i><p>购物车</p><span id="cart_count"></span></a>
+<!--                                                    <a href="javascript:void(0);" class="kefu wp30"><i></i><p>客服</p></a>-->
+                                                    <a href="javascript:void(0);" class="borl1 wp50 collect pd-collect <% if (is_favorate) { %>favorate<% } %>"><i></i><p>收藏</p></a>
+                                                    <a href="../tmpl/cart_list.html" class="cart wp50"><i></i><p>购物车</p><span id="cart_count"></span></a>
                                                 </div>
                                                 <div class="buy-handle <%if(!goods_hair_info.if_store || goods_info.goods_storage == 0){%>no-buy<%}%>">
                                                     <% if (goods_info.cart == '1') { %>
@@ -470,7 +471,7 @@ include __DIR__.'/../../includes/header.php';
     <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
     
     <script type="text/javascript" src="../../js/libs/template.js"></script>
-    <script type="text/javascript" src="../../js/swipe.js"></script>
+    <script type="text/javascript" src="../../js/libs/swipe.js"></script>
     <script type="text/javascript" src="../../js/common.js"></script>
     <script type="text/javascript" src="../../js/iscroll.js"></script>
     <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>

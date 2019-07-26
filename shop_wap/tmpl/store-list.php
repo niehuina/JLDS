@@ -14,7 +14,7 @@ include __DIR__.'/../includes/header.php';
     <link rel="stylesheet" href="../css/swiper.min.css" />
     <link rel="stylesheet" href="../css/nctouch_common.css" />
     <link rel="stylesheet" href="../css/nctouch_products_list.css" />
-    <script type="text/javascript" src="../js/swipe.js"></script>
+    <script type="text/javascript" src="../js/libs/swipe.js"></script>
 <style>
    /* #header .header-inp{
         margin:0.2rem 4rem 0.3rem 2rem !important;

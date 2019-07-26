@@ -71,7 +71,7 @@ if ($data) {
 }
 
 
-if ($flag && $Stock_OrderModel->sql->commitDb()) {
+if ($flag !== false && $Stock_OrderModel->sql->commitDb()) {
     $status = 200;
     $msg = __('success');
 } else {

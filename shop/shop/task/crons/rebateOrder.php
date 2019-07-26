@@ -30,14 +30,11 @@ $User_InfoModel = new User_InfoModel();
 $User_GradeModel = new User_GradeModel();
 
 //获取所有的合伙人
-$partner_list = $User_InfoModel->getByWhere(['user_grade' => 3]);
+$partner_list = $User_InfoModel->getByWhere(['user_grade' => 3, 'user_name:!='=>'admin']);
 $user_grade = $User_GradeModel->getOne(3);
 //获取所有的高级合伙人
-$g_partner_list = $User_InfoModel->getByWhere(['user_grade' => 4]);
+$g_partner_list = $User_InfoModel->getByWhere(['user_grade' => 4, 'user_name:!='=>'admin']);
 $user_g_grade = $User_GradeModel->getOne(4);
-
-//开启事物
-$Order_BaseModel->sql->startTransactionDb();
 
 //查找出所有确认收货的未结算订单
 //$time = time()-7*24*60*60;
@@ -51,9 +48,14 @@ $cond_row['order_finished_time:<='] = $N;
 $order_row['order_create_time'] = 'asc';
 
 $flag = true;
+
+//开启事物
+$Order_BaseModel->sql->startTransactionDb();
+
 foreach ($partner_list as $key => $user_info) {
     $user_id = $user_info['user_id'];
     $user_children_ids = $User_InfoModel->getUserChildren($user_id, 0);
+    if(!$user_children_ids) continue;
     $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
     $cond_row['rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
     $cond_row['order_create_time:>='] = $user['user_grade_update_date'];
@@ -66,6 +68,12 @@ foreach ($partner_list as $key => $user_info) {
         $user_order_refund_amount = array_sum(array_column($user_orders, 'order_refund_amount'));
         $user_order_amount = $user_order_pay_amount - $user_order_refund_amount;
 
+        $user_order_ids = array_column($user_orders, 'order_id');
+        $order_edit_row['rebate_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
+        $flag = $Order_BaseModel->editBase($user_order_ids, $order_edit_row);
+
+        if ($user_order_amount == 0) continue;
+
         $total_children_order_total_amount = $user_info['children_order_total_amount'] + $user_order_amount;
         $edit_row['children_order_total_amount'] = $total_children_order_total_amount;
         $User_InfoModel->editInfo($user_id, $edit_row);
@@ -76,8 +84,6 @@ foreach ($partner_list as $key => $user_info) {
         $grade_order_rebate2 = $user_grade['order_rebate2'];
 
         if ($user_info['children_order_total_amount'] > $grade_order_amount) {
-            $order_rebate_value = $user_order_amount * $grade_order_rebate2;
-        } else if ($user_info['children_order_total_amount'] <= $grade_order_amount) {
             //不足指标金额$grade_order_amount的部分
             $order_amount1 = $grade_order_amount - $user_info['children_order_total_amount'];
             $rebate_value1 = $order_amount1 * $grade_order_rebate1;
@@ -90,12 +96,11 @@ foreach ($partner_list as $key => $user_info) {
                 $rebate_value2 = 0;
             }
             $order_rebate_value = $rebate_value1 + $rebate_value2;
+        } else if ($user_info['children_order_total_amount'] <= $grade_order_amount) {
+            $order_rebate_value = $user_order_amount * $grade_order_rebate1;
         }
-
-        $user_order_ids = array_column($user_orders, 'order_id');
-        $order_edit_row['rebate_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
-        $flag = $Order_BaseModel->editBase($user_order_ids, $order_edit_row);
     }
+    if($order_rebate_value == 0) continue;
 
     //将需要确认的订单号远程发送给Paycenter修改订单状态
     //远程修改paycenter中的订单状态
@@ -116,6 +121,19 @@ foreach ($partner_list as $key => $user_info) {
     $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=directsellerOrder&typ=json', $url), $formvars);
 }
 
+if ($flag !== false && $Order_BaseModel->sql->commitDb()) {
+    $status = 200;
+    $msg = __('success');
+} else {
+    $Order_BaseModel->sql->rollBackDb();
+    $m = $Order_BaseModel->msg->getMessages();
+    $msg = $m ? $m[0] : __('failure');
+    $status = 250;
+}
+
+//开启事物
+$Order_BaseModel->sql->startTransactionDb();
+
 foreach ($g_partner_list as $key => $user_info) {
     $user_id = $user_info['user_id'];
 
@@ -132,6 +150,7 @@ foreach ($g_partner_list as $key => $user_info) {
 
     //获取高级合伙人所有线下的未结算订单
     $user_children_ids = $User_InfoModel->getUserChildren($user_id, 0);
+    if(!$user_children_ids) continue;
     $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
     $cond_row['g_rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
     $user_orders = $Order_BaseModel->getByWhere($cond_row, $order_row);
@@ -149,6 +168,7 @@ foreach ($g_partner_list as $key => $user_info) {
         $order_edit_row['g_rebate_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
         $flag = $Order_BaseModel->editBase($user_order_ids, $order_edit_row);
     }
+    if($order_rebate_value == 0) continue;
 
     //将需要确认的订单号远程发送给Paycenter修改订单状态
     //远程修改paycenter中的订单状态
@@ -168,7 +188,7 @@ foreach ($g_partner_list as $key => $user_info) {
     $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=directsellerOrder&typ=json', $url), $formvars);
 }
 
-if ($flag && $Order_BaseModel->sql->commitDb()) {
+if ($flag !== false && $Order_BaseModel->sql->commitDb()) {
     $status = 200;
     $msg = __('success');
 } else {

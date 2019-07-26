@@ -664,9 +664,9 @@ class Order_BaseModel extends Order_Base
                     //查找该订单商品是否存在退款/退货
                     $goods_return       = $Order_ReturnModel->getByWhere(array(
                                                                              'order_goods_id' => $v['order_goods_id'],
-                                                                             'return_type' => Order_ReturnModel::RETURN_TYPE_ORDER,
+//                                                                             'return_type' => Order_ReturnModel::RETURN_TYPE_ORDER,
                                                                              'return_shop_handle:!=' => Order_ReturnModel::RETURN_SELLER_UNPASS,
-                                                                         ));
+                                                                         ), ['return_add_time'=>'desc']);
 
                     $return_txt = '';
                     if($goods_return)
@@ -677,11 +677,16 @@ class Order_BaseModel extends Order_Base
                         {
                             $return_txt = "<span class='colred'>已退".$goods_return['order_goods_num']."件</span>";
                         }else{
-                            $return_url = $url . '?ctl=Seller_Service_Return&met=orderReturn&act=detail&id=' . $goods_return['order_return_id'];
 
                             if($deilve_able)
                             {
-                                $return_txt = "<a class=\"ncbtn ncbtn-mint mt10 bbc_seller_btns\" href=\"$return_url\"><i class=\"icon-truck\"></i>处理退款</a>";
+                                if($goods_return['return_type'] == Order_ReturnModel::RETURN_TYPE_GOODS){
+                                    $return_url = $url . '?ctl=Seller_Service_Return&met=goodsReturn&act=detail&id=' . $goods_return['order_return_id'];
+                                    $return_txt = "<a class=\"ncbtn ncbtn-mint mt10 bbc_seller_btns\" href=\"$return_url\"><i class=\"icon-truck\"></i>处理退货</a>";
+                                }else{
+                                    $return_url = $url . '?ctl=Seller_Service_Return&met=orderReturn&act=detail&id=' . $goods_return['order_return_id'];
+                                    $return_txt = "<a class=\"ncbtn ncbtn-mint mt10 bbc_seller_btns\" href=\"$return_url\"><i class=\"icon-truck\"></i>处理退款</a>";
+                                }
                             }
                         }
 
@@ -794,7 +799,7 @@ class Order_BaseModel extends Order_Base
         }
 
         if (!empty($query_end_date)) {
-            $condition['order_create_time:<='] = $query_end_date;
+            $condition['order_create_time:<='] = date('Y-m-d 23:59:59',strtotime($query_end_date));
         }
 
         if (!empty($buyer_name)) {
@@ -915,7 +920,7 @@ class Order_BaseModel extends Order_Base
                 break;
 
             case Order_StateModel::ORDER_RECEIVED:
-            case Order_StateModel::ORDER_RECEIVED:
+            case Order_StateModel::ORDER_FINISH:
                 $data['order_status_text'] = '已经收货';
                 $data['order_status_html'] = '<li>1. 交易已完成，买家可以对购买的商品及服务进行评价。</li><li>2. 评价后的情况会在商品详细页面中显示，以供其它会员在购买时参考。</li>';
 
@@ -1256,8 +1261,8 @@ class Order_BaseModel extends Order_Base
             $goods_stock['goods_stock'] = $chain_goods['goods_stock'] + 1;
             $Chain_GoodsModel->editGoods($chain_goods_id, $goods_stock);
         }else{
-            $Goods_BaseModel = new Goods_BaseModel();
-            $Goods_BaseModel->returnGoodsStock($order_goods_id);
+            //$Goods_BaseModel = new Goods_BaseModel();
+            //$Goods_BaseModel->returnGoodsStock($order_goods_id);
         }
 
         //远程关闭paycenter中的订单状态

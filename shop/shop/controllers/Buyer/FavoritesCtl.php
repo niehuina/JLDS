@@ -8,7 +8,13 @@
  */
 class Buyer_FavoritesCtl extends Buyer_Controller
 {
-	
+    public $userFavoritesGoodsModel = null;
+    public $goodsBaseModel = null;
+    public $goodsCommonModel = null;
+    public $shopBaseModel = null;
+    public $goodsCatModel = null;
+    public $userFavoritesShopModel = null;
+    public $userFootprintModel = null;
 	/**
 	 * Constructor
 	 *
@@ -362,43 +368,37 @@ class Buyer_FavoritesCtl extends Buyer_Controller
 	public function footprintwap()
 	{
 
-		$Yf_Page           = new Yf_Page();
-		$Yf_Page->listRows = $size = request_int('listRows')?request_int('listRows'):10;
-		$rows              = $Yf_Page->listRows;
-		$page              = (int)$_GET['curpage'];
+        $Yf_Page           = new Yf_Page();
+        $Yf_Page->listRows = $size = request_int('listRows')?request_int('listRows'):10;
+        $rows              = $Yf_Page->listRows;
+        $page              = (int)$_GET['curpage'];
 
-		$user_id              = Perm::$userId;
-		$order_row['user_id'] = $user_id;
-		$classid              = request_int('classid');
-		$data = $this->userFootprintModel->getFootprintList($order_row, array('footprint_time' => 'DESC'),$page,$size);
+        $user_id              = Perm::$userId;
+        $cond_row['user_id'] = $user_id;
+        $data = $this->userFootprintModel->listByWhere($cond_row, array('footprint_time' => 'DESC'),$page,$size);
 
-		if(!$data['items']){
+        if(!$data['items']){
 
             $data['arr']['items'] = [];
             return $this->data->addBody(-140, $data);
-		}
+        }
 
-		$goodsid                 = array();
-		$cond = array_column($data['items'], 'common_id');
-		$goodsid['common_id:in'] = $cond;
- 		$tb = TABEL_PREFIX."goods_common"; 
- 		$order_by = implode(",",$cond);
- 		$condition  = " where common_id in (".$order_by.")";
- 		$sql = "select * from ".$tb." ".$condition." order by field(common_id,".$order_by.")";
-		$goods_cat = $this->goodsCommonModel->sql->getAll($sql);
-		foreach ($goods_cat as $key => $value) {
-			$goods_cat[$key]['goods_id'] = json_decode($value['goods_id'],true)[0]['goods_id'];
-		}
-		$data['arr']['items'] = $goods_cat;
-
-		$page_nav = '';
-		$arr      = array();
-		$cat      = array(); 
-		$data['hasmore'] = $page >= $data['total'] ?false:true;
-
-		return $this->data->addBody(-140, $data);
-	 
-		 
+        $goodsid                 = array();
+        $cond = array_column($data['items'], 'common_id');
+        $goodsid['common_id:in'] = $cond;
+        $tb = TABEL_PREFIX."goods_common";
+        $order_by = implode(",",$cond);
+        $condition  = " where common_id in (".$order_by.")";
+        $sql = "select * from ".$tb." ".$condition." order by field(common_id,".$order_by.")";
+        $goods_cat = $this->goodsCommonModel->sql->getAll($sql);
+        $GoodsBaseModel = new Goods_BaseModel();
+        foreach ($goods_cat as $key => $value) {
+            $goods= $GoodsBaseModel->getOneByWhere(array('common_id'=>$value['common_id']));
+            $goods_cat[$key]['goods_id'] = $goods['goods_id'];
+        }
+        $data['arr']['items'] = $goods_cat;
+        $data['hasmore'] = $page >= $data['total'] ?false:true;
+        return $this->data->addBody(-140, $data);
 
 	}
 

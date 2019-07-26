@@ -135,6 +135,7 @@ class LoginCtl extends Yf_AppController
                         //regDone
                         $PluginManager = Yf_Plugin_Manager::getInstance();
                         $PluginManager->trigger('regDone', $user_id);
+                        Yf_Log::log('regDone run', Yf_Log::LOG, 'debug');
                     }
 
                     $user_resource_row = array();
@@ -210,7 +211,6 @@ class LoginCtl extends Yf_AppController
                 //当天没有登录过执行
 
                 if ($last_day != $now_day && $now > $lotime) {
-
                     $user_points = Web_ConfigModel::value("points_login");
                     $user_grade = Web_ConfigModel::value("grade_login");
 
@@ -223,9 +223,6 @@ class LoginCtl extends Yf_AppController
 
                     $res_flag = $User_ResourceModel->editResource($user_row['user_id'], $resource_row);
 
-                    $User_GradeModel = new User_GradeModel;
-                    //升级判断
-                    $res_flag = $User_GradeModel->upGrade($user_row['user_id'], $resource_row['user_growth']);
                     //积分
                     $points_row['user_id'] = $user_id;
                     $points_row['user_name'] = $user_row['user_account'];
@@ -251,6 +248,10 @@ class LoginCtl extends Yf_AppController
                     $Grade_LogModel = new Grade_LogModel;
                     $Grade_LogModel->addLog($grade_row);
                 }
+
+                $User_GradeModel = new User_GradeModel;
+                //升级判断
+                $res_flag = $User_GradeModel->upGrade($user_row['user_id'], $resource_row['user_growth']);
 
                 //$flag     = $User_BaseModel->editBaseSingleField($user_row['user_id'], 'user_key', $user_key, $user_row['user_key']);
                 Yf_Hash::setKey($user_key);
@@ -415,10 +416,17 @@ class LoginCtl extends Yf_AppController
             $user_info_row['user_id'] = $user_id;
             $user_info_row['user_realname'] = @$init_rs['data']['user_truename'];
             $user_info_row['user_name'] = isset($init_rs['data']['nickname']) ? $init_rs['data']['nickname'] : $data['user_account'];
-            $user_info_row['user_mobile'] = @$init_rs['data']['user_mobile'];
+            $user_info_row['user_mobile'] = @$init_rs['data']['mobile'];
             $user_info_row['user_logo'] = @$init_rs['data']['user_avatar'];
             $user_info_row['user_regtime'] = get_date_time();
             $info_flag = $User_InfoModel->addInfo($user_info_row);
+
+            if (Web_ConfigModel::value('Plugin_Directseller')) {
+                //regDone
+                $PluginManager = Yf_Plugin_Manager::getInstance();
+                $PluginManager->trigger('regDone', $user_id);
+                Yf_Log::log('regDone run', Yf_Log::LOG, 'debug');
+            }
 
             $user_resource_row = array();
             $user_resource_row['user_id'] = $user_id;
@@ -439,6 +447,12 @@ class LoginCtl extends Yf_AppController
             $user_points_row['points_log_desc'] = __('会员注册');
             $user_points_row['points_log_flag'] = 'reg';
             $Points_LogModel->addLog($user_points_row);
+
+
+            $User_GradeModel = new User_GradeModel;
+            //升级判断
+            $res_flag = $User_GradeModel->upGrade($user_row['user_id'], 0);
+
             //发送站内信
             $message = new MessageModel();
             $message->sendMessage('welcome', $user_id, $data['user_account'], '', '', 0, MessageModel::OTHER_MESSAGE);
@@ -721,7 +735,6 @@ class LoginCtl extends Yf_AppController
             $login_row['user_lastip'] = $info[$user_row['user_id']]['user_login_ip'];
             $flag = $User_InfoModel->editInfo($user_row['user_id'], $login_row, false);
             //当天没有登录过执行
-
             if ($last_day != $now_day && $now > $lotime) {
 
                 $user_points = Web_ConfigModel::value("points_login");

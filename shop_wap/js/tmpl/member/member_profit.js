@@ -13,5 +13,8 @@ $(function () {
         $("#profit").text(sprintf('%0.2f',result.data.amount));
         var user_grade = result.data.user_grade;
         $(".v"+user_grade).show();
+        if(result.data.self_user_id == getCookie('id')){
+            $(".stock").hide();
+        }
     });
 });

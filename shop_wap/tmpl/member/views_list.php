@@ -40,43 +40,43 @@ include __DIR__.'/../../includes/header.php';
     </div>
     <script type="text/html" id="viewlist_data">
         <% if ('undefined' != typeof arr.items  &&  arr.items.length > 0) {%>
-            <ul class="goods-secrch-list">
-                <% for (var i=0; i<arr.items.length; i++) {%> 
-               
-                    <li class="goods-item">
-                        <span class="goods-pic">
-                            <a href="../product_detail.html?goods_id=<%=arr.items[i].goods_id%>">
-                                <img src="<%=$image_thumb(arr.items[i].common_image, 116, 116)%>"/>
-                            </a>
-                        </span>
-                        <dl class="goods-info">
-                            <dt class="goods-name">
-                                <a href="../product_detail.html?goods_id=<%=arr.items[i].goods_id%>">
-                                    <h4><%=arr.items[i].common_name%></h4>
-                                    <h6></h6>
-                                </a>
-                            </dt>
-                            <dd class="goods-sale">
-                                <a href="../product_detail.html?goods_id=<%=arr.items[i].goods_id%>">
-                                    <span class="goods-price">￥<em><%=arr.items[i].common_price%></em></span>
-                                </a>
-                            </dd>
-                        </dl>
-                    </li>
-                    
-                    <% } %>
-                <li class="loading"><div class="spinner"><i></i></div>浏览记录读取中...</li>
-            </ul>
-            <% } else {%>
-                <div class="nctouch-norecord views">
-                    <div class="norecord-ico"><i></i></div>
-                    <dl>
-                        <dt>暂无您的浏览记录</dt>
-                        <dd>可以去看看哪些想要买的</dd>
-                    </dl>
-                    <a href="<%=WapSiteUrl%>" class="btn">随便逛逛</a>
-                </div>
+        <ul class="goods-secrch-list">
+            <% for (var i=0; i<arr.items.length; i++) {%>
+            <li class="goods-item">
+                    <span class="goods-pic">
+                        <a href="../<% if(arr.items[i].common_is_virtual == 1){%>service_product_detail.html<%}else{%>store.html<%}%>?goods_id=<%=arr.items[i].goods_id%>">
+                            <img src="<%=$image_thumb(arr.items[i].common_image, 116, 116)%>"/>
+                        </a>
+                    </span>
+                <dl class="goods-info">
+                    <dt class="goods-name">
+                        <a href="../<% if(arr.items[i].common_is_virtual == 1){%>service_product_detail.html<%}else{%>store.html<%}%>?goods_id=<%=arr.items[i].goods_id%>">
+                            <h4><%=arr.items[i].common_name%></h4>
+                            <h6></h6>
+                        </a>
+                    </dt>
+                    <dd class="goods-sale">
+                        <a href="../<% if(arr.items[i].common_is_virtual == 1){%>service_product_detail.html<%}else{%>store.html<%}%>?goods_id=<%=arr.items[i].goods_id%>">
+                            <span class="goods-price">￥<em><%=arr.items[i].common_price%></em></span>
+                        </a>
+                    </dd>
+                </dl>
+            </li>
             <% } %>
+            <li class="loading">
+                <div class="spinner"><i></i></div>浏览记录读取中...
+            </li>
+        </ul>
+        <% } else {%>
+        <div class="nctouch-norecord views">
+            <div class="norecord-ico"><i></i></div>
+            <dl>
+                <dt>暂无您的浏览记录</dt>
+                <dd>可以去看看哪些想要买的</dd>
+            </dl>
+            <a href="<%=WapSiteUrl%>" class="btn">随便逛逛</a>
+        </div>
+        <% } %>
     </script>
     
     <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
@@ -85,7 +85,7 @@ include __DIR__.'/../../includes/header.php';
     <script type="text/javascript" src="../../js/common.js"></script>
     <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
     <script type="text/javascript" src="../../js/tmpl/footer.js"></script>
-    <script type="text/javascript" src="../../js/tmpl/view_list.js"></script>
+    <script type="text/javascript" src="../../js/tmpl/member/view_list.js"></script>
 </body>
 
 </html>

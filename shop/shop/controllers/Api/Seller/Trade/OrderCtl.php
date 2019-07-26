@@ -403,8 +403,8 @@ class Api_Seller_Trade_OrderCtl extends Api_Controller
 				$edit_flag2 = $Chain_GoodsModel->editGoods($chain_goods_id, $goods_stock);
 				check_rs($edit_flag2, $rs_row);
 			}else{
-				$edit_flag2 = $Goods_BaseModel->returnGoodsStock($order_goods_id);
-				check_rs($edit_flag2, $rs_row);
+//				$edit_flag2 = $Goods_BaseModel->returnGoodsStock($order_goods_id);
+//				check_rs($edit_flag2, $rs_row);
 			}
 
 			//将需要取消的订单号远程发送给Paycenter修改订单状态
@@ -427,7 +427,7 @@ class Api_Seller_Trade_OrderCtl extends Api_Controller
 				if(count($dist_goods_order) == 1){
 					$Order_BaseModel-> editBase($dist_order['order_id'], $condition);
 					$Order_GoodsModel-> editGoods($dist_goods_order[0]['order_goods_id'], $edit_row);
-					$Goods_BaseModel -> returnGoodsStock($dist_goods_order[0]['order_goods_id']);
+					//$Goods_BaseModel -> returnGoodsStock($dist_goods_order[0]['order_goods_id']);
 				}else{
 					foreach($dist_goods_order as $key => $value){
 						if($value['order_goods_source_id'] == $order_id){
@@ -436,7 +436,7 @@ class Api_Seller_Trade_OrderCtl extends Api_Controller
 							$dist_edit_row['order_payment_amount']   = $dist_order['order_payment_amount'] - $value['order_goods_amount'];
 							$Order_BaseModel-> editBase($dist_order['order_id'], $dist_edit_row);
 							$Order_GoodsModel-> editGoods($dist_goods_order[$key]['order_goods_id'], $edit_row);
-							$Goods_BaseModel -> returnGoodsStock($dist_goods_order[$key]['order_goods_id']);
+							//$Goods_BaseModel -> returnGoodsStock($dist_goods_order[$key]['order_goods_id']);
 						}
 					}
 					$formvars['payment_amount'] = $dist_edit_row['order_payment_amount'];

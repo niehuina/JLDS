@@ -17,7 +17,7 @@ include __DIR__.'/../includes/header.php';
     <script type="text/javascript" src="../js/config.js"></script>
     <script type="text/javascript" src="../js/libs/zepto.min.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
-    <script type="text/javascript" src="../js/swipe.js"></script>
+    <script type="text/javascript" src="../js/libs/swipe.js"></script>
     
     <style>
     	.header-r a i.more {

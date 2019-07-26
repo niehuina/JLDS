@@ -359,7 +359,7 @@ include TPL_PATH . '/' . 'footer.php';
         <a nctype="btn_del_item_image" href="javascript:;">删除</a>
     </div>
 </script>
-<script src="<?= $this->view->js_com ?>/jquery.ajaxContent.pack.js" type="text/javascript"></script>
+<!--<script src="--><?//= $this->view->js_com ?><!--/jquery.ajaxContent.pack.js" type="text/javascript"></script>-->
 <script type="text/javascript">
     $(document).ready(function(){
         $('#btn_mb_special_goods_search').on('click', function() {

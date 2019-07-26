@@ -281,7 +281,9 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                                         <?php
                                         //已经付款（但是没有退款的商品），已经完成（但是没有退货的商品）出现“退款/退货”按钮
                                         //由于之前数据的影响，之前订单存在退款的商品的“退款/退货”按钮也不显示
-                                        if ((($data['order_status'] == Order_StateModel::ORDER_PAYED && $ogval['goods_return_status'] == Order_StateModel::ORDER_GOODS_RETURN_NO) || ($data['order_status'] == Order_StateModel::ORDER_FINISH && $ogval['goods_refund_status'] == Order_StateModel::ORDER_GOODS_RETURN_NO)) && !$data['order_source_id'] && $data['order_refund_status'] == Order_StateModel::ORDER_REFUND_NO && $ogval['order_goods_num'] > $ogval['order_goods_returnnum'] && $ogval['goods_price'] > 0
+                                        if ((($data['order_status'] == Order_StateModel::ORDER_PAYED
+                                                    && $ogval['goods_return_status'] == Order_StateModel::ORDER_GOODS_RETURN_NO)
+                                                || ($data['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS && $ogval['goods_refund_status'] == Order_StateModel::ORDER_GOODS_RETURN_NO)) && !$data['order_source_id'] && $data['order_refund_status'] == Order_StateModel::ORDER_REFUND_NO && $ogval['order_goods_num'] > $ogval['order_goods_returnnum'] && $ogval['goods_price'] > 0
                                         ) {
                                             ?>
                                             <!--不能退的商品，不能退换货-->

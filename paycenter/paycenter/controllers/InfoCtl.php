@@ -147,11 +147,13 @@ class InfoCtl extends Controller
             //进行中 1.购物为待付款到未确认收货之间的状态 2.其他为为处理中
             if ($status == 'doing') {
                 $cond_row['record_status:IN'] = [RecordStatusModel::IN_HAND, RecordStatusModel::RECORD_WAIT_SEND_GOODS, RecordStatusModel::RECORD_WAIT_CONFIRM_GOODS];
+                $cond_row['trade_type_id:not in'] = [Trade_TypeModel::SHOPPING, Trade_TypeModel::STOCK_ORDER];
             }
 //			echo '<pre>';print_r($cond_row);exit;
             //未付款
             if ($status == 'waitpay') {
                 $cond_row['record_status'] = RecordStatusModel::IN_HAND;
+                $cond_row['trade_type_id:in'] = [Trade_TypeModel::SHOPPING, Trade_TypeModel::STOCK_ORDER];
             }
 //			echo '<pre>';print_r($cond_row);exit;
             //等待发货
@@ -1399,7 +1401,7 @@ class InfoCtl extends Controller
 
                     //插入交易明细表
                     $flow_id = date("Ymdhis") . rand(0, 9);
-                    $add_time = get_date_time();
+                    $add_time = date('Y-m-d H:i:s');
                     $record_row = array(
                         'order_id' => $flow_id,
                         'user_id' => $user_id,

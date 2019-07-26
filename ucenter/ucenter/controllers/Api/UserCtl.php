@@ -503,6 +503,28 @@ class Api_UserCtl extends Api_Controller
         $this->data->addBody(-140, $data, $msg, $status);
     }
 
+    public function editUserGrade()
+    {
+        $user_id = request_int('user_id');
+        $user_grade = request_string('user_grade');
+
+        $User_InfoDetailModel = new User_InfoDetailModel();
+        $flag = $User_InfoDetailModel->editInfoDetail($user_id, ['user_grade'=>$user_grade]);
+        if ($flag !== false)
+        {
+            $status = 200;
+            $msg    = __('success');
+        }
+        else
+        {
+            $status = 250;
+            $msg    = __('failure');
+        }
+
+        $data = array();
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
+
     public function updateUserInfoForWap()
     {
         $user_id = request_string('user_id');

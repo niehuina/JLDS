@@ -348,12 +348,15 @@ class UploadCtl extends Yf_AppController
 			$base64 = 'base64';
 			$config['oriName'] = 'remote.png';
 		}
-		
+
+		if($base64 == 'base64'){
+            $config['oriName'] = 'remote.png';
+        }
+
 		/* 生成上传实例对象并完成上传 */
 		$up = new Yf_Uploader($field_name, $config, $base64);
 		
 		$info = $up->getFileInfo();
-
 		if ($info['state'] == "SUCCESS")
 		{
 			//判断文件类型
@@ -388,6 +391,7 @@ class UploadCtl extends Yf_AppController
 				$data['album_id']          = Upload_BaseModel::UPLOAD_IMAGE_UNGROUP;                  // 默认添加到未分组里
 				$data['user_id']           = $user_id; // 用户id
 				$data['shop_id']           = $shop_id; // 店铺id
+
 
 				$uploadBaseModel->addUpload($data);
 			}

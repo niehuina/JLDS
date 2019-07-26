@@ -64,7 +64,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
             <table class="ncsc-default-table order deliver">
                 <tbody>
                 <tr>
-                    <th colspan="20">
+                    <th colspan="4">
                         <a href="index.php?act=store_order&amp;op=order_print&amp;order_id=189" target="_blank" class="fr" title="<?=__('打印发货单')?>">
                             <i class="print-order"></i>
                         </a>
@@ -90,7 +90,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                                 <a target="_blank" href="<?= $val['goods_link']; ?>"><?= $val['goods_name']; ?></a>
                             </dt>
                             <dd><strong>￥<?= $val['goods_price']; ?></strong>&nbsp;x&nbsp;<em><?= $val['order_goods_num']; ?></em>件</dd>
-                            <dd><strong>库存</strong>&nbsp;x&nbsp;<em><?= $val['user_stock']; ?></em>件</dd>
+                            <dd><strong>库存</strong>&nbsp;:&nbsp;<em><?= $val['goods_stock']; ?></em>件</dd>
                             <?php if(isset($val['order_spec_info']) && $val['order_spec_info']){ ?>
                                 <dd><strong><?=__('规格')?>：</strong>&nbsp;&nbsp;<em><?= $val['order_spec_info']; ?></em></dd>
                             <?php }?>
@@ -98,7 +98,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                         </dl>
                     </td>
                     <?php if ( $key == 0 ) { ?>
-                    <td class="bdl bdr order-info w500" rowspan="<?= $data['goods_cat_num']; ?>">
+                    <td class="bdl bdr w500" rowspan="<?= $data['goods_cat_num']; ?>">
                         <dl>
                             <dt><?=__('运费')?>：</dt>
                             <dd><?= $data['shipping_info']; ?></dd>
@@ -109,7 +109,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                                 <textarea name="deliver_explain" cols="100" rows="2" class="w320 tip-t" title="<?=__('您可以输入一些发货备忘信息（仅卖家自己可见）')?>"></textarea>
                             </dd>
                         </dl>
-                         <dl>
+                        <dl>
                             <dt><?=__('给买家留言')?>：</dt>
                             <dd>
                                 <textarea name="order_seller_message" cols="100" rows="2" class="w320 tip-t" title="<?=__('您可以输入一些给买家的留言信息')?>"></textarea>
@@ -284,7 +284,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <td class="bdl" style="width: 249px;"><input name="shipping_code" type="text" class="text w200 tip-r" title="<?=__('正确填写物流单号，确保快递跟踪查询信息正确')?>" maxlength="20"></td>
                     <td class="bdl gray"></td>
                     <td class="bdl bdr tc">
-                        <button nc_value="<?= $val['express_id']; ?>" class="ncbtn bbc_seller_btns"><?=__('确认')?></button>
+                        <button nc_value="<?= $val['express_id']; ?>" class="ncbtn bbc_seller_btns"><?=__('确认发货')?></button>
                     </td>
                 </tr>
                 <?php } ?>
@@ -299,7 +299,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 <tr>
                     <td class="bdl tr"><?=__('如果订单中的商品无需物流运送，您可以直接点击确认')?></td>
                     <td class="bdr tl w400"> 
-                        <button nc_type="eb" nc_value="e1000" class="ncbtn bbc_seller_btns"><?=__('确认')?></button>
+                        <button nc_type="eb" nc_value="e1000" class="ncbtn bbc_seller_btns"><?=__('确认发货')?></button>
                     </td>
                 </tr>
                 <tr>
@@ -343,7 +343,7 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
         if (getQueryString("ctl") == "Seller_Trade_Order" && getQueryString("met") == "send") {
             var $leftLayout = $(".left-layout");
             $leftLayout.find(".active").removeClass("active");
-            $leftLayout.find("li:eq(3) > a").addClass("active");
+            $leftLayout.find("li:eq(1) > a").addClass("active");
 
             $(".right-layout > .path").html(' <i class="iconfont icon-diannao"></i>商家管理中心<i class="iconfont icon-iconjiantouyou"></i>订单物流<i class="iconfont icon-iconjiantouyou"></i>发货');
         }
@@ -432,17 +432,42 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
                     order_shipping_message: $('textarea[name="deliver_explain"]').val(),
 					order_seller_message: $('textarea[name="order_seller_message"]').val()
                 };
+            if(!send_data.order_shipping_code) {
+                $.dialog({
+                    title: '<?=__('提示')?>',
+                    content: '您未输入物流单号，请确定是否继续发货？',
+                    height: 100,
+                    width: 550,
+                    lock: true,
+                    drag: false,
+                    ok: function () {
+                        $.post(SITE_URL + '?ctl=Seller_Trade_Order&met=send&typ=json', send_data, function (data) {
 
-            $.post(SITE_URL + '?ctl=Seller_Trade_Order&met=send&typ=json', send_data, function (data){
+                            if (data.status == 200) {
+                                Public.tips({content: '<?=__('发货成功')?>', type: 3});
+                                window.location.href = SITE_URL + '?ctl=Seller_Trade_Order&met=physical&typ=e';
+                            } else {
+                                $('button[nc_value]').removeAttr("disabled").removeClass("button_disabled");
+                                Public.tips({content: '<?=__('发货失败')?>', type: 1});
+                            }
+                        })
+                    },
+                    cancel: function(){
+                        $('button[nc_value]').removeAttr("disabled").removeClass("button_disabled");
+                    }
+                });
+            }else {
+                $.post(SITE_URL + '?ctl=Seller_Trade_Order&met=send&typ=json', send_data, function (data) {
 
-                if ( data.status == 200 ) {
-                    Public.tips( {content: '<?=__('发货成功')?>', type: 3} );
-                    window.location.href = SITE_URL + '?ctl=Seller_Trade_Order&met=physical&typ=e';
-                } else {
-                    $('button[nc_value]').removeAttr("disabled").removeClass("button_disabled");
-                    Public.tips( {content: '<?=__('发货失败')?>', type: 1} );
-                }
-            })
+                    if (data.status == 200) {
+                        Public.tips({content: '<?=__('发货成功')?>', type: 3});
+                        window.location.href = SITE_URL + '?ctl=Seller_Trade_Order&met=physical&typ=e';
+                    } else {
+                        $('button[nc_value]').removeAttr("disabled").removeClass("button_disabled");
+                        Public.tips({content: '<?=__('发货失败')?>', type: 1});
+                    }
+                })
+            }
             return false;
         });
 

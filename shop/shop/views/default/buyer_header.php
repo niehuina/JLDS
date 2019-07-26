@@ -85,7 +85,7 @@
 							</dl>
 							<dl>
 								<dt><a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Favorites&met=favoritesGoods"  style="color: #398EE8"><?=__('我的收藏')?></a></dt>
-								<dd><a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Favorites&met=favoritesShop"><?=__('店铺收藏')?></a></dd>
+<!--								<dd><a href="--><?//= Yf_Registry::get('url') ?><!--?ctl=Buyer_Favorites&met=favoritesShop">--><?//=__('店铺收藏')?><!--</a></dd>-->
 								<dd><a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Favorites&met=favoritesGoods"><?=__('商品收藏')?></a></dd>
 							</dl>
 						</div>

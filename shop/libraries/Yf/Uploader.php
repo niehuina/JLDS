@@ -1,4 +1,5 @@
 <?php
+
 class Yf_Uploader
 {
     private $fileField; //文件域名
@@ -38,7 +39,7 @@ class Yf_Uploader
     );
 
 
-	private $remoteUrl; //远程网址,
+    private $remoteUrl; //远程网址,
 
     /**
      * 构造函数
@@ -53,7 +54,7 @@ class Yf_Uploader
         $this->type = $type;
         if ($type == "remote") {
             $this->saveRemote();
-        } else if($type == "base64") {
+        } else if ($type == "base64") {
             $this->upBase64();
         } else {
             $this->upFile();
@@ -120,30 +121,26 @@ class Yf_Uploader
             $this->stateInfo = $this->stateMap[0];
 
 
-			//临时放入,最终需要传入
-			if (Web_ConfigModel::value('remote_image_status'))
-			{
-				$up_url = Web_ConfigModel::value('remote_image_url');
-				$upload_file = $this->filePath;
+            //临时放入,最终需要传入
+            if (Web_ConfigModel::value('remote_image_status')) {
+                $up_url = Web_ConfigModel::value('remote_image_url');
+                $upload_file = $this->filePath;
 
-				//是否启用远程服务器
-				$post = array();
-				$post['full_name'] = $this->fullName;
-				$upload_rs = self::sendToRemote($up_url, $upload_file, $post);
+                //是否启用远程服务器
+                $post = array();
+                $post['full_name'] = $this->fullName;
+                $upload_rs = self::sendToRemote($up_url, $upload_file, $post);
 
-				$upload_row = decode_json($upload_rs);
+                $upload_row = decode_json($upload_rs);
 
-				if (isset($upload_row['status']) && 200==$upload_row['status'])
-				{
-					$this->remoteUrl = $upload_row['url'];
-				}
-				else
-				{
-					//
-					$this->stateInfo = $this->getStateInfo("ERROR_REMOTE_UNKNOWN");
-					return;
-				}
-			}
+                if (isset($upload_row['status']) && 200 == $upload_row['status']) {
+                    $this->remoteUrl = $upload_row['url'];
+                } else {
+                    //
+                    $this->stateInfo = $this->getStateInfo("ERROR_REMOTE_UNKNOWN");
+                    return;
+                }
+            }
         }
     }
 
@@ -154,64 +151,62 @@ class Yf_Uploader
     private function upBase64()
     {
         $base64Data = $_POST[$this->fileField];
-        $img = base64_decode($base64Data);
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64Data, $result)) {
+            $type = $result[2];
+            $img = base64_decode(str_replace($result[1], '', $base64Data));
 
-        $this->oriName = $this->config['oriName'];
-        $this->fileSize = strlen($img);
-        $this->fileType = $this->getFileExt();
-        $this->fullName = $this->getFullName();
-        $this->filePath = $this->getFilePath();
-        $this->fileName = $this->getFileName();
-        $dirname = dirname($this->filePath);
+            $this->oriName = $this->config['oriName'];
+            $this->fileSize = strlen($img);
+            $this->fileType = $type;
+            $this->fullName = $this->getFullName();
+            $this->filePath = $this->getFilePath();
+            $this->fileName = $this->getFileName();
+            $dirname = dirname($this->filePath);
 
-        //检查文件大小是否超出限制
-        if (!$this->checkSize()) {
-            $this->stateInfo = $this->getStateInfo("ERROR_SIZE_EXCEED");
-            return;
+            //检查文件大小是否超出限制
+            if (!$this->checkSize()) {
+                $this->stateInfo = $this->getStateInfo("ERROR_SIZE_EXCEED");
+                return;
+            }
+
+            //创建目录失败
+            if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
+                $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
+                return;
+            } else if (!is_writeable($dirname)) {
+                $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
+                return;
+            }
+
+            //移动文件
+            if (!(file_put_contents($this->filePath, $img) && file_exists($this->filePath))) { //移动失败
+                $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
+            } else { //移动成功
+                $this->stateInfo = $this->stateMap[0];
+
+
+                //临时放入,最终需要传入
+                if (Web_ConfigModel::value('remote_image_status')) {
+                    $up_url = Web_ConfigModel::value('remote_image_url');
+                    $upload_file = $this->filePath;
+
+                    //是否启用远程服务器
+                    $post = array();
+                    $post['full_name'] = $this->fullName;
+                    $upload_rs = self::sendToRemote($up_url, $upload_file, $post);
+
+                    $upload_row = decode_json($upload_rs);
+
+                    if (isset($upload_row['status']) && 200 == $upload_row['status']) {
+                        $this->remoteUrl = $upload_row['url'];
+                    } else {
+                        //
+                        $this->stateInfo = $this->getStateInfo("ERROR_REMOTE_UNKNOWN");
+                        return;
+                    }
+                }
+            }
         }
-
-        //创建目录失败
-        if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
-            $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
-            return;
-        } else if (!is_writeable($dirname)) {
-            $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
-            return;
-        }
-
-        //移动文件
-        if (!(file_put_contents($this->filePath, $img) && file_exists($this->filePath))) { //移动失败
-            $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
-        } else { //移动成功
-            $this->stateInfo = $this->stateMap[0];
-
-
-			//临时放入,最终需要传入
-			if (Web_ConfigModel::value('remote_image_status'))
-			{
-				$up_url = Web_ConfigModel::value('remote_image_url');
-				$upload_file = $this->filePath;
-
-				//是否启用远程服务器
-				$post = array();
-				$post['full_name'] = $this->fullName;
-				$upload_rs = self::sendToRemote($up_url, $upload_file, $post);
-
-				$upload_row = decode_json($upload_rs);
-
-				if (isset($upload_row['status']) && 200==$upload_row['status'])
-				{
-					$this->remoteUrl = $upload_row['url'];
-				}
-				else
-				{
-					//
-					$this->stateInfo = $this->getStateInfo("ERROR_REMOTE_UNKNOWN");
-					return;
-				}
-			}
-        }
-
     }
 
     /**
@@ -244,7 +239,7 @@ class Yf_Uploader
         // 此时提取出来的可能是 ip 也有可能是域名，先获取 ip
         $ip = gethostbyname($host_without_protocol);
         // 判断是否是私有 ip
-        if(!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)) {
+        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)) {
             $this->stateInfo = $this->getStateInfo("INVALID_IP");
             return;
         }
@@ -274,7 +269,7 @@ class Yf_Uploader
         ob_end_clean();
         preg_match("/[\/]([^\/]*)[\.]?[^\.\/]*$/", $imgUrl, $m);
 
-        $this->oriName = $m ? $m[1]:"";
+        $this->oriName = $m ? $m[1] : "";
         $this->fileSize = strlen($img);
         $this->fileType = $this->getFileExt();
         $this->fullName = $this->getFullName();
@@ -304,30 +299,26 @@ class Yf_Uploader
             $this->stateInfo = $this->stateMap[0];
 
 
-			//临时放入,最终需要传入
-			if (Web_ConfigModel::value('remote_image_status'))
-			{
-				$up_url = Web_ConfigModel::value('remote_image_url');
-				$upload_file = $this->filePath;
+            //临时放入,最终需要传入
+            if (Web_ConfigModel::value('remote_image_status')) {
+                $up_url = Web_ConfigModel::value('remote_image_url');
+                $upload_file = $this->filePath;
 
-				//是否启用远程服务器
-				$post = array();
-				$post['full_name'] = $this->fullName;
-				$upload_rs = self::sendToRemote($up_url, $upload_file, $post);
+                //是否启用远程服务器
+                $post = array();
+                $post['full_name'] = $this->fullName;
+                $upload_rs = self::sendToRemote($up_url, $upload_file, $post);
 
-				$upload_row = decode_json($upload_rs);
+                $upload_row = decode_json($upload_rs);
 
-				if (isset($upload_row['status']) && 200==$upload_row['status'])
-				{
-					$this->remoteUrl = $upload_row['url'];
-				}
-				else
-				{
-					//
-					$this->stateInfo = $this->getStateInfo("ERROR_REMOTE_UNKNOWN");
-					return;
-				}
-			}
+                if (isset($upload_row['status']) && 200 == $upload_row['status']) {
+                    $this->remoteUrl = $upload_row['url'];
+                } else {
+                    //
+                    $this->stateInfo = $this->getStateInfo("ERROR_REMOTE_UNKNOWN");
+                    return;
+                }
+            }
         }
 
     }
@@ -389,7 +380,8 @@ class Yf_Uploader
      * 获取文件名
      * @return string
      */
-    private function getFileName () {
+    private function getFileName()
+    {
         return substr($this->filePath, strrpos($this->filePath, '/') + 1);
     }
 
@@ -422,7 +414,7 @@ class Yf_Uploader
      * 文件大小检测
      * @return bool
      */
-    private function  checkSize()
+    private function checkSize()
     {
         return $this->fileSize <= ($this->config["maxSize"]);
     }
@@ -433,8 +425,8 @@ class Yf_Uploader
      */
     public function getFileInfo()
     {
-		$url_prefix = Yf_Registry::get('base_url') . '/image.php/'  . APP_DIR_NAME . '/data/upload';
-		$url = $this->remoteUrl ? $this->remoteUrl : $url_prefix . $this->fullName;
+        $url_prefix = Yf_Registry::get('base_url') . '/image.php/' . APP_DIR_NAME . '/data/upload';
+        $url = $this->remoteUrl ? $this->remoteUrl : $url_prefix . $this->fullName;
 
 
         return array(
@@ -449,48 +441,45 @@ class Yf_Uploader
         );
     }
 
-	public static function sendToRemote($up_url, $upload_file, $post=array())
-	{
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_VERBOSE, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible;)");
-		curl_setopt($ch, CURLOPT_URL, $up_url);
-		curl_setopt($ch, CURLOPT_POST, true);
+    public static function sendToRemote($up_url, $upload_file, $post = array())
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_VERBOSE, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible;)");
+        curl_setopt($ch, CURLOPT_URL, $up_url);
+        curl_setopt($ch, CURLOPT_POST, true);
 
 
-		if (version_compare(phpversion(), '5.5.0') >= 0 && class_exists('CURLFile'))
-		{
-			$upfile = new CURLFile(realpath($upload_file));
-		}
-		else
-		{
-			$upfile = '@' . $upload_file;
-		}
+        if (version_compare(phpversion(), '5.5.0') >= 0 && class_exists('CURLFile')) {
+            $upfile = new CURLFile(realpath($upload_file));
+        } else {
+            $upfile = '@' . $upload_file;
+        }
 
-		//构造权限验证数据
-		$post['upfile'] = $upfile;
+        //构造权限验证数据
+        $post['upfile'] = $upfile;
 
-		//构造权限验证数据
-		$post['rtime'] = get_time();
+        //构造权限验证数据
+        $post['rtime'] = get_time();
 
-		$hash_row = $post;
-		unset($hash_row['upfile']);
+        $hash_row = $post;
+        unset($hash_row['upfile']);
 
-		array_multiksort($hash_row, SORT_STRING);
+        array_multiksort($hash_row, SORT_STRING);
 
-		$hash_row['key'] = Web_ConfigModel::value('remote_image_key');;
+        $hash_row['key'] = Web_ConfigModel::value('remote_image_key');;
 
-		$tmp_str = http_build_query($hash_row);
+        $tmp_str = http_build_query($hash_row);
 
-		$post["token"] = md5($tmp_str);
-		//
+        $post["token"] = md5($tmp_str);
+        //
 
 
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-		$response = curl_exec($ch);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        $response = curl_exec($ch);
 
-		return $response;
-	}
+        return $response;
+    }
 }

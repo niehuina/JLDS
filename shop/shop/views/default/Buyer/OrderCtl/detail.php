@@ -214,8 +214,9 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
 
 
                                 <?php if($data['buyer_user_id'] == Perm::$userId){ ?>
-                                    <?php if($data['order_status'] != Order_StateModel::ORDER_WAIT_PAY && $data['order_status'] != Order_StateModel::ORDER_CANCEL && $data['order_status'] != Order_StateModel::ORDER_FINISH){?>
-
+                                    <?php if($data['order_status'] != Order_StateModel::ORDER_WAIT_PAY
+                                        && $data['order_status'] != Order_StateModel::ORDER_CANCEL
+                                        && $data['order_status'] != Order_StateModel::ORDER_FINISH){?>
 
                                     <?php if($ogval['goods_return_status'] == Order_StateModel::ORDER_GOODS_RETURN_NO){?>
                                             <?php if($ogval['goods_returns_setting'] != Goods_ReturnsModel::GOOD_NOT_RETURN){?>

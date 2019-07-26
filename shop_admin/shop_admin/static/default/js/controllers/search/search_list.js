@@ -81,9 +81,11 @@ $(function() {
             if (oper == "edit") {
                 $("#grid").jqGrid('setRowData', data.search_id, data);
                 dialogWin && dialogWin.api.close();
+                $("#grid").trigger("reloadGrid");
             } else {
                 $("#grid").jqGrid('addRowData', data.search_id, data, 'first');
-                dialogWin && dialogWin.resetForm(data);
+                dialogWin && dialogWin.api.close();
+                $("#grid").trigger("reloadGrid");
             }
         },
 

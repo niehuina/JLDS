@@ -106,7 +106,6 @@ class User_GradeModel extends User_Grade
 //			return $flag;
 //		}
 
-        Yf_Log::log('updateGradeVip:', Yf_Log::LOG, 'debug');
         return $this->updateGradeVip($user_id);
 	}
 
@@ -158,9 +157,12 @@ class User_GradeModel extends User_Grade
             $can_update_grade = $order_sum_amount + $user_deposit_amount >= $user_grade_trade;
         }else if($user_grade == 2){
             $can_update_grade = !$is_need_search;
+        }else if($user_grade == 3){
+            $this->updateGradePartner($user_id);
         }
 
         if($can_update_grade){
+            Yf_Log::log('updateGradeVip:'.$user_id, Yf_Log::LOG, 'user_update');
             //更新用户级别
             $u_row['user_grade'] = $user_grade;
             $u_row['user_grade_update_date'] = get_date_time();
@@ -173,35 +175,20 @@ class User_GradeModel extends User_Grade
             $log['log_date_time'] = get_date_time();
             $flag1 = $User_GradeLogModel->addGradeLog($log);
 
+            $this->updateUserGradeToUcenter($user_id, $user_grade);
+
+            return $flag;
+        }
+
+        if($user_grade == 3){
             //检查上级会员是否可以晋级
             $user_parent_id = $user['user_parent_id'];
             if($user_parent_id){
-                $user_parent = $User_InfoModel->getInfo($user_id);
-                //检查如果上级是会员才升级
-                if($user_parent['user_grade'] == 2){
-                    $user_grade_parent = $user_grade+1;
-                    $can_update_grade_parent = $this->checkUpdateGradeToPartner($user_parent_id, $user_grade_parent, $Grade);
-
-                    if($can_update_grade_parent){
-                        //上级会员晋级为合伙人
-                        $cond_row_parent['user_grade'] = $user_grade_parent;
-                        $cond_row_parent['user_grade_update_date'] = get_date_time();
-                        $flag_p                 = $User_InfoModel->editInfo($user_parent_id, $cond_row_parent);
-
-                        //添加用户晋级log
-                        $log['user_id'] = $user_id;
-                        $log['user_grade_pre'] = $user_grade;
-                        $log['user_grade_to'] = $user_grade_parent;
-                        $log['log_date_time'] = get_date_time();
-                        $flag1_p = $User_GradeLogModel->addGradeLog($log);
-                    }
-                }
+                $this->updateGradePartner($user_parent_id);
             }
-
-            return $flag;
-        }else{
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -221,12 +208,13 @@ class User_GradeModel extends User_Grade
 
         $can_update_grade = false;
 
-        //下个会员升级为合伙人
+        //下个等级为合伙人
         if($user_grade == 3) {
             $can_update_grade = $this->checkUpdateGradeToPartner($user_id, $user_grade, $Grade);
         }
 
         if($can_update_grade){
+            Yf_Log::log('updateGradePartner:'.$user_id, Yf_Log::LOG, 'user_update');
             //更新用户级别
             $cond_row['user_grade'] = $user_grade;
             $cond_row['user_grade_update_date'] = get_date_time();
@@ -242,6 +230,8 @@ class User_GradeModel extends User_Grade
             //更新上级高级合伙人的当前年度的发展合伙人数量
             $user_parent_g_partner_id = $User_InfoModel->getParentId($user_id);
             $flag2 = $User_InfoModel->edit($user_parent_g_partner_id, ['current_year_partner_count'=>1], true);
+
+            $this->updateUserGradeToUcenter($user_id, $user_grade);
 
             return $flag;
         }else{
@@ -325,6 +315,7 @@ class User_GradeModel extends User_Grade
         }
 
         if ($can_update_grade) {
+            Yf_Log::log('updateGradeGPartner:'.$user_id, Yf_Log::LOG, 'user_update');
             //更新用户级别
             $cond_row['user_grade'] = $user_grade;
             $cond_row['user_grade_update_date'] = get_date_time();
@@ -361,10 +352,27 @@ class User_GradeModel extends User_Grade
             $new_seller['rights_group_id'] = 0;
             $flag2 = $Seller_BaseModel->addBase($new_seller);
 
+            $this->updateUserGradeToUcenter($user_id, $user_grade);
+
             return $flag;
         } else {
             return null;
         }
+    }
+
+    private function updateUserGradeToUcenter($user_id, $user_grade){
+        //本地读取远程信息
+        $key = Yf_Registry::get('ucenter_api_key');
+        $api_url = Yf_Registry::get('ucenter_api_url');
+        $app_id = Yf_Registry::get('ucenter_app_id');
+
+        $formvars            = array();
+        $formvars['app_id']  = $app_id;
+        $formvars['user_id'] = $user_id;
+        $formvars['user_grade'] = $user_grade;
+
+        $url = sprintf('%s?ctl=%s&met=%s&typ=%s', $api_url, 'Api_User', 'editUserGrade', 'json');
+        $rs = get_url_with_encrypt($key, $url, $formvars);
     }
 
 	//获取当前用户等级对应的折扣率

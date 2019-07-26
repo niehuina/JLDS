@@ -79,7 +79,7 @@ class RedPacketCtl extends Controller
             foreach($data['redpacket']["items"] as $key=>$value)
             {
                 $data['redpacket']["items"][$key]['start_date'] = date("Y-m-d",strtotime($value['redpacket_t_start_date']));
-                $data['redpacket']["items"][$key]['end_date']   = date('Y-m-d',strtotime($value['redpacket_t_end_date']));
+                $data['redpacket']["items"][$key]['end_date']   = date('Y-m-d 23:59:59',strtotime($value['redpacket_t_end_date']));
             }
         }
 

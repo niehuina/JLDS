@@ -257,8 +257,8 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 					$edit_flag2 = $Chain_GoodsModel->editGoods($chain_goods_id, $goods_stock);
 					check_rs($edit_flag2, $rs_row);
 				}else{
-					$edit_flag2 = $Goods_BaseModel->returnGoodsStock($order_goods_id);
-					check_rs($edit_flag2, $rs_row);
+					//$edit_flag2 = $Goods_BaseModel->returnGoodsStock($order_goods_id);
+					//check_rs($edit_flag2, $rs_row);
 				}
 
 				//将需要取消的订单号远程发送给Paycenter修改订单状态
@@ -281,7 +281,7 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 					if(count($dist_goods_order) == 1){
 						$Order_BaseModel-> editBase($dist_order['order_id'], $condition);
 						$Order_GoodsModel-> editGoods($dist_goods_order[0]['order_goods_id'], $edit_row);
-						$Goods_BaseModel -> returnGoodsStock($dist_goods_order[0]['order_goods_id']);
+						//$Goods_BaseModel -> returnGoodsStock($dist_goods_order[0]['order_goods_id']);
 					}else{
 						foreach($dist_goods_order as $key => $value){
 							if($value['order_goods_source_id'] == $order_id){
@@ -290,7 +290,7 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 								$dist_edit_row['order_payment_amount']   = $dist_order['order_payment_amount'] - $value['order_goods_amount'];
 								$Order_BaseModel-> editBase($dist_order['order_id'], $dist_edit_row);
 								$Order_GoodsModel-> editGoods($dist_goods_order[$key]['order_goods_id'], $edit_row);
-								$Goods_BaseModel -> returnGoodsStock($dist_goods_order[$key]['order_goods_id']);
+								//$Goods_BaseModel -> returnGoodsStock($dist_goods_order[$key]['order_goods_id']);
 							}
 						}
 						$formvars['payment_amount'] = $dist_edit_row['order_payment_amount'];
@@ -671,8 +671,27 @@ class Seller_Trade_OrderCtl extends Seller_Controller
                 $User_StockModel = new User_StockModel();
                 foreach ($data['goods_list'] as $key=> $goods){
                     $user_stock = $User_StockModel->getOneByWhere(['user_id'=>Perm::$userId, 'goods_id'=>$goods['goods_id']]);
-                    $data['goods_list'][$key]['user_stock'] = $user_stock['goods_stock'];
+                    if($user_stock) {
+                        $data['goods_list'][$key]['goods_stock'] = $user_stock['goods_stock'];
+                    }else{
+                        $data['goods_list'][$key]['goods_stock'] = 0;
+                    }
                     $temp_can_send = $user_stock['goods_stock']*1 >= $goods['order_goods_num'];
+                    if(!$temp_can_send) {
+                        $can_send = 0;
+                        break;
+                    }
+                }
+            }else{
+                $Goods_BaseModel = new Goods_BaseModel();
+                foreach ($data['goods_list'] as $key=> $goods){
+                    $goods_base = $Goods_BaseModel->getOne($goods['goods_id']);
+                    if($goods_base) {
+                        $data['goods_list'][$key]['goods_stock'] = $goods_base['goods_stock'];
+                    }else{
+                        $data['goods_list'][$key]['goods_stock'] = 0;
+                    }
+                    $temp_can_send = $goods_base['goods_stock']*1 >= $goods['order_goods_num'];
                     if(!$temp_can_send) {
                         $can_send = 0;
                         break;
@@ -731,6 +750,25 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 						check_rs($edit_flag1,$rs_row);
 					}
 				}
+
+				$order_goods_ids = array_column($order_list, 'order_goods_id');
+                $update_goods_data['order_goods_status'] = Order_StateModel::ORDER_WAIT_CONFIRM_GOODS;
+                $edit_goods_flag = $Order_GoodsModel->editGoods($order_goods_ids, $update_goods_data);
+                check_rs($edit_goods_flag,$rs_row);
+
+				//减商品库存
+                $seller_user_id = $order_base['seller_user_id'];
+                if($seller_user_id == Web_ConfigModel::value('self_user_id')){
+                    $seller_user_id = null;
+                }
+                $order_goods_list = $Order_GoodsModel -> getByWhere(array('order_id' => $order_id));
+                $Goods_BaseModel = new Goods_BaseModel();
+                foreach ($order_goods_list as $key=>$goods) {
+                    $goods_id = $goods['goods_id'];
+                    $flag_stock = $Goods_BaseModel->delStock($goods_id, $goods['order_goods_num'], $seller_user_id);
+                    check_rs($flag_stock,$rs_row);
+                }
+
 				//如果为采购单，改变 "买家<-->分销商" 订单状态
 				if($order_base['order_source_id'])
 				{

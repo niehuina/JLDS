@@ -89,10 +89,10 @@ include __DIR__ . '/../../includes/header.php';
                 </a>
             </li>
         </ul>
-        <ul class="nctouch-default-list mt5 v4">
+        <ul class="nctouch-default-list mt5 v4 stock">
             <li>
                 <a href="profit_stock_order.html">
-                    <h4>备货差额返利</h4>
+                    <h4>备货差价返利</h4>
                     <span class="arrow-r"></span></a>
                 </a>
             </li>

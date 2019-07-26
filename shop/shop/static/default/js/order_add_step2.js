@@ -277,7 +277,7 @@ $(function () {
         var flag = selectAllCheck(false);
         var flag2 = getShippingFee();
         if(flag && flag2) {
-            var url = "index.php?ctl=Seller_Stock_Order&met=addSendOrder&typ=json";
+            var url = "index.php?ctl=Seller_Stock_Order&met=addOrder&typ=json";
             var form_ser = $("#form").serialize();
             $.post(url, form_ser, function (data) {
                 if (data.status == 200) {
@@ -376,7 +376,7 @@ $('a[dialog_id="edit_send_address"]').on('click', function () {
                 $("#order_address_address").val(send_address.order_seller_address);
                 $("#order_address_phone").val(send_address.order_seller_contact);
                 $("#t").val(send_address.seller_address_area);
-                $("#seller_address_span").text(send_address.seller_address_span);
+                // $("#order_address_span").text(send_address.seller_address_span);
                 $("#id_2").val(send_address.order_seller_city_id);
                 win.api.close();
             }

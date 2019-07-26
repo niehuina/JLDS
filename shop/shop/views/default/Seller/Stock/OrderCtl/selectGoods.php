@@ -84,10 +84,10 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 <dl>
                     <dt><i>*</i><?=__('所在地区')?>：</dt>
                     <dd>
-                        <input type="hidden" name="user_address_area" id="t" value="<?=$user_address['shipping_address_area']?>" />
-                        <input type="hidden" name="user_province_id" id="id_1" value="<?=$user_address['shipping_address_province_id']?>" />
-                        <input type="hidden" name="user_city_id" id="id_2" value="<?=$user_address['shipping_address_city_id']?>" />
-                        <input type="hidden" name="user_area_id" id="id_3" value="<?=$user_address['shipping_address_area_id']?>" />
+                        <input type="hidden" name="order_address_area" id="t" value="<?=$user_address['shipping_address_area']?>" />
+                        <input type="hidden" name="order_province_id" id="id_1" value="<?=$user_address['shipping_address_province_id']?>" />
+                        <input type="hidden" name="order_city_id" id="id_2" value="<?=$user_address['shipping_address_city_id']?>" />
+                        <input type="hidden" name="order_area_id" id="id_3" value="<?=$user_address['shipping_address_area_id']?>" />
                         <div id="d_1"><?php if($user_address['shipping_address_area']){ ?>
                             <?=$user_address['shipping_address_area'] ?>&nbsp;&nbsp;<a href="javascript:sd();"><?=__('编辑')?></a>
                         <?php } ?>
@@ -108,7 +108,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 <dl>
                     <dt><i>*</i><?=__('街道地址')?>：</dt>
                     <dd>
-                        <input type="text"  class="text w450" id="user_address_address" name="order_address_address"
+                        <input type="text"  class="text w450" id="order_address_address" name="order_address_address"
                                value="<?=$user_address['shipping_address_address']?>" />
                         <p class="hint"><?=__('不必重复填写地区')?></p>
                     </dd>

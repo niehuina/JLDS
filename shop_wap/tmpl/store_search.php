@@ -17,6 +17,11 @@ include __DIR__.'/../includes/header.php';
     <title>店内搜索</title>
     <link rel="stylesheet" type="text/css" href="../css/base.css">
     <link rel="stylesheet" type="text/css" href="../css/nctouch_store.css">
+    <style>
+        .nctouch-main-layout{
+            margin-top: 1rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,7 +30,8 @@ include __DIR__.'/../includes/header.php';
             <div class="header-l">
                 <a href="javascript:history.go(-1);"> <i class="back"></i> </a>
             </div>
-            <div class="header-inp clearfix"> <i class="icon"></i>
+            <div class="header-inp clearfix">
+                <i class="icon"></i>
                 <input type="text" class="search-input" id="search_keyword" placeholder="请输入搜索关键词" maxlength="50" autocomplete="on" autofocus>
             </div>
             <div class="header-r"><a id="search_btn" href="javascript:void(0);" class="search-btn">搜索</a></div>
@@ -49,8 +55,10 @@ include __DIR__.'/../includes/header.php';
         <% if (gc.subclass) { %>
             <li class="category-frist">
                 <a class="level<%= 1 %>" href="store_goods.html?shop_id=<%= shop_id %>&shop_cat_id=<%= gc.id %>">
-                    <%= gc.shop_goods_cat_name %><span>查看全部</sapn></a>
-		</li>
+                    <%= gc.shop_goods_cat_name %>
+                    <span>查看全部</span>
+                </a>
+		    </li>
 		<% } else { %>
 		<li class="category-seciond" >
 			<a href="store_goods.html?shop_id=<%= shop_id %>&stc_id=<%= gc.id %>"><%= gc.shop_goods_cat_name %></a>

@@ -61,7 +61,7 @@ include __DIR__ . '/../../includes/header.php';
         <div class="nctouch-norecord signin" style="top: 50%;">
             <div class="norecord-ico"><i></i></div>
             <dl>
-                <dt>您还没有账单记录</dt>
+                <dt>您还没有股金分红记录</dt>
             </dl>
         </div>
         <%}%>

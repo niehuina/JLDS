@@ -417,7 +417,11 @@ class CartModel extends Cart
                     $order_price_dis = $goods_base['goods_base']['goods_price_partner'];
                 }
 
-                $val['directseller_commission_0'] = ($order_price - $order_price_dis)*$val['goods_num'];
+                if($order_price - $order_price_dis < 0){
+                    $val['directseller_commission_0'] = 0;
+                }else{
+                    $val['directseller_commission_0'] = ($order_price - $order_price_dis)*$val['goods_num'];
+                }
                 $val['directseller_commission_1'] = 0;
                 $val['directseller_commission_2'] = 0;
 

@@ -101,7 +101,7 @@ class Buyer_PointsCtl extends Buyer_Controller
 			}
 			if ($end_date)
 			{
-				$cond_row['points_log_time:<='] = $end_date;
+				$cond_row['points_log_time:<='] = date('Y-m-d 23:59:59',strtotime($end_date));;
 			}
 			if ($class_id)
 			{

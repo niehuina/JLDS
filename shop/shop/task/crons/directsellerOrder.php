@@ -98,7 +98,7 @@ if ($data['items']) {
 }
 
 
-if ($flag && $Order_BaseModel->sql->commitDb()) {
+if ($flag !== false && $Order_BaseModel->sql->commitDb()) {
     $status = 200;
     $msg = __('success');
 } else {

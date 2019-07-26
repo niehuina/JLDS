@@ -170,12 +170,13 @@ var handle = {
         {
             $("#grid").jqGrid("setRowData", t.mb_cat_image_id, t);
             i && i.api.close();
-           
+            $("#grid").trigger("reloadGrid");
         }
         else
         {
             $("#grid").jqGrid("addRowData", t.mb_cat_image_id, t, "last");
             i && i.api.close();
+            $("#grid").trigger("reloadGrid");
         }
 
 

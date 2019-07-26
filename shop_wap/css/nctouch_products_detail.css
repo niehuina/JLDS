@@ -3,6 +3,7 @@
 .bort1{border-top:1px solid #e3e3e3;}
 .pdt20{padding-top:0.2rem !important;}
 .wp30{width:30% !important;}
+.wp50{width:50% !important;}
 .borl1{border-left:1px solid #e3e3e3;}
 .mrl22{margin-left:2.2rem !important;}
 
@@ -214,7 +215,7 @@
 .goods-detail-foot { height: 2rem; filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#F2F5F5F5', endColorstr='#F2F5F5F5');background:rgba(245,245,245,0.95);}
 .goods-option-foot { position: absolute; z-index:1; bottom: 0; left: 0; right: 0;}
 .goods-detail-foot .otreh-handle,
-.goods-option-foot .otreh-handle { float: left; width: 48%; font-size: 0;}
+.goods-option-foot .otreh-handle { float: left; width: 38%; font-size: 0;}
 .goods-detail-foot .otreh-handle a,
 .goods-option-foot .otreh-handle a { position: relative; z-index: auto; display: inline-block; height: 1.95rem; text-align: center; color: #333; border-top: solid 0.05rem #DDD;box-sizing:border-box; }
 .goods-detail-foot .otreh-handle a.kefu,
@@ -234,7 +235,7 @@
 .goods-detail-foot .otreh-handle a sup, 
 .goods-option-foot .otreh-handle a sup { position: absolute; z-index: 1; top: 0.1rem; right: 0.5rem; min-width: 0.5rem; height: 0.5rem; font-size: 0.45rem; line-height: 0.5rem; color: #F60; text-align: center; border: solid 0.05rem #F60; border-radius: 0.3rem; }
 .goods-detail-foot .buy-handle,
-.goods-option-foot .buy-handle { float: right; width: 52%; font-size: 0;}
+.goods-option-foot .buy-handle { float: right; width: 62%; font-size: 0;}
 .goods-detail-foot .buy-handle a,
 .goods-option-foot .buy-handle a { display: block; height: 2rem; font-size: 0.7rem; font-weight: 600; line-height: 2rem; color: #FFF; text-align: center;}
 .goods-detail-foot .no-buy a,

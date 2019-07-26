@@ -105,7 +105,7 @@ include __DIR__.'/../../includes/header.php';
                             <span class="input-del"></span> </div>
                     </li>
                 </ul>
-                <div class="form-btn"><a href="javascript:void(0);" class="btn" id="submit_btn">保存</a></div>
+                <div class="form-btn ok"><a href="javascript:void(0);" class="btn" id="submit_btn">保存</a></div>
             </div>
         </form>
     </div>

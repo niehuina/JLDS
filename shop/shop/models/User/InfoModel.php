@@ -208,6 +208,14 @@ class User_InfoModel extends User_Info
         $flag= $this->sql->exec($sql);
         return $flag;
     }
+
+    public function updateCurrentPartnerCount($count =0)
+    {
+        $sql = "UPDATE ".$this->_tableName." SET current_year_partner_count=" . $count . " WHERE user_grade = 4";
+        $flag= $this->sql->exec($sql);
+        $this->removeCache();
+        return $flag;
+    }
 }
 
 User_InfoModel::$userSex = array(

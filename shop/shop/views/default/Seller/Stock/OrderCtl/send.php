@@ -67,17 +67,21 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     </th>
                 </tr>
                 <tr>
-                    <td class="bdl bdr order-info w500">
+                    <td class="bdl bdr w200">
                         <dl>
                             <dt><?=__('运费')?>：</dt>
                             <dd><?= $data['shipping_info']; ?></dd>
                         </dl>
+                    </td>
+                    <td class="bdr">
                         <dl>
                             <dt><?=__('发货备忘')?>：</dt>
                             <dd>
                                 <textarea name="deliver_explain" cols="100" rows="2" class="w320 tip-t" title="<?=__('您可以输入一些发货备忘信息（仅卖家自己可见）')?>"></textarea>
                             </dd>
                         </dl>
+                    </td>
+                    <td class="bdr">
                         <dl>
                             <dt><?=__('给买家留言')?>：</dt>
                             <dd>
@@ -251,7 +255,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <td class="bdl" style="width: 151px;"><?= $val['express_name']; ?></td>
                     <td class="bdl" style="width: 249px;"><input name="shipping_code" type="text" class="text w200 tip-r" title="<?=__('正确填写物流单号，确保快递跟踪查询信息正确')?>" maxlength="20"></td>
                     <td class="bdl gray"></td>
-                    <td class="bdl bdr tc"><button nc_value="<?= $val['express_id']; ?>" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认')?></button></td>
+                    <td class="bdl bdr tc"><button nc_value="<?= $val['express_id']; ?>" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认发货')?></button></td>
                 </tr>
                 <?php } ?>
                 <?php } ?>
@@ -265,7 +269,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 <tr>
                     <td class="bdl tr"><?=__('如果订单中的商品无需物流运送，您可以直接点击确认')?></td>
                     <td class="bdr tl w400"> 
-                        <button nc_type="eb" nc_value="e1000" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认')?></button>
+                        <button nc_type="eb" nc_value="e1000" href="javascript:void(0);" class="ncbtn bbc_seller_btns"><?=__('确认发货')?></button>
                     </td>
                 </tr>
                 <tr>
@@ -303,9 +307,9 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
         $('.tabmenu > ul').find('li:gt(0)').remove();
 
         //设置发货左侧tab优化
-        if (getQueryString("ctl") == "Seller_Stock_Order" && getQueryString("met") == "send") {
-            $(".right-layout > .path").html(' <i class="iconfont icon-diannao"></i>商家管理中心<i class="iconfont icon-iconjiantouyou"></i>订单物流<i class="iconfont icon-iconjiantouyou"></i>发货');
-        }
+        // if (getQueryString("ctl") == "Seller_Stock_Order" && getQueryString("met") == "send") {
+        //     $(".right-layout > .path").html(' <i class="iconfont icon-diannao"></i>商家管理中心<i class="iconfont icon-iconjiantouyou"></i>订单物流<i class="iconfont icon-iconjiantouyou"></i>发货');
+        // }
 
         //选择发货地址
         $('a[dialog_id="edit_seller_address"]').on('click', function () {

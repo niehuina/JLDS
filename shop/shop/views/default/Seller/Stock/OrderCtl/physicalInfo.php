@@ -62,7 +62,25 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <dt><i class="icon-ok-circle green"></i><?=__('订单状态')?>：</dt>
                     <dd><?= $data['order_status_text']; ?></dd>
                 </dl>
-                <ul class="order_state"><?= $data['order_status_html']; ?></ul>
+                <ul class="order_state">
+                    <?= $data['order_status_html']; ?>
+                    <?php if ($data['shop_user_id'] == Perm::$userId) { ?>
+                        <?php if ($data['order_status'] == Order_StateModel::ORDER_PAYED): ?>
+                        <li>
+                            <?= __('3. 如果您想取消该备货单，请与平台沟通后对订单进行') ?>
+                            <a onclick="javascript:cancelOrder('<?= $val['order_id'] ?>', '1')" class="ncbtn-mini bbc_seller_btns"><?= __('取消订单') ?></a>
+                            <?= __('操作。') ?>
+                        </li>
+                        <?php endif; ?>
+                    <?php } ?>
+                    <?php if ($data['order_shipping_status'] == 2): ?>
+                        <?php if ($data['shop_user_id'] == Perm::$userId) { ?>
+                            <li><?= __('3. 如果您已收到货，且对商品满意，您可以 ') ?>
+                                <a onclick="confirmOrder('<?= $data['order_id'] ?>')" class="ncbtn-mini bbc_seller_btns"><?= __('确认收货') ?></a><?= __('完成交易。 ') ?>
+                            </li>
+                        <?php } ?>
+                    <?php endif; ?>
+                </ul>
             </div>
         </div>
         <?php if ($data['order_status'] != Order_StateModel::ORDER_CANCEL) { ?>
@@ -104,9 +122,9 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <th colspan="2"><?=__('商品')?></th>
                     <th class="w120"><?=__('商品VIP价格')?><!--(<?/*=Web_ConfigModel::value('monetary_unit')*/?>)--></th>
                     <th class="w60"><?=__('数量')?></th>
-                    <th class="w200"><strong><?=__('应返还差价')?>(<?=Web_ConfigModel::value('monetary_unit')?>)</strong></th>
+                    <th class="w150"><strong><?=__('应返还差价')?>(<?=Web_ConfigModel::value('monetary_unit')?>)</strong></th>
 <!--                    <th class="w100">--><?//=__('优惠活动')?><!--</th>-->
-                    <th class="w100"><?=__('操作')?></th>
+                    <th class="w150"><?=__('操作')?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -146,14 +164,25 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                                        onmouseout="hide_logistic('<?=($ship['stock_order_id'])?>')">
                                         <i class="iconfont icon-icowaitproduct rel_top2"></i><?=__('物流信息')?><?php if($is_show) echo $i+1; ?>
                                         <div style="display: none;" id="info_<?=($ship['stock_order_id'])?>" class="prompt-01"> </div>
-                                    </a><br/>
+                                    </a>
+                                    <?php if($data['shop_user_id'] == Perm::$userId && $ship['shipping_status'] == 0){ ?>
+                                    ->
+                                    <a onclick="confirmShipping('<?= $ship['stock_order_id'] ?>', '<?= $ship['shipping_express_id'] ?>', '<?= $ship['shipping_code'] ?>')" class="to_views ">
+                                        <i class="iconfont icon_size22"></i><?= __('确认收货') ?></a><br/>
+                                    <?php }else{?>
+                                        -><?= __('已收货') ?><br/>
+                                    <?php }?>
                                 <?php }?>
                             <?php } else {?>
                                 <a style="position:relative;" onmouseover="show_logistic('<?=($data['stock_order_id'])?>','<?=($data['order_shipping_express_id'])?>','<?=($data['order_shipping_code'])?>')"
                                    onmouseout="hide_logistic('<?=($data['stock_order_id'])?>')">
                                     <i class="iconfont icon-icowaitproduct rel_top2"></i><?=__('物流信息')?>
                                     <div style="display: none;" id="info_<?=($data['stock_order_id'])?>" class="prompt-01"> </div>
-                                </a>
+                                </a><br/>
+                                <?php if($data['shop_user_id'] == Perm::$userId){ ?>
+                                    <a onclick="confirmShipping('<?= $data['stock_order_id'] ?>', '<?= $data['shipping_express_id'] ?>', '<?= $data['shipping_code'] ?>')" class="to_views ">
+                                        <i class="iconfont icon_size22"></i><?= __('确认收货') ?></a>
+                                <?php }?>
                             <?php }?>
                         <?php }?>
                     </td>
@@ -192,6 +221,33 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
         $('.tabmenu > ul > li > a').attr('href',href);
         /*$($('.tabmenu > ul')[0]).find('li:lt(6)').remove();*/
 
+        window.confirmShipping = function(a, b, c){
+            var url = SITE_URL + "?ctl=Seller_Stock_Order&met=confirmShipping&typ=";
+            $.dialog({
+                title: '确认收货',
+                content: 'url: ' + url + 'e&user=buyer',
+                data: {order_id: a, shipping_express_id: b, shipping_code:c},
+                height: 300,
+                width: 500,
+                lock: true,
+                drag: false,
+                ok: function () {
+                    var form_ser = $(this.content.order_confirm_form).serialize();
+                    $.post(url + 'json', form_ser, function (rs) {
+                        if (rs.status == 200) {
+                            Public.tips.success('确认收货成功！');
+                            window.location.reload();
+                            //$.dialog.alert('确认收货成功'), window.location.reload();
+                            return true;
+                        } else {
+                            Public.tips.error('确认收货失败！');
+                            //$.dialog.alert('确认订单失败');
+                            return false;
+                        }
+                    })
+                }
+            })
+        }
 
         window.edit_cost = function (e)
         {

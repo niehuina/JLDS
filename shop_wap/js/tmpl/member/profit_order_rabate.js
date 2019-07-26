@@ -7,12 +7,14 @@ $(function () {
 
     //渲染list
     function t() {
+        var status = $("#filtrate_ul").find(".selected").find("a").data("status");
         var load_class = new ncScrollLoad();
         load_class.loadInit({
             'url': ApiUrl + '/index.php?ctl=Buyer_User&met=getProfit&typ=json',
             'getparam': {
                 k: key,
                 u: getCookie('id'),
+                status: status,
                 type: 15,
             },
             'tmplid': 'list_model',

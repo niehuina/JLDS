@@ -56,9 +56,15 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     {
                         echo 'class="current"';
                     } ?>>
-                        <dt><?= __("确认收款，");?><?=__('平台审核')?></dt>
+                        <dt><?= __("确认收款->");?><?=__('平台审核')?></dt>
                         <dd class="bg"></dd>
                     </dl>
+                    <?php if ($data['return_state'] >= 5){?>
+                        <dl id="state_handle" <?php if ($data['return_state'] >= 5) { echo 'class="current1"'; } ?> >
+                            <dt><?= $data['text'] ?><?= __('关闭') ?></dt>
+                            <dd class="bg"></dd>
+                        </dl>
+                    <?php } ?>
                 </div>
                 <div class="ncsc-form-default">
                     <h3><?=__('买家')?><?=$data['text']?><?=__('申请')?></h3>
@@ -72,7 +78,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     </dl>
                     <dl>
                         <dt><?=$data['text']?><?=__('原因：')?></dt>
-                        <dd><?= $data['return_message'] ?></dd>
+                        <dd><?= $data['return_reason'] ?></dd>
                     </dl>
                     <dl>
                         <dt><?=$data['text']?><?=__('金额：')?></dt>

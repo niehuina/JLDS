@@ -9805,7 +9805,7 @@ time.countdown i {
 }
 
 .dialog_has_title {
-    background: #555;
+    background: #555;×
 }
 
 .dialog_has_title .dialog_body {
@@ -9870,4 +9870,26 @@ a:hover.dialog-bottom-btn-acidblue {
 }
 #store_decoration_content{
     background-size:cover;
+}
+
+.w100{
+    width: 100px !important;
+}
+.w150{
+    width: 150px !important;
+}
+.w200{
+    width: 200px !important;
+}
+.w300{
+    width: 300px !important;
+}
+.w350{
+    width: 350px !important;
+}
+.w400{
+    width: 400px !important;
+}
+.w500{
+    width: 500px !important;
 }

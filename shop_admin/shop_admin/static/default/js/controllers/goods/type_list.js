@@ -139,9 +139,11 @@ $(function() {
             if (oper == "edit") {
                 $("#grid").jqGrid('setRowData', data.id, data);
                 dialogWin && dialogWin.api.close();
+                $("#grid").trigger("reloadGrid");
             } else {
                 $("#grid").jqGrid('addRowData', data.id, data, 'first');
                 dialogWin && dialogWin.resetForm(data);
+                $("#grid").trigger("reloadGrid");
             }
         },
 

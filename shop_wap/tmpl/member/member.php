@@ -37,7 +37,8 @@ include __DIR__ . '/../../includes/header.php';
                 <ul>
                     <li><a href="../../index.html"><i class="home"></i>首页</a></li>
                     <li><a href="../search.html"><i class="search"></i>搜索</a></li>
-                    <li><a href="../tmpl/cart_list.html"><i class="cart"></i>购物车<sup style="display: inline;"></sup></a>
+                    <li>
+                        <a href="../tmpl/cart_list.html"><i class="cart"></i>购物车<sup style="display: inline;"></sup></a>
                     </li>
                     <li><a href="javascript:void(0);"><i class="message"></i>消息<sup></sup></a></li>
                 </ul>

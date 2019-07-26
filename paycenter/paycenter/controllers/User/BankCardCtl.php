@@ -154,7 +154,7 @@ class User_BankCardCtl extends Yf_AppController
             'pay_uid' => $user_id,
             'orderid' => $flow_id,
             'amount' => $this->request_parameter['amount'],
-            'add_time' => time(),
+            'add_time' => $add_time,
             'bank' => $this->request_parameter['bank_name'],
             'cardno' => $bank_card['bank_card_number'],
             'cardname' => $bank_card['bank_user_name'],

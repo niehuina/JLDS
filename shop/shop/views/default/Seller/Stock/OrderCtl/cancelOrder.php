@@ -89,7 +89,7 @@
 <div class="dialog_content" style="margin: 0px; padding: 0px;">
     <div class="eject_con">
         <div id="warning"></div>
-        <form method="post" id="order_cancel_form" onsubmit="ajaxpost('order_cancel_form', '', '', 'onerror');return false;" action="index.php?act=store_vr_order&amp;op=change_state&amp;state_type=order_cancel&amp;">
+        <form method="post" id="order_cancel_form" onsubmit="ajaxpost('order_cancel_form', '', '', 'onerror');return false;">
             <input type="hidden" name="order_id" value="">
             <dl>
                 <dt><?=__('订单编号')?>：</dt>

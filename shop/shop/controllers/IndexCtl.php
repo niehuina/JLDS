@@ -953,6 +953,13 @@ class IndexCtl extends Controller
 
         return $floor_image;
     }
+
+    public function mb_cat()
+    {
+        $Mb_CatImageModel = new Mb_CatImageModel();
+        $data = $Mb_CatImageModel->getByWhere();
+        $this->data->addBody(-140, $data);
+    }
 }
 
 ?>

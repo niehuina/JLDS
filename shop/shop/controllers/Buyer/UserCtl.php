@@ -1721,11 +1721,13 @@ class Buyer_UserCtl extends Buyer_Controller
         $data['user_id'] = request_string('user_id');
         $data['trade_type_id'] = request_row('type');
         $data['user_type'] = 1;
+        $data['status'] = 2;
         $rs = $this->getPaycenterApi($data, 'Api_Paycen_PayRecord', 'getRecordAmountByUserId');
 
         $User_InfoModel = new User_InfoModel();
         $user_info = $User_InfoModel->getOne($data['user_id']);
         $rs['data']['user_grade'] = $user_info['user_grade'];
+        $rs['data']['self_user_id'] = Web_ConfigModel::value('self_user_id');
         $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
     }
 
@@ -1737,6 +1739,7 @@ class Buyer_UserCtl extends Buyer_Controller
         $rows              = $Yf_Page->listRows;
         $offset            = request_int('firstRow', 0);
         $page              = ceil_r($offset / $rows);
+        $status            = request_int('status', '');
 
         $formvars = array();
         $formvars['page'] = $page;
@@ -1744,8 +1747,13 @@ class Buyer_UserCtl extends Buyer_Controller
         $formvars['user_id'] = Perm::$userId;
         $formvars['trade_type_id'] = request_int('type', 15);//订单差价返利
         $formvars['user_type'] = 1;
+        $formvars['status'] = $status;
 
         $rs = $this->getPaycenterApi($formvars, 'Api_Paycen_PayRecord', 'getRecordListByUserId');
+
+        $formvars['status'] = 2;
+        $rs1 = $this->getPaycenterApi($formvars, 'Api_Paycen_PayRecord', 'getRecordAmountByUserId');
+        $rs['data']['amount'] = $rs1['data']['amount'];
 
         $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
     }

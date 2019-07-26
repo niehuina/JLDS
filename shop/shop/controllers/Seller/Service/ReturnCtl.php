@@ -82,7 +82,7 @@ class Seller_Service_ReturnCtl extends Seller_Controller
 		}
 		if ($end_time)
 		{
-			$cond_row['return_add_time:<='] = $end_time;
+			$cond_row['return_add_time:<='] = date('Y-m-d 23:59:59',strtotime($end_time));
 		}
 
 		$data = $this->orderReturnModel->getReturnList($cond_row, array('return_add_time' => 'DESC'), $page, $rows);
@@ -346,13 +346,12 @@ class Seller_Service_ReturnCtl extends Seller_Controller
 				if ($return['return_goods_return'] == Order_ReturnModel::RETURN_GOODS_RETURN)
 				{
 					$data['return_state'] = Order_ReturnModel::RETURN_SELLER_PASS;
-					$data['return_shop_handle'] = Order_ReturnModel::RETURN_SELLER_PASS;
 				}
 				else
 				{
 					$data['return_state'] = Order_ReturnModel::RETURN_SELLER_GOODS;
-					$data['return_shop_handle'] = Order_ReturnModel::RETURN_SELLER_GOODS;
 				}
+                $data['return_shop_handle'] = Order_ReturnModel::RETURN_SELLER_PASS;
 				$data['return_shop_time'] = get_date_time();
 				$flag                     = $this->orderReturnModel->editReturn($order_return_id, $data);
 				check_rs($flag,$rs_row);
@@ -383,9 +382,9 @@ class Seller_Service_ReturnCtl extends Seller_Controller
 					//扣除卖家的金额
 					$key                 = Yf_Registry::get('shop_api_key');
 					$formvars            = array();
-					$user_id             = Perm::$userId;
+					$user_id             = $order_base['seller_user_id'];;
 					$formvars['user_id'] = $user_id;
-					$formvars['user_name'] = Perm::$row['user_name'];
+					$formvars['user_name'] = $order_base['seller_user_name'];
 					$formvars['app_id'] = Yf_Registry::get('shop_app_id');
 					$formvars['money'] = $shop_return_amount * (-1);
 					$formvars['pay_type'] = $pay_type;
@@ -544,6 +543,7 @@ class Seller_Service_ReturnCtl extends Seller_Controller
 		$return = $this->orderReturnModel->getOne($order_return_id);
 		if ($return['seller_user_id'] == Perm::$shopId)
 		{
+            $data['return_goods_return'] = 0;
 			$data['return_shop_message'] = $return_shop_message;
 			$data['return_state']        = Order_ReturnModel::RETURN_SELLER_UNPASS;
 			$data['return_shop_handle']        = Order_ReturnModel::RETURN_SELLER_UNPASS;

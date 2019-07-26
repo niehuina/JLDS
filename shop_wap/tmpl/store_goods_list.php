@@ -3,9 +3,9 @@
     window.load = loadCss(WapSiteUrl+"/css/nctouch_common.css");
 </script>
 <style>
-    #header .header-inp{
-        margin:0.2rem 4rem 0.3rem 2rem !important;
-    }
+    /*#header .header-inp{*/
+    /*    margin:0.2rem 4rem 0.3rem 2rem !important;*/
+    /*}*/
     #search-btn{
         position: absolute;
         right: 2rem;

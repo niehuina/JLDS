@@ -87,8 +87,8 @@ class Seller_Order_OrderCtl extends Seller_Controller
                         $Chain_GoodsModel->editGoods($chain_goods_id, $goods_stock);
                     }
                 }else{
-                    $Goods_BaseModel = new Goods_BaseModel();
-                    $Goods_BaseModel->returnGoodsStock($order_goods_id);
+                    //$Goods_BaseModel = new Goods_BaseModel();
+                    //$Goods_BaseModel->returnGoodsStock($order_goods_id);
                 }
 
 			}

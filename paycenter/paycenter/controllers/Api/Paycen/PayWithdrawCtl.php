@@ -49,7 +49,7 @@ class Api_Paycen_PayWithdrawCtl extends Api_Controller
             }
             foreach ($data['items'] as $key=>$v){
                 $data['items'][$key]['user_account'] = $user_account_array[$v['pay_uid']];
-                $data['items'][$key]['add_time'] = date('Y-m-d H:i:s', $v['add_time']);
+                //$data['items'][$key]['add_time'] = date('Y-m-d H:i:s', $v['add_time']);
             }
         }
 

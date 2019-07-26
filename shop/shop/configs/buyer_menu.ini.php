@@ -128,15 +128,15 @@ $buyer_menu = array(
 														'menu_url_met' => 'favoritesGoods',
 														'menu_url_parem' => '',
 													),
-													10000212 => array(
-														'menu_id' => '10000212',
-														'menu_parent_id' => '1000021',
-														'menu_name' => __('店铺收藏'),
-														'menu_icon' => '',
-														'menu_url_ctl' => 'Buyer_Favorites',
-														'menu_url_met' => 'favoritesShop',
-														'menu_url_parem' => '',
-													),
+//													10000212 => array(
+//														'menu_id' => '10000212',
+//														'menu_parent_id' => '1000021',
+//														'menu_name' => __('店铺收藏'),
+//														'menu_icon' => '',
+//														'menu_url_ctl' => 'Buyer_Favorites',
+//														'menu_url_met' => 'favoritesShop',
+//														'menu_url_parem' => '',
+//													),
 													/* 10000213 => array(
 														'menu_id' => '10000213',
 														'menu_parent_id' => '1000021',
@@ -347,16 +347,16 @@ $buyer_menu = array(
 										'menu_url_parem' => '',
 
 									),
-									1000045 => array(
-										'menu_id' => '1000045',
-										'menu_parent_id' => '100004',
-										'menu_name' => __('我的好友'),
-										'menu_icon' => '',
-										'menu_url_ctl' => 'Buyer_User',
-										'menu_url_met' => 'friend',
-										'menu_url_parem' => '',
-
-									),
+//									1000045 => array(
+//										'menu_id' => '1000045',
+//										'menu_parent_id' => '100004',
+//										'menu_name' => __('我的好友'),
+//										'menu_icon' => '',
+//										'menu_url_ctl' => 'Buyer_User',
+//										'menu_url_met' => 'friend',
+//										'menu_url_parem' => '',
+//
+//									),
 //									1000046 => array(
 //										'menu_id' => '1000046',
 //										'menu_parent_id' => '100004',
@@ -369,16 +369,16 @@ $buyer_menu = array(
 //									),
 						),
 					),
-//					100005 => array(
-//						'menu_id' => '100005',
-//						'menu_parent_id' => '10000',
-//						'menu_name' => __('财产中心'),
-//						'menu_icon' => '',
-//						'menu_url_ctl' => 'Buyer_Property',
-//						'menu_url_met' => 'cash',
-//						'menu_url_parem' => '',
-//						'sub' => array(
-//
+					100005 => array(
+						'menu_id' => '100005',
+						'menu_parent_id' => '10000',
+						'menu_name' => __('财产中心'),
+						'menu_icon' => '',
+						'menu_url_ctl' => 'Buyer_Property',
+						'menu_url_met' => 'cash',
+						'menu_url_parem' => '',
+						'sub' => array(
+
 //									1000052 => array(
 //										'menu_id' => '1000052',
 //										'menu_parent_id' => '100005',
@@ -410,16 +410,16 @@ $buyer_menu = array(
 //										'menu_url_met' => 'redPacket',
 //										'menu_url_parem' => '',
 //									),
-//									1000054 => array(
-//										'menu_id' => '1000054',
-//										'menu_parent_id' => '100005',
-//										'menu_name' => __('我的积分'),
-//										'menu_icon' => '',
-//										'menu_url_ctl' => 'Buyer_Points',
-//										'menu_url_met' => 'points',
-//										'menu_url_parem' => '',
-//
-//									),
+									1000054 => array(
+										'menu_id' => '1000054',
+										'menu_parent_id' => '100005',
+										'menu_name' => __('我的积分'),
+										'menu_icon' => '',
+										'menu_url_ctl' => 'Buyer_Points',
+										'menu_url_met' => 'points',
+										'menu_url_parem' => '',
+
+									),
 //                                    1000055 => array(
 //										'menu_id' => '1000055',
 //										'menu_parent_id' => '100005',
@@ -431,8 +431,8 @@ $buyer_menu = array(
 //
 //									),
 //
-//						),
-//					),
+						),
+					),
 				),
 	),
 

@@ -457,7 +457,7 @@ class User_IndexCtl extends Yf_AppController
 
 				//插入交易明细表
 				$flow_id = date("Ymdhis").rand(0,9);
-				$add_time = time();
+				$add_time = date('Y-m-d H:i:s', time());
 				$record_row = array(
 					'order_id'=>$flow_id,
 					'user_id'=>$user_id,

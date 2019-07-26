@@ -158,7 +158,7 @@ include __DIR__.'/../includes/header.php';
 <script type="text/javascript" src="../js/libs/simple-plugin.js"></script>
 <script type="text/javascript" src="../js/libs/template.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
-<script type="text/javascript" src="../js/swipe.js"></script>
+<script type="text/javascript" src="../js/libs/swipe.js"></script>
 <script type="text/javascript" src="../js/integral.js"></script>
 <script type="text/javascript" src="../js/tmpl/footer.js"></script>
 </body>

@@ -67,7 +67,7 @@ class Seller_Supplier_DistLogCtl extends Seller_Controller
 		//结束时间
 		if(request_string('end_date'))
 		{
-			$cond_row['order_create_time:<'] = request_string('end_date');
+			$cond_row['order_create_time:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 		}
 		
 		$cond_row['common_id:IN'] = $common_id;
@@ -126,7 +126,7 @@ class Seller_Supplier_DistLogCtl extends Seller_Controller
 		//结束时间
 		if(request_string('end_date'))
 		{
-			$cond_row['order_create_time:<'] = request_string('end_date');
+			$cond_row['order_create_time:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 		}
 		
 		$cond_row['buyer_user_id']  = Perm::$userId;

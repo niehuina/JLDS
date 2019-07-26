@@ -186,7 +186,7 @@ class Distribution_Buyer_DirectsellerCtl extends Buyer_Controller
 		}
 		if (request_string('end_date'))
 		{
-			$cond_row['order_finished_time:<'] = request_string('end_date');
+			$cond_row['order_finished_time:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 		}
 		// END
 		
@@ -237,7 +237,7 @@ class Distribution_Buyer_DirectsellerCtl extends Buyer_Controller
 		}
 		if (request_string('end_date'))
 		{
-			$cond_row['order_create_time:<'] = request_string('end_date');
+			$cond_row['order_create_time:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 		}
 
 		//待付款

@@ -70,8 +70,8 @@ foreach($order_list as $key => $val)
             $goods_stock['goods_stock'] = $chain_goods['goods_stock'] + 1;
             $Chain_GoodsModel->editGoods($chain_goods_id, $goods_stock);
         }else{
-            $Goods_BaseModel = new Goods_BaseModel();
-            $Goods_BaseModel->returnGoodsStock($order_goods_id);
+            //$Goods_BaseModel = new Goods_BaseModel();
+            //$Goods_BaseModel->returnGoodsStock($order_goods_id);
         }
 
 		$order_row[] = $val['order_id'];

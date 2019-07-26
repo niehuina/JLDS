@@ -2,7 +2,7 @@
 /* 触屏版店铺样式类型					*/
 /*店铺首页头部特征*/
 .nctouch-store-header { position: fixed; z-index: 4; top: 0; right: 0; left: 0;z-index:222;}
-.nctouch-store-header .header-inp { margin: 0.275rem 2.5rem 0 2rem;}
+.nctouch-store-header .header-inp { margin: 0.275rem 2.5rem 0 2rem; width:65%;}
 .nctouch-store-header .header-r a { padding: 0.5rem 0.6rem 0.5rem 0.2rem;}
 .nctouch-store-header .header-r a.store-categroy { width: 1.275rem; height: 1.575rem; padding: 0.2rem 0.4rem 0.2rem 0.1rem;}
 .nctouch-store-header .header-r a.store-categroy i  { width: 100%; background-image: url(../images/categroy.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 100%; opacity: 0.60;}

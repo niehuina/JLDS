@@ -10,7 +10,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
                 <div id="da-error-pin"></div>
                 <div id="da-error-code">
                     <span><?=__('错误')?></span> </div>
-                <h1 class="da-error-heading"><?=isset($_REQUEST['msg']) ? $_REQUEST['msg'] : __('抱歉，您余下的商品为赠品，不可退款！')?></h1>
+                <h1 class="da-error-heading"><?=isset($_REQUEST['msg']) ? $_REQUEST['msg'] : __('抱歉，该笔订单不可再退款/退货！')?></h1>
                 <p> <a onclick="history.go(-1);"><?=__('点击返回')?></a></p>
             </div>
         </div>

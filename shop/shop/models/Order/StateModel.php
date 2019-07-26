@@ -30,6 +30,12 @@ class Order_StateModel extends Order_State
 	const FROM_PC = 1;			//PC端
 	const FROM_WAP = 2;		//移动端
 
+    const ORDER_SHIPPING_NO = 0;//未发货
+    const ORDER_SHIPPING_PART = 1;//部分发货
+    const ORDER_SHIPPING_ALL = 2;//全部发货
+
+    const SHIPPING_CONFIRM_NO = 0;//未收货
+    const SHIPPING_CONFIRM_YES = 1;//已收货
 
 	const SUB_SELF_PAY = 0;  //自己支付
 	const SUB_USER_PAY = 1;  //主管账号支付

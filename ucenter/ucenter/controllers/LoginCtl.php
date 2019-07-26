@@ -878,10 +878,13 @@ class LoginCtl extends Yf_AppController
         $email = request_string('email'); 
         $reg_checkcode = request_int('reg_checkcode',1);
         $parent_id = request_int('parent_id');
+
+        //设置推荐人Id
         if($parent_id){
             $rec = 'u'.$parent_id.'s';
-            setcookie('recserialize',$rec,time()+60*60*24*3,'/');
+            setcookie('recserialize',$rec,time()+60*60*5,'/');
         }
+
 		$server_id = 0;
 
 		if (!$user_name)

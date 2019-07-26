@@ -882,8 +882,13 @@ class Yf_Model extends Yf_Singleton
      * @return array $rows 信息
      * @access public
      */
-    public function getByWhere($cond_row=array(), $order_row = array())
+    public function getByWhere($cond_row=array(), $order_row = array(), $group=null)
     {
+        if($group)
+        {
+            $this->sql->setGroup($group);
+        }
+
         $key_rows = $this->getKeyByMultiCond($cond_row, $order_row);
 
         $data_rows = array();

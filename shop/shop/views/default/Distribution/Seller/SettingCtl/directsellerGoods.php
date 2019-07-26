@@ -74,7 +74,7 @@ if (!empty($data['items'])){
 									<a href="index.php?ctl=Goods_Goods&met=goods&type=goods&gid=<?= $item['goods_id'] ?>"target="_blank"><?= $item['common_name'] ?></a>
 								</h3>
                                 <p><?= $item['cat_name'] ?></p>
-                                <p><?= ($item['common_code'] ? sprintf("商品条码：%s", $item['common_code']) : '') ?></p>
+<!--                                <p>--><?//= ($item['common_code'] ? sprintf("商品条码：%s", $item['common_code']) : '') ?><!--</p>-->
                             </dd>
                         </dl>
                     </td>

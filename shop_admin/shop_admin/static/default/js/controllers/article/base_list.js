@@ -163,12 +163,14 @@ var handle = {
         if ("edit" == e)
         {
             $("#grid").jqGrid("setRowData", t.id, t);
-            i && i.api.close()
+            i && i.api.close();
+            $("#grid").trigger("reloadGrid");
         }
         else
         {
             $("#grid").jqGrid("addRowData", t.id, t, "last");
-            i && i.api.close()
+            i && i.api.close();
+            $("#grid").trigger("reloadGrid");
         }
     }, del: function (t)
     {

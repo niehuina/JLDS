@@ -67,9 +67,9 @@ $(function () {
         }
     });
     $("#registerbtn").click(function () {
-        if (!$(this).parent().hasClass("ok")) {
-            return false
-        }
+        // if (!$(this).parent().hasClass("ok")) {
+        //     return false
+        // }
         var e = $("input[name=username]").val();
         var r = $("input[name=pwd]").val();
         var a = $("input[name=password_confirm]").val();

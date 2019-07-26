@@ -135,8 +135,8 @@ $brother_menu = $Menu_Base->getByWhere(array('menu_parent_id'=>$father_menu['men
                             2. 享受所有下线会员及消费者的每笔订单价与股东价的差额返利；<br/>
                             3. 享受缴纳股金的年度分红；<br/>
                             4. 所有下线的订单总额的指标金额：<input type="text" class="n-valid" value="<?=$val['order_amount'];?>" name="gr[<?=$key;?>][order_amount]">，<br/>
-                            &nbsp;&nbsp;&nbsp;未超过指标部分，提成比例为<input type="text" class="n-valid" value="<?=$val['order_rebate1'];?>" name="gr[<?=$key;?>][order_rebate1]">%，<br/>
-                            &nbsp;&nbsp;&nbsp;超过股金的部分，提成比例为<input type="text" class="n-valid" value="<?=$val['order_rebate2'];?>" name="gr[<?=$key;?>][order_rebate2]">%。
+                            &nbsp;&nbsp;&nbsp;未超过指标金额部分，提成比例为<input type="text" class="n-valid" value="<?=$val['order_rebate1'];?>" name="gr[<?=$key;?>][order_rebate1]">%，<br/>
+                            &nbsp;&nbsp;&nbsp;超过指标金额部分，提成比例再加<input type="text" class="n-valid" value="<?=$val['order_rebate2'];?>" name="gr[<?=$key;?>][order_rebate2]">%。
                         </dd>
                     </dl>
                     <dl  class="row">

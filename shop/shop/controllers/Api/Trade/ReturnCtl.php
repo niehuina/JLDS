@@ -383,6 +383,26 @@ class Api_Trade_ReturnCtl extends Api_Controller
 				$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $ogoods_data,true);
 				check_rs($edit_flag, $rs_row);
 
+				//如果是退货，则恢复商品的库存
+                if ($return['return_type'] == Order_ReturnModel::RETURN_TYPE_GOODS) {
+                    $add_stock_num = $return['order_goods_num'];
+                    $order_goods = $this->Order_GoodsModel->getOne($return['order_goods_id']);
+                    $goods_id = $order_goods['goods_id'];
+                    if($return['seller_user_id'] == Web_ConfigModel::value('self_shop_id')) {
+                        $Goods_CommonModel = new Goods_CommonModel();
+                        $Goods_BaseModel = new Goods_BaseModel();
+                        $goods_base = $Goods_BaseModel->getOne($goods_id);
+                        $edit_flag11 = $Goods_CommonModel->editCommon($goods_base['common_id'], ['common_stock' => $add_stock_num], true);
+                        $edit_flag12 = $Goods_BaseModel->editBase($goods_id, ['goods_stock' => $add_stock_num], true);
+                        check_rs($edit_flag11, $rs_row);
+                        check_rs($edit_flag12, $rs_row);
+                    }else{
+                        $User_StockModel = new User_StockModel();
+                        $user_stock = $User_StockModel->getOneByWhere(['user_id'=>$order_base['seller_user_id'],'goods_id'=>$goods_id]);
+                        $edit_flag12 = $User_StockModel->editUserStock($user_stock['stock_id'], ['goods_stock' => $add_stock_num], true);
+                        check_rs($edit_flag12, $rs_row);
+                    }
+                }
 
 				//退款金额，退货数量，交易佣金退款更新到订单表中
 				$order_edit = array();
@@ -437,8 +457,8 @@ class Api_Trade_ReturnCtl extends Api_Controller
 					$url         = Yf_Registry::get('paycenter_api_url');
 					$shop_app_id = Yf_Registry::get('shop_app_id');
 
-					$formvars             = array();
-					$formvars['app_id']        = $shop_app_id;
+                    $formvars             = array();
+                    $formvars['app_id']        = $shop_app_id;
 					$formvars['user_id']  = $return_user_id;
 					$formvars['user_account'] = $return_user_name;
 					$formvars['seller_id'] = $return['seller_user_id'];
@@ -458,7 +478,6 @@ class Api_Trade_ReturnCtl extends Api_Controller
 					{
 						$formvars['uorder_id'] = $order_base['payment_number'];
 					}
-
 
 					//平台同意退款（只增加买家的流水）
 					$rs                   = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=refundBuyerTransfer&typ=json', $url), $formvars);
@@ -502,8 +521,15 @@ class Api_Trade_ReturnCtl extends Api_Controller
 						check_rs($rs_flag,$rs_row);
 					}
 				}
-
 			}
+
+            //2019/7/26 修改为确认收货前才可退货，如果是退货的话，同退款一样处理
+			if($order_base['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS){
+                $formvars['order_id']    = $return['order_number'];
+                $formvars['from_app_id'] = Yf_Registry::get('shop_app_id');
+
+                $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=confirmOrder&typ=json', $url), $formvars);
+            }
 
 			$data['rs'] = $rs_row;
 
@@ -514,8 +540,6 @@ class Api_Trade_ReturnCtl extends Api_Controller
 			$flag = false;
 			$data = array();
 		}
-
-
 
 
 		if ($flag && $this->Order_ReturnModel->sql->commitDb())

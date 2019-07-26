@@ -350,7 +350,7 @@ class Seller_Controller extends Yf_AppController
 		$format_menu = array();
 		foreach ($menu_list as $key => $menu_value) {
 			foreach ($menu_value['sub'] as $submenu_value) {
-				$format_menu[$submenu_value['ctl'].'_'.$submenu_value['met']] = array(
+				$format_menu[$submenu_value['ctl']] = array(
 					'model' => $key,
 					'model_name' => $menu_value['name'],
 					'name' => $submenu_value['name'],

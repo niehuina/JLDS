@@ -85,7 +85,7 @@
                              <p></p>
 				<dt><a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Favorites&met=favoritesGoods" target="_blank"><span class="iconfont icon-taoxinshi bbc_color"></span><?=__('我的收藏')?></a></dt>
 				<dd class="rel_nav">
-					<a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Favorites&met=favoritesShop"><?=__('店铺收藏')?></a>
+<!--					<a href="--><?//= Yf_Registry::get('url') ?><!--?ctl=Buyer_Favorites&met=favoritesShop">--><?//=__('店铺收藏')?><!--</a>-->
 					<a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Favorites&met=favoritesGoods"><?=__('商品收藏')?></a>
 					<a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Favorites&met=footprint"><?=__('我的足迹')?></a>
 				</dd>

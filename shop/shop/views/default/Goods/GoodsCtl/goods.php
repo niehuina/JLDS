@@ -430,15 +430,15 @@ include $this->view->getTplPath() . '/' . 'header.php';
                                 <?php } ?>
                             </div>
 
-                            <p class="mar-top mar-bottom">
-                                <span class="span_w mar_l mar_w"><?= __('商品编号：') ?></span>
-                                <span class="span_font clearfix">
-                                    <?php if ($goods_detail['common_base']['common_code']) { ?>
-                                        <?= ($goods_detail['common_base']['common_code']) ?><?php } else { ?>
-                                        <?= __("无") ?>
-                                    <?php } ?>
-                                </span>
-                            </p>
+<!--                            <p class="mar-top mar-bottom">-->
+<!--                                <span class="span_w mar_l mar_w">--><?//= __('商品编号：') ?><!--</span>-->
+<!--                                <span class="span_font clearfix">-->
+<!--                                    --><?php //if ($goods_detail['common_base']['common_code']) { ?>
+<!--                                        --><?//= ($goods_detail['common_base']['common_code']) ?><!----><?php //} else { ?>
+<!--                                        --><?//= __("无") ?>
+<!--                                    --><?php //} ?>
+<!--                                </span>-->
+<!--                            </p>-->
 
                             <p class="mar-top">
                                 <span class="span_w lineh-2 mar_l mar_w"><?= __('配送至：') ?></span>

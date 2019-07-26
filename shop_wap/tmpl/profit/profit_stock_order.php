@@ -27,6 +27,9 @@ include __DIR__ . '/../../includes/header.php';
             .nctouch-log-list li .money{
                 font-size: 0.6rem;
             }
+            .nctouch-log-list li dl.pl45{
+                padding-left: 45px;
+            }
         </style>
     </head>
     <body>
@@ -36,7 +39,7 @@ include __DIR__ . '/../../includes/header.php';
                 <a href="member_profit.html"> <i class="back"></i> </a>
             </div>
             <div class="header-title">
-                <h1>备货差额返利</h1>
+                <h1>备货差价返利</h1>
             </div>
         </div>
         <div class="header-r">
@@ -55,17 +58,17 @@ include __DIR__ . '/../../includes/header.php';
         <div id="fixed_nav" class="nctouch-single-nav">
             <ul id="filtrate_ul" class="w20h">
                 <li class="selected"><a href="javascript:void(0);" data-status="0">未结算</a></li>
-                <li><a href="javascript:void(0);" data-status="1">已结算</a></li>
+                <li><a href="javascript:void(0);" data-status="1">待到账</a></li>
+                <li><a href="javascript:void(0);" data-status="2">已到账</a></li>
             </ul>
         </div>
         <ul id="profit-list" class="nctouch-log-list">
         </ul>
     </div>
     <script type="text/html" id="list_model">
-        <% var records=items; %>
-        <% if(records.length >0){%>
-        <% for (var k in records) {
-        var profit = records[k];
+        <% if(records >0){%>
+        <% for (var k in items) {
+        var profit = items[k];
         %>
         <li data-order-id="<%=profit.stock_order_id;%>">
             <dl>
@@ -90,7 +93,35 @@ include __DIR__ . '/../../includes/header.php';
         <div class="nctouch-norecord signin" style="top: 50%;">
             <div class="norecord-ico"><i></i></div>
             <dl>
-                <dt>您还没有备货订单返利</dt>
+                <dt>您还没有符合条件的备货差价返利</dt>
+            </dl>
+        </div>
+        <%}%>
+    </script>
+    <script type="text/html" id="record_model">
+        <% if(records >0){%>
+        <% for (var k in items) { var v = items[k]; %>
+        <li data-order-id="<%=v.order_id;%>" class="deposit">
+            <img src="../../images/new/member_monelist_add.png">
+            <dl class="pl45">
+                <dt>
+                    <%=v.record_title;%>
+                </dt>
+                <dd><%=v.order_id;%></dd>
+            </dl>
+            <div class="money add">
+                <em>¥</em><%=v.record_money;%>
+            </div>
+            <time class="date">
+                <%=v.record_status_con;%>
+            </time>
+        </li>
+        <%}%>
+        <%} else{%>
+        <div class="nctouch-norecord signin" style="top: 50%;">
+            <div class="norecord-ico"><i></i></div>
+            <dl>
+                <dt>您还没有符合条件的备货差价返利</dt>
             </dl>
         </div>
         <%}%>

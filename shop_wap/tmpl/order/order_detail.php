@@ -180,7 +180,7 @@ include __DIR__.'/../../includes/header.php';
             </div>
 
         </div>
-        <span class="im-contact"><a href="javascript:void(0);" class="kefu"><i class="im"></i>联系客服</a></span>
+<!--        <span class="im-contact"><a href="javascript:void(0);" class="kefu"><i class="im"></i>联系客服</a></span>-->
         <% if(shop_phone){ %>
         <span class="to-call"><a href="tel:<%=shop_phone%>" tel="<%=shop_phone%>"><i class="tel"></i>拨打电话</a></span>
         <% } %>

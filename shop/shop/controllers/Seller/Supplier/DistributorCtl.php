@@ -109,7 +109,7 @@ class Seller_Supplier_DistributorCtl extends Seller_Controller
 			//结束时间
 	    	if(request_string('end_date'))
 			{
-	    		$cond_row['shop_distributor_time:<'] = request_string('end_date');
+	    		$cond_row['shop_distributor_time:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 	    	}
 			
 			//时间排序

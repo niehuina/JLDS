@@ -79,7 +79,7 @@ class Consume_RecordModel extends Consume_Record
 		foreach($data_rows as $key => $val)
 		{
 			//如果为购物交易明细，显示交易进度
-			if($val['trade_type_id'] == Trade_TypeModel::SHOPPING )
+			if($val['trade_type_id'] == Trade_TypeModel::SHOPPING || $val['trade_type_id'] == Trade_TypeModel::STOCK_ORDER)
 			{
 
 				$order_row = $Consume_TradeModel->getOne($val['order_id']);
@@ -144,7 +144,7 @@ class Consume_RecordModel extends Consume_Record
 		foreach ($data["items"] as $key => $value)
 		{
 			//如果为购物交易明细，显示交易进度
-			if($value['trade_type_id'] == Trade_TypeModel::SHOPPING)
+			if($value['trade_type_id'] == Trade_TypeModel::SHOPPING || $value['trade_type_id'] == Trade_TypeModel::STOCK_ORDER)
 			{
 				$order_row = $Consume_TradeModel->getOne($value['order_id']);
                 if($value['record_title']=='门店购物'){

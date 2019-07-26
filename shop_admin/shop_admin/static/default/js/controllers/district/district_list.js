@@ -128,11 +128,13 @@ var handle = {
             $("#grid").jqGrid('setRowData', data.items.id, data.items);
 
             dialogWin && dialogWin.api.close();
+            $("#grid").trigger("reloadGrid");
         }
         else
         {
             $("#grid").jqGrid('addRowData', data.items.id, data.items, 'first');
             dialogWin && dialogWin.api.close();
+            $("#grid").trigger("reloadGrid");
         }
     },
 

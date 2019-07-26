@@ -222,8 +222,8 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 
 		$data['goods']     = $goods;
 
-		//订单为已完成（6），退货
-		if ($goods['order_goods_status'] == Order_StateModel::ORDER_FINISH)
+		//订单为已发货（4），退货
+		if ($goods['order_goods_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS)
 		{
 			//白条不支持退款和退货
 			if(strstr($data['order']['payment_name'],'白条支付')){
@@ -460,7 +460,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 			{
 				case Order_StateModel::ORDER_PAYED:$field['return_type'] = Order_ReturnModel::RETURN_TYPE_ORDER ; //退款
 					break;
-				case Order_StateModel::ORDER_FINISH:$field['return_type'] = Order_ReturnModel::RETURN_TYPE_GOODS ; //退货
+				case Order_StateModel::ORDER_WAIT_CONFIRM_GOODS:$field['return_type'] = Order_ReturnModel::RETURN_TYPE_GOODS ; //退货
 					break;
 			}
 		}
@@ -494,7 +494,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		}
 
 		//退货
-		if ($goods['order_goods_status'] == Order_StateModel::ORDER_FINISH)
+		if ($goods['order_goods_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS)
 		{
 			if(strstr($order['payment_name'],'白条支付')){
 				$flag2 = false;
@@ -1100,7 +1100,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 
 		$goods_parent_base = $this->orderGoodsModel->getOne($goods_parent_id);
 		//判断原订单是否是已完成订单，如果是已完成订单，则分销订单为退货。否则是退款
-		if($goods_parent_base['order_goods_status'] == Order_StateModel::ORDER_FINISH)
+		if($goods_parent_base['order_goods_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS)
 		{
 			$order_field['order_return_status']  = 1;
 

@@ -208,7 +208,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         $this->data->addBody(-140, $transport_cost);
     }
 
-    public function addSendOrder()
+    public function addOrder()
     {
         $action = request_string('action');
         $order_id = request_string('order_id');
@@ -251,11 +251,6 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $User_AddressModel = new User_AddressModel();
             $user_address['user_id'] = $user_id;
             $user_address['user_address_contact'] = $user_address_phone;
-            $user_address['user_id'] = $user_id;
-            $user_address['user_id'] = $user_id;
-            $user_address['user_id'] = $user_id;
-            $user_address['user_id'] = $user_id;
-            $user_address['user_id'] = $user_id;
 
             //备货订单物流信息
             $order_row['order_shipping_fee'] = $shipping_fee;
@@ -329,10 +324,6 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 
                 $flag2 = $Stock_OrderGoodsModel->addOrderGoods($order_goods_row);
                 check_rs($flag2, $rs);
-
-                //减少商品库存
-                $flags = $Goods_BaseModel->reduceGoodsStock($goods_base['goods_id'], $goods_num);
-                check_rs($flag2, $rs);
             }
 
             $order_row['order_payment_amount'] = $order_total_amount + $shipping_fee;
@@ -350,8 +341,8 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $formvars['order_id'] = $order_id;
             $formvars['buy_id'] = $user_id;
             $formvars['buyer_name'] = $user_info['user_name'];
-            $formvars['seller_id'] = $shop_info['user_id'];
-            $formvars['seller_name'] = $shop_info['user_name'];
+            $formvars['seller_id'] = Perm::$userId;
+            $formvars['seller_name'] = Perm::$row['user_name'];
             $formvars['order_state_id'] = $order_row['order_status'];
             $formvars['order_payment_amount'] = $order_row['order_payment_amount_vip'];
             $formvars['order_commission_fee'] = 0;
@@ -558,7 +549,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                 //判断订单的总商品数量 是否等于 已发货的商品数量+本次发货的商品数量
                 if($order_goods_count == ($already_shipping_goods_count + $current_ship_goods_count)) {
                     //设置发货
-                    $update_data['order_status'] = Order_StateModel::ORDER_WAIT_CONFIRM_GOODS;
+                    $update_data['order_shipping_status'] = Order_StateModel::ORDER_SHIPPING_ALL;
 //                $update_data['order_shipping_express_id'] = request_int('order_shipping_express_id');
 //                $update_data['order_shipping_code'] = request_string('order_shipping_code');
 //                $update_data['order_shipping_message'] = request_string('order_shipping_message');
@@ -566,11 +557,15 @@ class Seller_Stock_OrderCtl extends Seller_Controller
 //                $update_data['order_shipping_method']     = $order_address_phone;
                     //配送时间 默认收货时间
                     $confirm_order_time = Yf_Registry::get('confirm_order_time');
-                    $update_data['order_shipping_time'] = date('Y-m-d H:i:s', $current_time);
+//                    $update_data['order_shipping_time'] = date('Y-m-d H:i:s', $current_time);
                     $update_data['order_receiver_date'] = date('Y-m-d H:i:s', $current_time + $confirm_order_time);
-                    $update_flag = $Stock_OrderModel->editOrder($order_id, $update_data);
-                    check_rs($update_flag, $rs_row);
+                }else{
+                    $update_data['order_shipping_status'] = Order_StateModel::ORDER_SHIPPING_PART;
                 }
+                $update_data['order_status'] = Order_StateModel::ORDER_WAIT_CONFIRM_GOODS;
+                $update_data['order_shipping_time'] = date('Y-m-d H:i:s', $current_time);
+                $update_flag = $Stock_OrderModel->editOrder($order_id, $update_data);
+                check_rs($update_flag, $rs_row);
 
                 //更新订单商品的发货状态
                 $order_goods_id = array_values($order_send_goods);
@@ -589,6 +584,14 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                 $add_shipping['shipping_time'] = date('Y-m-d H:i:s', $current_time);
                 $add_flag = $Stock_OrderShippingModel->addOrderShipping($add_shipping);
                 check_rs($add_flag, $rs_row);
+
+                //减少商品库存
+                $Goods_BaseModel = new Goods_BaseModel();
+                foreach ($order_goods_id as $key=>$order_goods_id){
+                    $order_goods_data = $Stock_OrderGoodsModel->getOne($order_goods_id);
+                    $flags = $Goods_BaseModel->reduceGoodsStock($order_goods_data['goods_id'], $order_goods_data['goods_num']);
+                    check_rs($flags, $rs_row);
+                }
 
                 $flag = is_ok($rs_row);
                 if($flag) {
@@ -723,25 +726,28 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         $typ = request_string('typ');
         $rs_row = array();
 
-        if ($typ == 'e') {
-            $cancel_row['cancel_identity'] = Order_CancelReasonModel::CANCEL_SELLER;
+        $order_id = request_string('order_id');
+        //获取订单详情，判断订单的当前状态与下单这是否为当前用户
+        $Stock_OrderModel = new Stock_OrderModel();
+        $order_base = $Stock_OrderModel->getOne($order_id);
 
+        if(Perm::$userId == $order_base['seller_user_id']){
+            $cancel_member = Order_CancelReasonModel::CANCEL_BUYER;
+        }else{
+            $cancel_member = Order_CancelReasonModel::CANCEL_SELLER;
+        }
+
+        if ($typ == 'e') {
             //获取取消原因
             $Order_CancelReasonModel = new Order_CancelReasonModel;
-            $reason = array_values($Order_CancelReasonModel->getByWhere($cancel_row));
+            $reason = array_values($Order_CancelReasonModel->getByWhere($cancel_member));
 
             include $this->view->getView();
         } else {
-            $Stock_OrderModel = new Stock_OrderModel();
-
             //开启事物
             $Stock_OrderModel->sql->startTransactionDb();
 
-            $order_id = request_string('order_id');
             $state_info = request_string('state_info');
-
-            //获取订单详情，判断订单的当前状态与下单这是否为当前用户
-            $order_base = $Stock_OrderModel->getOne($order_id);
 
             if ($order_base['order_status'] == Order_StateModel::ORDER_PAYED) {
                 if (empty($state_info)) {
@@ -750,7 +756,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                 //加入取消时间
                 $condition['order_status'] = Order_StateModel::ORDER_CANCEL;
                 $condition['order_cancel_reason'] = addslashes($state_info);
-                $condition['order_cancel_identity'] = Order_BaseModel::IS_ADMIN_CANCEL;
+                $condition['order_cancel_identity'] = $cancel_member;
                 $condition['order_cancel_date'] = get_date_time();
 
                 $edit_flag = $Stock_OrderModel->editOrder($order_id, $condition);
@@ -760,16 +766,15 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                 $edit_row['order_goods_status'] = Order_StateModel::ORDER_CANCEL;
                 $Stock_OrderGoodsModel = new Stock_OrderGoodsModel();
                 $order_goods_id = $Stock_OrderGoodsModel->getKeyByWhere(array('stock_order_id' => $order_id));
-
                 if($order_goods_id) {
                     $edit_flag1 = $Stock_OrderGoodsModel->editOrderGoods($order_goods_id, $edit_row);
                     check_rs($edit_flag1, $rs_row);
                 }
 
-                //退还订单商品的库存
-                $Goods_BaseModel = new Goods_BaseModel();
-                $edit_flag2 = $Goods_BaseModel->addGoodsStock($order_goods_id);
-                check_rs($edit_flag2, $rs_row);
+//                //退还订单商品的库存
+//                $Goods_BaseModel = new Goods_BaseModel();
+//                $edit_flag2 = $Goods_BaseModel->addGoodsStock($order_goods_id);
+//                check_rs($edit_flag2, $rs_row);
             }
 
             $flag = is_ok($rs_row);
@@ -805,6 +810,144 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         }
     }
 
+    public function confirmShipping()
+    {
+        $typ = request_string('typ');
+
+        if ($typ == 'e')
+        {
+            include $this->view->getView();
+        }
+        else
+        {
+            $Order_BaseModel = new Stock_OrderModel();
+            $Order_GoodsModel = new Stock_OrderGoodsModel();
+            $Stock_OrderShippingModel = new Stock_OrderShippingModel();
+
+            $rs_row = array();
+            //开启事物
+            $Order_BaseModel->sql->startTransactionDb();
+
+            $order_id = request_string('order_id');
+            $shipping_code = request_string('shipping_code');
+
+            $order_base           = $Order_BaseModel->getOne($order_id);
+            //判断下单者是否是当前用户
+            if($order_base['shop_user_id'] == Perm::$userId && $order_base['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS)
+            {
+                //将当前物流确认收货
+                $shipping = $Stock_OrderShippingModel->getOneByWhere(['stock_order_id'=>$order_id, 'shipping_code'=>$shipping_code]);
+                $edit_shipping_row['shipping_status'] = Order_StateModel::SHIPPING_CONFIRM_YES;
+                $edit_shipping_flag = $Stock_OrderShippingModel->editOrderShipping($shipping_code, $edit_shipping_row);
+                check_rs($edit_shipping_flag,$rs_row);
+
+                //修改该物流中的订单商品表中的订单状态
+                $order_goods_id = explode(',',$shipping['shipping_stock_goods_id']);
+                $edit_row['order_goods_status'] = Order_StateModel::ORDER_FINISH;
+                $edit_flag1 = $Order_GoodsModel->editOrderGoods($order_goods_id, $edit_row);
+                check_rs($edit_flag1,$rs_row);
+
+                $User_Stock_Model = new User_StockModel();
+                $user_stock_list = $User_Stock_Model->getByWhere(['user_id'=>$order_base['shop_user_id']]);
+                $goods_id_array = array_reduce($user_stock_list, function($carry,$item){
+                    $carry[$item['goods_id']] = $item['stock_id'];
+                    return $carry;
+                });
+
+                $Stock_OrderGoodsModel = new Stock_OrderGoodsModel();
+                $orderGoods_list = $Stock_OrderGoodsModel->getByWhere(array('stock_order_id' => $order_id, 'stock_order_goods_id:in'=>$order_goods_id));
+                foreach ($orderGoods_list as $order_goods){
+                    $goods_id = $order_goods['goods_id'];
+                    if(array_key_exists($goods_id, $goods_id_array)){
+                        $stock_row = array();
+                        $stock_row['goods_stock'] = $order_goods['goods_num'];
+
+                        //修改用户仓储商品数量
+                        $stock_id = $goods_id_array[$goods_id];
+                        $s_flag = $User_Stock_Model->editUserStock($stock_id,$stock_row, true);
+                        check_rs($s_flag,$rs_row);
+                    }else{
+                        $stock_row = array();
+                        $stock_row['user_id'] = $order_base['shop_user_id'];
+                        $stock_row['user_name'] = $order_base['shop_user_name'];
+                        $stock_row['goods_id'] = $order_goods['goods_id'];
+                        $stock_row['common_id'] = $order_goods['common_id'];
+                        $stock_row['goods_name'] = $order_goods['goods_name'];
+                        $stock_row['goods_stock'] = $order_goods['goods_num'];
+                        $stock_row['alarm_stock'] = 0;
+                        $stock_row['stock_date_time'] = get_date_time();
+
+                        //添加到用户仓储
+                        $s_flag = $User_Stock_Model->addUserStock($stock_row);
+                        check_rs($s_flag,$rs_row);
+                    }
+                }
+
+                //如果该订单全部发货
+                if($order_base['order_shipping_status'] == Order_StateModel::ORDER_SHIPPING_ALL) {
+                    $shipping_list = $Stock_OrderShippingModel->getByWhere(['stock_order_id'=>$order_id]);
+                    $shipping_list_status = array_column($shipping_list, 'shipping_status');
+                    $flag = true;
+                    foreach ($shipping_list_status as $status){
+                        if ($status == 1)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            $flag = false;
+                            break;
+                        }
+                    }
+
+                    if($flag) {
+                        //如果全部收货，修改订单状态，然后修改用户备货金
+                        $condition['order_status'] = Order_StateModel::ORDER_FINISH;
+                        $condition['order_finished_time'] = get_date_time();
+                        $edit_flag = $Order_BaseModel->editOrder($order_id, $condition);
+                        check_rs($edit_flag,$rs_row);
+
+                        //将需要确认的订单号远程发送给Paycenter修改订单状态
+                        //远程修改paycenter中的订单状态
+                        //判断修改用户的备货金
+                        $formvars = array();
+                        $formvars['order_id'] = $order_id;
+                        $formvars['payment'] = 1;
+                        $formvars['from_app_id'] = Yf_Registry::get('shop_app_id');
+                        $rs = $this->getPayCenterUrl('Api_Pay_Pay', 'confirmOrder', $formvars);
+                        if ($rs['status'] == 250) {
+                            $rs_flag = false;
+                            check_rs($rs_flag, $rs_row);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                $flag = false;
+
+                check_rs($flag,$rs_row);
+            }
+
+            $flag = is_ok($rs_row);
+
+            if ($flag && $Order_BaseModel->sql->commitDb())
+            {
+                $status = 200;
+                $msg    = __('success');
+            }
+            else
+            {
+                $Order_BaseModel->sql->rollBackDb();
+                $m      = $Order_BaseModel->msg->getMessages();
+                $msg    = $m ? $m[0] : __('failure');
+                $status = 250;
+            }
+
+            $this->data->addBody(-140, array(), $msg, $status);
+        }
+    }
+
     public function confirmOrder()
     {
         $typ = request_string('typ');
@@ -828,12 +971,11 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             //判断下单者是否是当前用户
             if($order_base['shop_user_id'] == Perm::$userId && $order_base['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS)
             {
-                $order_payment_amount = $order_base['order_payment_amount'];
-
+                //修改订单状态
                 $condition['order_status'] = Order_StateModel::ORDER_FINISH;
-
                 $condition['order_finished_time'] = get_date_time();
 
+//                $order_payment_amount = $order_base['order_payment_amount'];
 //                if(Web_ConfigModel::value('Plugin_Directseller'))
 //                {
 //                    //确认收货以后将总佣金写入商品订单表
@@ -846,13 +988,21 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                 $edit_flag = $Order_BaseModel->editOrder($order_id, $condition);
                 check_rs($edit_flag,$rs_row);
 
-                //修改订单商品表中的订单状态
-                $edit_row['order_goods_status'] = Order_StateModel::ORDER_FINISH;
-                $order_goods_id                 = $Order_GoodsModel->getKeyByWhere(array('stock_order_id' => $order_id));
+                //修改物流表状态
+                $Stock_OrderShippingModel = new Stock_OrderShippingModel();
+                $shipping_ids = $Stock_OrderShippingModel->getKeyByWhere(['stock_order_id'=>$order_id, 'shipping_status:!='=>Order_StateModel::SHIPPING_CONFIRM_YES]);
+                $edit_shipping_row['shipping_status'] = Order_StateModel::SHIPPING_CONFIRM_YES;
+                $edit_shipping_flag = $Stock_OrderShippingModel->editOrderShipping($shipping_ids, $edit_shipping_row);
+                check_rs($edit_shipping_flag,$rs_row);
 
+                //修改订单商品表中的订单状态
+                $orderGoods_list                 = $Order_GoodsModel->getByWhere(array('stock_order_id' => $order_id, 'order_goods_status:!='=>Order_StateModel::ORDER_FINISH));
+                $order_goods_id = array_column($orderGoods_list, 'stock_order_goods_id');
+                $edit_row['order_goods_status'] = Order_StateModel::ORDER_FINISH;
                 $edit_flag1 = $Order_GoodsModel->editOrderGoods($order_goods_id, $edit_row);
                 check_rs($edit_flag1,$rs_row);
 
+                //将收货的商品加入库存中
                 $User_Stock_Model = new User_StockModel();
                 $user_stock_list = $User_Stock_Model->getByWhere(['user_id'=>$order_base['shop_user_id']]);
                 $goods_id_array = array_reduce($user_stock_list, function($carry,$item){
@@ -860,8 +1010,6 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                     return $carry;
                 });
 
-                $Stock_OrderGoodsModel = new Stock_OrderGoodsModel();
-                $orderGoods_list = $Stock_OrderGoodsModel->getByWhere(array('stock_order_id' => $order_id));
                 foreach ($orderGoods_list as $order_goods){
                     $goods_id = $order_goods['goods_id'];
                     if(array_key_exists($goods_id, $goods_id_array)){
@@ -1327,7 +1475,8 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         $page    = request_int('curpage', 1);
         $rows    = request_int('page', 20);
         $status    = request_int('status', 0);
-        $cond_row['order_is_settlement'] = $status;
+        $cond_row['order_is_settlement'] = 0;
+        $cond_row['order_status'] = Order_StateModel::ORDER_FINISH;
         $order_row['order_create_time'] = 'desc';
         $order_list = $Stock_OrderModel->listByWhere($cond_row, $order_row, $page, $rows);
         foreach ($order_list['items'] as $key=>$order){
@@ -1344,6 +1493,7 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         $formvars['user_id'] = Perm::$userId;
         $formvars['trade_type_id'] = request_int('type', 13);//备货差价返利
         $formvars['user_type'] = 1;
+        $formvars['status'] = 2;
         $rs = $this->getPayCenterUrl('Api_Paycen_PayRecord', 'getRecordAmountByUserId',$formvars);
         if($rs['data']){
             $order_list['amount'] = $rs['data']['amount'];

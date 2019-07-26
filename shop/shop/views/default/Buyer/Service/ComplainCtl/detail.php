@@ -148,7 +148,13 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                             <?php
                         }
                         ?>
-
+                        <?php if ($data['complain_state'] == 5) { ?>
+                            <h3><?= __('平台处理意见') ?></h3>
+                            <dl>
+                                <dt><?= __('意见内容：') ?></dt>
+                                <dd><?= $data['final_handle_message'] ?></dd>
+                            </dl>
+                        <?php } ?>
                         <dl class="foot">
                             <form id="form" action="#" method="post">
                                 <input type="hidden" name="complain_id" id="complain_id"

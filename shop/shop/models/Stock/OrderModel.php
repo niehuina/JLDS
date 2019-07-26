@@ -37,6 +37,11 @@ class Stock_OrderModel extends Stock_Order
                 $set_html .= "<a class=\"ncbtn ncbtn-mint mt10 bbc_seller_btns\" target='_blank' ' href=\"$send_url\"><i class=\"icon-truck\"></i>设置发货</a>";
 
                 $data['items'][$key]['set_html'] = $set_html;
+            } elseif ($val['order_shipping_status'] == Order_StateModel::ORDER_SHIPPING_PART) {
+                $send_url = $data['items'][$key]['send_url'];
+                $set_html = "<a class=\"ncbtn ncbtn-mint mt10 bbc_seller_btns\" target='_blank' ' href=\"$send_url\"><i class=\"icon-truck\"></i>设置发货</a>";
+
+                $data['items'][$key]['set_html'] = $set_html;
             } else {
                 $data['items'][$key]['set_html'] = null;
                 if($val['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS){
@@ -69,7 +74,7 @@ class Stock_OrderModel extends Stock_Order
             //设置收货URL
             $data['items'][$key]['send_url'] = $url . '?ctl=Seller_Stock_Order&met=send&typ=e&order_id=' . $order_id;
 
-            if ($val['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS) {
+            if ($val['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS && $val['order_shipping_status'] == Order_StateModel::ORDER_SHIPPING_ALL) {
                 $set_html = "<a class=\"ncbtn ncbtn-mint mt10 bbc_seller_btns\" onclick=\"confirmOrder('{$order_id}')\"><i class=\"icon-truck\"></i>确认收货</a>";
                 $data['items'][$key]['set_html'] = $set_html;
             } else {
@@ -194,10 +199,18 @@ class Stock_OrderModel extends Stock_Order
                 }
                 else {
                     $Stock_OrderShippingModel = new Stock_OrderShippingModel();
-                    $order_shipping = $Stock_OrderShippingModel->getByWhere(['stock_order_id' => $condi['stock_order_id']]);
+                    $order_shipping = $Stock_OrderShippingModel->getByWhere(['stock_order_id' => $condi['stock_order_id']], ['shipping_time'=>'asc']);
                     $data['order_shipping'] = array_values($order_shipping);
                     if (count($order_shipping) > 0) {
-                        $order_shipping_html = '<li>1. 商品已发出；';
+                        if($data['order_shipping_status'] == Order_StateModel::ORDER_SHIPPING_PART){
+                            $data['order_status_text'] = '部分发货';
+                            $data['order_stauts_const'] = '部分发货';
+                            $order_shipping_html1 = '<li>1. 商品已发出部分；';
+                            $order_shipping_html2 = "</li><li>2. 因您购买的商品未全部发货，请耐心等待。</li>";
+                        }else {
+                            $order_shipping_html1 = '<li>1. 商品已发出；';
+                            $order_shipping_html2 = "</li><li>2. 系统将于<time>$order_shipping_time</time>自动完成“确认收货”，完成交易。</li>";
+                        }
                         $expressModel = new ExpressModel();
                         foreach ($order_shipping as $key => $shipping) {
                             //查找物流公司
@@ -205,13 +218,12 @@ class Stock_OrderModel extends Stock_Order
                             $express_base = pos($express_base);
                             $express_name = $express_base['express_name'];
                             $order_shipping_code = $shipping['shipping_code'];
-                            $order_shipping_html .= "$express_name : $order_shipping_code;  ";
+                            $order_shipping_html1 .= "$express_name : $order_shipping_code;  ";
                         }
-                        $order_shipping_html .= "</li><li>2. 如果买家没有及时进行收货，系统将于<time>$order_shipping_time</time>自动完成“确认收货”，完成交易。</li>";
-
+                        $order_shipping_html = $order_shipping_html1 . $order_shipping_html2;
                         $data['order_status_html'] = $order_shipping_html;
                     } else {
-                        $data['order_status_html'] = "<li>1. 商品已发出；无需物流。</li><li>2. 如果买家没有及时进行收货，系统将于<time>$order_shipping_time</time>自动完成“确认收货”，完成交易。</li>";
+                        $data['order_status_html'] = "<li>1. 商品已发出；无需物流。</li><li>2. 系统将于<time>$order_shipping_time</time>自动完成“确认收货”，完成交易。</li>";
                     }
                 }
 
@@ -223,7 +235,7 @@ class Stock_OrderModel extends Stock_Order
                 break;
 
             case Order_StateModel::ORDER_RECEIVED:
-            case Order_StateModel::ORDER_FINISH :
+            case Order_StateModel::ORDER_FINISH:
                 $data['order_status_text'] = '已经收货';
                 $data['order_status_html'] = '<li>1. 交易已完成，买家可以对购买的商品及服务进行评价。</li><li>2. 评价后的情况会在商品详细页面中显示，以供其它会员在购买时参考。</li>';
 

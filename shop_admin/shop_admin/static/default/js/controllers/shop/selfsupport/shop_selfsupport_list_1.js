@@ -165,12 +165,14 @@ var handle = {
         {
             
             $("#grid").jqGrid("setRowData", t.shop_id, t);
-            i && i.api.close()
+            i && i.api.close();
+            $("#grid").trigger("reloadGrid");
         }
         else
         {
             $("#grid").jqGrid("addRowData", t.shop_id, t, "last");
-            i && i.api.close()
+            i && i.api.close();
+            $("#grid").trigger("reloadGrid");
         }
         
        

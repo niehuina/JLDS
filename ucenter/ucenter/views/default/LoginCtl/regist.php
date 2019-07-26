@@ -31,6 +31,8 @@ extract($_GET);
     <script src="<?= $this->view->js ?>/jquery-1.9.1.js"></script>
     <script type="text/javascript">
         $(function () {
+            $(".img-code").trigger('click');
+
             function changeDiv(firstDiv, secondDiv) {
                 var temp;
                 temp = firstDiv.html();
@@ -101,7 +103,7 @@ extract($_GET);
     <div id="header">
         <a href="javascript:history.go(-1)" class="back-pre"></a>账户注册
         <a href="<?= sprintf('%s?ctl=Login&met=index&t=%s&from=%s&callback=%s', Yf_Registry::get('url'), request_string('t'), request_string('from'), urlencode(request_string('callback'))) ?>"
-                class="back-to-login">登录
+           class="back-to-login">登录
         </a>
     </div>
     <div class="main clearfix" id="form-main">
@@ -373,8 +375,8 @@ extract($_GET);
 
 <script>
 
-    function getIntroducer(obj){
-        if($(obj).html() == "清除"){
+    function getIntroducer(obj) {
+        if ($(obj).html() == "清除") {
             $("#parent_id").val("");
             $("#intro_keys").val("");
             $("#intro_list").html("");
@@ -384,8 +386,8 @@ extract($_GET);
         }
 
         var intro_keys = $("#intro_keys").val();
-        if(!intro_keys) return;
-        var ajaxurl = './index.php?ctl=Login&met=getIntroducer&typ=json&intro_keys='+$("#intro_keys").val();
+        if (!intro_keys) return;
+        var ajaxurl = './index.php?ctl=Login&met=getIntroducer&typ=json&intro_keys=' + $("#intro_keys").val();
         $.ajax({
             type: "POST",
             url: ajaxurl,
@@ -396,16 +398,16 @@ extract($_GET);
                     var data = respone.data;
                     var html = '';
                     $.each(data, function (i, item) {
-                        if(i == 0) {
+                        if (i == 0) {
                             $("#parent_id").val(item.user_id);
                             html += item.user_truename + '/' + item.user_mobile;
                         }
                     });
 
-                    if(html == ""){
+                    if (html == "") {
                         html = icons.error + '请准确填写推荐人姓名或手机号';
                         $("#intro_list").addClass("error").removeClass("intro_list");
-                    }else{
+                    } else {
                         $("#intro_list").removeClass("error").addClass("intro_list");
                     }
                     $("#intro_list").html(html);

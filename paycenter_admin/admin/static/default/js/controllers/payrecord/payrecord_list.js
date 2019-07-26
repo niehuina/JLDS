@@ -28,17 +28,17 @@ var THISPAGE = {
         queryConditions.beginDate = this.$_beginDate.val();
         queryConditions.endDate = this.$_endDate.val();
         var colModel = [
-            {name:'order_id', label:'商户订单id', width:250, align:"center"},
             {name:'user_nickname', label:'用户姓名', width:150,align:'center'},
             {name:'record_money',label:'金额',  width:120,align:'center'},
             {name:'record_title', label:'标题', width:180, align:"center"},
             {name:'trade_type', label:'交易类型', width:110, align:"center"},
             {name:'user_type_con', label:'用户类型', width:80, align:"center"},
             {name:'record_status_con', label:'付款状态', width:80, align:"center"},
+            {name:'order_id', label:'商户订单id', width:250, align:"center"},
             {name:'record_payorder', label:'支付单号', width:150, align:"center"},
             {name:'record_paytime', label:'支付时间', width:140, align:"center"},
-            {name:'record_date', label:'日期', width:90, align:"center"},
-            {name:'record_desc', label:'描述', width:200, align:"center"},
+            {name:'record_time', label:'创建时间', width:140, align:"center"},
+            {name:'record_desc', label:'描述', width:150, align:"center"},
         ];
         this.mod_PageConfig.gridReg('grid', colModel);
         colModel = this.mod_PageConfig.conf.grids['grid'].colModel;

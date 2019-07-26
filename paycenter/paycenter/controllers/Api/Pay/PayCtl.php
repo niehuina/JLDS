@@ -353,7 +353,9 @@ class Api_Pay_PayCtl extends Api_Controller
         //开启事物
         $Consume_TradeModel->sql->startTransactionDb();
 
-        $Consume_TradeModel->editTrade($order_id,array('order_state_id' => Union_OrderModel::FINISH));
+        $finash_row['order_state_id'] = Union_OrderModel::FINISH;
+        $finash_row['trade_finish_time'] = get_date_time();
+        $Consume_TradeModel->editTrade($order_id,$finash_row);
 
         $consume_trade_row = $Consume_TradeModel->getOne($order_id);
 
@@ -881,11 +883,12 @@ class Api_Pay_PayCtl extends Api_Controller
     public function directsellerOrder()
     {
 		$date = array();
-        $user_id  = request_row('user_id');  //收款人
-        $amount   = request_row('user_money');        //付款金额
-        $reason   = request_row('reason');  //付款说明
-        $order_id = request_row('order_id');
-        $trade_type = request_row('trade_type', 14);
+        $user_id  = request_int('user_id');  //收款人
+        $amount   = request_float('user_money');        //付款金额
+        $reason   = request_string('reason');  //付款说明
+        $order_id = request_string('order_id');
+        $trade_type = request_string('trade_type', 14);
+        $desc = request_string('desc', '');
  
         //交易明细表
         $Consume_RecordModel = new Consume_RecordModel();
@@ -920,7 +923,7 @@ class Api_Pay_PayCtl extends Api_Controller
                 'record_month' => date("m"),
                 'record_day' => date("d"),
                 'record_title' => $reason,
-                'record_desc' => "",
+                'record_desc' => $desc,
                 'record_time' => date('Y-m-d H:i:s'),
                 'trade_type_id' => $trade_type,
                 'user_type' => '1',
@@ -1345,7 +1348,9 @@ class Api_Pay_PayCtl extends Api_Controller
         $Consume_TradeModel->sql->startTransactionDb();
 
         //1.修改订单表（consume_trade）
-        $Consume_TradeModel->editTrade($order_id,array('order_state_id' => Union_OrderModel::FINISH));
+        $finash_row['order_state_id'] = Union_OrderModel::FINISH;
+        $finash_row['trade_finish_time'] = get_date_time();
+        $Consume_TradeModel->editTrade($order_id,$finash_row);
 
 //        $consume_trade_row = $Consume_TradeModel->getOne($order_id);
 

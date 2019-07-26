@@ -57,7 +57,7 @@ include __DIR__ . '/../../includes/header.php';
         </form>
 
     </div>
-    <script type="text/javascript" src="../../js/libs//zepto.min.js"></script>
+    <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
     <script type="text/javascript" src="../../js/common.js"></script>
     <script type="text/javascript" src="../../js/tmpl/footer.js"></script>
     <script type="text/javascript">
@@ -114,22 +114,22 @@ include __DIR__ . '/../../includes/header.php';
             });
 
 
-            /*$('input[name="upfile"]').ajaxUploadImage({
-                url: ApiUrl + "/index.php?ctl=Upload&action=uploadImage",
-                data: {key:getCookie('id')},
-                start: function (e) {
-                },
-                success: function (e, a) {
-                    checkLogin(a.login);
-                    if (a.state != 'SUCCESS') {
-                        e.parent().siblings(".upload-loading").remove();
-                        $.sDialog({skin: "red", content: "图片尺寸过大！", okBtn: false, cancelBtn: false});
-                        return false
-                    }
-                    $('#certificate_logo').attr('src',a.url);
-                    e.parents("a").next().val(a.url)
-                }
-            });*/
+            // $('input[name="upfile"]').ajaxUploadImage({
+            //     url: ApiUrl + "/index.php?ctl=Upload&action=uploadImage",
+            //     data: {key:getCookie('id')},
+            //     start: function (e) {
+            //     },
+            //     success: function (e, a) {
+            //         checkLogin(a.login);
+            //         if (a.state != 'SUCCESS') {
+            //             e.parent().siblings(".upload-loading").remove();
+            //             $.sDialog({skin: "red", content: "图片尺寸过大！", okBtn: false, cancelBtn: false});
+            //             return false
+            //         }
+            //         $('#certificate_logo').attr('src',a.url);
+            //         e.parents("a").next().val(a.url)
+            //     }
+            // });
             $("#submitBtn").click(function () {
                 if (upload_flag == false) {
                     errorTipsShow("请上传头像");

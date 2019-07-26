@@ -137,16 +137,16 @@ class Goods_BaseModel extends Goods_Base
 	public function delStock($goods_id, $num, $seller_user_id = null)
 	{
         if($seller_user_id != null){
-//            if($seller_user_id){
-//                //获取消费者对应的高级合伙人的库存
-//                $flag = $this->editUserStock($goods_id, -1*$num, $seller_user_id);
-//
-//                if(!is_bool($flag)){
-//                    return $flag;
-//                }
-//
-//                $res = $flag;
-//            }
+            if($seller_user_id){
+                //获取消费者对应的高级合伙人的库存
+                $flag = $this->editUserStock($goods_id, -1*$num, $seller_user_id);
+
+                if(!is_bool($flag)){
+                    return $flag;
+                }
+
+                $res = $flag;
+            }
             return true;
         }else {
 

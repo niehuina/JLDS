@@ -127,7 +127,7 @@ class Api_Operation_SettlementCtl extends Api_Controller
 		}
 		if ($end_time)
 		{
-			$cond_row['os_end_date:<='] = $end_time;
+			$cond_row['os_end_date:<='] = date('Y-m-d 23:59:59',strtotime($end_time));
 		}
 //        if ($oname != "number")
 //        {

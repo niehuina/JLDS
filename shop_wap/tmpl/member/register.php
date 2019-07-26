@@ -117,7 +117,7 @@ include __DIR__ . '/../../includes/header.php';
                     <label for="checkbox">同意</label>
                     <a class="reg-cms" href="javascript:void(0);">用户注册协议</a></div>
                 <div class="error-tips"></div>
-                <div class="form-btn"><a href="javascript:void(0);" class="btn" id="registerbtn">注册</a></div>
+                <div class="form-btn ok"><a href="javascript:void(0);" class="btn" id="registerbtn">注册</a></div>
                 <input type="hidden" name="referurl">
             </div>
         </div>

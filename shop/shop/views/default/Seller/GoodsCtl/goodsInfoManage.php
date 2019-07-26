@@ -339,30 +339,30 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 					<p class="hint"><?=__('价格必须是0.01~9999999之间的数字，此价格仅为市场参考售价，请根据该实际情况认真填写。')?></p>
 				</dd>
 			</dl>
-            <dl>
-                <dt><?=__('低保价')?>：</dt>
-                <dd>
-                    <input type="text" class="text w60" name="dibao_price" value="<?php if( !empty($common_data) ) { echo $common_data['common_dibao_price']; } ?>"/><em><?=Web_ConfigModel::value('monetary_unit')?></em>
-
-                    <p class="hint"><?=__('价格必须是0.00~9999999之间的数字，此价格为商户对低保用户销售的价格，非必填选项，如果不填，该商品则没有低报价。')?></p>
-                </dd>
-            </dl>
-            <dl>
-                <dt><?=__('普通售价')?>：</dt>
-                <dd>
-                    <input type="text" class="text w60" name="normal_price" value="<?php if( !empty($common_data) ) { echo $common_data['common_normal_price']; } ?>"/><em><?=Web_ConfigModel::value('monetary_unit')?></em>
-
-                    <p class="hint"><?=__('价格必须是0.00~9999999之间的数字，此价格为商户对所销售的商品实际成本价格进行备注记录，非必填选项，不会在前台销售页面中显示。')?></p>
-                </dd>
-            </dl>
-            <dl>
-				<dt><?=__('成本价')?>：</dt>
-				<dd>
-					<input type="text" class="text w60" name="cost_price" value="<?php if( !empty($common_data) ) { echo $common_data['common_cost_price']; } ?>"/><em><?=Web_ConfigModel::value('monetary_unit')?></em>
-
-					<p class="hint"><?=__('价格必须是0.00~9999999之间的数字，此价格为商户对所销售的商品实际成本价格进行备注记录，非必填选项，不会在前台销售页面中显示。')?></p>
-				</dd>
-			</dl>
+<!--            <dl>-->
+<!--                <dt>--><?//=__('低保价')?><!--：</dt>-->
+<!--                <dd>-->
+<!--                    <input type="text" class="text w60" name="dibao_price" value="--><?php //if( !empty($common_data) ) { echo $common_data['common_dibao_price']; } ?><!--"/><em>--><?//=Web_ConfigModel::value('monetary_unit')?><!--</em>-->
+<!---->
+<!--                    <p class="hint">--><?//=__('价格必须是0.00~9999999之间的数字，此价格为商户对低保用户销售的价格，非必填选项，如果不填，该商品则没有低报价。')?><!--</p>-->
+<!--                </dd>-->
+<!--            </dl>-->
+<!--            <dl>-->
+<!--                <dt>--><?//=__('普通售价')?><!--：</dt>-->
+<!--                <dd>-->
+<!--                    <input type="text" class="text w60" name="normal_price" value="--><?php //if( !empty($common_data) ) { echo $common_data['common_normal_price']; } ?><!--"/><em>--><?//=Web_ConfigModel::value('monetary_unit')?><!--</em>-->
+<!---->
+<!--                    <p class="hint">--><?//=__('价格必须是0.00~9999999之间的数字，此价格为商户对所销售的商品实际成本价格进行备注记录，非必填选项，不会在前台销售页面中显示。')?><!--</p>-->
+<!--                </dd>-->
+<!--            </dl>-->
+<!--            <dl>-->
+<!--				<dt>--><?//=__('成本价')?><!--：</dt>-->
+<!--				<dd>-->
+<!--					<input type="text" class="text w60" name="cost_price" value="--><?php //if( !empty($common_data) ) { echo $common_data['common_cost_price']; } ?><!--"/><em>--><?//=Web_ConfigModel::value('monetary_unit')?><!--</em>-->
+<!---->
+<!--					<p class="hint">--><?//=__('价格必须是0.00~9999999之间的数字，此价格为商户对所销售的商品实际成本价格进行备注记录，非必填选项，不会在前台销售页面中显示。')?><!--</p>-->
+<!--				</dd>-->
+<!--			</dl>-->
 			<?php if ( !empty($data['spec'])) {  ?>
 			<?php foreach ( $data['spec'] as $key => $val ) { ?>
 
@@ -513,14 +513,14 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 				
 			<?php } ?>
 			
-			<dl>
-				<dt><?=__('商品条码')?>：</dt>
-				<dd>
-					<input type="text" class="text" name="code" id="code" maxlength="20" value="<?php if( !empty($common_data) ) { echo $common_data['common_code']; } ?>"/>
-
-					<p class="hint"><?=__('商品条码是指商家管理商品的编号')?><Br/><?=__('最多可输入20个字符，支持输入字母、数字')?></p>
-				</dd>
-			</dl>
+<!--			<dl>-->
+<!--				<dt>--><?//=__('商品条码')?><!--：</dt>-->
+<!--				<dd>-->
+<!--					<input type="text" class="text" name="code" id="code" maxlength="20" value="--><?php //if( !empty($common_data) ) { echo $common_data['common_code']; } ?><!--"/>-->
+<!---->
+<!--					<p class="hint">--><?//=__('商品条码是指商家管理商品的编号')?><!--<Br/>--><?//=__('最多可输入20个字符，支持输入字母、数字')?><!--</p>-->
+<!--				</dd>-->
+<!--			</dl>-->
  
 			<dl>
 				<dt><i>*</i><?=__('商品图片')?>：</dt>
@@ -547,34 +547,34 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 					</textarea>
 				</dd>
 			</dl>
-			<dl>
-				<dt><?=__('关联顶部版式')?>：</dt>
-				<dd>
-					<select name="formatid_top">
-						<option value=""><?=__('请选择')?></option>
-						<?php if( !empty($data['format_top']) ) { ?>
-						<?php foreach( $data['format_top'] as $key => $val ) { ?>
-						<option value="<?= $val['id']; ?>"><?= $val['name']; ?></option>
-						<?php } ?>
-						<?php } ?>
-					</select>
-					<a class="bbc_seller_btns ncbtn" target="_blank" href="<?= Yf_Registry::get('url')."?ctl=Seller_Goods&met=format&typ=e&act=add&opener=true" ?>"><?=__('添加新版式')?></a>
-				</dd>
-			</dl>
-			<dl>
-				<dt><?=__('关联底部版式')?>：</dt>
-				<dd>
-					<select name="formatid_bottom">
-						<option value=""><?=__('请选择')?></option>
-						<?php if( !empty($data['format_bottom']) ) { ?>
-							<?php foreach( $data['format_bottom'] as $key => $val ) { ?>
-							<option value="<?= $val['id']; ?>"><?= $val['name']; ?></option>
-							<?php } ?>
-						<?php } ?>
-					</select>
-					<a class="bbc_seller_btns ncbtn" target="_blank" href="<?= Yf_Registry::get('url')."?ctl=Seller_Goods&met=format&typ=e&act=add&opener=true" ?>"><?=__('添加新版式')?></a>
-				</dd>
-			</dl>
+<!--			<dl>-->
+<!--				<dt>--><?//=__('关联顶部版式')?><!--：</dt>-->
+<!--				<dd>-->
+<!--					<select name="formatid_top">-->
+<!--						<option value="">--><?//=__('请选择')?><!--</option>-->
+<!--						--><?php //if( !empty($data['format_top']) ) { ?>
+<!--						--><?php //foreach( $data['format_top'] as $key => $val ) { ?>
+<!--						<option value="--><?//= $val['id']; ?><!--">--><?//= $val['name']; ?><!--</option>-->
+<!--						--><?php //} ?>
+<!--						--><?php //} ?>
+<!--					</select>-->
+<!--					<a class="bbc_seller_btns ncbtn" target="_blank" href="--><?//= Yf_Registry::get('url')."?ctl=Seller_Goods&met=format&typ=e&act=add&opener=true" ?><!--">--><?//=__('添加新版式')?><!--</a>-->
+<!--				</dd>-->
+<!--			</dl>-->
+<!--			<dl>-->
+<!--				<dt>--><?//=__('关联底部版式')?><!--：</dt>-->
+<!--				<dd>-->
+<!--					<select name="formatid_bottom">-->
+<!--						<option value="">--><?//=__('请选择')?><!--</option>-->
+<!--						--><?php //if( !empty($data['format_bottom']) ) { ?>
+<!--							--><?php //foreach( $data['format_bottom'] as $key => $val ) { ?>
+<!--							<option value="--><?//= $val['id']; ?><!--">--><?//= $val['name']; ?><!--</option>-->
+<!--							--><?php //} ?>
+<!--						--><?php //} ?>
+<!--					</select>-->
+<!--					<a class="bbc_seller_btns ncbtn" target="_blank" href="--><?//= Yf_Registry::get('url')."?ctl=Seller_Goods&met=format&typ=e&act=add&opener=true" ?><!--">--><?//=__('添加新版式')?><!--</a>-->
+<!--				</dd>-->
+<!--			</dl>-->
 
 			<?php if ( !empty($data['cat_is_virtual']) && $data['cat_is_virtual'] == 1 ) { ?>
 			<!-- 只有可发布服务商品才会显示 S -->
@@ -671,15 +671,15 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 			</dl>
 			<h3><b><em>*</em><?=__('表示该项必填')?></b><i class="iconfont icon-edit"></i><?=__('其他信息')?></h3>
 
-			<dl>
-				<dt><?=__('每人限购')?>：</dt>
-				<dd>
-					<!--<input type="text" class="text w60 n-valid" name="limit" value="<?php /*if ( !empty($common_data) ) { echo $common_data['common_limit']; }  */?>" aria-required="true">-->
-					<label class="radio"><input checked="checked" type="radio" name="is_limit" value="0"><?=__('否')?></label>
-					<label class="radio"><input type="radio" name="is_limit" value="1"><?=__('是')?></label>
-					<span style="display: none">每人限购<input class="text w60 n-valid" name="limit" value="0" /><?=__('件')?></span><span class="msg-box" for="limit"></span>
-				</dd>
-			</dl>
+<!--			<dl>-->
+<!--				<dt>--><?//=__('每人限购')?><!--：</dt>-->
+<!--				<dd>-->
+<!--					<input type="text" class="text w60 n-valid" name="limit" value="--><?php ///*if ( !empty($common_data) ) { echo $common_data['common_limit']; }  */?><!--" aria-required="true">-->
+<!--					<label class="radio"><input checked="checked" type="radio" name="is_limit" value="0">--><?//=__('否')?><!--</label>-->
+<!--					<label class="radio"><input type="radio" name="is_limit" value="1">--><?//=__('是')?><!--</label>-->
+<!--					<span style="display: none">每人限购<input class="text w60 n-valid" name="limit" value="0" />--><?//=__('件')?><!--</span><span class="msg-box" for="limit"></span>-->
+<!--				</dd>-->
+<!--			</dl>-->
             <dl>
                 <dt><?=__('是否热销')?>：</dt>
                 <dd>
@@ -687,20 +687,20 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                     <label class="radio"><input type="radio" name="is_best_seller" <?php if( !empty($common_data) && $common_data['common_is_best_seller'] == 1 ) { echo "checked"; } ?>  value="1"><?=__('是')?></label>
                 </dd>
             </dl>
-            <dl>
-                <dt><?=__('是否折扣')?>：</dt>
-                <dd>
-                     <label class="radio"><input  type="radio" name="is_discount" <?php if( !empty($common_data) && $common_data['common_is_discount'] == 0 ) { echo "checked"; } ?>  value="0"><?=__('否')?></label>
-                    <label class="radio"><input type="radio" name="is_discount" <?php if( !empty($common_data) && $common_data['common_is_discount'] == 1 ) { echo "checked"; } ?>  value="1"><?=__('是')?></label>
-                </dd>
-            </dl>
-            <dl>
-                <dt><?=__('是否特惠')?>：</dt>
-                <dd>
-                    <label class="radio"><input  type="radio" name="is_preference" <?php if( !empty($common_data) && $common_data['common_is_preference'] == 0 ) { echo "checked"; } ?>  value="0"><?=__('否')?></label>
-                    <label class="radio"><input type="radio" name="is_preference" <?php if( !empty($common_data) && $common_data['common_is_preference'] == 1 ) { echo "checked"; } ?>  value="1"><?=__('是')?></label>
-                </dd>
-            </dl>
+<!--            <dl>-->
+<!--                <dt>--><?//=__('是否折扣')?><!--：</dt>-->
+<!--                <dd>-->
+<!--                     <label class="radio"><input  type="radio" name="is_discount" --><?php //if( !empty($common_data) && $common_data['common_is_discount'] == 0 ) { echo "checked"; } ?><!--  value="0">--><?//=__('否')?><!--</label>-->
+<!--                    <label class="radio"><input type="radio" name="is_discount" --><?php //if( !empty($common_data) && $common_data['common_is_discount'] == 1 ) { echo "checked"; } ?><!--  value="1">--><?//=__('是')?><!--</label>-->
+<!--                </dd>-->
+<!--            </dl>-->
+<!--            <dl>-->
+<!--                <dt>--><?//=__('是否特惠')?><!--：</dt>-->
+<!--                <dd>-->
+<!--                    <label class="radio"><input  type="radio" name="is_preference" --><?php //if( !empty($common_data) && $common_data['common_is_preference'] == 0 ) { echo "checked"; } ?><!--  value="0">--><?//=__('否')?><!--</label>-->
+<!--                    <label class="radio"><input type="radio" name="is_preference" --><?php //if( !empty($common_data) && $common_data['common_is_preference'] == 1 ) { echo "checked"; } ?><!--  value="1">--><?//=__('是')?><!--</label>-->
+<!--                </dd>-->
+<!--            </dl>-->
             <dl>
                 <dt><i>*</i><?=__('退换货')?>：</dt>
                 <dd>
@@ -716,29 +716,14 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 
                 </dd>
             </dl>
-			<dl>
-				<dt><?=__('包装清单')?>：</dt>
-				<dd>
-					<textarea class="text textarea" maxlength="200" style="width:70%" name="packing_list"><?php if( !empty($common_data) ) { echo $common_data['common_packing_list']; } ?></textarea>
-
-					<p class="hint"><?=__('包装清单不能超过200个汉字')?></p>
-				</dd>
-			</dl>
-			<dl>
-				<dt><?=__('本店分类')?>：</dt>
-				<dd>
-					<a href="javascript:void(0)" id="add_sgcategory" class="ncbtn bbc_seller_btns"><?=__('新增分类')?></a>
-					<select name="sgcate_id[]" class="sgcategory valid">
-						<option value="0"><?=__('请选择')?>...</option>
-						<?php if ( !empty($data['goods_cat_list']) ) { ?>
-						<?php foreach ($data['goods_cat_list'] as $key => $val) { ?>
-							<option data-parent_id = "<?= $val['parent_id']; ?>" value="<?= $val['shop_goods_cat_id']; ?>"><?= $val['shop_goods_cat_name']; ?></option>
-						<?php } ?>
-						<?php } ?>
-					</select>
-					<p class="hint"><?=__('商品可以从属于店铺的多个分类之下')?>，<br/><?=__('店铺分类可以由 "商家管理中心 -> 店铺 -> 店铺分类" 中自定义')?></p>
-				</dd>
-			</dl>
+<!--			<dl>-->
+<!--				<dt>--><?//=__('包装清单')?><!--：</dt>-->
+<!--				<dd>-->
+<!--					<textarea class="text textarea" maxlength="200" style="width:70%" name="packing_list">--><?php //if( !empty($common_data) ) { echo $common_data['common_packing_list']; } ?><!--</textarea>-->
+<!---->
+<!--					<p class="hint">--><?//=__('包装清单不能超过200个汉字')?><!--</p>-->
+<!--				</dd>-->
+<!--			</dl>-->
 			<dl>
 				<dt><?=__('商品发布')?>：</dt>
 				<dd class="time">

@@ -131,12 +131,13 @@ $(".submit").click(function(){
                         {
 							Public.tips.success("<?=_('操作成功')?>");
                             location.href= SITE_URL +"?ctl=User&met=security";
-                        }else if(a.status == 240){
-                            Public.tips.success("<?=_('验证码错误')?>");
-						}
-                        else
+                        }else
                         {
-                            Public.tips.error("<?=_('操作失败')?>");
+                            if(typeof(a.msg) == 'undefined'){
+                                Public.tips.error("<?=_('操作失败！')?>");
+                            }else{
+                                Public.tips.error(a.msg);
+                            }
                         }
                     }
                 });

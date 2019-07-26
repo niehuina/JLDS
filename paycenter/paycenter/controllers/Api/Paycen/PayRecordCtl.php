@@ -55,14 +55,19 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         $user_id  = request_string('user_id');   //用户Id
         $trade_type_id = request_int('trade_type_id'); //交易类型
         $user_type = request_int('user_type'); //用户入账类型
+        $status = request_int('status'); //是否已完成
+
         $cond_row = array();
         $cond_row['user_id'] = $user_id;
         $cond_row['trade_type_id'] = $trade_type_id;
         $cond_row['user_type'] = $user_type;
+        if($status) {
+            $cond_row['record_status'] = $status;
+        }
 
         $order_row['record_time'] = 'desc';
         $Consume_RecordModel = new Consume_RecordModel();
-        $data           = $Consume_RecordModel->listByWhere($cond_row,$order_row,$page,$rows);
+        $data           = $Consume_RecordModel->getRecordList1($cond_row,$order_row,$page,$rows);
         if ($data)
         {
             $amount_list = array_column($data['items'], 'record_money');
@@ -89,10 +94,14 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         $user_id  = request_string('user_id');   //用户Id
         $trade_type_id = request_row('trade_type_id'); //交易类型
         $user_type = request_int('user_type'); //用户入账类型
+        $status = request_int('status'); //是否已完成
         $cond_row = array();
         $cond_row['user_id'] = $user_id;
         $cond_row['trade_type_id:in'] = $trade_type_id;
         $cond_row['user_type'] = $user_type;
+        if($status) {
+            $cond_row['record_status'] = $status;
+        }
         $Consume_RecordModel = new Consume_RecordModel();
         $data           = $Consume_RecordModel->getByWhere($cond_row);
         if ($data)

@@ -115,7 +115,7 @@ class Seller_Promotion_VoucherCtl extends Seller_Controller
 			}
 			if (request_string('end_date'))
 			{
-				$cond_row['voucher_t_end_date:<'] = request_string('end_date');
+				$cond_row['voucher_t_end_date:<'] = date('Y-m-d 23:59:59',strtotime(request_string('end_date')));
 			}
 			if (request_int('state'))
 			{

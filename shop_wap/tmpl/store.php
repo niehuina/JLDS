@@ -18,6 +18,11 @@ include __DIR__.'/../includes/header.php';
     <link rel="stylesheet" type="text/css" href="../css/base.css">
     <link rel="stylesheet" type="text/css" href="../css/nctouch_common.css">
     <link rel="stylesheet" type="text/css" href="../css/nctouch_store.css">
+    <style>
+        .nctouch-store-bottom li{
+            width: 49.8%;
+        }
+    </style>
 </head>
 
 <body>
@@ -49,10 +54,10 @@ include __DIR__.'/../includes/header.php';
             <!-- 导航条 -->
             <div id="nav_tab_con" class="nctouch-single-nav nctouch-store-nav">
                 <ul id="nav_tab">
-                    <li class="selected"><a href="javascript: void(0);" data-type="storeindex">店铺首页</a></li>
-                    <li><a href="javascript: void(0);" data-type="allgoods">全部商品</a></li>
-                    <li><a href="javascript: void(0);" data-type="newgoods">商品上新</a></li>
-                    <li><a href="javascript: void(0);" data-type="storeactivity">店铺活动</a></li>
+                    <li class="selected"><a href="javascript: void(0);" data-type="storeindex">首页</a></li>
+                    <li><a href="javascript: void(0);" data-type="allgoods">商品</a></li>
+                    <li><a href="javascript: void(0);" data-type="newgoods">上新</a></li>
+<!--                    <li><a href="javascript: void(0);" data-type="storeactivity">店铺活动</a></li>-->
                 </ul>
             </div>
 
@@ -102,9 +107,9 @@ include __DIR__.'/../includes/header.php';
     <div class="nctouch-store-bottom fixed-Width">
         <ul>
             <li><a id="store_intro" href="javascript:void(0);">店铺介绍</a></li>
-            <li><a id="store_voucher" href="javascript: void(0);">免费领券</a></li>
-
-            <li><a id="store_kefu" style="display: none;" class="kefu" href="javascript: void(0);">联系客服</a></li>
+            <li><a id="store_intro" href="javascript:void(0);">商品分类</a></li>
+<!--            <li><a id="store_voucher" href="javascript: void(0);">免费领券</a></li>-->
+<!--            <li><a id="store_kefu" style="display: none;" class="kefu" href="javascript: void(0);">联系客服</a></li>-->
             
         </ul>
     </div>
@@ -340,11 +345,11 @@ include __DIR__.'/../includes/header.php';
     <script type="text/javascript" src="../js/libs/zepto.min.js"></script>
     
     <script type="text/javascript" src="../js/libs/template.js"></script>
-    <script type="text/javascript" src="../js/swipe.js"></script>
+    <script type="text/javascript" src="../js/libs/swipe.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript" src="../js/libs/simple-plugin.js"></script>
-    <script type="text/javascript" src="../js/zepto.waypoints.js"></script>
-    <script type="text/javascript" src="../js/ncscroll-load.js"></script>
+    <script type="text/javascript" src="../js/libs/zepto.waypoints.js"></script>
+    <script type="text/javascript" src="../js/libs/ncscroll-load.js"></script>
     <script type="text/javascript" src="../js/tmpl/store.js"></script>
     <script type="text/javascript" src="../js/tmpl/footer.js"></script>
 </body>

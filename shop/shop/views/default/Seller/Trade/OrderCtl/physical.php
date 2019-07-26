@@ -22,23 +22,15 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 			</td>
 			<th><?=__('下单时间')?></th>
 			<td class="w240">
-				<input type="text" class="text w70 hasDatepicker heigh" placeholder="<?=__('起始时间')?>" name="query_start_date" id="query_start_date" value="<?php if (!empty($condition['order_create_time:>='])) {
-					echo $condition['order_create_time:>='];
-				} ?>" readonly="readonly"><label class="add-on"><i class="iconfont icon-rili"></i></label><span class="rili_ge">–</span>
-				<input id="query_end_date" class="text w70 hasDatepicker heigh" placeholder="<?=__('结束时间')?>" type="text" name="query_end_date" value="<?php if (!empty($condition['order_create_time:<='])) {
-					$condition['order_create_time:<='];
-				} ?>" readonly="readonly"><label class="add-on"><i class="iconfont icon-rili"></i></label>
+				<input type="text" class="text w70 hasDatepicker heigh" placeholder="<?=__('起始时间')?>" name="query_start_date" id="query_start_date" value="<?php echo $_GET['query_start_date']; ?>" readonly="readonly"><label class="add-on"><i class="iconfont icon-rili"></i></label><span class="rili_ge">–</span>
+				<input id="query_end_date" class="text w70 hasDatepicker heigh" placeholder="<?=__('结束时间')?>" type="text" name="query_end_date" value="<?php echo $_GET['query_end_date']; ?>" readonly="readonly"><label class="add-on"><i class="iconfont icon-rili"></i></label>
 			</td>
 			<th><?=__('买家')?></th>
 			<td class="w100">
-				<input type="text" class="text w80" placeholder="<?=__('买家昵称')?>" id="buyer_name" name="buyer_name" value="<?php if (!empty($condition['buyer_user_name:LIKE'])) {
-					echo str_replace('%', '', $condition['buyer_user_name:LIKE']);
-				} ?>"></td>
+				<input type="text" class="text w80" placeholder="<?=__('买家昵称')?>" id="buyer_name" name="buyer_name" value="<?php echo $_GET['buyer_name']; ?>"></td>
 			<th><?=__('订单编号')?></th>
 			<td class="w160">
-				<input type="text" class="text w150 heigh" placeholder="<?=__('请输入订单编号')?>" id="order_sn" name="order_sn" value="<?php if (!empty($condition['order_id'])) {
-					echo $condition['order_id'];
-				} ?>"></td>
+				<input type="text" class="text w150 heigh" placeholder="<?=__('请输入订单编号')?>" id="order_sn" name="order_sn" value="<?php echo $_GET['order_sn']; ?>"></td>
 			<td class="w70 tc"><a onclick="formSub()" class="button btn_search_goods" href="javascript:void(0);"><i class="iconfont icon-btnsearch"></i><?=__('搜索')?></a>
 			<input name="ctl" value="Seller_Trade_Order" type="hidden" /><input name="met" value="physical" type="hidden" />
 			</td>

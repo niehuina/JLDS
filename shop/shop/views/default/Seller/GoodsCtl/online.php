@@ -91,7 +91,7 @@ if (!empty($goods)){
 
                                 <p><?= $item['cat_name'] ?></p>
 
-                                <p><?= ($item['common_code'] ? sprintf(__('商品条码').'：%s', $item['common_code']) : '') ?></p>
+<!--                                <p>--><?//= ($item['common_code'] ? sprintf(__('商品条码').'：%s', $item['common_code']) : '') ?><!--</p>-->
                             </dd>
                         </dl>
                     </td>
