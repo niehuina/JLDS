@@ -1002,8 +1002,10 @@ extract($_GET);
 
     function get_randcode() {
         if (check_type == 2) {
+            hideError(form_email);
             get_randcode_email();
         } else {
+            hideError(form_mobile);
             get_randcode_phone();
         }
         return;

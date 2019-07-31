@@ -355,6 +355,41 @@ class Buyer_OrderCtl extends Buyer_Controller
 				$edit_flag1 = $Order_GoodsModel->editGoods($order_goods_id, $edit_row);
 				check_rs($edit_flag1,$rs_row);
 
+                //添加到个人仓库
+                $User_Stock_Model = new User_StockModel();
+                $user_stock_list = $User_Stock_Model->getByWhere(['user_id'=>$order_base['buyer_user_id']]);
+                $goods_id_array = array_reduce($user_stock_list, function($carry,$item){
+                    $carry[$item['goods_id']] = $item['stock_id'];
+                    return $carry;
+                });
+
+                foreach($order_goods_data as $i=>$order_goods){
+                    $goods_id = $order_goods['goods_id'];
+                    if(array_key_exists($goods_id, $goods_id_array)){
+                        $stock_row = array();
+                        $stock_row['goods_stock'] = $order_goods['order_goods_num'];
+
+                        //修改用户仓储商品数量
+                        $stock_id = $goods_id_array[$goods_id];
+                        $s_flag = $User_Stock_Model->editUserStock($stock_id,$stock_row, true);
+                        check_rs($s_flag,$rs_row);
+                    }else{
+                        $stock_row = array();
+                        $stock_row['user_id'] = $order_base['buyer_user_id'];
+                        $stock_row['user_name'] = $order_base['buyer_user_name'];
+                        $stock_row['goods_id'] = $order_goods['goods_id'];
+                        $stock_row['common_id'] = $order_goods['common_id'];
+                        $stock_row['goods_name'] = $order_goods['goods_name'];
+                        $stock_row['goods_stock'] = $order_goods['order_goods_num'];
+                        $stock_row['alarm_stock'] = 0;
+                        $stock_row['stock_date_time'] = get_date_time();
+
+                        //添加到用户仓储
+                        $s_flag = $User_Stock_Model->addUserStock($stock_row);
+                        check_rs($s_flag,$rs_row);
+                    }
+                }
+
 				//货到付款时修改商品销量
 				if($order_base['payment_id'] == PaymentChannlModel::PAY_CONFIRM)
 				{
@@ -1689,10 +1724,9 @@ class Buyer_OrderCtl extends Buyer_Controller
 				$order_shop_benefit = $order_shop_benefit . ' 平台红包:' . format_money($val['order_rpt_price']) . ' ';
 			}
 
-			$prefix       = sprintf('%s-%s-', Yf_Registry::get('shop_app_id'), date('YmdHis'));
+			$prefix       = sprintf('%s-', date('YmdHis'));
 			$order_number = $Number_SeqModel->createSeq($prefix);
-
-			$order_id = sprintf('%s-%s-%s-%s', 'DD', $val['shop_user_id'], $key, $order_number);
+			$order_id = sprintf('%s-%s', 'DD', $order_number);
 
             //生成订单发票信息
             $Order_InvoiceModel = new Order_InvoiceModel();
@@ -2798,10 +2832,10 @@ class Buyer_OrderCtl extends Buyer_Controller
 		}
 
 
-		$prefix       = sprintf('%s-%s-', Yf_Registry::get('shop_app_id'), date('YmdHis'));
-		$order_number = $Number_SeqModel->createSeq($prefix);
+        $prefix       = sprintf('%s-', date('YmdHis'));
+        $order_number = $Number_SeqModel->createSeq($prefix);
+        $order_id = sprintf('%s-%s', 'DD', $order_number);
 
-		$order_id = sprintf('%s-%s-%s-%s', 'DD', $data['shop_base']['user_id'], $data['shop_base']['shop_id'], $order_number);
         //地址信息
         $address_model = new User_AddressModel();
         $address_info = $address_model->getOne($address_id);
@@ -3774,14 +3808,12 @@ class Buyer_OrderCtl extends Buyer_Controller
         {
             $order_shop_benefit = $order_shop_benefit . ' 代金券:' . format_money($voucher_base['voucher_price']) . ' ';
         }
-
-        $prefix       = sprintf('%s-%s-', Yf_Registry::get('shop_app_id'), date('YmdHis'));
-        $order_number = $Number_SeqModel->createSeq($prefix);
-
         $order_price = $data['goods_base']['sumprice'] + $increase_price;
         $commission  = $data['goods_base']['commission'] + $increase_commission;
 
-        $order_id = sprintf('%s-%s-%s-%s', 'DD', $data['shop_base']['user_id'], $data['shop_base']['shop_id'], $order_number);
+        $prefix       = sprintf('%s-', date('YmdHis'));
+        $order_number = $Number_SeqModel->createSeq($prefix);
+        $order_id = sprintf('%s-%s', 'DD', $order_number);
 
         $order_row                           = array();
         $order_row['order_id']               = $order_id;
@@ -4243,10 +4275,9 @@ class Buyer_OrderCtl extends Buyer_Controller
 			$trade_title = '';
 			//生成店铺订单
 
-			$prefix       = sprintf('%s-%s-', Yf_Registry::get('shop_app_id'), date('YmdHis'));
-			$order_number = $Number_SeqModel->createSeq($prefix);
-
-			$order_id = sprintf('%s-%s-%s-%s', 'SP', $supplier_shop_info['user_id'],$shop_id, $order_number);
+            $prefix       = sprintf('%s-', date('YmdHis'));
+            $order_number = $Number_SeqModel->createSeq($prefix);
+            $order_id = sprintf('%s-%s', 'SP', $order_number);
 
 			$order_row                           = array();
 			$order_row['order_id']               = $order_id;
@@ -4724,10 +4755,12 @@ class Buyer_OrderCtl extends Buyer_Controller
 		$uprice  = 0;
 		$inorder = '';
 		$utrade_title = '';	//商品名称 - 标题
-        $prefix       = sprintf('%s-%s-', Yf_Registry::get('shop_app_id'), date('YmdHis'));
-        $order_number = $Number_SeqModel->createSeq($prefix);
 
-        $order_id = sprintf('%s-%s-%s-%s', 'DD', $shop_info['user_id'], $shop_info['shop_id'], $order_number);
+
+        $prefix       = sprintf('%s-', date('YmdHis'));
+        $order_number = $Number_SeqModel->createSeq($prefix);
+        $order_id = sprintf('%s-%s', 'DD', $order_number);
+
 
         //开启事物
 		$this->tradeOrderModel->sql->startTransactionDb();
@@ -5097,6 +5130,7 @@ class Buyer_OrderCtl extends Buyer_Controller
         $user_id    = request_int('user_id', 1);
         $cond_row['directseller_id'] = $user_id;
         $cond_row['directseller_is_settlement'] = 0;
+        $cond_row['(order_payment_amount-order_refund_amount):>'] = 0;
         $cond_row['order_status'] = Order_StateModel::ORDER_FINISH;
         $order_row['order_create_time'] = 'desc';
         $order_list = $OrderModel->listByWhere($cond_row, $order_row, $page, $rows);
@@ -5108,11 +5142,12 @@ class Buyer_OrderCtl extends Buyer_Controller
             $order_commission_0 = array_sum($directseller_commission_0_array);
 
             $order_list['items'][$key]['order_create_text'] = '创建日'.date('m-d H:i', strtotime($order['order_create_time']));
-            if($order['order_settlement_time']){
-                $order_list['items'][$key]['order_settlement_text'] = '结算日'.date('m-d H:i', strtotime($order['order_settlement_time']));
-            }else{
-                $order_list['items'][$key]['order_settlement_text'] = '';
-            }
+//            if($order['order_settlement_time']){
+//                $order_list['items'][$key]['order_settlement_text'] = '结算日'.date('m-d H:i', strtotime($order['order_settlement_time']));
+//            }else{
+//                $order_list['items'][$key]['order_settlement_text'] = '';
+//            }
+            $order_list['items'][$key]['order_settlement_text'] = '';
             $order_list['items'][$key]['order_commission'] = $order_commission_0;
         }
 

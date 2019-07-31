@@ -288,107 +288,105 @@ class Api_Trade_ReturnCtl extends Api_Controller
 		//判断平台是否已经审核过
 		if($return['return_state'] < Order_ReturnModel::RETURN_PLAT_PASS)
 		{
-			//判断商家是否同意退款
-			if($return['return_state'] == Order_ReturnModel::RETURN_SELLER_UNPASS)
+			//判断商家是否同意退款，如果商家不同意，且是退货，则强制修改卖家状态为已同意；
+            //其他就按平台已同意相当于商家已同意来处理
+			if($return['return_type'] == Order_ReturnModel::RETURN_TYPE_GOODS
+                && $return['return_state'] == Order_ReturnModel::RETURN_SELLER_UNPASS)
 			{
-				//不同意
+				//平台同意->将卖家强制改为同意
 				$data = array();
 				$data['return_platform_message'] = $return_platform_message;
-				$data['return_state']            = Order_ReturnModel::RETURN_PLAT_PASS;
-				$data['return_finish_time']      = get_date_time();
+                $data['return_state']            = Order_ReturnModel::RETURN_SELLER_PASS;
+				//$data['return_finish_time']      = get_date_time();
 				$rs_row                          = array();
 
 				$edit_flag = $this->Order_ReturnModel->editReturn($order_return_id, $data);
 				check_rs($edit_flag, $rs_row);
 
+
 				//根据order_id查找订单信息
-				$order_base = $this->Order_BaseModel->getOne($return['order_number']);
-				fb($order_base);
-
-				//如果是分销商的进货单则同时退掉买家订单
-				if($order_base['order_source_id'])
-				{
-					$dist_return = $this->Order_ReturnModel->getOneByWhere(array('order_number' => $order_base['order_source_id'],'return_type'=>$return['return_type']));
-
-					$this->refuseDist($dist_return['order_return_id'],$data);
-				}
-
-				if ($return['return_goods_return'])
-				{
-					//商家拒绝退款退货3
-					$goods_data['goods_refund_status'] = Order_GoodsModel::REFUND_REF;
-					$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
-					check_rs($edit_flag, $rs_row);
-				}
-				else
-				{
-					$goods_data['goods_return_status'] = Order_GoodsModel::REFUND_REF;
-					$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
-					check_rs($edit_flag, $rs_row);
-				}
+//				$order_base = $this->Order_BaseModel->getOne($return['order_number']);
+//				fb($order_base);
+//
+//				//如果是分销商的进货单则同时退掉买家订单
+//				if($order_base['order_source_id'])
+//				{
+//					$dist_return = $this->Order_ReturnModel->getOneByWhere(array('order_number' => $order_base['order_source_id'],'return_type'=>$return['return_type']));
+//
+//					$this->refuseDist($dist_return['order_return_id'],$data);
+//				}
+//
+//				if ($return['return_goods_return'])
+//				{
+//					//商家拒绝退款退货3
+//					$goods_data['goods_refund_status'] = Order_GoodsModel::REFUND_REF;
+//					$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+//					check_rs($edit_flag, $rs_row);
+//				}
+//				else
+//				{
+//					$goods_data['goods_return_status'] = Order_GoodsModel::REFUND_REF;
+//					$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+//					check_rs($edit_flag, $rs_row);
+//				}
 
 			}
-			else
-			{
-				//同意
-				$data = array();
-				$data['return_platform_message'] = $return_platform_message;
-				$data['return_state']            = Order_ReturnModel::RETURN_PLAT_PASS;
-				$data['return_finish_time']      = get_date_time();
-				$rs_row                          = array();
+			else {
+                //同意
+                $data = array();
+                if($return_platform_message){
+                    $data['return_platform_message'] = $return_platform_message;
+                }
+                $data['return_state'] = Order_ReturnModel::RETURN_PLAT_PASS;
+                $data['return_finish_time'] = get_date_time();
+                $rs_row = array();
 
-				$edit_flag = $this->Order_ReturnModel->editReturn($order_return_id, $data);
-				check_rs($edit_flag, $rs_row);
+                $edit_flag = $this->Order_ReturnModel->editReturn($order_return_id, $data);
+                check_rs($edit_flag, $rs_row);
 
-				//根据order_id查找订单信息
-				$order_base = $this->Order_BaseModel->getOne($return['order_number']);
+                //根据order_id查找订单信息
+                $order_base = $this->Order_BaseModel->getOne($return['order_number']);
 
-				$data['return_goods_return'] = $return['return_goods_return'];
+                $data['return_goods_return'] = $return['return_goods_return'];
 
-				if ($return['return_goods_return'])
-				{
-					$Shop_BaseModel = new Shop_BaseModel();
-					$shop_detail    = $Shop_BaseModel->getOne($order_base['shop_id']);
-					if ($shop_detail['shop_type'] == 2)
-					{
-						$flag = $this->edit_product($return['order_number'], $return['order_goods_num']);
+                if ($return['return_goods_return']) {
+                    $Shop_BaseModel = new Shop_BaseModel();
+                    $shop_detail = $Shop_BaseModel->getOne($order_base['shop_id']);
+                    if ($shop_detail['shop_type'] == 2) {
+                        $flag = $this->edit_product($return['order_number'], $return['order_goods_num']);
 
-						$data['edit_product'] = $flag;
-					}
-				}
+                        $data['edit_product'] = $flag;
+                    }
+                }
 
-				//如果是分销商的进货单则同时退掉买家订单
-				fb($order_base);
-				if($order_base['order_source_id'])
-				{
-					$dist_return = $this->Order_ReturnModel->getOneByWhere(array('order_number' => $order_base['order_source_id'],'return_type'=>$return['return_type']));
-					$this->agreeDist($dist_return['order_return_id'],$data);
-				}
+                //如果是分销商的进货单则同时退掉买家订单
+                fb($order_base);
+                if ($order_base['order_source_id']) {
+                    $dist_return = $this->Order_ReturnModel->getOneByWhere(array('order_number' => $order_base['order_source_id'], 'return_type' => $return['return_type']));
+                    $this->agreeDist($dist_return['order_return_id'], $data);
+                }
 
-				if ($return['return_goods_return'])
-				{
-					//商品退换情况为完成2
-					$goods_data['goods_refund_status'] = Order_GoodsModel::REFUND_COM;
-					$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
-					check_rs($edit_flag, $rs_row);
-				}
-				else
-				{
-					$goods_data['goods_return_status'] = Order_GoodsModel::REFUND_COM;
-					$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
-					check_rs($edit_flag, $rs_row);
-				}
-				$ogoods_data = array();
-				$ogoods_data['order_goods_returnnum'] = $return['order_goods_num'];
-				$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $ogoods_data,true);
-				check_rs($edit_flag, $rs_row);
+                if ($return['return_goods_return']) {
+                    //商品退换情况为完成2
+                    $goods_data['goods_refund_status'] = Order_GoodsModel::REFUND_COM;
+                    $edit_flag = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+                    check_rs($edit_flag, $rs_row);
+                } else {
+                    $goods_data['goods_return_status'] = Order_GoodsModel::REFUND_COM;
+                    $edit_flag = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+                    check_rs($edit_flag, $rs_row);
+                }
+                $ogoods_data = array();
+                $ogoods_data['order_goods_returnnum'] = $return['order_goods_num'];
+                $edit_flag = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $ogoods_data, true);
+                check_rs($edit_flag, $rs_row);
 
-				//如果是退货，则恢复商品的库存
+                //如果是退货，则恢复商品的库存
                 if ($return['return_type'] == Order_ReturnModel::RETURN_TYPE_GOODS) {
                     $add_stock_num = $return['order_goods_num'];
                     $order_goods = $this->Order_GoodsModel->getOne($return['order_goods_id']);
                     $goods_id = $order_goods['goods_id'];
-                    if($return['seller_user_id'] == Web_ConfigModel::value('self_shop_id')) {
+                    if ($return['seller_user_id'] == Web_ConfigModel::value('self_shop_id')) {
                         $Goods_CommonModel = new Goods_CommonModel();
                         $Goods_BaseModel = new Goods_BaseModel();
                         $goods_base = $Goods_BaseModel->getOne($goods_id);
@@ -396,132 +394,122 @@ class Api_Trade_ReturnCtl extends Api_Controller
                         $edit_flag12 = $Goods_BaseModel->editBase($goods_id, ['goods_stock' => $add_stock_num], true);
                         check_rs($edit_flag11, $rs_row);
                         check_rs($edit_flag12, $rs_row);
-                    }else{
+                    } else {
                         $User_StockModel = new User_StockModel();
-                        $user_stock = $User_StockModel->getOneByWhere(['user_id'=>$order_base['seller_user_id'],'goods_id'=>$goods_id]);
+                        $user_stock = $User_StockModel->getOneByWhere(['user_id' => $order_base['seller_user_id'], 'goods_id' => $goods_id]);
                         $edit_flag12 = $User_StockModel->editUserStock($user_stock['stock_id'], ['goods_stock' => $add_stock_num], true);
                         check_rs($edit_flag12, $rs_row);
                     }
                 }
 
-				//退款金额，退货数量，交易佣金退款更新到订单表中
-				$order_edit = array();
-				//判断商品金额是否全都退还，如果全部退还订单状态修改为完成状态(用订单商品数判断)
-				//订单中所有商品数量
-				$order_goods = $this->Order_GoodsModel->getByWhere(array('order_id'=>$return['order_number'],'order_goods_amount:>'=>0));
-				$order_all_goods_num      = array_sum(array_column($order_goods, 'order_goods_num'));
+                //退款金额，退货数量，交易佣金退款更新到订单表中
+                $order_edit = array();
+                //判断商品金额是否全都退还，如果全部退还订单状态修改为完成状态(用订单商品数判断)
+                //订单中所有商品数量
+                $order_goods = $this->Order_GoodsModel->getByWhere(array('order_id' => $return['order_number'], 'order_goods_amount:>' => 0));
+                $order_all_goods_num = array_sum(array_column($order_goods, 'order_goods_num'));
 
-				//查找该笔订单已经完成的退款，退货
-				$order_return = $this->Order_ReturnModel->getByWhere(array(
-																		 'order_number' => $return['order_number'],
-																		 'return_state' => Order_ReturnModel::RETURN_PLAT_PASS
-																	 ));
-				//订单已经退还的商品数量
-				$order_return_num = array_sum(array_column($order_return, 'order_goods_num'));
+                //查找该笔订单已经完成的退款，退货
+                $order_return = $this->Order_ReturnModel->getByWhere(array(
+                    'order_number' => $return['order_number'],
+                    'return_state' => Order_ReturnModel::RETURN_PLAT_PASS
+                ));
+                //订单已经退还的商品数量
+                $order_return_num = array_sum(array_column($order_return, 'order_goods_num'));
 
-				$order_edit['order_refund_amount'] = $return['return_cash'];
-				$order_edit['order_return_num'] = $return['order_goods_num'];
-				$order_edit['order_commission_return_fee'] = $return['return_commision_fee'];
-				$order_edit['order_rpt_return'] = $return['return_rpt_cash'];
+                $order_edit['order_refund_amount'] = $return['return_cash'];
+                $order_edit['order_return_num'] = $return['order_goods_num'];
+                $order_edit['order_commission_return_fee'] = $return['return_commision_fee'];
+                $order_edit['order_rpt_return'] = $return['return_rpt_cash'];
 
-				$edit_flag  = $this->Order_BaseModel->editBase($return['order_number'], $order_edit,true);
-				check_rs($edit_flag, $rs_row);
-				if($order_all_goods_num == $order_return_num && $order_base['order_status'] !== $Order_StateModel::ORDER_FINISH)
-				{
-					$order_edit_row = array();
-					$order_edit_row['order_status'] = $Order_StateModel::ORDER_FINISH;
+                $edit_flag = $this->Order_BaseModel->editBase($return['order_number'], $order_edit, true);
+                check_rs($edit_flag, $rs_row);
+                if ($order_all_goods_num == $order_return_num && $order_base['order_status'] !== $Order_StateModel::ORDER_FINISH) {
+                    $order_edit_row = array();
+                    $order_edit_row['order_status'] = $Order_StateModel::ORDER_FINISH;
 
-					$edit_flag2  = $this->Order_BaseModel->editBase($return['order_number'], $order_edit_row);
-					check_rs($edit_flag2, $rs_row);
-				}
+                    $edit_flag2 = $this->Order_BaseModel->editBase($return['order_number'], $order_edit_row);
+                    check_rs($edit_flag2, $rs_row);
+                }
 
-				if($edit_flag)
-				{
-					//判断该笔订单是否是主账号支付，如果是主账号支付，则将退款金额退还主账号
-					if($order_base['order_sub_pay'] == Order_StateModel::SUB_SELF_PAY)
-					{
-						$return_user_id = $return['buyer_user_id'];
-						$return_user_name = $return['buyer_user_account'];
-					}
-					if($order_base['order_sub_pay'] == Order_StateModel::SUB_USER_PAY)
-					{
-						//查找主管账户用户名
-						$User_BaseModel = new  User_BaseModel();
-						$sub_user_base = $User_BaseModel->getOne($order_base['order_sub_user']);
+                if ($edit_flag) {
+                    //判断该笔订单是否是主账号支付，如果是主账号支付，则将退款金额退还主账号
+                    if ($order_base['order_sub_pay'] == Order_StateModel::SUB_SELF_PAY) {
+                        $return_user_id = $return['buyer_user_id'];
+                        $return_user_name = $return['buyer_user_account'];
+                    }
+                    if ($order_base['order_sub_pay'] == Order_StateModel::SUB_USER_PAY) {
+                        //查找主管账户用户名
+                        $User_BaseModel = new  User_BaseModel();
+                        $sub_user_base = $User_BaseModel->getOne($order_base['order_sub_user']);
 
-						$return_user_id = $order_base['order_sub_user'];
-						$return_user_name = $sub_user_base['user_account'];
-					}
+                        $return_user_id = $order_base['order_sub_user'];
+                        $return_user_name = $sub_user_base['user_account'];
+                    }
 
-					$key      = Yf_Registry::get('shop_api_key');
-					$url         = Yf_Registry::get('paycenter_api_url');
-					$shop_app_id = Yf_Registry::get('shop_app_id');
+                    $key = Yf_Registry::get('shop_api_key');
+                    $url = Yf_Registry::get('paycenter_api_url');
+                    $shop_app_id = Yf_Registry::get('shop_app_id');
 
-                    $formvars             = array();
-                    $formvars['app_id']        = $shop_app_id;
-					$formvars['user_id']  = $return_user_id;
-					$formvars['user_account'] = $return_user_name;
-					$formvars['seller_id'] = $return['seller_user_id'];
-					$formvars['seller_account'] = $return['seller_user_account'];
-					$formvars['amount']   = $return['return_cash'];
-					$formvars['return_commision_fee']   = $return['return_commision_fee'];
-					$formvars['order_id'] = $return['order_number'];
-					$formvars['goods_id'] = $return['order_goods_id'];
-					$formvars['payment_id'] = $order_base['payment_id'];
+                    $formvars = array();
+                    $formvars['app_id'] = $shop_app_id;
+                    $formvars['user_id'] = $return_user_id;
+                    $formvars['user_account'] = $return_user_name;
+                    $formvars['seller_id'] = $order_base['seller_user_id'];
+                    $formvars['seller_account'] = $order_base['seller_user_name'];
+                    $formvars['amount'] = $return['return_cash'];
+                    $formvars['return_commision_fee'] = $return['return_commision_fee'];
+                    $formvars['order_id'] = $return['order_number'];
+                    $formvars['goods_id'] = $return['order_goods_id'];
+                    $formvars['payment_id'] = $order_base['payment_id'];
 
-					//SP分销单没有payment_other_number这个字段值会报错，所以在此做判断
-					if($order_base['payment_other_number'])
-					{
-						$formvars['uorder_id'] = $order_base['payment_other_number'];
-					}
-					else
-					{
-						$formvars['uorder_id'] = $order_base['payment_number'];
-					}
+                    //SP分销单没有payment_other_number这个字段值会报错，所以在此做判断
+                    if ($order_base['payment_other_number']) {
+                        $formvars['uorder_id'] = $order_base['payment_other_number'];
+                    } else {
+                        $formvars['uorder_id'] = $order_base['payment_number'];
+                    }
 
-					//平台同意退款（只增加买家的流水）
-					$rs                   = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=refundBuyerTransfer&typ=json', $url), $formvars);
-					$data['for']  =           $formvars;
-					if ($rs['status'] == 200)
-					{
-						check_rs(true, $rs_row);
-					}
-					else
-					{
-						check_rs(false, $rs_row);
-					}
-					$edit_flag = is_ok($rs_row);
-				}
+                    //平台同意退款（只增加买家的流水）
+                    $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=refundBuyerTransfer&typ=json', $url), $formvars);
+                    $data['for'] = $formvars;
+                    if ($rs['status'] == 200) {
+                        check_rs(true, $rs_row);
+                    } else {
+                        check_rs(false, $rs_row);
+                    }
+                    $edit_flag = is_ok($rs_row);
+                }
 
-				//如果订单金额全数退还需要将订单商品，支付中心的订单状态修改为订单完成(未发货)
-				if($order_all_goods_num == $order_return_num && $order_base['order_status'] == Order_StateModel::ORDER_PAYED)
-				{
-					$goods_data['order_goods_status'] = $Order_StateModel::ORDER_FINISH;
-					$order_goods_ids_row = $this->Order_GoodsModel->getByWhere(array('order_id'=>$return['order_number']));
-					$order_goods_ids = current($order_goods_ids_row);
-					$ed_flag                         = $this->Order_GoodsModel->editGoods($order_goods_ids['order_goods_id'], $goods_data);
-					check_rs($ed_flag, $rs_row);
+                //如果订单金额全数退还需要将订单商品，支付中心的订单状态修改为订单完成(未发货)
+                if ($order_all_goods_num == $order_return_num && $order_base['order_status'] == Order_StateModel::ORDER_PAYED) {
+                    $goods_data['order_goods_status'] = $Order_StateModel::ORDER_FINISH;
+                    $order_goods_ids_row = $this->Order_GoodsModel->getByWhere(array('order_id' => $return['order_number']));
+                    $order_goods_ids = current($order_goods_ids_row);
+                    $ed_flag = $this->Order_GoodsModel->editGoods($order_goods_ids['order_goods_id'], $goods_data);
+                    check_rs($ed_flag, $rs_row);
 
-					//将需要确认的订单号远程发送给Paycenter修改订单状态
-					//远程修改paycenter中的订单状态
-					$key      = Yf_Registry::get('shop_api_key');
-					$url         = Yf_Registry::get('paycenter_api_url');
-					$shop_app_id = Yf_Registry::get('shop_app_id');
-					$formvars = array();
+                    //将需要确认的订单号远程发送给Paycenter修改订单状态
+                    //远程修改paycenter中的订单状态
+                    $key = Yf_Registry::get('shop_api_key');
+                    $url = Yf_Registry::get('paycenter_api_url');
+                    $shop_app_id = Yf_Registry::get('shop_app_id');
+                    $formvars = array();
 
-					$formvars['order_id']    = $return['order_number'];
-					$formvars['app_id']        = $shop_app_id;
-					$formvars['from_app_id'] = Yf_Registry::get('shop_app_id');
+                    $formvars['order_id'] = $return['order_number'];
+                    $formvars['app_id'] = $shop_app_id;
+                    $formvars['from_app_id'] = Yf_Registry::get('shop_app_id');
 
-					$rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=confirmOrder&typ=json', $url), $formvars);
+                    $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=confirmOrder&typ=json', $url), $formvars);
 
-					if($rs['status'] == 250)
-					{
-						$rs_flag = false;
-						check_rs($rs_flag,$rs_row);
-					}
-				}
-			}
+                    if ($rs['status'] == 250) {
+                        $rs_flag = false;
+                        check_rs($rs_flag, $rs_row);
+                    }
+                }
+
+            }
+
 
             //2019/7/26 修改为确认收货前才可退货，如果是退货的话，同退款一样处理
 			if($order_base['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS){
@@ -588,6 +576,7 @@ class Api_Trade_ReturnCtl extends Api_Controller
 			$msg    = __('failure');
 		}
 		$this->data->addBody(-140, $data, $msg, $status);
+
 
 	}
 
@@ -809,8 +798,8 @@ class Api_Trade_ReturnCtl extends Api_Controller
 			$formvars['app_id']        = $shop_app_id;
 			$formvars['user_id']  = $return['buyer_user_id'];
 			$formvars['user_account'] = $return['buyer_user_account'];
-			$formvars['seller_id'] = $return['seller_user_id'];
-			$formvars['seller_account'] = $return['seller_user_account'];
+			$formvars['seller_id'] = $order_base['seller_user_id'];
+			$formvars['seller_account'] = $order_base['seller_user_account'];
 			$formvars['amount']   = $return['return_cash'];
 			$formvars['return_commision_fee']   = $return['return_commision_fee'];
 			$formvars['order_id'] = $return['order_number'];

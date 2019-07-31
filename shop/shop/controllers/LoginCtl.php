@@ -424,7 +424,8 @@ class LoginCtl extends Yf_AppController
             if (Web_ConfigModel::value('Plugin_Directseller')) {
                 //regDone
                 $PluginManager = Yf_Plugin_Manager::getInstance();
-                $PluginManager->trigger('regDone', $user_id);
+                $parent_id = $_REQUEST['parent_id'];
+                $PluginManager->trigger('regDone', $user_id, $parent_id);
                 Yf_Log::log('regDone run', Yf_Log::LOG, 'debug');
             }
 

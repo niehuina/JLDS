@@ -233,6 +233,7 @@ include __DIR__.'/../../includes/header.php';
     <script type="text/javascript" src="../../js/common.js"></script>
     <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
     <script type="text/javascript" src="../../js/tmpl/order/order_detail.js"></script>
+    <script type="text/javascript" src="../../js/tmpl/order/order_common.js"></script>
     <script type="text/javascript" src="../../js/libs/jquery.timeCountDown.js" ></script>
     </body>
     </html>

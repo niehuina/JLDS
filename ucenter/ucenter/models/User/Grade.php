@@ -21,7 +21,7 @@ class User_Grade extends Yf_Model
      * @var   string $db_id 指定需要连接的数据库Id
      * @return void
      */
-    public function __construct(&$db_id='shop', &$user=null)
+    public function __construct(&$db_id='ucenter', &$user=null)
     {
         $this->_tableName = TABEL_PREFIX . $this->_tableName;
  		$this->_cacheFlag        = CHE;

@@ -7,7 +7,6 @@ include __DIR__ . '/../../includes/header.php';
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="Author" contect="U2FsdGVkX1+liZRYkVWAWC6HsmKNJKZKIr5plAJdZUSg1A==">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-touch-fullscreen" content="yes">
         <meta name="format-detection" content="telephone=no">
@@ -22,25 +21,15 @@ include __DIR__ . '/../../includes/header.php';
         <link rel="stylesheet" type="text/css" href="../../css/nctouch_common.css">
         <link rel="stylesheet" type="text/css" href="../../css/nctouch_cart.css">
         <style type="text/css">
-            .nctouch-full-mask.left {
-                left: 25%;
-            }
-
-            .nctouch-main-layout-a {
-                top: 0;
-            }
-
             .secreen-layout .bottom {
                 padding: 0.5rem 0;
             }
 
-            #reset {
-                background: #70696a;
-            }
             .nctouch-cart-item li .goods-info dt.goods-name a{
-                height: 2.0rem;
+                height: 2rem;
+                max-height: 2.0rem;
+                line-height: 1rem;
             }
-
             .selected-all {
                 font-size: 0.6rem;
                 vertical-align:middle;
@@ -48,37 +37,9 @@ include __DIR__ . '/../../includes/header.php';
             .nctouch-cart-item li .edit-area {
                 display: block;
                 position: relative;
-                width: 8rem;
+                width: 6rem !important;
                 float: right;
-                top:-0.5rem;
-            }
-            .JS-header-edit {
-                position: absolute;
-                z-index: 1;
-                top: 0;
-                right: 50px;
-                text-align: right;
-                line-height:1.95rem;
-                font-size:0.7rem;
-            }
-            #batchRemove {
-                float: right;
-                display: none;
-
-                text-align: center;
-                color:#FFF ;
-                font-size: 0.7rem;
-                line-height: 2rem;
-                width:20%;
-                background: -webkit-linear-gradient(to right, #d92e66, #ec5a6f);
-                background: linear-gradient(to right,#d92e66, #ec5a6f);
-            }
-
-            .JS-header-edit {
-                display: none;
-            }
-            .nctouch-cart-bottom {
-                bottom: 2.5rem;
+                top: -0.3rem;
             }
             .edit-area .value-box span{
                 width: 50%;
@@ -97,12 +58,12 @@ include __DIR__ . '/../../includes/header.php';
     <body>
     <header id="header" class="nctouch-product-header fixed">
         <div class="header-wrap">
-            <div class="header-l"><a href="javascript:history.go(-1)"> <i class="back"></i> </a></div>
+            <div class="header-l"><a href="member_stock.html"> <i class="back"></i> </a></div>
             <div class="header-title">
                 <h1>仓库商品自用</h1>
             </div>
             <div class="header-r">
-                <a href="javascript:void(0);" class="JS-edit fr text">完成</a>
+                <a href="javascript:void(0);" class="JS-edit fr text">提交</a>
             </div>
         </div>
         <div class="nctouch-nav-layout">
@@ -130,13 +91,12 @@ include __DIR__ . '/../../includes/header.php';
         </div>
     </div>
     <div class="fix-block-r">
-        <a href="./views_list.html" class="browse-btn"><i></i></a>
         <a href="javascript:void(0);" class="gotop-btn gotop hide" id="goTopBtn"><i></i></a>
     </div>
     </body>
     <script type="text/html" id="home_body">
         <% var goods_list = data.items; %>
-        <% if(goods_list.length >0){%>
+        <% if(data.records >0){%>
         <% for(j=0;j<goods_list.length;j++){ %>
         <% var goods = goods_list[j]; var goods_id = goods.goods_id; %>
         <li class="cart-litemw-cnt" id="<%=goods.stock_id;%>">
@@ -153,19 +113,18 @@ include __DIR__ . '/../../includes/header.php';
                     <dt class="goods-name">
                         <a href="<%=WapSiteUrl%>/tmpl/product_detail.html?goods_id=<%=goods.goods_id%>"> <%=goods.common_info.common_name%> </a>
                     </dt>
-                    <dd class="goods-type"></dd>
                     <span class="goods-price">库存：<em><%=goods.goods_stock%></em></span>
                     <div class="edit-area">
                         <div class="goods-subtotal">
                             <div class="value-box">
-                            <span class="minus"><a href="javascript:void(0);">&nbsp;</a></span>
-                            <!-- s 获取并设置限用数量 -->
-                            <span>
-                                <input type="number" min="0" class="buy-num buynum" name="out_num"
-                                       data_max="<%=goods.goods_stock%>" data_min="0" value="0" />
-                            </span>
-                            <!-- e 获取并设置限用数量-->
-                            <span class="add"><a href="javascript:void(0);">&nbsp;</a></span>
+                                <span class="minus"><a href="javascript:reduceNum('<%=goods.stock_id;%>');">&nbsp;</a></span>
+                                <!-- s 获取并设置限用数量 -->
+                                <span>
+                                    <input type="number" min="0" class="buy-num buynum" name="out_num"
+                                           data-max="<%=goods.goods_stock%>" data-min="0" value="0" />
+                                </span>
+                                <!-- e 获取并设置限用数量-->
+                                <span class="add"><a href="javascript:addNum('<%=goods.stock_id;%>');">&nbsp;</a></span>
                             </div>
                         </div>
                     </div>

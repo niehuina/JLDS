@@ -55,24 +55,24 @@ $brother_menu = $Menu_Base->getByWhere(array('menu_parent_id'=>$father_menu['men
         </div>
         <form method="post" enctype="multipart/form-data" id="grade-setting-form" name="form">
             <input type="hidden" name="config_type[]" value="shares"/>
+<!--            <div class="ncap-form-default">-->
+<!--                <dl class="row">-->
+<!--                    <dt class="tit">-->
+<!--                        <label>每股价格(元)</label>-->
+<!--                    </dt>-->
+<!--                    <dd class="opt">-->
+<!--                        <input name="shares[shares_price]" value="--><?//=($data['shares_price']['config_value'])?><!--" class="ui-input w400" type="text"/>-->
+<!--                        <p class="notic"></p>-->
+<!--                    </dd>-->
+<!--                </dl>-->
+<!--            </div>-->
             <div class="ncap-form-default">
                 <dl class="row">
                     <dt class="tit">
-                        <label>每股价格(元)</label>
+                        <label>股份分红比例</label>
                     </dt>
                     <dd class="opt">
-                        <input name="shares[shares_price]" value="<?=($data['shares_price']['config_value'])?>" class="ui-input w400" type="text"/>
-                        <p class="notic"></p>
-                    </dd>
-                </dl>
-            </div>
-            <div class="ncap-form-default">
-                <dl class="row">
-                    <dt class="tit">
-                        <label>股份分红比例(每股)</label>
-                    </dt>
-                    <dd class="opt">
-                        <input name="shares[shares_dividend]" value="<?=($data['shares_dividend']['config_value'])?>" class="ui-input w400" type="text"/>
+                        <input name="shares[shares_dividend]" value="<?=($data['shares_dividend']['config_value'])?>" class="ui-input w100" type="text"/>%
                         <p class="notic"></p>
                     </dd>
                 </dl>

@@ -28,15 +28,15 @@ class User_GradeLogModel extends User_GradeLog
     {
         //1.查出下级用户
         $query_row['user_parent_id'] = $user_id;
-        $query_row['user_grade'] = ['>=', $user_grade];
+        $query_row['user_grade:>='] = $user_grade;
         $User_InfoModel = new User_InfoModel();
         $ids_list = $User_InfoModel->getKeyByWhere($query_row);
 
         //2.查询下级用户中1年内升级成为会员的用户
-        $cond_row['user_id'] = ['in', $ids_list];
+        $cond_row['user_id:in'] = $ids_list;
         $cond_row['user_grade_to'] = $user_grade;
-        $cond_row['log_date_time'] = ['>=', $start_date];
-        $cond_row['log_date_time'] = ['<=', $end_date];
+        $cond_row['log_date_time:>='] = $start_date;
+        $cond_row['log_date_time:<='] = $end_date;
         $list = $this->getByWhere($cond_row);
 
         $user_ids = array();

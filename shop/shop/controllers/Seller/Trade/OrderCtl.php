@@ -743,15 +743,16 @@ class Seller_Trade_OrderCtl extends Seller_Controller
 				$edit_flag = $Order_BaseModel->editBase($order_id, $update_data);
 				check_rs($edit_flag,$rs_row);
 
-				$order_list = $Order_GoodsModel -> getByWhere(array('order_id' => $order_base['order_source_id'],'order_goods_source_id' => ''));//查看不是分销商品的订单
-				if(!empty($order_list) && $order_base['order_source_id']){
-					foreach ($order_list as $key => $value) {
+                $order_list = $Order_GoodsModel -> getByWhere(array('order_id' => $order_base['order_source_id'],'order_goods_source_id' => ''));//查看不是分销商品的订单
+                if(!empty($order_list) && $order_base['order_source_id']){
+                    foreach ($order_list as $key => $value) {
 						$edit_flag1 = $Order_GoodsModel -> editGoods($key,array('order_goods_source_ship' => $update_data['order_shipping_code'].'-'.$update_data['order_shipping_express_id']));
 						check_rs($edit_flag1,$rs_row);
 					}
 				}
 
-				$order_goods_ids = array_column($order_list, 'order_goods_id');
+                $order_goods_list = $Order_GoodsModel->getByWhere(array('order_id' => $order_id));
+				$order_goods_ids = array_column($order_goods_list, 'order_goods_id');
                 $update_goods_data['order_goods_status'] = Order_StateModel::ORDER_WAIT_CONFIRM_GOODS;
                 $edit_goods_flag = $Order_GoodsModel->editGoods($order_goods_ids, $update_goods_data);
                 check_rs($edit_goods_flag,$rs_row);
@@ -761,7 +762,6 @@ class Seller_Trade_OrderCtl extends Seller_Controller
                 if($seller_user_id == Web_ConfigModel::value('self_user_id')){
                     $seller_user_id = null;
                 }
-                $order_goods_list = $Order_GoodsModel -> getByWhere(array('order_id' => $order_id));
                 $Goods_BaseModel = new Goods_BaseModel();
                 foreach ($order_goods_list as $key=>$goods) {
                     $goods_id = $goods['goods_id'];

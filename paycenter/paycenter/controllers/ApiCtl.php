@@ -239,7 +239,7 @@ class ApiCtl extends Yf_AppController
 			$data['server_id'] = $user_row['server_id'];
 			srand((double)microtime() * 1000000);
 			$user_key = md5(rand(0, 32000));
-			$userBaseModel->editSingleField($user_row['user_id'], 'user_key', $user_key, $user_row['user_key']);
+			$userBaseModel->editBaseSingleField($user_row['user_id'], 'user_key', $user_key, $user_row['user_key']);
 			Yf_Hash::setKey($user_key);
 			$encrypt_str        = Perm::encryptUserInfo($data);
 
@@ -737,7 +737,7 @@ class ApiCtl extends Yf_AppController
 				$data['server_id'] = $user_row['server_id'];
 				srand((double)microtime() * 1000000);
 				$user_key = md5(rand(0, 32000));
-				$userBaseModel->editSingleField($user_row['user_id'], 'user_key', $user_key, $user_row['user_key']);
+				$userBaseModel->editBaseSingleField($user_row['user_id'], 'user_key', $user_key, $user_row['user_key']);
 				Yf_Hash::setKey($user_key);
 				$encrypt_str        = Perm::encryptUserInfo($data);
 
@@ -853,7 +853,7 @@ class ApiCtl extends Yf_AppController
 		$userBaseModel = new User_BaseModel();
 
 		//本地数据校验登录
-		$user_id_row = $userBaseModel->getUserIdByAccount($user_account);
+		$user_id_row = $userBaseModel->getBaseIdByAccount($ucenter_u);
 
 		if ($user_id_row)
 		{
@@ -879,7 +879,7 @@ class ApiCtl extends Yf_AppController
 			$data['server_id'] = $user_row['server_id'];
 			srand((double)microtime() * 1000000);
 			$user_key = md5(rand(0, 32000));
-			$userBaseModel->editSingleField($user_row['user_id'], 'user_key', $user_key, $user_row['user_key']);
+			$userBaseModel->editBaseSingleField($user_row['user_id'], 'user_key', $user_key, $user_row['user_key']);
 			Yf_Hash::setKey($user_key);
 			$encrypt_str        = Perm::encryptUserInfo($data);
 
@@ -923,7 +923,7 @@ class ApiCtl extends Yf_AppController
 		$Pay_PaymentChannelModel = new Pay_PaymentChannelModel();
 		$data = $Pay_PaymentChannelModel->getPayWaysByCode($type);
 		fb($data);
-		if ($flag)
+		if ($data)
 		{
 			$msg    = 'success';
 			$status = 200;

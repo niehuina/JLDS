@@ -255,7 +255,10 @@ include $this->view->getTplPath() . '/' . 'header.php';
                         <ul class="nofloat">
                             <li>
                                 <a id="btn_handle_submit" class="ui-btn ui-btn-sp submit-btn"
-                                   href="javascript:void(0)">确认提交</a>
+                                   href="javascript:void(0)">同意买家申请</a>
+                                &nbsp;&nbsp;
+                                <a id="btn_handle_unpass" class="ui-btn ui-btn-sc submit-btn"
+                                   href="javascript:void(0)">拒绝买家申请</a>
                             </li>
                         </ul>
                     </dd>

@@ -99,9 +99,10 @@ $(function () {
                     console.info(data);
                     if (data.status == 200) {
                         $.post(ApiUrl + "/index.php?ctl=Login&met=doLogin&typ=json", {
+                            parent_id: data.data.parent_id,
                             user_account: e,
                             user_password: r,
-                            client: t
+                            client: t,
                         }, function (result) {
                             allow_submit = true;
                             if (result.status == 200) {

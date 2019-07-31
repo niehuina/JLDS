@@ -72,11 +72,11 @@ class UserCtl extends Yf_AppController
 		$data = $data[$user_id];
 
 		if (empty($data['user_mobile']) && empty($data['user_email']))
-		{
-			header('location:' . Yf_Registry::get('url') . '?ctl=User&met=security&op=mobiles');
-			die;
-		}
-		
+        {
+            header('location:' . Yf_Registry::get('url') . '?ctl=User&met=security&op=mobiles');
+            die;
+        }
+
 		$privacy = $this->userPrivacyModel->getPrivacy($user_id);
 		$privacy = @$privacy[$user_id];
 
@@ -90,7 +90,7 @@ class UserCtl extends Yf_AppController
 			$this->user['grade']  = $this->userGradeModel->getOne($user_grade_id);
 		}
 
-		if (empty($user['grade']))
+		if (empty($this->user['grade']))
 		{
 			$this->user['grade']['user_grade_name'] = '普通会员';
 		}
@@ -1922,6 +1922,23 @@ class UserCtl extends Yf_AppController
 		return $rs;
 	}
 
+    public function getYzmforMobile()
+    {
+        $val = request_string('val');
+        $type = request_string('type');
+        $code = VerifyCode::getCode($val);
+        $contents = '您的验证码是：' . $code . '。请不要把验证码泄露给其他人。如非本人操作，可不用理会！';
+        $str = Sms::send($val, $contents);
+
+        $data = array();
+        $status = 200;
+        if (DEBUG == true) {
+            $data[] = $code;
+        }
+        $msg = "success";
+        return $this->data->addBody(-140, $data, $msg, $status);
+
+    }
 }
 
 ?>

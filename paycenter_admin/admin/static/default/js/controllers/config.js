@@ -375,8 +375,10 @@ $(function ()
             timely: 1,
             stopOnError: true,
             fields: {
+                'sms[sms_url]': 'required;',
                 'sms[sms_account]': 'required;',
-                'sms[sms_pass]': 'required;'
+                'sms[sms_pass]': 'required;',
+                'sms[sms_signature]': 'required;'
             },
             valid: function (form)
             {

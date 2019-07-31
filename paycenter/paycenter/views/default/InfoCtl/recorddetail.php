@@ -32,13 +32,13 @@ include $this->view->getTplPath() . '/' . 'header.php';
 			<dd><span>备注：</span><em><?=$v['remark']?></em></dd>
 			<?php }?>
 			<?php }?>
-			<?php if($re['trade_type_id']!=4){?>
+			<?php if($re['trade_type_id']!=4){?><dd><span>标题：</span><em><?=$re['record_title']?></em></dd>
             <?php if($re['order_id']){?>
                   <dd><span>交易号：</span><em><?=$re['order_id']?></em></dd>
             <?php }?>
             <dd><span>交易金额：</span><em><?=format_money($re['record_money'])?></em></dd>
             <dd><span>付款时间：</span><em><?=$re['record_time']?></em></dd>
-            <dd><span>描述：</span><em><?=$re['record_title']?></em></dd>
+            <dd><span>描述：</span><em><?=$re['record_desc']?></em></dd>
 			<?php }?>
 		</dl>
 	</div>

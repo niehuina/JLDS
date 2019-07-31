@@ -47,16 +47,27 @@ $$key = $item['config_value'];
 
         <div class="ncap-form-default">
             <dl class="row">
-                <dt class="tit">远丰短信账号</dt>
+                <dt class="tit">短信URL</dt>
                 <dd class="opt">
-                    <input type="text" value="<?=$sms_account?>" name="sms[sms_account]" id="sms_account" class="ui-input w400">
-
+                    <input type="text" value="<?=$sms_url?>" name="sms[sms_url]" id="sms_url" class="ui-input w400">
                 </dd>
             </dl>
             <dl class="row">
-                <dt class="tit">远丰短信密码</dt>
+                <dt class="tit">短信账号</dt>
+                <dd class="opt">
+                    <input type="text" value="<?=$sms_account?>" name="sms[sms_account]" id="sms_account" class="ui-input w400">
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">短信密码</dt>
                 <dd class="opt">
                     <input type="text" value="<?=$sms_pass?>" name="sms[sms_pass]" id="sms_pass" class="ui-input w400">
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">短信签名</dt>
+                <dd class="opt">
+                    <input type="text" value="<?=$sms_signature?>" name="sms[sms_signature]" id="sms_signature" class="ui-input w400">
                 </dd>
             </dl>
 

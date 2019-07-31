@@ -127,9 +127,9 @@ class Api_Pay_PayCtl extends Api_Controller
         $record_add_seller_row['user_nickname'] = $seller_name;
         $record_add_seller_row['record_money']  = $order_payment_amount;
         $record_add_seller_row['record_date']   = date('Y-m-d');
-        $record_add_seller_row['record_year']	   = date('Y');
+        $record_add_seller_row['record_year']	= date('Y');
         $record_add_seller_row['record_month']	= date('m');
-        $record_add_seller_row['record_day']		=date('d');
+        $record_add_seller_row['record_day']	=date('d');
         $record_add_seller_row['record_title']  = '销售入账';
         $record_add_seller_row['record_time']   = date('Y-m-d H:i:s');
         $record_add_seller_row['trade_type_id'] = Trade_TypeModel::SHOPPING;
@@ -565,7 +565,7 @@ class Api_Pay_PayCtl extends Api_Controller
 
 
 
-    //平台同意退款（只增加买家的流水）
+    //平台同意退款（只增加买家的流水，也增加卖家流水）
     public function refundBuyerTransfer()
     {
         $date = array();
@@ -616,14 +616,33 @@ class Api_Pay_PayCtl extends Api_Controller
             $record_add_buy_row['user_nickname'] = $user_name;
             $record_add_buy_row['record_money']  = $amount;
             $record_add_buy_row['record_date']   = date('Y-m-d');
-            $record_add_buy_row['record_year']	   = date('Y');
-            $record_add_buy_row['record_month']	= date('m');
-            $record_add_buy_row['record_day']		=date('d');
+            $record_add_buy_row['record_year']	 = date('Y');
+            $record_add_buy_row['record_month']	 = date('m');
+            $record_add_buy_row['record_day']	 = date('d');
             $record_add_buy_row['record_title']  = $reason;
             $record_add_buy_row['record_desc']  = "订单号:" . $order_id . $str;
             $record_add_buy_row['record_time']   = date('Y-m-d H:i:s');
             $record_add_buy_row['trade_type_id'] = Trade_TypeModel::REFUND;
             $record_add_buy_row['user_type']     = 1;	//收款方
+            $record_add_buy_row['record_status'] = RecordStatusModel::RECORD_FINISH;
+
+            $Consume_RecordModel->addRecord($record_add_buy_row);
+
+            //插入支出方的交易记录
+            $record_add_buy_row                  = array();
+            $record_add_buy_row['order_id']      = $flow_id;
+            $record_add_buy_row['user_id']       = $seller_id;
+            $record_add_buy_row['user_nickname'] = $seller_name;
+            $record_add_buy_row['record_money']  = $amount;
+            $record_add_buy_row['record_date']   = date('Y-m-d');
+            $record_add_buy_row['record_year']	 = date('Y');
+            $record_add_buy_row['record_month']	 = date('m');
+            $record_add_buy_row['record_day']	 = date('d');
+            $record_add_buy_row['record_title']  = $reason;
+            $record_add_buy_row['record_desc']  = "订单号:" . $order_id . $str;
+            $record_add_buy_row['record_time']   = date('Y-m-d H:i:s');
+            $record_add_buy_row['trade_type_id'] = Trade_TypeModel::REFUND;
+            $record_add_buy_row['user_type']     = 2;	//支出方
             $record_add_buy_row['record_status'] = RecordStatusModel::RECORD_FINISH;
 
             $Consume_RecordModel->addRecord($record_add_buy_row);
@@ -932,7 +951,7 @@ class Api_Pay_PayCtl extends Api_Controller
             );
             $flag1       = $Consume_RecordModel->addRecord($record_row2, true);
 
-            if ($flag1)
+            if ($flag1 !== false)
             {
                 //修改收款方的金额
                 $user_resource_row['user_money_frozen'] = $user_resource['user_money_frozen'] + $amount;
@@ -945,7 +964,7 @@ class Api_Pay_PayCtl extends Api_Controller
 
         }
 
-        if ($flag)
+        if ($flag !== false)
         {
             $msg    = 'success';
             $status = 200;
@@ -1326,7 +1345,7 @@ class Api_Pay_PayCtl extends Api_Controller
         $this->data->addBody(-140, $data, $msg, $status);
     }
 
-    //确认收货
+    //备货订单确认收货
     public function confirmStockOrder()
     {
         $rs_row  = array();

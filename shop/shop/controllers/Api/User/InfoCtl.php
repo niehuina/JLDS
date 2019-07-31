@@ -582,17 +582,23 @@ class Api_User_InfoCtl extends Yf_AppController
         $user_info = $this->userInfoModel->getOne($user_id);
         $user_parent_id = $user_info['user_parent_id'];
 
-        //获取该用户的直属下级用户
-        $user_list = $this->userInfoModel->getKeyByWhere(['user_parent_id'=>$user_id]);
-
+        $rs_row = array();
         $this->userInfoModel->sql->startTransactionDb();
-        $flag = $this->userInfoModel->editInfo($user_id, ['user_statu'=>1]); //不可再登录
-        foreach ($user_list as $userId){
-            $flag1 = $this->userInfoModel->editInfo($userId, ['user_parent_id'=>$user_parent_id]);
-            $flag = $flag && $flag1;
-        }
 
-        if ($flag && $this->userInfoModel->sql->commitDb()) {
+        //更新该用户为退出状态
+        $flag = $this->userInfoModel->editInfo($user_id, ['user_statu'=>1]); //不可再登录
+        check_rs($flag,$rs_row);
+
+        //给该用户结算
+        $flag_settle = $this->user_profit_settle($user_id, $user_info);
+        check_rs($flag_settle,$rs_row);
+
+        //获取该用户的直属下级用户,并更新其user_parent_id
+        $user_list = $this->userInfoModel->getKeyByWhere(['user_parent_id'=>$user_id]);
+        $flag1 = $this->userInfoModel->editInfo($user_list, ['user_parent_id'=>$user_parent_id]);
+        check_rs($flag1,$rs_row);
+
+        if (is_ok($rs_row) && $this->userInfoModel->sql->commitDb()) {
             $msg = 'success';
             $status = 200;
         } else {
@@ -610,6 +616,57 @@ class Api_User_InfoCtl extends Yf_AppController
         $intro_keys = request_string('intro_keys');
         $user_list = $this->userInfoModel->getUserInfoByKeys($intro_keys);
         return $this->data->addBody(-140, $user_list);
+    }
+
+    private function user_profit_settle($user_id, $user_info)
+    {
+        $Order_BaseModel = new Order_BaseModel();
+        $User_SettleProfitModel = new User_SettleProfitModel();
+
+        $user_grade = $user_info['user_grade'];
+
+        $rs_row = array();
+
+        //会员以上
+        if($user_grade >= 2) {
+            //订单差价返利
+            $flag = $User_SettleProfitModel->directOrder($user_id, $user_info);
+            check_rs($flag, $rs_row);
+        }
+
+        //合伙人
+        if($user_grade == 3) {
+            //合伙人-订单提成返利
+            $flag_p = $User_SettleProfitModel->rebateOrderForPartner($user_id, $user_info);
+            check_rs($flag_p, $rs_row);
+        }
+
+        //一般高级合伙人
+        if($user_grade == "4"){
+            //高级合伙人-订单提成返利
+            $flag_gp1 = $User_SettleProfitModel->rebateOrderForGPartner($user_id, $user_info);
+            check_rs($flag_gp1, $rs_row);
+
+            //高级合伙人-备货金差价返利
+            $flag_gp2 = $User_SettleProfitModel->stockOrderSettle($user_id);
+            check_rs($flag_gp2, $rs_row);
+        }
+
+        //更新未确认收货的订单的上级未空，之后订单差价就不会返还给当前用户
+        $cond_row = array();
+        $cond_row['directseller_id'] = $user_id;
+        $cond_row['order_status:<'] = Order_StateModel::ORDER_FINISH;
+        $cond_row['order_is_virtual'] = Order_BaseModel::ORDER_IS_REAL;
+        $cond_row['order_finished_time:<='] = get_date_time();
+        $cond_row['(order_payment_amount-order_refund_amount):>'] = 0;
+        $cond_row['directseller_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
+        $order_row['order_finished_time'] = 'asc';
+        $order_key_list = $Order_BaseModel->getKeyByWhere($cond_row, $order_row);
+        $edit_row['directseller_id'] = '';
+        $flag_order = $Order_BaseModel->editBase($order_key_list, $edit_row);
+        check_rs($flag_order, $rs_row);
+
+        return is_ok($rs_row);
     }
 }
 

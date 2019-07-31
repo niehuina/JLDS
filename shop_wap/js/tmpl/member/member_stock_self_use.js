@@ -5,8 +5,6 @@ var hasmore = true;
 var footer = false;
 var keyword = decodeURIComponent(getQueryString("keyword"));
 var key = getQueryString("key");
-var actgoods = getQueryString("actgoods");
-var ci = getQueryString("ci");
 var myDate = new Date;
 
 var select_goods_list = {};
@@ -25,6 +23,12 @@ $(function ()
         var flag = selectAllCheck();
         if(!flag) return false;
         if(Object.keys(select_goods_list).length == 0){
+            $.sDialog({
+                skin:"red",
+                content:'请选择商品！',
+                okBtn:false,
+                cancelBtn:false
+            });
             return false;
         }else{
             param.out_num_list = JSON.stringify(select_goods_list);
@@ -33,8 +37,8 @@ $(function ()
 
             //本系统登录
             $.ajax({
-                type: "get",
-                url: ApiUrl + "/index.php?ctl=Seller_Stock_Order&met=stock_self_use&typ=json",
+                type: "post",
+                url: ApiUrl + "/index.php?ctl=Buyer_User&met=stock_self_use&typ=json",
                 data:param,
                 dataType: "json",
                 success: function(result){
@@ -85,6 +89,26 @@ $(function ()
         }
     });
 });
+
+function addNum(stock_id) {
+    var out_num_obj = $("#"+stock_id).find("input[name='out_num']");
+    var out_num = $(out_num_obj).val();
+    var num_max = $(out_num_obj).data('max');
+    if(out_num == num_max) return;
+
+    out_num = out_num*1 + 1;
+    $(out_num_obj).val(out_num);
+}
+
+function reduceNum(stock_id) {
+    var out_num_obj = $("#"+stock_id).find("input[name='out_num']");
+    var out_num = $(out_num_obj).val();
+    var num_min = $(out_num_obj).data('min');
+    if(out_num == num_min) return;
+    out_num = out_num*1 - 1;
+    $(out_num_obj).val(out_num);
+}
+
 function get_list()
 {
     $(".loading").remove();
@@ -102,7 +126,7 @@ function get_list()
     param.k = getCookie("key");
     param.u = getCookie('id');
 
-    $.getJSON(ApiUrl + "/index.php?ctl=Seller_Stock_Order&met=stock_goods&typ=json&ua=wap", param, function (e)
+    $.getJSON(ApiUrl + "/index.php?ctl=Buyer_User&met=stock_goods&typ=json&ua=wap", param, function (e)
     {
         if (!e)
         {

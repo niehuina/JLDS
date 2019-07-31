@@ -151,8 +151,8 @@ $(function(){
     var preYear = year - 1;
 
     var data_year = [{
-        id: preYear,
-        name: preYear
+        id: year,
+        name: year
     }];
 
     $year = $("#dividend_year").combo({
@@ -180,11 +180,15 @@ $(function(){
         {
             if (200 == e.status)
             {
-                Public.tips({content: _("股份分红成功！")});
+                if(220 == e.data.state){
+                    Public.tips({type: 1, content: _("该年度已分红！")})
+                }else{
+                    Public.tips({content: _("股份分红成功！")});
+                }
             }
             else
             {
-                Public.tips({type: 1, content: _("股份分红失败！") + e.msg})
+                Public.tips({type: 1, content: _("股份分红失败！")})
             }
         })
     });

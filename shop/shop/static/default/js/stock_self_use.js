@@ -183,6 +183,22 @@ function initGrid() {
                 });
             }
 
+            $("input[name='out_num']").blur(function () {
+                var stock_id = $(this).data('stock_id');
+                var curChk = $("#"+stock_id+"").find(":checkbox");
+                var checked = $(curChk).attr("checked");
+                if(checked == "checked"){
+                    var goods_stock = $(this).data('goods_stock');
+                    var out_num = $(this).val();
+                    if(out_num && out_num > 0 && out_num <= goods_stock){
+                        select_goods_list[stock_id] = out_num;
+                    }else{
+                        delete select_goods_list[stock_id];
+                    }
+                    disabledButton();
+                }
+            });
+
             //下面的代码顺序不能变(这是页面上所有行被真选中[所有行被黄色])
             $("#cb_goods_grid").click(function () {
                 if(this.checked){

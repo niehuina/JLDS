@@ -39,8 +39,24 @@ function get_list()
 
     param.k = getCookie("key");
     param.u = getCookie('id');
+    param.user_id = getCookie('id');
 
-    $.getJSON(SiteUrl + "/index.php?ctl=Seller_Stock_Order&met=stock_goods&typ=json&ua=wap", param, function (e)
+    // var load_class = new ncScrollLoad();
+    // load_class.loadInit({
+    //     'url': ApiUrl + '/index.php?ctl=Buyer_User&met=stock_goods&typ=json&ua=wap',
+    //     'getparam': {
+    //         k: getCookie("key"),
+    //         u: getCookie('id'),
+    //         user_id: getCookie('id'),
+    //         goods_key: $("#goods_key").val(),
+    //     },
+    //     'tmplid': 'home_body',
+    //     'containerobj': $("#product_list .goods-secrch-list"),
+    //     'iIntervalId': true
+    // });
+
+
+    $.getJSON(SiteUrl + "/index.php?ctl=Buyer_User&met=stock_goods&typ=json&ua=wap", param, function (e)
     {
         if (!e)
         {

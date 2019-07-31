@@ -683,6 +683,8 @@ class InfoCtl extends Controller
     public function addDeposit()
     {
         $deposit_amount = request_float('deposit_amount');
+        $user_id = request_string('user_id');
+        $user_account = request_string('user_account');
 
         $Union_OrderModel = new Union_OrderModel();
         //开启事务
@@ -693,8 +695,16 @@ class InfoCtl extends Controller
 
         $trade_title = $uorder;
         $uprice = $deposit_amount;
-        $buyer = Perm::$userId;
-        $buyer_name = Perm::$row['user_account'];
+        if($user_id){
+            $buyer = $user_id;
+        }else{
+            $buyer = Perm::$userId;
+        }
+        if($user_account){
+            $buyer_name = $user_account;
+        }else {
+            $buyer_name = Perm::$row['user_account'];
+        }
 
         $add_row = array(
             'union_order_id' => $uorder,

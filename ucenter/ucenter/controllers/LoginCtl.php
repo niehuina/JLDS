@@ -877,7 +877,7 @@ class LoginCtl extends Yf_AppController
 		$mobile    = request_string('mobile');
         $email = request_string('email'); 
         $reg_checkcode = request_int('reg_checkcode',1);
-        $parent_id = request_int('parent_id');
+        $parent_id = request_string('parent_id');
 
         //设置推荐人Id
         if($parent_id){
@@ -1048,7 +1048,8 @@ class LoginCtl extends Yf_AppController
 					"user_name" => $user_name,
 					"server_id" => $server_id,
 					"k" => $encrypt_str,
-					"user_id" => $user_id
+					"user_id" => $user_id,
+                    "parent_id" => $parent_id
 				);
 
 				if($token)

@@ -33,52 +33,46 @@ include $this->view->getTplPath() . '/'  . 'header.php';
 		<input type="hidden" name="config_type[]" value="sms"/>
 		<div class="ncap-form-default">
 			<div id="para-wrapper">
-				<!-- <div class="para-item">
-					<ul class="mod-form-rows" id="establish-form">
-
-						<li class="row-item">
-							<div class="label-wrap">
-								<label for="sms_account">账号:</label>
-							</div>
-							<div class="ctn-wrap">
-								<input id="sms_account" name="sms[sms_account]" value="<?=($data['sms_account']['config_value'])?>" class="ui-input w400" type="text" />
-								<p class="notic">在远丰公司购买短信后,客服提供的用户名</p>
-							</div>
-						</li>
-						<li class="row-item">
-							<div class="label-wrap">
-								<label for="sms_pass">密码:</label>
-							</div>
-							<div class="ctn-wrap">
-
-								<input id="sms_pass" name="sms[sms_pass]" value="<?=($data['sms_pass']['config_value'])?>" class="ui-input w400" type="text" />
-								<p class="notic">在远丰公司购买短信后,客服提供的密码</p>
-							</div>
-						</li>
-					</ul>
-				</div> -->
 				<div class="ncap-form-default">
 					<div class="mod-form-rows" id="establish-form">
-
+                        <dl class="row">
+                            <dt class="tit">
+                                <label for="sms_url">短信URL:</label>
+                            </dt>
+                            <dd class="opt">
+                                <input id="sms_url" name="sms[sms_url]" value="<?=($data['sms_url']['config_value'])?>" class="ui-input w400" type="text" />
+                                <p class="notic">在购买短信后,客服提供的网址</p>
+                            </dd>
+                        </dl>
 						<dl class="row">
 							<dt class="tit">
-								<label for="sms_account">账号:</label>
+								<label for="sms_account">短信账号:</label>
 							</dt>
 							<dd class="opt">
 								<input id="sms_account" name="sms[sms_account]" value="<?=($data['sms_account']['config_value'])?>" class="ui-input w400" type="text" />
-								<p class="notic">在远丰公司购买短信后,客服提供的用户名</p>
+								<p class="notic">在购买短信后,客服提供的用户名</p>
 							</dd>
 						</dl>
 						<dl class="row">
 							<dt class="tit">
-								<label for="sms_pass">密码:</label>
+								<label for="sms_pass">短信密码:</label>
 							</dt>
 							<dd class="opt">
 
 								<input id="sms_pass" name="sms[sms_pass]" value="<?=($data['sms_pass']['config_value'])?>" class="ui-input w400" type="text" />
-								<p class="notic">在远丰公司购买短信后,客服提供的密码</p>
+								<p class="notic">在购买短信后,客服提供的密码</p>
 							</dd>
 						</dl>
+                        <dl class="row">
+                            <dt class="tit">
+                                <label for="sms_signature">短信签名:</label>
+                            </dt>
+                            <dd class="opt">
+
+                                <input id="sms_signature" name="sms[sms_signature]" value="<?=($data['sms_signature']['config_value'])?>" class="ui-input w400" type="text" />
+                                <p class="notic">设置短信的签名，短信才能发送成功</p>
+                            </dd>
+                        </dl>
 					</div>
 				</div>
 				<div class="btn-wrap bot"> <a name="submit" id="submit" class="ui-btn ui-btn-sp submit-btn">提交</a> </div>

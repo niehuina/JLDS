@@ -1707,6 +1707,7 @@ class Buyer_UserCtl extends Buyer_Controller
         $rows    = request_int('page', 20);
         $cond_row['user_parent_id'] = Perm::$userId;
         $cond_row['user_grade'] = $level;
+        $order_row['user_statu'] = 'asc';
         $order_row['user_regtime'] = 'asc';
         $data = $User_InfoModel->getInfoList($cond_row, $order_row, $page, $rows);
 
@@ -1887,6 +1888,192 @@ class Buyer_UserCtl extends Buyer_Controller
         $data = array();
         $this->data->addBody(-140, $data, $msg, $status);
 
+    }
+
+    public function addDepositForWap(){
+        $data['deposit_amount'] = request_string('deposit_amount');
+        $data['user_id'] = request_string('user_id');
+        $data['user_account'] = request_string('user_account');
+
+        $rs = $this->getPaycenterApi($data, 'Api_User_Info', 'addDeposit');
+        $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
+    }
+
+    /**
+     * 修改支付密码
+     */
+    public function editUserPayPassword()
+    {
+        $data['user_id'] = request_string('user_id');
+        $data['password'] = request_string('password');
+        $rs = $this->getPaycenterApi($data, 'Api_User_Info', 'editUserPayPassword');
+
+        $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
+    }
+
+    /**
+     * 个人仓库管理
+     */
+    public function stock_check()
+    {
+        $typ = request_string('typ');
+        if($typ == 'e'){
+            include $this->view->getView();
+        }else{
+            $real_stock_list = request_string('real_stock_list');
+            $real_stock_list = decode_json($real_stock_list);
+
+            $User_Stock_Model = new User_StockModel();
+            $Stock_CheckModel = new Stock_CheckModel();
+            $Stock_CheckGoodsModel = new Stock_CheckGoodsModel();
+
+            $cond_row['user_id'] = Perm::$userId;
+            $goods_stock_list = $User_Stock_Model->getByWhere($cond_row);
+
+            $User_Stock_Model->sql->startTransactionDb();
+            $rs_row = array();
+            //添加盘点记录表
+            $add_row = array();
+            $add_row['user_id'] = Perm::$userId;
+            $add_row['user_name'] = '';
+            $add_row['check_date'] = date('Y-m-d');
+            $add_row['check_date_time'] = get_date_time();
+            $check_id = $Stock_CheckModel->addCheck($add_row, true);
+            check_rs($check_id, $rs_row);
+
+            try {
+                foreach ($goods_stock_list as $stock_id => $goods_stock) {
+                    $real_num = isset($real_stock_list[$stock_id]) ? $real_stock_list[$stock_id] : $goods_stock['goods_stock'];
+                    //添加盘点明细表
+                    $add_goods_row = array();
+                    $add_goods_row['check_id'] = $check_id;
+                    $add_goods_row['user_id'] = Perm::$userId;
+                    $add_goods_row['goods_id'] = $goods_stock['goods_id'];
+                    $add_goods_row['common_id'] = $goods_stock['common_id'];
+                    $add_goods_row['goods_name'] = $goods_stock['goods_name'];
+                    $add_goods_row['goods_stock'] = $goods_stock['goods_stock'];
+                    $add_goods_row['real_goods_stock'] = $real_num;
+                    //根据实际数据与库存数量相比，得出盘盈/盘亏/账实相符
+                    if($real_num > $goods_stock['goods_stock']){
+                        $add_goods_row['check_status'] = Stock_CheckModel::STOCK_SURPLUS;
+                    }else if($real_num < $goods_stock['goods_stock']){
+                        $add_goods_row['check_status'] = Stock_CheckModel::STOCK_LOSSES;
+                    }else{
+                        $add_goods_row['check_status'] = Stock_CheckModel::STOCK_NORMAL;
+                    }
+                    $add_goods_row['check_date_time'] = get_date_time();
+                    $add_flag = $Stock_CheckGoodsModel->addCheckGoods($add_goods_row);
+                    check_rs($add_flag, $rs_row);
+
+                    //修改商品库存
+                    if($real_num != $goods_stock['goods_stock']) {
+                        $edit_row = array();
+                        $edit_row['goods_stock'] = $real_num;
+                        $edit_flag = $User_Stock_Model->editUserStock($stock_id, $edit_row);
+                        check_rs($edit_flag, $rs_row);
+                    }
+                }
+            }catch (Exception $e){
+                $User_Stock_Model->sql->rollBackDb();
+                $msg =  __('failure');
+                $status = 250;
+            }
+
+            if(is_ok($rs_row) && $User_Stock_Model->sql->commitDb()){
+                $msg =  __('success');
+                $status = 200;
+            }else{
+                $User_Stock_Model->sql->rollBackDb();
+                $m = $User_Stock_Model->msg->getMessages();
+                $msg = $m ? $m[0] : __('failure');
+                $status = 250;
+            }
+
+            $this->data->addBody(-140, array(), $msg, $status);
+        }
+    }
+
+    public function stock_goods()
+    {
+        $page    = request_int('page', 1);
+        $rows    = request_int('rows', 20);
+        $goods_key = request_string('goods_key', '');
+
+        $User_Stock_Model = new User_StockModel();
+        $cond_row['user_id'] = Perm::$userId;
+        if (!empty($goods_key)) {
+            $cond_row['goods_name:like'] = '%' . $goods_key . '%';
+        }
+        $order_row['CONVERT(goods_name USING gbk)'] = 'asc';
+        $goods = $User_Stock_Model->getUserStockList($cond_row, $order_row, $page, $rows);
+        $this->data->addBody(-140, $goods);
+    }
+
+    public function stock_self_use()
+    {
+        $typ = request_string('typ');
+        if($typ == 'e'){
+            include $this->view->getView();
+        }else{
+            $out_num_list = request_string('out_num_list');
+            $out_num_list = decode_json($out_num_list);
+
+            $User_Stock_Model = new User_StockModel();
+            $User_StockOutModel = new User_StockOutModel();
+
+            $cond_row = array();
+            $cond_row['user_id'] = Perm::$userId;
+            $goods_stock_list = $User_Stock_Model->getByWhere($cond_row);
+
+            $user_id = Perm::$userId;
+            $prefix = sprintf('%s-%s-', date('Ymd'), $user_id);
+            $Number_SeqModel = new Number_SeqModel();
+            $order_number = $Number_SeqModel->createSeq($prefix);
+            $order_id = sprintf('%s-%s', 'ZY', $order_number);
+
+            $User_StockOutModel->sql->startTransactionDb();
+            $rs_row = array();
+            foreach ($out_num_list as $stock_id=>$out_num)
+            {
+                $goods_stock = $goods_stock_list[$stock_id];
+                if($out_num > 0 && $out_num <= $goods_stock['goods_stock']) {
+                    $add_row = array();
+                    $add_row['out_order_id'] = $order_id;
+                    $add_row['user_id'] = $user_id;
+                    $add_row['user_name'] = $user_id;
+                    $add_row['goods_id'] = $goods_stock['goods_id'];
+                    $add_row['common_id'] = $goods_stock['common_id'];
+                    $add_row['goods_name'] = $goods_stock['goods_name'];
+                    $add_row['out_num'] = $out_num;
+                    $add_row['out_type'] = User_StockOutModel::OUT_SELF;
+                    $add_row['out_time'] = get_date_time();
+
+                    $add_flag = $User_StockOutModel->addStockOut($add_row);
+                    check_rs($add_flag, $rs_row);
+
+                    //修改商品库存
+                    if($out_num) {
+                        $edit_row = array();
+                        $edit_row['goods_stock'] = $out_num * -1;
+                        $edit_flag = $User_Stock_Model->editUserStock($stock_id, $edit_row, true);
+                        check_rs($edit_flag, $rs_row);
+                    }
+                }
+
+            }
+
+            if(is_ok($rs_row) && $User_StockOutModel->sql->commitDb()){
+                $msg =  __('success');
+                $status = 200;
+            }else{
+                $User_StockOutModel->sql->rollBackDb();
+                $m = $User_StockOutModel->msg->getMessages();
+                $msg = $m ? $m[0] : __('failure');
+                $status = 250;
+            }
+
+            $this->data->addBody(-140, array(), $msg, $status);
+        }
     }
 }
 

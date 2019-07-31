@@ -616,6 +616,135 @@ class Api_User_InfoCtl extends Api_Controller
         $data = array();
         $this->data->addBody(-140, $data, $msg, $status);
     }
+
+    public function addDeposit()
+    {
+        $deposit_amount = request_float('deposit_amount');
+        $user_id = request_string('user_id');
+        $user_account = request_string('user_account');
+
+        $Union_OrderModel = new Union_OrderModel();
+        //开启事务
+        $Union_OrderModel->sql->startTransactionDb();
+
+        //生成合并支付订单
+        $uorder = "U" . date("Ymdhis", time()) . rand(100, 999);  //18位
+
+        $trade_title = $uorder;
+        $uprice = $deposit_amount;
+        $buyer = $user_id;
+        $buyer_name =$user_account;
+
+        $add_row = array(
+            'union_order_id' => $uorder,
+            'trade_title' => $trade_title,
+            'trade_payment_amount' => $uprice,
+            'create_time' => date("Y-m-d H:i:s"),
+            'buyer_id' => $buyer,
+            'order_state_id' => Union_OrderModel::WAIT_PAY,
+            'union_online_pay_amount' => $uprice,
+            'trade_type_id' => Trade_TypeModel::DEPOSIT,
+            'app_id' => Yf_Registry::get('paycenter_app_id'),
+        );
+
+        $flag = $Union_OrderModel->addUnionOrder($add_row);
+
+        //添加充值表
+        $Consume_DepositModel = new Consume_DepositModel();
+        $add_deposit_row = array();
+        $add_deposit_row['deposit_trade_no'] = $uorder;
+        $add_deposit_row['deposit_buyer_id'] = $buyer;
+        $add_deposit_row['deposit_total_fee'] = $deposit_amount;
+        $add_deposit_row['deposit_gmt_create'] = date('Y-m-d H:i:s');
+        $add_deposit_row['deposit_trade_status'] = RecordStatusModel::IN_HAND;
+        $Consume_DepositModel->addDeposit($add_deposit_row);
+
+        //添加交易明细
+        $Consume_RecordModel = new Consume_RecordModel();
+        $Trade_TypeModel = new Trade_TypeModel();
+        $record_add_buy_row = array();
+        $record_add_buy_row['order_id'] = $uorder;
+        $record_add_buy_row['user_id'] = $buyer;
+        $record_add_buy_row['user_nickname'] = $buyer_name;
+        $record_add_buy_row['record_money'] = $deposit_amount;
+        $record_add_buy_row['record_date'] = date('Y-m-d');
+        $record_add_buy_row['record_year'] = date('Y');
+        $record_add_buy_row['record_month'] = date('m');
+        $record_add_buy_row['record_day'] = date('d');
+        $record_add_buy_row['record_title'] = $Trade_TypeModel->trade_type[Trade_TypeModel::DEPOSIT];
+        $record_add_buy_row['record_time'] = date('Y-m-d H:i:s');
+        $record_add_buy_row['trade_type_id'] = Trade_TypeModel::DEPOSIT;
+        $record_add_buy_row['user_type'] = 1;    //收款方
+        $record_add_buy_row['record_status'] = RecordStatusModel::IN_HAND;
+
+        $Consume_RecordModel->addRecord($record_add_buy_row);
+
+        if ($flag && $Union_OrderModel->sql->commitDb()) {
+            $key = Yf_Registry::get('shop_api_key');
+            $url = Yf_Registry::get('shop_api_url');
+            $shop_app_id = Yf_Registry::get('shop_app_id');
+            //发送站内信
+            get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Message&met=sendMessage&typ=json', $url), ['code' => 'deposit_reminder', 'user_id' => $buyer, 'user_name' => $buyer_name, 'status' => '', 'amount' => $deposit_amount, 'dhm' => '', 'app_id' => $shop_app_id]);
+
+            $msg = 'success';
+            $status = 200;
+        } else {
+            $Union_OrderModel->sql->rollBackDb();
+            $m = $Union_OrderModel->msg->getMessages();
+            $msg = $m ? $m[0] : _('failure');
+            $status = 250;
+        }
+
+        $data = array('uorder' => $uorder);
+
+        if ($_REQUEST['returnData'] == 1) {
+            return $data;
+        }
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
+
+    /**
+     * 修改支付密码
+     */
+    public function editUserPayPassword()
+    {
+        $user_id = request_string('user_id');
+        $password = request_string('password');
+
+        if ($password)
+        {
+            $User_BaseModel = new User_BaseModel();
+            $user_base = $User_BaseModel->getOne($user_id);
+            if($user_base['user_pay_passwd'] == md5($password)){
+                $msg    = 'success';
+                $status = 200;
+            }else{
+                $user_base_row = array();
+                $user_base_row['user_pay_passwd'] = md5($password);
+                $flag                             = $User_BaseModel->editBase($user_id, $user_base_row);
+
+                if ($flag !== false)
+                {
+                    $msg    = 'success';
+                    $status = 200;
+                }
+                else
+                {
+                    $msg    = 'failure';
+                    $status = 250;
+                }
+            }
+        }
+        else
+        {
+            $msg = '密码不能为空';
+            $status = 250;
+        }
+
+        $data = array();
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
+
 }
 
 ?>

@@ -114,7 +114,7 @@ class User_BaseModel extends User_Base
         }
         list($count, $before_time) = explode('-', $cache_val);
 
-        if ($count >= self::PAYMENT_PASSWORD_MISTAKE_BOUT_LIMIT) {
+        if ($count > self::PAYMENT_PASSWORD_MISTAKE_BOUT_LIMIT) {
             if (time() - $before_time <= self::PAYMENT_PASSWORD_MISTAKE_INTERVAL) {
                 return true;
             } else {

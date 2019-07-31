@@ -30,6 +30,11 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 echo "selected='selected'";
             } ?>><?=__('卖家审核通过')?>
             </option>
+            <option value="21" <?php if ($data['state'] == 21)
+            {
+                echo "selected='selected'";
+            } ?>><?=__('等待买家退货')?>
+            </option>
             <option value="4" <?php if ($data['state'] == 4)
             {
                 echo "selected='selected'";

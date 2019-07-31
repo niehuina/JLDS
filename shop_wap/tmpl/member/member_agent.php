@@ -58,7 +58,11 @@ include __DIR__.'/../../includes/header.php';
         <img src="<%=user.user_logo;%>">
         <dl>
             <dt>
-                <%=user.user_name;%><em>Lv<%=user.user_grade;%></em>
+                <%=user.user_name;%>
+                <em><%=user.user_grade;%></em>
+                <% if(user.user_statu == 1){%>
+                <span class="fr">已退出</span>
+                <%}%>
             </dt>
             <dd><%=user_mobile;%>&nbsp;&nbsp;<%=user.user_regtime;%></dd>
         </dl>

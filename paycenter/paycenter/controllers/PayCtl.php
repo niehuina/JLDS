@@ -668,4 +668,17 @@ EOT;
 
 		$this->data->addBody(-140, ['orderString'=> $result, 'APPID'=> APPID_DEF, 'MCHID'=> MCHID_DEF], 'success', 200);
 	}
+
+    /**
+     * 取得unionOrder信息
+     */
+    public function getUnionOrderInfo()
+    {
+        $uorder_id = request_string('uorder');
+
+        $unionOrderModel = new Union_OrderModel();
+        $uorder_data = $unionOrderModel->getOne($uorder_id);
+
+        $this->data->addBody(-140, $uorder_data, 'success', 200);
+    }
 }

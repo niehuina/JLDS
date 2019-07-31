@@ -385,9 +385,9 @@ class WebPosApi_OrderCtl extends WebPosApi_Controller
 
         //开始写入订单表
         $Number_SeqModel = new Number_SeqModel();
-        $prefix          = sprintf('%s-%s-', Yf_Registry::get('shop_app_id'), date('YmdHis'));
+        $prefix          = sprintf('%s-', date('YmdHis'));
         $order_number    = $Number_SeqModel->createSeq($prefix);
-        $order_id 		 = sprintf('%s-%s-%s-%s', 'DD', $shop_info['user_id'], $shop_id, $order_number);
+        $order_id 		 = sprintf('%s-%s', 'DD', $order_number);
 
 		//开启事物
 		$this->Order_BaseModel->sql->startTransactionDb();

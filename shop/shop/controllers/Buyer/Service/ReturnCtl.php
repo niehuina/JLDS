@@ -300,7 +300,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		//判断这件“退款/退货”商品是否还有可退数量（退款，退货都会退还商品数量）
 		$this_goods_return = $this->orderReturnModel->getByWhere(array(
 			'order_goods_id' => $goods_id,
-			'return_state:!=' => Order_ReturnModel::RETURN_SELLER_UNPASS,
+			'return_state:!=' => Order_ReturnModel::RETURN_PLAT_UNPASS,
 
 		));
 		//“退款/退货”商品总的退还件数
@@ -318,7 +318,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		//查找该笔订单已经进行过或正进行中的的退款，退货
 		$order_return = $this->orderReturnModel->getByWhere(array(
 			'order_number' => $data['order']['order_id'],
-			'return_state:!=' => Order_ReturnModel::RETURN_SELLER_UNPASS
+			'return_state:!=' => Order_ReturnModel::RETURN_PLAT_UNPASS
 		));
 		//订单已经退款退货的金额（包括与同意的退款和正在审核中的退款）
 		$order_return_cash = array_sum(array_column($order_return, 'return_cash'));
@@ -404,9 +404,9 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		$goods_id         = request_int("goods_id");         //退货订单商品id
 		$flag2            = true;
 		$Number_SeqModel  = new Number_SeqModel();
-		$prefix           = sprintf('%s-%s-', Yf_Registry::get('shop_app_id'), date('YmdHis'));
+		$prefix           = sprintf('%s-', date('YmdHis'));
 		$return_number    = $Number_SeqModel->createSeq($prefix);
-		$return_id        = sprintf('%s-%s-%s-%s', 'TD', Perm::$userId, 0, $return_number);
+		$return_id        = sprintf('%s-%s-%s', 'TD', $return_number);
 
 		$field['return_message']   = request_string("return_message");    //“退款/退货”说明
 		$field['return_reason_id']   = request_string("return_reason_id");  //“退款/退货”原因
@@ -508,7 +508,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 			$return       = $this->orderReturnModel->getByWhere(array(
 				'order_goods_id' => $goods_id,
 				'return_type' => Order_ReturnModel::RETURN_TYPE_GOODS,
-				'return_state:!=' => Order_ReturnModel::RETURN_SELLER_UNPASS
+				'return_state:!=' => Order_ReturnModel::RETURN_PLAT_UNPASS
 			));
 		}
 
@@ -517,7 +517,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		//判断这件“退款/退货”商品是否还有可退数量（退款，退货都会退还商品数量）
 		$this_goods_return = $this->orderReturnModel->getByWhere(array(
 			'order_goods_id' => $goods_id,
-			'return_state:!=' => Order_ReturnModel::RETURN_SELLER_UNPASS
+			'return_state:!=' => Order_ReturnModel::RETURN_PLAT_UNPASS
 		));
 		//“退款/退货”商品总的退还件数
 		$this_goods_return_num = array_sum(array_column($this_goods_return, 'order_goods_num'));
@@ -539,7 +539,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		//查找该笔订单已经进行过或正进行中的的退款，退货
 		$order_return = $this->orderReturnModel->getByWhere(array(
 			'order_number' => $order['order_id'],
-			'return_state:!=' => Order_ReturnModel::RETURN_SELLER_UNPASS
+			'return_state:!=' => Order_ReturnModel::RETURN_PLAT_UNPASS
 		));
 		//订单已经退款退货的金额（包括与同意的退款和正在审核中的退款）
 		$order_return_cash = array_sum(array_column($order_return, 'return_cash'));
@@ -777,9 +777,9 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		$Order_StateModel = new Order_StateModel();
 		$flag2            = true;
 		$Number_SeqModel  = new Number_SeqModel();
-		$prefix           = sprintf('%s-%s-', Yf_Registry::get('shop_app_id'), date('YmdHis'));
-		$return_number    = $Number_SeqModel->createSeq($prefix);
-		$return_id        = sprintf('%s-%s-%s-%s', 'TD', Perm::$userId, 0, $return_number);
+        $prefix           = sprintf('%s-', date('YmdHis'));
+        $return_number    = $Number_SeqModel->createSeq($prefix);
+        $return_id        = sprintf('%s-%s-%s', 'TD', $return_number);
 
 		$field['return_message']       = __('服务商品过期自动退款');
 		$field['return_code']          = $return_id;
@@ -862,6 +862,32 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 
 	}
 
+    public function sendReturnGoods()
+    {
+        $order_return_id         = request_int("order_return_id");
+
+        $return          = $this->orderReturnModel->getOne($order_return_id);
+        $goods               = $this->orderGoodsModel->getOne($return['goods_id']);
+
+        $edit_row['return_state'] = Order_ReturnModel::RETURN_GOODS;
+        $flag = $this->orderReturnModel->editReturn($order_return_id, $edit_row);
+        if ($goods['order_goods_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS){
+        }
+
+        if ($flag !== false)
+        {
+            $status = 200;
+            $msg    = __('success');
+        }
+        else
+        {
+            $status = 250;
+            $msg    = __('failure');
+        }
+
+        $data = array();
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
 
 	public function agree()
 	{
@@ -1129,9 +1155,9 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		check_rs($edit_flag,$re_rows);
 
 		$Number_SeqModel  = new Number_SeqModel();
-		$prefix           = sprintf('%s-%s-', Yf_Registry::get('shop_app_id'), date('YmdHis'));
-		$return_number    = $Number_SeqModel->createSeq($prefix);
-		$return_id        = sprintf('%s-%s-%s-%s', 'SPTD', Perm::$userId, 0, $return_number);
+        $prefix           = sprintf('%s-', date('YmdHis'));
+        $return_number    = $Number_SeqModel->createSeq($prefix);
+        $return_id        = sprintf('%s-%s-%s', 'SPTD', $return_number);
 
 		$cond_row['order_number'] = $order['order_id'];
 		$cond_row['return_message']  = $return_message;
@@ -1168,6 +1194,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 			return false;
 		}
 	}
+
 }
 
 ?>

@@ -506,6 +506,37 @@ class Api_ConfigCtl extends Api_Controller
 				$init_rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Config&met=edit&typ=json', $url), $formvars);
 
 				}
+
+
+            if ('sms' == $config_type)
+            {
+
+                $str = '<?php
+
+$sms_config = array();
+
+$sms_config[\'sms_url\'] = \''.$config_value_row['sms_url'].'\';
+$sms_config[\'sms_account\'] = \''.$config_value_row['sms_account'].'\';
+$sms_config[\'sms_pass\'] = \''.$config_value_row['sms_pass'].'\';
+$sms_config[\'sms_signature\'] = \'【'.$config_value_row['sms_signature'].'】\';
+
+Yf_Registry::set(\'sms_config\', $sms_config);
+
+return $sms_config;
+?>';
+
+                $server_id = Yf_Registry::get('server_id');
+                if (is_file(INI_PATH . '/sms_' . $server_id . '.ini.php'))
+                {
+                    $file = INI_PATH . '/sms_' . $server_id . '.ini.php';
+                }
+                else
+                {
+                    $file = INI_PATH . '/sms.ini.php';
+                }
+
+                $flag = file_put_contents($file, $str);
+            }
 			
 			
 		}

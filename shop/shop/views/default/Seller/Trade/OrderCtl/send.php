@@ -421,7 +421,7 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
             {
                 $('button[nc_value]').removeAttr("disabled").removeClass("button_disabled");
                 Public.tips( {content: '<?=__('请设置发货地址')?>', type: 1} );
-                return;
+                return false;
             }
 
             var $this = $(this),

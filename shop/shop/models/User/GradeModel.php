@@ -132,7 +132,6 @@ class User_GradeModel extends User_Grade
             $order_Base = new Order_BaseModel();
             $cond_row['buyer_user_id'] = $user_id;
             $cond_row['order_status'] = Order_StateModel::ORDER_FINISH;
-            $cond_row['order_refund_status'] = Order_StateModel::ORDER_REFUND_NO;
             $order_sum_amount = $order_Base->getSumOrderPaymentAmount($cond_row);
             Yf_Log::log('order_sum_amount:'.$order_sum_amount, Yf_Log::LOG, 'debug');
 
@@ -178,6 +177,8 @@ class User_GradeModel extends User_Grade
             $this->updateUserGradeToUcenter($user_id, $user_grade);
 
             return $flag;
+        }else{
+            $this->updateUserGradeToUcenter($user_id, $user['user_grade']);
         }
 
         if($user_grade == 3){
@@ -216,9 +217,10 @@ class User_GradeModel extends User_Grade
         if($can_update_grade){
             Yf_Log::log('updateGradePartner:'.$user_id, Yf_Log::LOG, 'user_update');
             //更新用户级别
-            $cond_row['user_grade'] = $user_grade;
-            $cond_row['user_grade_update_date'] = get_date_time();
-            $flag                   = $User_InfoModel->editInfo($user_id, $cond_row);
+            $u_row['user_grade'] = $user_grade;
+            $u_row['user_grade_update_date'] = get_date_time();
+            $u_row['user_update_partner_date'] = get_date_time();
+            $flag                   = $User_InfoModel->editInfo($user_id, $u_row);
 
             //添加用户晋级log
             $log['user_id'] = $user_id;
@@ -269,15 +271,17 @@ class User_GradeModel extends User_Grade
 
                 //例如：前三年每年发展10个（及以上）会员
                 $s_user_grade = 2; //1.普通用户;2:会员;3:合伙人;4:高级合伙人
+                $can_update_grade = true;
                 for ($y = 1, $temp_date = $user_pay_shares_date; $y <= $user_grade_year_num; $y++) {
                     $end_date = date('Y-m-d 00:00:00', strtotime('+1 year', strtotime($temp_date)));
                     $User_GradeLogModel = new User_GradeLogModel();
                     $user_count = $User_GradeLogModel->getUserCount($user_id, $s_user_grade, $temp_date, $end_date);
-                    if ($user_count < $user_grade_per_year) break;
+                    if ($user_count < $user_grade_per_year) {
+                        $can_update_grade = false;
+                        break;
+                    }
                     $temp_date = $end_date;
                 }
-
-                $can_update_grade = true;
             }
         }
 
@@ -317,10 +321,11 @@ class User_GradeModel extends User_Grade
         if ($can_update_grade) {
             Yf_Log::log('updateGradeGPartner:'.$user_id, Yf_Log::LOG, 'user_update');
             //更新用户级别
-            $cond_row['user_grade'] = $user_grade;
-            $cond_row['user_grade_update_date'] = get_date_time();
-            $cond_row['user_parent_id'] = 0;
-            $flag = $User_InfoModel->editInfo($user_id, $cond_row);
+            $u_row['user_grade'] = $user_grade;
+            $u_row['user_grade_update_date'] = get_date_time();
+            $u_row['uset_update_g_partner_date'] = get_date_time();
+            $u_row['user_parent_id'] = 0;
+            $flag = $User_InfoModel->editInfo($user_id, $u_row);
 
             //添加用户晋级log
             $User_GradeLogModel = new User_GradeLogModel();
@@ -360,7 +365,7 @@ class User_GradeModel extends User_Grade
         }
     }
 
-    private function updateUserGradeToUcenter($user_id, $user_grade){
+    public function updateUserGradeToUcenter($user_id, $user_grade){
         //本地读取远程信息
         $key = Yf_Registry::get('ucenter_api_key');
         $api_url = Yf_Registry::get('ucenter_api_url');

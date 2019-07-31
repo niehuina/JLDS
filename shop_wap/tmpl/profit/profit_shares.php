@@ -16,7 +16,30 @@ include __DIR__ . '/../../includes/header.php';
         <title>账单明细</title>
         <link rel="stylesheet" type="text/css" href="../../css/base.css">
         <link rel="stylesheet" type="text/css" href="../../css/nctouch_member.css">
-
+        <style>
+            .nctouch-log-list li dl{
+                padding-left: 0px;
+            }
+            .nctouch-log-list li dt{
+                font-size: 0.6rem;
+                width: 240px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .nctouch-log-list li dd{
+                line-height: unset;
+            }
+            .nctouch-log-list li .money{
+                font-size: 0.6rem;
+            }
+            .nctouch-log-list li dl.pl45{
+                padding-left: 45px;
+            }
+            .nctouch-log-list li dl.pl45 dt{
+                width: 230px;
+            }
+        </style>
     </head>
 
     <body>
@@ -46,7 +69,6 @@ include __DIR__ . '/../../includes/header.php';
         <% if(items.length >0){%>
             <% for (var k in items) { var v = items[k]; %>
             <li data-order-id="<%=v.order_id;%>" class="deposit">
-            <img src="../../images/new/member_monelist_add.png">
             <dl>
                 <dt>
                     <%=v.record_title;%>

@@ -9,12 +9,15 @@
 class Order_ReturnModel extends Order_Return
 {
 
-	const RETURN_WAIT_PASS      = 1;
-	const RETURN_SELLER_PASS    = 2;
-	const RETURN_SELLER_UNPASS  = 3;
-	const RETURN_SELLER_GOODS   = 4;
-	const RETURN_PLAT_PASS      = 5;
-	const RETURN_PLAT_UNPASS    = 6;
+    const RETURN_WAIT_PASS      = 1;
+    const RETURN_SELLER_PASS    = 2;
+    const RETURN_SELLER_UNPASS  = 3;
+    const RETURN_GOODS          = 21;
+    const RETURN_SELLER_GOODS   = 4;
+    const RETURN_PLAT_PASS      = 5;
+    const RETURN_PLAT_UNPASS    = 6;
+    const RETURN_COMPLETE       = 7;
+
 	const RETURN_TYPE_ORDER     = 1;  //退款
 	const RETURN_TYPE_GOODS     = 2;	//退货
 	const RETURN_TYPE_VIRTUAL   = 3; //服务商品退款
@@ -30,6 +33,8 @@ class Order_ReturnModel extends Order_Return
 		'3' => 'seller_unpass',
 		'4' => 'seller_goods',
 		'5' => 'plat_pass',
+        '6' => 'plat_unpass',
+        '21' => 'seller_pass',
 	);
 
 	public $return_state;
@@ -40,10 +45,12 @@ class Order_ReturnModel extends Order_Return
 		parent::__construct();
 		$this->return_state = array(
 			'1' => __("等待卖家审核"),
-			'2' => __("卖家审核通过"),
+            '2' => __("卖家审核通过"),
+            '21' => __("等待买家退货"),
 			'3' => __("卖家审核未通过"),
 			'4' => __("等待平台审核"),
 			'5' => __("退款/货完成"),
+            '6' => __("退款/退款关闭"),
 		);
 		$this->return_type  = array(
 			'1' => __("退款"),
@@ -65,7 +72,7 @@ class Order_ReturnModel extends Order_Return
 
 		foreach ($data['items'] as $k => $v)
 		{
-			if($v['return_shop_handle'] == 3)
+			if($v['return_shop_handle'] == 3 && $v['return_state'] == self::RETURN_SELLER_UNPASS)
 			{
 				$data['items'][$k]['return_state_text'] = @$this->return_state[$v['return_state']].'('.@$this->return_state[$v['return_shop_handle']].')';
 			}

@@ -331,8 +331,6 @@ class Seller_Service_ReturnCtl extends Seller_Controller
 			$order_finish = true;
 		}
 
-
-
 		if ($return['seller_user_id'] == Perm::$shopId)
 		{
 
@@ -446,7 +444,17 @@ class Seller_Service_ReturnCtl extends Seller_Controller
 			//退款退货提醒
 			$message = new MessageModel();
 			$message->sendMessage('Refund return reminder', $return['buyer_user_id'], $return['buyer_user_account'], $order_id = NULL, $shop_name = NULL, 0, MessageModel::ORDER_MESSAGE);
-		}
+
+            //如果退款，商家审核通过，则平台默认即通过
+            if($return['return_type'] ==  Order_ReturnModel::RETURN_TYPE_ORDER){
+                $formvars['order_return_id'] = $order_return_id;
+                $formvars['return_platform_message'] = "同意";
+                $rs = $this->getShopApi('Api_Trade_Return', 'agree', $formvars, 'json');
+
+                $status = $rs['status'];
+                $msg    = $rs['msg'];
+            }
+        }
 		else
 		{
 			$this->orderReturnModel->sql->rollBackDb();
@@ -506,6 +514,16 @@ class Seller_Service_ReturnCtl extends Seller_Controller
 				$message->sendMessage('Refund return reminder', $return['buyer_user_id'], $return['buyer_user_account'], $order_id = NULL, $shop_name = NULL, 0, 1);
 				$status = 200;
 				$msg    = __('success');
+
+                //如果是退货，商家确认收货后，则平台默认即通过
+                if($return['return_type'] ==  Order_ReturnModel::RETURN_TYPE_GOODS ){
+                    $formvars['order_return_id'] = $order_return_id;
+                    $formvars['return_platform_message'] = "默认通过";
+                    $rs = $this->getShopApi('Api_Trade_Return', 'agree', $formvars, 'json');
+
+                    $status = $rs['status'];
+                    $msg    = $rs['msg'];
+                }
 			}
 			else
 			{
@@ -543,7 +561,7 @@ class Seller_Service_ReturnCtl extends Seller_Controller
 		$return = $this->orderReturnModel->getOne($order_return_id);
 		if ($return['seller_user_id'] == Perm::$shopId)
 		{
-            $data['return_goods_return'] = 0;
+            //$data['return_goods_return'] = 0;
 			$data['return_shop_message'] = $return_shop_message;
 			$data['return_state']        = Order_ReturnModel::RETURN_SELLER_UNPASS;
 			$data['return_shop_handle']        = Order_ReturnModel::RETURN_SELLER_UNPASS;

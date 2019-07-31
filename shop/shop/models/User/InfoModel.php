@@ -14,6 +14,11 @@ class User_InfoModel extends User_Info
 		"2" => '保密'
 	);
 
+	public static $status = array(
+	    "0" => '正常',
+	    "1" => '已退出'
+    );
+
 	/**
 	 * 读取分页列表
 	 *
@@ -161,7 +166,7 @@ class User_InfoModel extends User_Info
         $return_model = new Order_ReturnModel();
         $cond_row5 = array();
         $cond_row5['buyer_user_id']        = $user_id;
-        $cond_row5['return_state:!='] = Order_ReturnModel::RETURN_PLAT_PASS;
+        $cond_row5['return_state:not in'] = [Order_ReturnModel::RETURN_PLAT_PASS, Order_ReturnModel::RETURN_PLAT_UNPASS];
         $order_count['return'] = $return_model->getCount($cond_row5);
         return $order_count;
     }
@@ -182,6 +187,24 @@ class User_InfoModel extends User_Info
         $rs = array_values($rs);
         return $rs[0];
     }
+
+    public function getUserDirectChildrenNoPartner($user_id)
+    {
+        $sql = "select getUserChildrenNoPartner({$user_id})";
+        $data_rows = $this->sql->getAll($sql);
+        $rs = current($data_rows);
+        $rs = array_values($rs);
+        return $rs[0];
+    }
+
+    public function getUserDirectChildren($user_id)
+    {
+        $cond_row['user_parent_id'] = $user_id;
+        $cond_row['user_grade:<='] = 3;
+        $user_ids = $this->getKeyByWhere($cond_row);
+        return $user_ids;
+    }
+
     public function user_count($cond_row)
     {
         return $this->getNum($cond_row);
@@ -189,7 +212,7 @@ class User_InfoModel extends User_Info
 
     public function getUserInfoByKeys($keys)
     {
-        $where = 'user_grade >= 2 and user_realname = \''.$keys.'\' or user_mobile = \''.$keys.'\'';
+        $where = ' user_statu = 0 and user_grade >= 2 and user_realname = \''.$keys.'\' or user_mobile = \''.$keys.'\'';
 
         $sql = 'select user_id, user_name, user_realname as user_truename, user_mobile from '.$this->_tableName.' where '.$where;
         $sql .= $this->sql->getLimit();

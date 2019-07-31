@@ -204,6 +204,21 @@ class Controller extends Yf_AppController
         $rs = get_url_with_encrypt($key, $url, $formvars);
         return $rs;
     }
+
+    public function getShopApi($data, $ctl, $met, $typ = 'json')
+    {
+        //本地读取远程信息
+        $key = Yf_Registry::get('shop_api_key');
+        $api_url = Yf_Registry::get('shop_api_url');
+        $app_id = Yf_Registry::get('shop_app_id');
+
+        $formvars            = $data;
+        $formvars['app_id']  = $app_id;
+
+        $url = sprintf('%s?ctl=%s&met=%s&typ=%s', $api_url, $ctl, $met, $typ);
+        $rs = get_url_with_encrypt($key, $url, $formvars);
+        return $rs;
+    }
 }
 
 ?>

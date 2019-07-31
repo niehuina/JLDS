@@ -52,9 +52,11 @@ class Plugin_Directseller implements Yf_Plugin_Interface
 	 *
 	 * @return mixed
 	 */
-	public function regDone($user_id)
+	public function regDone($user_id, $parent_id)
 	{
 		$rec = $_COOKIE['recserialize'];
+        Yf_Log::log($rec, Yf_Log::LOG, 'debug');
+        Yf_Log::log($parent_id, Yf_Log::LOG, 'debug');
         if($rec){
             $b = (strpos($rec, "u"));
             $e = (strpos($rec, "s"));
@@ -65,8 +67,13 @@ class Plugin_Directseller implements Yf_Plugin_Interface
                 $data['user_parent_id'] = Web_ConfigModel::value('self_user_id');
             }
         }else{
-            $data['user_parent_id'] = Web_ConfigModel::value('self_user_id');
+            if($parent_id){
+                $data['user_parent_id'] = $parent_id;
+            }else{
+                $data['user_parent_id'] = Web_ConfigModel::value('self_user_id');
+            }
         }
+
 
         Yf_Log::log($data, Yf_Log::LOG, 'debug');
 		/* $User_BaseModel = new User_BaseModel();

@@ -341,16 +341,18 @@ $(function () {
             },
 
             userExit: function (a) {
-                //4:退出
-                a && Public.ajaxPost('./index.php?ctl=User_Base&met=editStatus&typ=json', {
-                    id: a,
-                    server_status: 4
-                }, function (data) {
-                    data && 200 == data.status ? (parent.Public.tips({
-                        content: '用户退出成功！'
-                    }), $('#grid').jqGrid('setCell', a, 'operate', 4)) : parent.Public.tips({
-                        type: 1,
-                        content: '用户退出失败！' + c.msg
+                $.dialog.confirm('是否确定退出？如果选择退出，则视为放弃您的推荐人员中未确认收货的订单带给您的收益，请谨慎选择!', function () {
+                    //4:退出
+                    a && Public.ajaxPost('./index.php?ctl=User_Base&met=editStatus&typ=json', {
+                        id: a,
+                        server_status: 4
+                    }, function (data) {
+                        data && 200 == data.status ? (parent.Public.tips({
+                            content: '用户退出成功！'
+                        }), $('#grid').jqGrid('setCell', a, 'operate', 4)) : parent.Public.tips({
+                            type: 1,
+                            content: '用户退出失败！' + c.msg
+                        })
                     })
                 })
             },

@@ -24,6 +24,9 @@ include __DIR__ . '/../../includes/header.php';
             .nctouch-log-list li dt{
                 font-size: 0.6rem;
             }
+            .nctouch-log-list li dd{
+                line-height: unset;
+            }
             .nctouch-log-list li .money{
                 font-size: 0.6rem;
             }
@@ -102,8 +105,7 @@ include __DIR__ . '/../../includes/header.php';
         <% if(records >0){%>
         <% for (var k in items) { var v = items[k]; %>
         <li data-order-id="<%=v.order_id;%>" class="deposit">
-            <img src="../../images/new/member_monelist_add.png">
-            <dl class="pl45">
+            <dl class="">
                 <dt>
                     <%=v.record_title;%>
                 </dt>

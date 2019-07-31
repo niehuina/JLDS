@@ -25,12 +25,6 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                     } ?>>
                         <a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Service_Return&met=index&state=2"><?= __('退货申请') ?></a>
                     </li>
-                    <li <?php if ($data['state'] == 3)
-                    {
-                        echo 'class="active"';
-                    } ?>>
-                        <a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Service_Return&met=index&state=3"><?= __('服务兑码退款') ?></a>
-                    </li>
                 </ul>
             </div>
 

@@ -28,7 +28,7 @@ include __DIR__.'/../../includes/header.php';
 <header id="header" class="transparent">
     <div class="header-wrap">
         <div class="header-l">
-            <a href="javascript:history.go(-1)">
+            <a href="member.html">
                 <i class="back back2"></i>
             </a>
         </div>

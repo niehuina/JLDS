@@ -7,11 +7,10 @@ include __DIR__ . '/../../includes/header.php';
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="Author" contect="U2FsdGVkX1+liZRYkVWAWC6HsmKNJKZKIr5plAJdZUSg1A==">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-touch-fullscreen" content="yes">
         <meta name="format-detection" content="telephone=no">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1">
@@ -21,30 +20,23 @@ include __DIR__ . '/../../includes/header.php';
         <link rel="stylesheet" type="text/css" href="../../css/nctouch_products_list.css">
         <link rel="stylesheet" type="text/css" href="../../css/nctouch_common.css">
         <style type="text/css">
-            .nctouch-full-mask.left {
-                left: 25%;
-            }
-
-            .nctouch-main-layout-a {
-                top: 0;
-            }
-
             .secreen-layout .bottom {
                 padding: 0.5rem 0;
             }
-
-            #reset {
-                background: #70696a;
-            }
             .list .goods-secrch-list .goods-sold{
                 width: 33%;
+            }
+            .list .goods-secrch-list .goods-name{
+                height: 2rem;
+                max-height: 2.0rem;
+                line-height: 1rem;
             }
         </style>
     </head>
     <body>
     <header id="header" class="nctouch-product-header fixed">
         <div class="header-wrap">
-            <div class="header-l"><a href="javascript:history.go(-1)"> <i class="back"></i> </a></div>
+            <div class="header-l"><a href="member_stock.html"> <i class="back"></i> </a></div>
             <div class="header-title">
                 <h1>个人仓库商品</h1>
             </div>
@@ -97,17 +89,16 @@ include __DIR__ . '/../../includes/header.php';
                 <dt class="goods-name">
                     <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
                         <h4><%=goods.common_info.common_name;%></h4>
-                        <h6><%=goods.common_info.common_jingle;%></h6>
                     </a>
                 </dt>
                 <dd class="goods-assist">
                     <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
-                        <span class="goods-sold">销量
-                            <em><%=goods.common_info.common_salenum;%></em>
-                        </span>
-                        <span class="goods-sold">评论
-                            <em><%=goods.common_info.common_evaluate;%></em>
-                        </span>
+<!--                        <span class="goods-sold">销量-->
+<!--                            <em><%=goods.common_info.common_salenum;%></em>-->
+<!--                        </span>-->
+<!--                        <span class="goods-sold">评论-->
+<!--                            <em><%=goods.common_info.common_evaluate;%></em>-->
+<!--                        </span>-->
                         <span class="goods-sold">库存
                             <em><%=goods.goods_stock;%></em>
                         </span>
@@ -135,6 +126,7 @@ include __DIR__ . '/../../includes/header.php';
     <script type="text/javascript" src="../../js/common.js"></script>
     <script type="text/javascript" src="../../js/libs/template.js"></script>
     <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
+    <script type="text/javascript" src="../../js/libs/ncscroll-load.js"></script>
     <script type="text/javascript" src="../../js/tmpl/member/member_stock_goods.js"></script>
     <!--    <script type="text/javascript" src="../js/tmpl/footer.js"></script>-->
     </html>

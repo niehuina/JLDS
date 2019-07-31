@@ -708,7 +708,7 @@ class Order_BaseModel extends Order_Base
                 $return       = $Order_ReturnModel->getByWhere(array(
                                                                         'order_number' => $val['order_id'],
                                                                         'return_type' => Order_ReturnModel::RETURN_TYPE_ORDER,
-                                                                        'return_state:!=' => Order_ReturnModel::RETURN_PLAT_PASS
+                                                                        'return_state:<' => Order_ReturnModel::RETURN_PLAT_PASS
                                                                     ));
 
                 if ($return) {
@@ -1439,9 +1439,10 @@ class Order_BaseModel extends Order_Base
             $Order_StateModel = new Order_StateModel();
             $flag2            = true;
             $Number_SeqModel  = new Number_SeqModel();
-            $prefix           = sprintf('%s-%s-', Yf_Registry::get('shop_app_id'), date('YmdHis'));
+
+            $prefix           = sprintf('%s-', date('YmdHis'));
             $return_number    = $Number_SeqModel->createSeq($prefix);
-            $return_id        = sprintf('%s-%s-%s-%s', 'TD', Perm::$userId, 0, $return_number);
+            $return_id        = sprintf('%s-%s-%s', 'TD', $return_number);
 
             $field['return_message']       = __('服务商品过期自动退款');
             $field['return_code']          = $return_id;
@@ -1564,8 +1565,9 @@ class Order_BaseModel extends Order_Base
     {
         $order_list = $this->getByWhere($cond_row);
         $order_payment_amount = array_column($order_list, 'order_payment_amount');
+        $order_refund_amount = array_column($order_list, 'order_refund_amount');
 
-        $sum_amount = array_sum($order_payment_amount);
+        $sum_amount = array_sum($order_payment_amount) - array_sum($order_refund_amount);
 
         return $sum_amount;
     }

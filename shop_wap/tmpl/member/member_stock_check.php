@@ -20,39 +20,48 @@ include __DIR__ . '/../../includes/header.php';
         <link rel="stylesheet" type="text/css" href="../../css/nctouch_member.css">
         <link rel="stylesheet" type="text/css" href="../../css/nctouch_products_list.css">
         <link rel="stylesheet" type="text/css" href="../../css/nctouch_common.css">
+        <link rel="stylesheet" type="text/css" href="../../css/nctouch_cart.css">
         <style type="text/css">
-            .nctouch-full-mask.left {
-                left: 25%;
-            }
-
-            .nctouch-main-layout-a {
-                top: 0;
-            }
-
             .secreen-layout .bottom {
                 padding: 0.5rem 0;
             }
 
-            #reset {
-                background: #70696a;
+            .nctouch-cart-item li .goods-info dt.goods-name a{
+                height: 2rem;
+                max-height: 2.0rem;
+                line-height: 1rem;
             }
-            .list .goods-secrch-list .goods-sold{
-                width: 33%;
+
+            .nctouch-cart-item li .edit-area {
+                display: block;
+                position: relative;
+                width: 6rem !important;
+                float: right;
+                top: -0.3rem;
             }
-            .list .goods-secrch-list .goods-info{
-                margin-left: 1.38rem;
+            .edit-area .value-box span{
+                width: 50%;
+            }
+            .value-box span .buy-num, .edit-area .value-box span .buy-num{
+                width: 100%;
+            }
+            .edit-area .value-box .minus, .edit-area .value-box .add{
+                width: 25%;
+            }
+            .edit-area .goods-subtotal{
+                width: 100%;
             }
         </style>
     </head>
     <body>
     <header id="header" class="nctouch-product-header fixed">
         <div class="header-wrap">
-            <div class="header-l"><a href="javascript:history.go(-1)"> <i class="back"></i> </a></div>
+            <div class="header-l"><a href="member_stock.html"> <i class="back"></i> </a></div>
             <div class="header-title">
                 <h1>库存盘点</h1>
             </div>
             <div class="header-r">
-                <a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a>
+                <a href="javascript:void(0);" class="JS-edit fr text">提交</a>
             </div>
         </div>
         <div class="nctouch-nav-layout">
@@ -76,36 +85,50 @@ include __DIR__ . '/../../includes/header.php';
             <input type="button" id="search_btn" value="搜索">
         </div>
         <div id="product_list" class="list">
-            <ul class="goods-secrch-list"></ul>
+            <ul class="nctouch-cart-item"></ul>
         </div>
     </div>
     <div class="fix-block-r">
-        <a href="./views_list.html" class="browse-btn"><i></i></a>
         <a href="javascript:void(0);" class="gotop-btn gotop hide" id="goTopBtn"><i></i></a>
     </div>
     </body>
     <script type="text/html" id="home_body">
         <% var goods_list = data.items; %>
-        <% if(goods_list.length >0){%>
+        <% if(data.records >0){%>
         <%for(j=0;j<goods_list.length;j++){%>
         <% var goods = goods_list[j];
         var goods_id = goods.goods_id;
         %>
-        <li class="goods-item" goods_id="<%=goods.goods_id;%>">
-            <dl class="goods-info">
-                <dt class="goods-name">
-                    <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
-                        <h4><%=goods.common_info.common_name;%></h4>
-                    </a>
-                </dt>
-                <dd class="goods-assist">
-                    <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
-                        <span class="goods-sold">库存
-                            <em><%=goods.goods_stock;%></em>
-                        </span>
-                    </a>
-                </dd>
-            </dl>
+        <li class="cart-litemw-cnt" id="<%=goods.stock_id;%>">
+            <div class="buy-li">
+                <div class="goods-pic">
+                    <a href="<%=WapSiteUrl%>/tmpl/product_detail.html?goods_id=<%=goods.goods_id%>">
+                        <img src="<%=goods.common_info.common_image%>" /> </a>
+                </div>
+                <dl class="goods-info">
+                    <dt class="goods-name">
+                        <a href="<%=WapSiteUrl%>/tmpl/product_detail.html?goods_id=<%=goods.goods_id%>">
+                            <%=goods.common_info.common_name%>
+                        </a>
+                    </dt>
+                    <span class="goods-price">库存：<em><%=goods.goods_stock%></em></span>
+                    <div class="edit-area">
+                        <div class="goods-subtotal">
+                            <div class="value-box">
+                                <span class="minus"><a href="javascript:reduceNum('<%=goods.stock_id;%>');">&nbsp;</a></span>
+                                <!-- s 获取并设置限用数量 -->
+                                <span>
+                                <input type="number" min="0" class="buy-num buynum" name="check_num"
+                                       data-good_name="<%=goods.common_info.common_name%>" onblur="formatNum(this);"
+                                       data-max="<%=goods.goods_stock%>" data-min="0" value="<%=goods.goods_stock%>" />
+                                </span>
+                                <!-- e 获取并设置限用数量-->
+                                <span class="add"><a href="javascript:addNum('<%=goods.stock_id;%>');">&nbsp;</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </dl>
+            </div>
         </li>
         <%}%><%}%>
     </script>

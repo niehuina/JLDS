@@ -66,6 +66,12 @@ include __DIR__ . '/../../includes/header.php';
                     <span style="float: right; margin-right: 50px" id="certificationStatus"></span>
                     <span class="arrow-r"></span></a>
             </li>
+            <li>
+                <a href="pay_password_edit.html">
+                    <h4>支付密码</h4>
+                    <span style="float: right; margin-right: 50px" id="certificationStatus"></span>
+                    <span class="arrow-r"></span></a>
+            </li>
         </ul>
         <ul class="nctouch-default-list mt5">
             <li>

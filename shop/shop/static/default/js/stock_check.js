@@ -143,7 +143,6 @@ function initGrid() {
                 //     select_goods_list[stock_id] = curRowData['goods_stock'];
                 // }
             }
-
         },
         beforeSelectRow: function (rowid, e) {
             var $myGrid = $(this),

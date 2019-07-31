@@ -48,95 +48,103 @@ class Api_User_SharesCtl extends Yf_AppController
         $dividend_year = request_string('dividend_year');
         $type = request_string('type');
 
-        $flag = true;
-        $share_price = Web_ConfigModel::value('shares_price');
-        $shares_dividend = Web_ConfigModel::value('shares_dividend');
-        $User_InfoModel = new User_InfoModel();
-        $User_GradeLogModel = new User_GradeLogModel();
-        if(array_search($type, ['all', 'all_g_partner', 'all_partner']) !== false) {
-            $cond_row = array();
-            if ($type == "all") {
-                $cond_row['user_grade:>='] = 3;
-                $cond_row['user_grade:<='] = 4;
-            } else if ($type == "all_g_partner") {
-                $cond_row['user_grade'] = 4;
-            } else if ($type == "all_partner") {
-                $cond_row['user_grade'] = 3;
-            }
-            $sort = array();
-            $sort['user_regtime'] = 'desc';
-            $user_num = $User_InfoModel->user_count($cond_row);
+        $Shares_DividendModel = new Shares_DividendModel();
+        $shares_list = $Shares_DividendModel->getByWhere(['dividend_year'=>$dividend_year]);
+        if(count($shares_list) == 0){
+            $data['state'] = 220;
+            return $this->data->addBody(-140, $data);
+        }
+        else {
+            $flag = true;
+            $share_price = 1;
+            Web_ConfigModel::value('shares_price');
+            $shares_dividend = Web_ConfigModel::value('shares_dividend');
+            $User_InfoModel = new User_InfoModel();
+            $User_GradeLogModel = new User_GradeLogModel();
+            if (array_search($type, ['all', 'all_g_partner', 'all_partner']) !== false) {
+                $cond_row = array();
+                if ($type == "all") {
+                    $cond_row['user_grade:>='] = 3;
+                    $cond_row['user_grade:<='] = 4;
+                } else if ($type == "all_g_partner") {
+                    $cond_row['user_grade'] = 4;
+                } else if ($type == "all_partner") {
+                    $cond_row['user_grade'] = 3;
+                }
+                $sort = array();
+                $sort['user_regtime'] = 'desc';
+                $user_num = $User_InfoModel->user_count($cond_row);
 
-            $rows = 500;
-            $total_page = ceil($user_num / $rows);
-            Yf_Log::log($total_page, Yf_Log::LOG, 'shares');
-            $total_amount = 0;
-            for ($i = 1; $i <= $total_page; $i = $i + 1) {
-                $user_list = $User_InfoModel->listByWhere($cond_row, $sort, $i, $rows);
-                $user_ids = array_column($user_list['items'], 'user_id');
-                Yf_Log::log($user_ids, Yf_Log::LOG, 'shares');
+                $rows = 500;
+                $total_page = ceil($user_num / $rows);
+                Yf_Log::log($total_page, Yf_Log::LOG, 'shares');
+                $total_amount = 0;
+                for ($i = 1; $i <= $total_page; $i = $i + 1) {
+                    $user_list = $User_InfoModel->listByWhere($cond_row, $sort, $i, $rows);
+                    $user_ids = array_column($user_list['items'], 'user_id');
+                    Yf_Log::log($user_ids, Yf_Log::LOG, 'shares');
 
-                $rs = self::shares_profit($user_ids, $dividend_year, $share_price, $shares_dividend);
-                if ($rs['status'] == 250) {
-                    $flag = false;
-                    break;
-                } else {
-                    $total_amount += $rs['data']['total_amount'] * 1;
+                    $rs = self::shares_profit($user_ids, $dividend_year, $share_price, $shares_dividend);
+                    if ($rs['status'] == 250) {
+                        $flag = false;
+                        break;
+                    } else {
+                        $total_amount += $rs['data']['total_amount'] * 1;
+                    }
+                }
+            } else if (array_search($type, ['all_one_year', 'part']) !== false) {
+                $cond_row = array();
+                $user_ids = array();
+                if ($type == "all_one_year") {
+                    $cond_row['user_grade:>='] = 3;
+                    $cond_row['user_grade:<='] = 4;
+
+                    //获取升级到3级后，>=1年时间的股东
+                    $pre_year = date('Y-m-d H:i:s', strtotime("-1 year"));
+                    $cond_row_log['user_grade_to:in'] = [3, 4];
+                    $cond_row_log['log_date_time:<='] = $pre_year;
+                    $order_row['log_date_time'] = 'asc';
+                    $user_ids_list = $User_GradeLogModel->getUserIdBySql($cond_row_log, $order_row);
+                    $user_ids = array_column($user_ids_list, 'user_id');
+                    Yf_Log::log($user_ids, Yf_Log::LOG, 'shares');
+                } else if ($type == "part") {
+                    $user_ids = request_string('user_list');
+                    $user_ids = decode_json($user_ids);
+                    Yf_Log::log($user_ids, Yf_Log::LOG, 'shares');
+                }
+
+                $rows = 500;
+                $total_amount = 0;
+                for ($i = 0; $i < count($user_ids); $i = $i + $rows) {
+                    $user_ids_temps = array_slice($user_ids, $i, $rows);
+                    $rs = self::shares_profit($user_ids_temps, $dividend_year, $share_price, $shares_dividend);
+                    if ($rs['status'] == 250) {
+                        $flag = false;
+                        break;
+                    } else {
+                        $total_amount += $rs['data']['total_amount'] * 1;
+                    }
                 }
             }
-        }else if(array_search($type, ['all_one_year', 'part']) !== false){
-            $cond_row = array();
-            $user_ids = array();
-            if($type == "all_one_year"){
-                $cond_row['user_grade:>='] = 3;
-                $cond_row['user_grade:<='] = 4;
 
-                //获取升级到3级后，>=1年时间的股东
-                $pre_year = date('Y-m-d H:i:s',strtotime("-1 year"));
-                $cond_row_log['user_grade_to:in'] = [3,4];
-                $cond_row_log['log_date_time:<='] = $pre_year;
-                $order_row['log_date_time'] = 'asc';
-                $user_ids_list = $User_GradeLogModel->getUserIdBySql($cond_row_log, $order_row);
-                $user_ids = array_column($user_ids_list,'user_id');
-                Yf_Log::log($user_ids, Yf_Log::LOG, 'shares');
-            }else if($type == "part"){
-                $user_ids = request_string('user_list');
-                $user_ids = decode_json($user_ids);
-                Yf_Log::log($user_ids, Yf_Log::LOG, 'shares');
+            if ($flag) {
+                $add_row['dividend_datetime'] = get_date_time();
+                $add_row['dividend_year'] = $dividend_year;
+                $add_row['shares_price'] = $share_price;
+                $add_row['shares_dividend'] = $shares_dividend;
+                $add_row['dividend_amount'] = $total_amount;
+                $id = $Shares_DividendModel->addSharesDividend($add_row, true);
             }
 
-            $rows = 500;
-            $total_amount = 0;
-            for($i = 0; $i < count($user_ids); $i = $i + $rows) {
-                $user_ids_temps = array_slice($user_ids,$i,$rows);
-                $rs = self::shares_profit($user_ids_temps, $dividend_year, $share_price, $shares_dividend);
-                if ($rs['status'] == 250) {
-                    $flag = false;
-                    break;
-                } else {
-                    $total_amount += $rs['data']['total_amount'] * 1;
-                }
+            if ($flag && $id) {
+                $status = 200;
+                $message = __('success');
+            } else {
+                $status = 250;
+                $message = __('failure');
             }
+            $this->data->addBody(-140, array(), $message, $status);
         }
-
-        if($flag){
-            $Shares_DividendModel = new Shares_DividendModel();
-            $add_row['dividend_datetime'] = get_date_time();
-            $add_row['dividend_year'] = $dividend_year;
-            $add_row['shares_price'] = $share_price;
-            $add_row['shares_dividend'] = $shares_dividend;
-            $add_row['dividend_amount'] = $total_amount;
-            $id = $Shares_DividendModel->addSharesDividend($add_row, true);
-        }
-
-        if($flag && $id){
-            $status = 200;
-            $message = __('success');
-        }else{
-            $status = 250;
-            $message = __('failure');
-        }
-        $this->data->addBody(-140, array(), $message, $status);
     }
 
     private function shares_profit($user_ids, $dividend_year, $share_price, $shares_dividend)
@@ -167,6 +175,7 @@ class Api_User_SharesCtl extends Yf_AppController
         $rows = request_int('rows', 20);
 
         $cond_row = array();
+        $cond_row['user_statu'] = 0;
         $cond_row['user_grade:>='] = 3;
         $cond_row['user_grade:<='] = 4;
 

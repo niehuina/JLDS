@@ -231,8 +231,10 @@ class Api_ConfigCtl extends Api_Controller
 
 $sms_config = array();
 
+$sms_config[\'sms_url\'] = \''.$config_value_row['sms_url'].'\';
 $sms_config[\'sms_account\'] = \''.$config_value_row['sms_account'].'\';
 $sms_config[\'sms_pass\'] = \''.$config_value_row['sms_pass'].'\';
+$sms_config[\'sms_signature\'] = \'【'.$config_value_row['sms_signature'].'】\';
 
 Yf_Registry::set(\'sms_config\', $sms_config);
 

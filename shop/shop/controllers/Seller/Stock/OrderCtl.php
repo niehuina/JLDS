@@ -232,10 +232,10 @@ class Seller_Stock_OrderCtl extends Seller_Controller
             $User_InfoModel = new User_InfoModel();
             $user_info = $User_InfoModel->getOne($user_id);
 
-            $prefix = sprintf('%s-%s-', Yf_Registry::get('shop_app_id'), date('YmdHis'));
+            $prefix = sprintf('%s-', date('YmdHis'));
             $Number_SeqModel = new Number_SeqModel();
             $order_number = $Number_SeqModel->createSeq($prefix);
-            $order_id = sprintf('%s-%s-%s-%s', 'BH', $user_id, $shop_id, $order_number);
+            $order_id = sprintf('%s-%s', 'BH', $order_number);
 
             $order_row = array();
             $order_row['stock_order_id'] = $order_id;
@@ -912,9 +912,9 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                         //判断修改用户的备货金
                         $formvars = array();
                         $formvars['order_id'] = $order_id;
-                        $formvars['payment'] = 1;
+                        $formvars['payment'] = 0;
                         $formvars['from_app_id'] = Yf_Registry::get('shop_app_id');
-                        $rs = $this->getPayCenterUrl('Api_Pay_Pay', 'confirmOrder', $formvars);
+                        $rs = $this->getPayCenterUrl('Api_Pay_Pay', 'confirmStockOrder', $formvars);
                         if ($rs['status'] == 250) {
                             $rs_flag = false;
                             check_rs($rs_flag, $rs_row);
@@ -1042,9 +1042,9 @@ class Seller_Stock_OrderCtl extends Seller_Controller
                 //判断修改用户的备货金
                 $formvars = array();
                 $formvars['order_id']    = $order_id;
-                $formvars['payment'] = 1;
+                $formvars['payment'] = 0;
                 $formvars['from_app_id'] = Yf_Registry::get('shop_app_id');
-                $rs = $this->getPayCenterUrl('Api_Pay_Pay', 'confirmOrder', $formvars);
+                $rs = $this->getPayCenterUrl('Api_Pay_Pay', 'confirmStockOrder', $formvars);
                 if($rs['status'] == 250)
                 {
                     $rs_flag = false;
@@ -1481,11 +1481,12 @@ class Seller_Stock_OrderCtl extends Seller_Controller
         $order_list = $Stock_OrderModel->listByWhere($cond_row, $order_row, $page, $rows);
         foreach ($order_list['items'] as $key=>$order){
             $order_list['items'][$key]['order_create_text'] = '创建日'.date('m-d H:i', strtotime($order['order_create_time']));
-            if($order['order_settlement_time']){
-                $order_list['items'][$key]['order_settlement_text'] = '结算日'.date('m-d H:i', strtotime($order['order_settlement_time']));
-            }else{
-                $order_list['items'][$key]['order_settlement_text'] = '';
-            }
+//            if($order['order_settlement_time']){
+//                $order_list['items'][$key]['order_settlement_text'] = '结算日'.date('m-d H:i', strtotime($order['order_settlement_time']));
+//            }else{
+//                $order_list['items'][$key]['order_settlement_text'] = '';
+//            }
+            $order_list['items'][$key]['order_settlement_text'] = '';
             $order_list['items'][$key]['order_commission'] = $order['order_payment_amount_vip'] - $order['order_payment_amount_partner'];
         }
 
