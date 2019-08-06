@@ -36,8 +36,7 @@ include __DIR__.'/../../includes/header.php';
             <h1>我的商城</h1>
         </div>
         <div class="header-r">
-            <a href="member_setting.html"><img src="../../../images/new/setting.png" width="20px" height="20px" ></a>
-            <a href="chat_list.html"><img src="../../images/message_b.png" width="20px" height="20px"></a>
+            <a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a>
         </div>
     </div>
     <div class="nctouch-nav-layout">
@@ -45,7 +44,7 @@ include __DIR__.'/../../includes/header.php';
             <ul>
                 <li><a href="../../index.html"><i class="home"></i>首页</a></li>
                 <li><a href="../search.html"><i class="search"></i>搜索</a></li>
-                <li><a href="../tmpl/cart_list.html"><i class="cart"></i>购物车<sup style="display: inline;"></sup></a></li>
+                <li><a href="/tmpl/cart_list.html"><i class="cart"></i>购物车<sup style="display: inline;"></sup></a></li>
                 <li><a href="javascript:void(0);"><i class="message"></i>消息<sup></sup></a></li>
             </ul>
         </div>
@@ -53,7 +52,7 @@ include __DIR__.'/../../includes/header.php';
 </header>
 <div class="scroller-body">
     <div class="scroller-box">
-        <div class="member-top member-top1"></div>
+        <div class="member-top"></div>
         <div class="nctouch-main-layout">
             <ul class="nctouch-default-list mt5">
                 <li>

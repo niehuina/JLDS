@@ -14,7 +14,7 @@ include __DIR__ . '/../../includes/header.php';
     </head>
 
     <body>
-    <header id="header" class="fixed">
+    <header id="header" class="fixed write">
         <div class="header-wrap">
             <div class="header-l">
                 <a href="javascript:history.go(-1);"> <i class="back"></i> </a>
@@ -39,7 +39,7 @@ include __DIR__ . '/../../includes/header.php';
                             <br>
                             <br>
                             <a href="javascript:void(0);">
-                                <input type="button" id="btnUpload" class="btn-green"
+                                <input type="button" id="btnUpload" class="btn-submit"
                                        style="width: 50%; line-height: 1.5rem;margin-left: 0rem;margin-top: 0.1rem"
                                        value="上传头像">
                                 <input type="file" class="inp" name="upfile" style="display: none">
@@ -51,7 +51,7 @@ include __DIR__ . '/../../includes/header.php';
                     </li>
                 </ul>
                 <div class="error-tips"></div>
-                <div class="form-btn ok" style="display: block"><a class="btn-green" href="javascript:;" id="submitBtn">保存</a>
+                <div class="form-btn ok" style="display: block"><a class="btn-submit" href="javascript:;" id="submitBtn">保存</a>
                 </div>
             </div>
         </form>

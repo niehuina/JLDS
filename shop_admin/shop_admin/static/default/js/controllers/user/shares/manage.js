@@ -21,7 +21,8 @@ var THISPAGE = {
         var colModel = [
             {name:'user_name', label:'用户名',  width:200, align:"center"},
             {name:'user_realname', label:'用户姓名', width:200,align:'center'},
-            {name:'user_grade', label:'用户等级',  width:100, align:"center"},
+            {name:'user_shares', label:'用户股金',  width:100, align:"center"},
+            {name:'user_grade_text', label:'用户等级',  width:100, align:"center"},
             {name:'user_regtime', label:'升级为股东的时间',  width:200, align:"center"},
         ];
         this.mod_PageConfig.gridReg('grid', colModel);

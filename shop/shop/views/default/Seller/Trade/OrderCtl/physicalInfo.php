@@ -124,6 +124,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                             <dt>
                                 <a target="_blank" href="<?= $val['goods_link']; ?>"><?= $val['goods_name']; ?></a>
                                 <a target="_blank" href="<?= $val['goods_link']; ?>" class="blue ml5"><?=__('[交易快照]')?></a>
+                                <?=$val['return_txt']?>
                             </dt>
                             <!--<dd><?/*= $val['spec_name']; */?></dd>-->
                         </dl>

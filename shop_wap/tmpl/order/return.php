@@ -40,8 +40,8 @@ include __DIR__ . '/../../includes/header.php';
     <div class="nctouch-order-list" id="order-info-container"></div>
     <form>
         <div class="nctouch-inp-con">
-            <ul class="form-box bort1 borb1">
-                <li class="form-item borb1">
+            <ul class="form-box">
+                <li class="form-item">
                     <h4 class="cash">退款金额</h4>
                     <div class="input-box">
                         <input pattern="[0-9.]*" class="inp bgf mrt2" name="refund_amount" readonly placeholder="退款金额不能超过可退金额" type="text">
@@ -50,20 +50,33 @@ include __DIR__ . '/../../includes/header.php';
                         </span> </div>
                 </li>
                 <li class="form-item">
-                    <h4 class="num">退货数量</h4>
+                    <h4 class="num">商品数量</h4>
                     <div class="input-box pdt3">
                         <div class="refundnum inblock">
                             <input type="hidden" class="gprice" value="">
                             <input type="hidden" class="gnum" value="">
                             <a class="reduce numsclick">-</a><input class="refundnums" data-max="" name="nums" value="" style=""><a class="no_add numsclick">+</a></div>
                     </div>
-
                 </li>
             </ul>
-            <div class="back-goods-text">
-                <h4>退货说明</h4>
-                <textarea name="buyer_message" id="" cols="30" rows="10" placeholder="请输入退货说明"></textarea>
-                <em class="fr">200</em>
+            <div class="nctouch-inp-con">
+                <ul class="form-box" style="padding-top: 0.3rem">
+                    <li class="form-item">
+                        <h4 class="reason">退款原因</h4>
+                        <div class="input-box">
+                            <!--<input type="text" class="inp" value="取消订单，全部退款" readonly="readonly">-->
+                            <select id="refundReason" class="select" name="return_reason_id"></select>
+                        </div>
+                    </li>
+                    <li class="form-item">
+                        <h4 class="remark">退款说明</h4>
+                        <div class="back-goods-text" style="margin-left: 3rem;padding-top: 0;width: 75%;ba">
+                            <textarea name="buyer_message" id="" cols="30" rows="15" class="textRemark"
+                                      placeholder="" style="background-color: #f5f5f5;font-size: 0.6rem;"></textarea>
+<!--                            <em class="fr">200</em>-->
+                        </div>
+                    </li>
+                </ul>
             </div>
             <div class="error-tips"></div>
             <div class="form-btn"><a href="javascript:;" class="btn-l">提交</a></div>
@@ -104,7 +117,6 @@ include __DIR__ . '/../../includes/header.php';
 </script>
 <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
 <script type="text/javascript" src="../../js/libs/template.js"></script>
-
 <script type="text/javascript" src="../../js/common.js"></script>
 <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
 <script type="text/javascript" src="../../js/tmpl/order/return.js"></script>

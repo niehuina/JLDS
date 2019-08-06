@@ -99,6 +99,8 @@ $(function () {
                     '</dl>';
                 $(".header-b").append(html);
 
+                $(".header-r").show();
+
                 return false;
             }
         });
@@ -133,6 +135,8 @@ $(function () {
             '</dt>'+
             '</dl>';
         $(".member-center").append(html);
+
+        $(".header-r").hide();
 
         return false;
     }

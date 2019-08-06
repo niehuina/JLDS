@@ -43,7 +43,7 @@ to { opacity: 0;  display: none;}
 .nctouch-cart-store dd span { display: block; clear: both; margin: 0 0.5rem 0 2.4rem;line-height:1rem;}
 .nctouch-cart-item { background-color: #FFF;}
 .nctouch-cart-item li { display: block; position: relative; /*z-index: 1; *//*padding: 0.5rem 0 0.5rem 0.5rem;*//*background:#f6f6f6;*/}
-.buy-li{padding: 0.5rem 0 0.5rem 0.5rem;}
+.buy-li{padding: 0.5rem;}
 .nctouch-cart-item li:last-child { border: none;}
 .nctouch-cart-item li .goods-check { /*position: absolute; top: 1.2rem;*/display:inline-block;vertical-align: top;margin-top:0.8rem;}
 .nctouch-cart-item li .goods-pic { display: inline-block; width: 2.7rem; height: 2.7rem; padding: 0.2rem;border-radius: 0.2rem}
@@ -56,7 +56,7 @@ to { opacity: 0;  display: none;}
 .nctouch-cart-item li .goods-del { display: inline-block;float:right;height:100%; /*position: absolute; z-index: 1; top: 0.3rem; right: 0.5rem; */width: 2.3rem;text-align:center;color:#fff;font-size:0.7rem;background:#fd3d53;line-height:3rem; }
 .nctouch-cart-item li .goods-del a { display: block;  width: 100%; height: 100%; background-image: url(../images/bbc-bg27.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 60%; opacity: 0.4;}
 .nctouch-cart-item li .goods-subtotal { display: inline-block;font-size: 0.6rem; position: relative; z-index: 1;}
-.nctouch-cart-item li  .goods-price { color: #DB4453; font-size: 0.55rem; font-weight: 600;}
+.nctouch-cart-item li  .goods-price { color: #06c1ae; font-size: 0.55rem; font-weight: 600;}
 .nctouch-cart-item li .nums{font-size:12px;}
 .old-price{font-size: 0.55rem;}
 .edit-area .goods-subtotal{width:79%;}
@@ -77,21 +77,20 @@ to { opacity: 0;  display: none;}
 .nctouch-cart-item li .goods-gift span em { display: inline-block; height: 0.5rem; vertical-align: middle; padding: 0.1rem 0.2rem; margin-right: 0.2rem; background: #BBB; font-size: 0.45rem; line-height: 0.5rem; color: #FFF; border-radius: 0.1rem;}
 
 .nctouch-cart-item .buy-item .goods-pic { left: 0;}
-.nctouch-cart-item .buy-item .goods-info { /*margin: 0 0.5rem 0 3.5rem;*/width:60%;}
+.nctouch-cart-item .buy-item .goods-info { /*margin: 0 0.5rem 0 3.5rem;*/width:75%;}
 /*.nctouch-cart-item .buy-item .goods-subtotal { margin: 0 0.5rem 0 3.5rem;}*/
 .nctouch-cart-item .buy-item .notransport { position: absolute; z-index: 3; top: 0; left: -0.5rem; right: 0; bottom: 0; display: none; text-align: center; filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#E5F5F5F5', endColorstr='#E5F5F5F5');background:rgba(245,245,245,0.9);}
 .nctouch-cart-item .buy-item .notransport p { margin-top: 1.5rem; font-size: 0.7rem; line-height: 1rem; color: #F60;}
 
 .nctouch-cart-bottom { position: fixed; z-index: 1; top: auto; left: 0; right: 0; bottom: 0; height: 2rem; background-color:#fff; border-top: solid 0.05rem #EEE;}
 .nctouch-cart-bottom .all-check { position: absolute; z-index: 1; top: 0.4rem; left: 0.5rem;}
-.nctouch-cart-bottom .total { display: block; float: left; text-align: right; width: 60%;margin-left:2rem;}
+.nctouch-cart-bottom .total { display: block; float: left; text-align: center; width: 60%;margin-left:2.5rem;}
 .nctouch-cart-bottom .total-money { height: 1rem; margin-right: 1rem; padding: 0 0; font-size: 0; line-height: 2rem;}
 .nctouch-cart-bottom .total-money dt { display: inline-block; font-size: 0.6rem;}
-.nctouch-cart-bottom .total-money dd { display: inline-block; font-size: 0.55rem; color: #DB4453; font-weight: 600;}
+.nctouch-cart-bottom .total-money dd { display: inline-block; font-size: 0.55rem; color: #06c1ae; font-weight: 600;}
 .nctouch-cart-bottom .total-money dd em { font-size: 0.7rem;font-weight:normal;}
 .nctouch-cart-bottom .check-out { display: block; float: right;padding:0 2.5%; height: 2rem; background-color: #BBB;}
-.nctouch-cart-bottom .check-out.ok { background: -webkit-linear-gradient(to right, #d92e66, #ec5a6f);
-    background: linear-gradient(to right,#d92e66, #ec5a6f);}
+.nctouch-cart-bottom .check-out.ok { background-color: #06c1ae; }
 .nctouch-cart-bottom .check-out a { display: block; text-align: center; font-size: 0.7rem; color: #FFF; line-height: 2rem;}
 
 .nctouch-cart-bottom.no-login { height: 5rem;}
@@ -135,7 +134,7 @@ to { opacity: 0;  display: none;}
 .nctouch-cart-add-list dt sub { display: inline-block; background-color: #DB4453; font-size: 0.45rem;/* line-height: 0.6rem; */padding: 0 0.1rem; margin-left: 0.1rem; border-radius: 0.1rem; color: #FFF;}
 .nctouch-cart-add-list dd { display: block; min-height: 0.7rem; max-height: 1.4rem; font-size: 0.55rem; line-height: 0.7rem;}
 
-.nctouch-cart-subtotal {}
+.nctouch-cart-subtotal { padding: 0 0.5rem;}
 .nctouch-cart-subtotal dl { position: relative; z-index: 1; height: 1rem; padding: 0.2rem 0; font-size: 0;color:#666;}
 .nctouch-cart-subtotal dt { position: absolute; z-index: 1; top: 0.4rem; left: 0.4rem; display: block; width: 50%; height: 1rem; font-size: 0.6rem; line-height: 1rem;}
 .nctouch-cart-subtotal dd { height: 1rem; margin: 0 0.5rem 0 50%; text-align: right; font-size: 0.6rem; line-height: 1rem;}
@@ -144,7 +143,8 @@ to { opacity: 0;  display: none;}
 .nctouch-cart-subtotal .store-total { padding: 0.5rem; text-align: right; font-size: 0.6rem; line-height: 0.9rem;}
 .nctouch-cart-subtotal .store-total span { font-size: 0.45rem; color: #DB4453;}
 .nctouch-cart-subtotal .store-total span em { font-size: 0.6rem; font-weight: 600;}
-.message dd{margin-left:18%;}
+.message dt{width: unset;}
+.message dd{margin-left:20%;}
 .message dd input{padding:0 !important;}
 .nctouch-cart-num { display: block; padding: 0.5rem 0; text-align: center; font-size: 0.6rem; color: #000; line-height: 1rem;}
 .nctouch-cart-num em { font-size: 1rem; color: #DB4453; font-weight: 600; display: inline-block; vertical-align: sub; margin: 0 0.2rem; }

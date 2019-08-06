@@ -106,7 +106,7 @@ $wb = $connect_rows['weibo']['status'];
 									</div>
                                     <div id="imgCodeVerification" class="item item-fore2 hide">
                                         <label class="login-label pwd-label" for="imgCode"></label>
-                                        <input id="imgCode" type="text" class="itxt" style="width: 224px;" name="img_code" tabindex="3" maxlength="4" placeholder="验证码">
+                                        <input id="imgCode" type="text" class="itxt" name="img_code" tabindex="3" maxlength="4" placeholder="验证码">
                                         <img onclick="get_randfunc(this);" style="cursor:pointer;margin-bottom: 2px;" src="./libraries/rand_func.php">
                                     </div>
 									<div class="item item-fore3">

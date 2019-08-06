@@ -2,8 +2,8 @@ $(function () {
     var e = getCookie("key");
     var u = getCookie("id");
     if (!e) {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html";
-        return
+        login();
+        return;
     }
     var a = getQueryString("oge_id");
     $.getJSON(ApiUrl + "/index.php?ctl=Buyer_Order&met=evaluation&act=again&typ=json", {k: e,u:u, oge_id: a}, function (r) {

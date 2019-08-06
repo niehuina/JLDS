@@ -47,9 +47,9 @@ include __DIR__ . '/../../includes/header.php';
         <div class="nctouch-nav-layout">
             <div class="nctouch-nav-menu"><span class="arrow"></span>
                 <ul>
-                    <li><a href="../index.html"><i class="home"></i>首页</a></li>
-                    <li><a href="../tmpl/cart_list.html"><i class="cart"></i>购物车<sup></sup></a></li>
-                    <li><a href="../tmpl/member/member.html"><i class="member"></i>我的商城</a></li>
+                    <li><a href="../../index.html"><i class="home"></i>首页</a></li>
+                    <li><a href="/tmpl/cart_list.html"><i class="cart"></i>购物车<sup></sup></a></li>
+                    <li><a href="/tmpl/member/member.html"><i class="member"></i>我的商城</a></li>
                     <li><a href="javascript:void(0);"><i class="message"></i>消息<sup></sup></a></li>
                 </ul>
             </div>
@@ -74,30 +74,36 @@ include __DIR__ . '/../../includes/header.php';
     </body>
     <script type="text/html" id="home_body">
         <% var goods_list = data.items; %>
-        <% if(goods_list.length >0){%>
+        <% if(data.records >0){%>
         <%for(j=0;j<goods_list.length;j++){%>
-        <% var goods = goods_list[j];
-           var goods_id = goods.goods_id;
+        <%
+            var goods = goods_list[j];
+            var goods_id = goods.goods_id;
+            if(goods_list[j].common_info){
+                goods = goods_list[j].common_info;
+                goods.goods_stock = goods_list[j].goods_stock;
+                goods.goods_id = goods_list[j].goods_id;
+            }
         %>
         <li class="goods-item" goods_id="<%=goods.goods_id;%>">
             <span class="goods-pic">
                 <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
-                    <img src="<%=goods.common_info.common_image;%>"/>
+                    <img src="<%=goods.common_image;%>"/>
                 </a>
             </span>
             <dl class="goods-info">
                 <dt class="goods-name">
                     <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
-                        <h4><%=goods.common_info.common_name;%></h4>
+                        <h4><%=goods.common_name;%></h4>
                     </a>
                 </dt>
                 <dd class="goods-assist">
                     <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
 <!--                        <span class="goods-sold">销量-->
-<!--                            <em><%=goods.common_info.common_salenum;%></em>-->
+<!--                            <em><%=goods.common_salenum;%></em>-->
 <!--                        </span>-->
 <!--                        <span class="goods-sold">评论-->
-<!--                            <em><%=goods.common_info.common_evaluate;%></em>-->
+<!--                            <em><%=goods.common_evaluate;%></em>-->
 <!--                        </span>-->
                         <span class="goods-sold">库存
                             <em><%=goods.goods_stock;%></em>

@@ -16,6 +16,8 @@
  */
 class Buyer_Controller extends Controller
 {
+    public $is_partner	= false;
+
 	/**
 	 * Constructor
 	 *
@@ -120,6 +122,12 @@ class Buyer_Controller extends Controller
 		$this->countMessage['article']      = $this->Message;
 		$this->countMessage['countMessage'] = $this->countMessage['receive'] * 1 +$this->countMessage['message'] * 1 + $this->countMessage['article'] * 1;
 
+        $self_shop_id = Web_ConfigModel::value('self_shop_id');
+        if(Perm::$row['shop_id'] != $self_shop_id && $this->user_info['user_grade'] == 4){
+            $this->is_partner = true;
+        }else{
+            $this->is_partner = false;
+        }
 	}
 	
 	

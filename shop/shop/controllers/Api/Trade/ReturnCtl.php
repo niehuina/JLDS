@@ -427,6 +427,7 @@ class Api_Trade_ReturnCtl extends Api_Controller
                 if ($order_all_goods_num == $order_return_num && $order_base['order_status'] !== $Order_StateModel::ORDER_FINISH) {
                     $order_edit_row = array();
                     $order_edit_row['order_status'] = $Order_StateModel::ORDER_FINISH;
+                    $condition['order_finished_time'] = get_date_time();
 
                     $edit_flag2 = $this->Order_BaseModel->editBase($return['order_number'], $order_edit_row);
                     check_rs($edit_flag2, $rs_row);
@@ -482,7 +483,7 @@ class Api_Trade_ReturnCtl extends Api_Controller
                 }
 
                 //如果订单金额全数退还需要将订单商品，支付中心的订单状态修改为订单完成(未发货)
-                if ($order_all_goods_num == $order_return_num && $order_base['order_status'] == Order_StateModel::ORDER_PAYED) {
+                if ($order_all_goods_num == $order_return_num && $order_base['order_status'] !== $Order_StateModel::ORDER_FINISH) {
                     $goods_data['order_goods_status'] = $Order_StateModel::ORDER_FINISH;
                     $order_goods_ids_row = $this->Order_GoodsModel->getByWhere(array('order_id' => $return['order_number']));
                     $order_goods_ids = current($order_goods_ids_row);
@@ -507,17 +508,8 @@ class Api_Trade_ReturnCtl extends Api_Controller
                         check_rs($rs_flag, $rs_row);
                     }
                 }
-
             }
 
-
-            //2019/7/26 修改为确认收货前才可退货，如果是退货的话，同退款一样处理
-			if($order_base['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS){
-                $formvars['order_id']    = $return['order_number'];
-                $formvars['from_app_id'] = Yf_Registry::get('shop_app_id');
-
-                $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=confirmOrder&typ=json', $url), $formvars);
-            }
 
 			$data['rs'] = $rs_row;
 
@@ -595,44 +587,41 @@ class Api_Trade_ReturnCtl extends Api_Controller
 		$edit_flag = $this->Order_ReturnModel->editReturn($order_return_id, $data);
 		check_rs($edit_flag, $rs_row);
 
+        //不同意
+        if ($return['return_goods_return'])
+        {
+            //商家拒绝退款退货3
+            $goods_data['goods_refund_status'] = Order_GoodsModel::REFUND_REF;
+            $edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+            check_rs($edit_flag, $rs_row);
+        }
+        else
+        {
+            $goods_data['goods_return_status'] = Order_GoodsModel::REFUND_REF;
+            $edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+            check_rs($edit_flag, $rs_row);
+        }
 
-		if($return['return_state'] == Order_ReturnModel::RETURN_SELLER_UNPASS)
-		{
-			//不同意
-			if ($return['return_goods_return'])
-			{
-				//商家拒绝退款退货3
-				$goods_data['goods_refund_status'] = Order_GoodsModel::REFUND_REF;
-				$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
-				check_rs($edit_flag, $rs_row);
-			}
-			else
-			{
-				$goods_data['goods_return_status'] = Order_GoodsModel::REFUND_REF;
-				$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
-				check_rs($edit_flag, $rs_row);
-			}
-
-		}
-		else
-		{
-			//同意
-			if ($return['return_goods_return'])
-			{
-				//商品退换情况为完成2
-				$goods_data['goods_refund_status'] = Order_GoodsModel::REFUND_COM;
-				$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
-				check_rs($edit_flag, $rs_row);
-			}
-			else
-			{
-				$goods_data['goods_return_status'] = Order_GoodsModel::REFUND_COM;
-				$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
-				check_rs($edit_flag, $rs_row);
-			}
-		}
-
-
+//		if($return['return_state'] == Order_ReturnModel::RETURN_SELLER_UNPASS)
+//		{
+//		}
+//		else
+//		{
+//			//同意
+//			if ($return['return_goods_return'])
+//			{
+//				//商品退换情况为完成2
+//				$goods_data['goods_refund_status'] = Order_GoodsModel::REFUND_COM;
+//				$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+//				check_rs($edit_flag, $rs_row);
+//			}
+//			else
+//			{
+//				$goods_data['goods_return_status'] = Order_GoodsModel::REFUND_COM;
+//				$edit_flag                         = $this->Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+//				check_rs($edit_flag, $rs_row);
+//			}
+//		}
 
 		$data['rs'] = $rs_row;
 		if ($edit_flag && $this->Order_ReturnModel->sql->commitDb())
@@ -783,6 +772,7 @@ class Api_Trade_ReturnCtl extends Api_Controller
 		{
 			$order_edit_row = array();
 			$order_edit_row['order_status'] = $Order_StateModel::ORDER_FINISH;
+            $condition['order_finished_time'] = get_date_time();
 
 			$edit_flag2  = $this->Order_BaseModel->editBase($return['order_number'], $order_edit_row);
 			check_rs($edit_flag2, $rs_row);

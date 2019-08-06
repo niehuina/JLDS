@@ -5,7 +5,8 @@ var map_list = [];
 $(function(){
     var key = getCookie('key');
     if(!key){
-        window.location.href = WapSiteUrl+'/tmpl/member/login.html';
+        login();
+        return;
     }
     $.getJSON(ApiUrl + '/index.php?ctl=Buyer_Order&met=virtual&act=detail&typ=json',{k: getCookie("key"),u: getCookie("id"),order_id:order_id}, function(result) {
         if (result.status == 250) {

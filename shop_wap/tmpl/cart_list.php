@@ -18,27 +18,20 @@ include __DIR__ . '/../includes/header.php';
         <link rel="stylesheet" type="text/css" href="../css/base.css">
         <link rel="stylesheet" type="text/css" href="../css/nctouch_common.css">
         <link rel="stylesheet" type="text/css" href="../css/nctouch_cart.css">
+<!--        <link rel="stylesheet" type="text/css" href="../css/base1.css">-->
+<!--        <link rel="stylesheet" type="text/css" href="../css/them1.css">-->
         <style type="text/css">
             .selected-all {
                 font-size: 0.6rem;
-               vertical-align:middle;
+                vertical-align:middle;
             }
             .nctouch-cart-item li .edit-area {
-                display: none;
+                display: block;
                 position: absolute;
                 right: 0;
                 top: 0.5rem;
                 width: 12rem;
                 height:73%;
-            }
-            .JS-header-edit {
-                position: absolute;
-                z-index: 1;
-                top: 0;
-                right: 50px;
-                text-align: right;
-                line-height:1.95rem;
-                font-size:0.7rem;
             }
             #batchRemove {
                 float: right;
@@ -49,8 +42,8 @@ include __DIR__ . '/../includes/header.php';
                 font-size: 0.7rem;
                 line-height: 2rem;
                 width:20%;
-                background: -webkit-linear-gradient(to right, #d92e66, #ec5a6f);
-                background: linear-gradient(to right,#d92e66, #ec5a6f);
+                background: -webkit-linear-gradient(to right, #06c1ae, #1aafa0);
+                background: linear-gradient(to right,#06c1ae, #1aafa0);
             }
 
             .JS-header-edit {
@@ -58,7 +51,38 @@ include __DIR__ . '/../includes/header.php';
             }
             .nctouch-cart-bottom { 
                 bottom: 2.5rem;
-              
+
+            }
+
+
+            .nctouch-cart-item li .goods-info dt.goods-name a{
+                height: 1rem;
+                max-height: 2.0rem;
+                line-height: 1rem;
+            }
+
+            .selected-all {
+                font-size: 0.6rem;
+                vertical-align:middle;
+            }
+            .nctouch-cart-item li .edit-area {
+                display: block;
+                position: relative;
+                width: 6rem !important;
+                float: right;
+                top: -0.3rem;
+            }
+            .edit-area .value-box span{
+                width: 50%;
+            }
+            .value-box span .buy-num, .edit-area .value-box span .buy-num{
+                width: 100%;
+            }
+            .edit-area .value-box .minus, .edit-area .value-box .add{
+                width: 25%;
+            }
+            .edit-area .goods-subtotal{
+                width: 100%;
             }
         </style>
     </head>
@@ -71,27 +95,13 @@ include __DIR__ . '/../includes/header.php';
             <div class="header-title">
                 <h1>购物车</h1>
             </div>
-            <div class="JS-header-edit">
-                编辑
-            </div>
             <div class="header-r">
-                <a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a>
-            </div>
-        </div>
-        <div class="nctouch-nav-layout">
-            <div class="nctouch-nav-menu">
-                <span class="arrow"></span>
-                <ul>
-                    <li><a href="../index.html"><i class="home"></i>首页</a></li>
-                    <li><a href="../tmpl/search.html"><i class="search"></i>搜索</a></li>
-                    <li><a href="../tmpl/member/member.html"><i class="member"></i>我的商城</a></li>
-                    <li><a href="javascript:void(0);"><i class="message"></i>消息<sup></sup></a></li>
-                </ul>
+                <a class="JS-header-edit fr text">管理</a>
             </div>
         </div>
     </header>
     <div class="nctouch-main-layout">
-        <div id="cart-list-wp" class="mb50"></div>
+        <div id="cart-list-wp" class="mb50 mallCart"></div>
     </div>
     <footer id="footer" class="bottom"></footer>
     <div class="pre-loading hide">
@@ -100,27 +110,32 @@ include __DIR__ . '/../includes/header.php';
             购物车数据读取中...
         </div>
     </div>
+
     <script id="cart-list" type="text/html">
         <% if(cart_list.length >0){%><% for (var i = 0;i
         <cart_list.length;i++){%>
         <div class="nctouch-cart-container">
             <dl class="nctouch-cart-store">
-                <dt><span class="store-check">
-							<input class="store_checkbox" type="checkbox" checked>
-						</span>
-                    <i class="icon-store"></i> <%=cart_list[i].shop_name%> <% if (cart_list[i].voucher_base != '') { %>
-						<span class="handle">
-							<a href="javascript:void(0);" class="voucher animation-up animation-up<%=i%>"><i></i>领券</a>
-						</span> <% } %>
-                    <span class="JS-edit fr">编辑</span>
-                </dt>
+<!--                <dl class="nctouch-cart-store">-->
+<!--                    <dt>-->
+<!--                        <span class="store-check">-->
+<!--                            <input class="store_checkbox" type="checkbox" checked>-->
+<!--                        </span>-->
+<!--                        <i class="icon-store"></i> <%=cart_list[i].shop_name%>-->
+<!--                        <span class="JS-edit fr">编辑</span>-->
+<!--                    </dt>-->
+<!--                </dl>-->
+
                 <% if (cart_list[i].free_freight) { %>
                 <dd class="store-activity">
                     <em>免运费</em> <span><%=cart_list[i].free_freight%></span>
                 </dd>
                 <% } %> <% if (cart_list[i].mansong_info && !isEmpty(cart_list[i].mansong_info)) { %>
                 <dd class="store-activity">
-                    <em>满即送</em> <%var mansong = cart_list[i].mansong_info%> <span><%if(mansong.rule_discount){%>店铺优惠<%=mansong.rule_discount%>。<%}%> <%if(mansong.goods_name){%>赠品：<%=mansong.goods_name%><%if(!isEmpty(mansong.goods_image)){%><img src="<%=mansong.goods_image%>" /><%}%><%}%></span>
+                    <em>满即送</em> <%var mansong = cart_list[i].mansong_info%>
+                    <span><%if(mansong.rule_discount){%>店铺优惠<%=mansong.rule_discount%>。<%}%>
+                        <%if(mansong.goods_name){%>赠品：<%=mansong.goods_name%><%if(!isEmpty(mansong.goods_image)){%>
+                        <img src="<%=mansong.goods_image%>" /><%}%><%}%></span>
                     <i class="arrow-down"></i>
                 </dd>
                 <% } %>
@@ -138,64 +153,51 @@ include __DIR__ . '/../includes/header.php';
                         </div>
                         <dl class="goods-info">
                             <dt class="goods-name">
-                                <a href="<%=WapSiteUrl%>/tmpl/product_detail.html?goods_id=<%=goods.goods_id%>"> <%=goods.common_base.common_name%> </a>
+                                <a class="word-ellipsis"
+                                   href="<%=WapSiteUrl%>/tmpl/product_detail.html?goods_id=<%=goods.goods_id%>">
+                                    <%=goods.common_base.common_name%>
+                                </a>
                             </dt>
                             <dd class="goods-type"><%=goods.goods_base.spec_val_str%></dd>
                             <span class="goods-price">￥<em><%=goods.now_price%></em></span>
-                           <!--  <% if(goods.old_price > 0){ %>
-                            <span class="old-price">￥<s><%=goods.old_price%></s></span>
-                            <% } %> -->
-                            <span class="fr nums">x<%=goods.goods_num%></span>
-                            <span class="goods-sale">
-                            <% if (!isEmpty(goods.groupbuy_info))
-                                {%><em>团购</em><% }
-                            else if (!isEmpty(goods.xianshi_info))
-                                { %><em>限时折扣</em><% }
-                            else if (!isEmpty(goods.sole_info))
-                                { %><em><i></i>手机专享</em><% } %>
-                            </span>
-                        </dl>
-                        <div class="edit-area">
-                        <div class="goods-del" cart_id="<%=goods.cart_id%>"> 
-                            删除
-                        </div>
-                         <div class="goods-subtotal">
-                            
-                            <div class="value-box">
-                                    <span class="minus">
-                                        <a href="javascript:void(0);">&nbsp;</a>
-                                    </span>
-                                <!-- s 获取并设置限购数量 2017.5.2 -->
-                                    <span>
-                                        <% if(goods.buy_limit > 0 && !goodsIsHaveBuy)
-                                        {
-                                            data_max = goods.buy_limit;
-                                        }
-                                        else
-                                        {
-                                            data_max = goods.goods_base.goods_stock;
-                                        }
-                                        if(goods.goods_base.lower_limit)
-                                        {
-                                            data_min = goods.goods_base.lower_limit;
-                                            promotion = 1;
-                                        }
-                                        else
-                                        {
-                                            data_min = 1;
-                                            promotion = 0;
-                                        }
-                                        %>
-                                        <input type="number" min="1" class="buy-num buynum" promotion="<%=promotion%>" data_max="<%=data_max%>" data_min="<%=data_min%>" value="<%=goods.goods_num%>" />
-                                        <!-- e 获取并设置限购数量 2017.5.2 -->
-                                    </span>
-                                    <span class="add">
-                                        <a href="javascript:void(0);">&nbsp;</a>
-                                    </span>
+                            <!--  <% if(goods.old_price > 0){ %>
+                             <span class="old-price">￥<s><%=goods.old_price%></s></span>
+                             <% } %> -->
+                            <div class="edit-area">
+                                <div class="goods-subtotal">
+                                    <div class="value-box">
+                                        <span class="minus"><a href="javascript:void(0);">&nbsp;</a></span>
+                                        <!-- s 获取并设置限用数量 -->
+                                        <span>
+                                            <% if(goods.buy_limit > 0 && !goodsIsHaveBuy)
+                                            {
+                                                data_max = goods.buy_limit;
+                                            }
+                                            else
+                                            {
+                                                data_max = goods.goods_base.goods_stock;
+                                            }
+                                            if(goods.goods_base.lower_limit)
+                                            {
+                                                data_min = goods.goods_base.lower_limit;
+                                                promotion = 1;
+                                            }
+                                            else
+                                            {
+                                                data_min = 1;
+                                                promotion = 0;
+                                            }
+                                            %>
+                                            <input type="text" min="0" class="buy-num buynum" name="out_num"
+                                               data_max="<%=data_max%>" data_min="<%=data_min%>" value="<%=goods.goods_num%>" />
+                                        </span>
+                                        <!-- e 获取并设置限用数量-->
+                                        <span class="add"><a href="javascript:void(0);">&nbsp;</a></span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        </div>
-                       
+                        </dl>
+
                     </div>
                 </li>
                 <% } %> <% } %>
@@ -260,24 +262,23 @@ include __DIR__ . '/../includes/header.php';
         </div><%}%>
     </script>
 
-
     <script id="cart-list1" type="text/html">
-        <% if(cart_list.length >0){%><% for (var i = 0;i
-        <cart_list.length;i++){%>
+        <% if(cart_list.length >0){%><%
+        for (var i = 0;i<cart_list.length;i++){%>
         <div class="nctouch-cart-container">
-            <dl class="nctouch-cart-store">
-                <dt>
-                    <span class="store-check">
-					    <input class="store_checkbox" type="checkbox" checked>
-					</span>
-                    <i class="icon-store"></i> <%=cart_list[i].store_name%>
-                    <span class="JS-edit fr">编辑</span>
-                </dt>
-            </dl>
+<!--            <dl class="nctouch-cart-store">-->
+<!--                <dt>-->
+<!--                    <span class="store-check">-->
+<!--					    <input class="store_checkbox" type="checkbox" checked>-->
+<!--					</span>-->
+<!--                    <i class="icon-store"></i> <%=cart_list[i].shop_name%>-->
+<!--                    <span class="JS-edit fr">编辑</span>-->
+<!--                </dt>-->
+<!--            </dl>-->
             <ul class="nctouch-cart-item">
-                <% if (cart_list[i].goods) { %> <% for (var j=0; j
-                <cart_list
-                [i].goods.length; j++) {var goods = cart_list[i].goods[j];%>
+                <% if (cart_list[i].goods) { %>
+                <% for (var j=0; j<cart_list[i].goods.length; j++) {
+                    var goods = cart_list[i].goods[j];%>
                 <li cart_id="<%=goods.cart_id%>" class="cart-litemw-cnt">
                     <div class="buy-li">
                         <div class="goods-check">
@@ -289,29 +290,50 @@ include __DIR__ . '/../includes/header.php';
                         </div>
                         <dl class="goods-info">
                             <dt class="goods-name">
-                                <a href="<%=WapSiteUrl%>/tmpl/product_detail.html?goods_id=<%=goods.goods_id%>"> <%=goods.goods_name%> </a>
+                                <a class="dpm" href="<%=WapSiteUrl%>/tmpl/product_detail.html?goods_id=<%=goods.goods_id%>">
+                                    <%=goods.goods_name%>
+                                </a>
                             </dt>
                             <dd class="goods-type"><%=goods.goods_spec%></dd>
-                        </dl>
-                        <div class="edit-area">
-                            <div class="goods-del" cart_id="<%=goods.cart_id%>">  
-                                删除 
-                            </div>
-                            <div class="goods-subtotal"><span class="goods-price">￥<em><%=goods.goods_price%></em></span>
-                                <div class="value-box">
-                                        <span class="minus">
-                                            <a href="javascript:void(0);">&nbsp;</a>
-                                        </span>
+                            <span class="goods-price">￥<em><%=goods.goods_price%></em></span>
+                            <!--  <% if(goods.old_price > 0){ %>
+                             <span class="old-price">￥<s><%=goods.old_price%></s></span>
+                             <% } %> -->
+                            <div class="edit-area">
+                                <div class="goods-subtotal">
+                                    <div class="value-box">
+                                        <span class="minus"><a href="javascript:void(0);">&nbsp;</a></span>
+                                        <!-- s 获取并设置限用数量 -->
                                         <span>
-                                            <input type="number" min="1" class="buy-num buynum" value="<%=goods.goods_num%>" />
+                                            <% if(goods.buy_limit > 0 && !goodsIsHaveBuy)
+                                            {
+                                                data_max = goods.buy_limit;
+                                            }
+                                            else
+                                            {
+                                                data_max = goods.goods_stock;
+                                            }
+                                            if(goods.lower_limit)
+                                            {
+                                                data_min = goods.lower_limit;
+                                                promotion = 1;
+                                            }
+                                            else
+                                            {
+                                                data_min = 1;
+                                                promotion = 0;
+                                            }
+                                            %>
+                                            <input type="text" min="0" class="buy-num buynum" name="out_num"
+                                                   data_max="<%=data_max%>" data_min="<%=data_min%>" value="<%=goods.goods_num%>" />
                                         </span>
-                                        <span class="add">
-                                            <a href="javascript:void(0);">&nbsp;</a>
-                                        </span>
+                                        <!-- e 获取并设置限用数量-->
+                                        <span class="add"><a href="javascript:void(0);">&nbsp;</a></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div> 
+                        </dl>
+                    </div>
                 </li>
                 <% } %> <% } %>
             </ul>

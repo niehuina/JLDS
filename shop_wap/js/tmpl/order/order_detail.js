@@ -2,7 +2,8 @@ $(function () {
 
     var r = getCookie("key");
     if (!r) {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html"
+        login();
+        return;
     }
     $.getJSON(ApiUrl + "/index.php?ctl=Buyer_Order&met=physical&act=details&typ=json", {
         k: r,

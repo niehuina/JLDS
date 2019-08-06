@@ -20,7 +20,7 @@ include __DIR__ . '/../../includes/header.php';
     </head>
 
     <body>
-    <header id="header">
+    <header id="header" class="fixed">
         <div class="header-wrap">
             <div class="header-l"><a href="javascript:history.go(-1)"><i class="back"></i></a></div>
             <div class="header-title">
@@ -106,9 +106,6 @@ include __DIR__ . '/../../includes/header.php';
     <script type="text/javascript" src="../../js/common.js"></script>
     <script type="text/javascript" src="../../js/libs/ncscroll-load.js"></script>
     <script type="text/javascript" src="../../js/tmpl/member/moneylog_list.js"></script>
-    <script>
-
-    </script>
     </body>
 
     </html>

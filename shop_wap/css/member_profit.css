@@ -1,0 +1,33 @@
+
+.nctouch-log-list{
+    padding: 0;
+}
+.nctouch-log-list li{
+    padding: 0.5rem 0.8rem
+}
+.nctouch-log-list li dl{
+    padding-left: 0px;
+}
+.nctouch-log-list li dt{
+    font-size: 0.6rem;
+    width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.nctouch-log-list li dd{
+    line-height: unset;
+}
+.nctouch-log-list li .money{
+    font-size: 0.6rem;
+    padding-right: 0.3rem;
+}
+.nctouch-log-list li .date{
+    padding-right: 0.3rem;
+}
+.nctouch-log-list li dl.pl45{
+    padding-left: 45px;
+}
+.nctouch-log-list li dl.pl45 dt{
+    width: 230px;
+}

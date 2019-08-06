@@ -19,7 +19,7 @@ function setGrid(adjustH, adjustW) {
 };
 
 function initGrid(check_id) {
-    var a = ['商品名称', "商品库存", '盘点库存']
+    var a = ['商品名称', "商品库存", '盘点库存', '状态']
         , b = [{
         name: "goods_name",
         index: "goods_name",
@@ -34,6 +34,20 @@ function initGrid(check_id) {
         index: "real_goods_stock",
         align: "center",
         width: 100
+    }, {
+        name: "check_status",
+        index: "check_status",
+        align: "center",
+        width: 100,
+        formatter: function (val, opt, row) {
+            if(val == "-1"){
+                return "<span class='red'>盘亏</span>";
+            }else if(val == "1"){
+                return "<span class='green'>盘盈</span>";
+            }else{
+                return "<span>正常</span>";
+            }
+        }
     }];
     $("#checks_grid").jqGrid({
         url: SITE_URL + "?ctl=Seller_Stock_Order&met=check_goods&typ=json",

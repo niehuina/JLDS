@@ -96,7 +96,7 @@ to { display: none; bottom:-100%; opacity: 0;}
 .nctouch-sel-box .sel-con div.tic-tab{display:inline-block;width:49%;box-sizing:border-box;text-align:center;}
 .nctouch-sel-box .sel-con div.tic-tab:first-child{border-right:1px solid #e3e3e3;}
 .nctouch-sel-box .sel-con a {padding:0 0.4rem; display: inline-block;font-size: 0.7rem; color: #888; line-height:2rem; background: #FFF;border-bottom:0.1rem solid #fff;}
-.nctouch-sel-box .sel-con a.sel {border-color:#fd3d53;color:#fd3d53;}
+.nctouch-sel-box .sel-con a.sel {border-color:#06c1ae;color:#06c1ae;}
 .nctouch-sel-list { background-color: #FFF;/* margin-top: 0.5rem;*/}
 .nctouch-sel-list label { position: relative; z-index: 1; display: block;margin: 0 0.5rem; font-size: 0.6rem;min-height:1.95rem;}
 .nctouch-sel-list label input[type="radio"] { display: none;}
@@ -104,9 +104,9 @@ to { display: none; bottom:-100%; opacity: 0;}
 .nctouch-sel-list label.checked i { border-color:#00b6ff; background-color: #00b6ff; }
 .nctouch-sel-list label.checked i:after { content: ''; position: absolute; left: 0.1rem; top: 0.175rem; width: 0.4rem; height: 0.2rem; border-left: 0.065rem solid #fff; border-bottom: 0.065rem solid #fff; -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); transform: rotate(-45deg); }
 .nctouch-sel-list a.del-invoice { position: absolute; z-index: 1; top: 0.5rem; right: 0.5rem; display: block; width: 0.8rem; height: 0.9rem; background-image: url(../images/bbc-bg27.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 80%;}
-.nctouch-inp-con .input-box.btn-style label { display: inline-block !important; height: 0.9rem !important; padding: 0.25rem 0.5rem !important; margin:0 0.3rem 0 0 !important; font-size: 0.55rem !important; color: #d92e66 !important; line-height: 0.9rem !important;border: solid 0.05rem #d92e66 !important; border-radius: 0.9rem !important;}
-.nctouch-inp-con .input-box.btn-style label.checked { padding: 0.28rem 0.5rem !important; color: #FFF !important; background: -webkit-linear-gradient(to left, #d92e66, #ec5a6f);
-    background: linear-gradient(to left,#d92e66, #ec5a6f); border: none !important;}
+.nctouch-inp-con .input-box.btn-style label { display: inline-block !important; height: 0.9rem !important; padding: 0.25rem 0.5rem !important; margin:0 0.3rem 0 0 !important; font-size: 0.55rem !important; color: #06c1ae !important; line-height: 0.9rem !important;border: solid 0.05rem #06c1ae !important; border-radius: 0.9rem !important;}
+.nctouch-inp-con .input-box.btn-style label.checked { padding: 0.28rem 0.5rem !important; color: #FFF !important; background: -webkit-linear-gradient(to left, #06c1ae, #06c1ae);
+    background: linear-gradient(to left,#06c1ae, #06c1ae); border: none !important;}
 .nctouch-inp-con .input-box label input[type="radio"] { display: none;}
 .nctouch-sel-list label .inp_input{width:77%;line-height:1.6rem;min-height:1.6rem;background:#f5f5f5;text-indent:6px;color:#999;float:right;}
 .nctouch-sel-list label span{font-size:0.6rem;line-height: 1.95rem;display:inline-block;}

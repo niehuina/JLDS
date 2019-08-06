@@ -3,7 +3,8 @@ $(function ()
     var e = getCookie("key");
     if (!e)
     {
-        location.href = "login.html"
+        login();
+        return;
     }
     template.helper("isEmpty", function (e)
     {

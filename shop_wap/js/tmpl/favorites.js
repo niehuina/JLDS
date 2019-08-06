@@ -3,7 +3,8 @@ $(function ()
     var t = getCookie("key");
     if (!t)
     {
-        location.href = "login.html"
+        login();
+        return;
     }
     var i = new ncScrollLoad;
     i.loadInit({

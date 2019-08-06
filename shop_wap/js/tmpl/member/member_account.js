@@ -1,8 +1,8 @@
 $(function () {
     var e = getCookie("key");
     if (!e) {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html";
-        return
+        login();
+        return;
     }
     $.ajax({
         type: "get",

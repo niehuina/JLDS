@@ -112,7 +112,7 @@ include __DIR__.'/../../includes/header.php';
             <div class="error-tips"></div>
             <input type="hidden" id="account_money">
             <input type="hidden" id="cashamount_min">
-            <input type="button" class="btn-green mt5" id="withdraw_btn" value="提交">
+            <input type="button" class="btn-submit mt5" id="withdraw_btn" value="提交">
         </div>
     </div>
     <footer id="footer"></footer>

@@ -107,10 +107,9 @@ $user_info = $User_InfoModel->getOne(Perm::$userId);
                                     foreach ($menu_row['sub'] as $menu_level)
                                     {
                                         ?>
-                                        <dd class="selected"><i nctype="btn_add_quicklink"
-                                                                data-quicklink-act="<?= $menu_level['menu_id'] ?>"
-                                                                class="icon-icon_duigou2" title="<?=__('添加为常用功能菜单')?>"></i><a
-                                                href="<?= sprintf('%s?ctl=%s&met=%s&typ=e&%s', Yf_Registry::get('url'), $menu_level['menu_url_ctl'], $menu_level['menu_url_met'], $menu_level['menu_url_parem']); ?>"> <?= $menu_level['menu_name'] ?> </a>
+                                        <dd class="selected">
+                                            <i nctype="btn_add_quicklink" data-quicklink-act="<?= $menu_level['menu_id'] ?>" class="icon-icon_duigou2" title="<?=__('添加为常用功能菜单')?>"></i>
+                                            <a href="<?= sprintf('%s?ctl=%s&met=%s&typ=e&%s', Yf_Registry::get('url'), $menu_level['menu_url_ctl'], $menu_level['menu_url_met'], $menu_level['menu_url_parem']); ?>"> <?= $menu_level['menu_name'] ?> </a>
                                         </dd>
                                         <?php
                                     }

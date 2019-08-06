@@ -205,6 +205,7 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                                                             </a>
                                                         </p>
                                                     <?php } else { ?>
+
                                                         <?php if ($ogval['goods_refund_status'] == Order_StateModel::ORDER_GOODS_RETURN_NO && $ogval['order_goods_num'] > $ogval['order_goods_returnnum']) { ?>
                                                             <!--不能退的商品，不能退换货-->
                                                             <?php if ($ogval['goods_returns_setting'] != Goods_ReturnsModel::GOOD_NOT_RETURN) { ?>
@@ -214,6 +215,8 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                                                                        class="to_views"><?= __('退款/退货') ?>
                                                                     </a>
                                                                 </p>
+                                                            <?php } else { ?>
+                                                                <p>商品不可退</p>
                                                             <?php } ?>
                                                         <?php } else { ?>
                                                             <a href="<?= Yf_Registry::get('url') ?>?ctl=Buyer_Service_Return&met=index&act=detail&id=<?= ($ogval['order_refund_id']) ?>"><?= $ogval['goods_refund_status_con'] ?></a>
@@ -369,7 +372,10 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                                 <?php } ?>
 
                                 <!--E  未付款订单 -->
-                                <?php if ($val['order_refund_status'] !== Order_StateModel::ORDER_REFUND_IN && $val['order_return_status'] !== Order_StateModel::ORDER_GOODS_RETURN_IN && $val['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS): ?>
+
+                                <?php if ($val['order_refund_status'] !== Order_StateModel::ORDER_REFUND_IN
+                                    && $val['order_return_status'] !== Order_StateModel::ORDER_GOODS_RETURN_IN
+                                    && $val['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS && $val['can_confirm_order']): ?>
 
                                     <p><a onclick="confirmOrder('<?= $val['order_id'] ?>')" class="to_views "><i
                                                     class="iconfont icon-duigou1 icon_size22"></i><?= __('确认收货') ?></a>

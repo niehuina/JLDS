@@ -333,6 +333,8 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
     $(function () {
 
         $('.tabmenu > ul').find('li:lt(8)').remove();
+        var href = window.location.href;
+        $('.tabmenu > ul > li > a').attr('href',href);
 
         if("<?= $data['can_send'] ?>" == "0"){
             // $('button[nc_value]').attr("disabled", "disabled").addClass("button_disabled");

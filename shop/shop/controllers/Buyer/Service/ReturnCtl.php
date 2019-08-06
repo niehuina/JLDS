@@ -393,6 +393,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 			return $data;
 		}
 
+
 	}
 
 
@@ -406,7 +407,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		$Number_SeqModel  = new Number_SeqModel();
 		$prefix           = sprintf('%s-', date('YmdHis'));
 		$return_number    = $Number_SeqModel->createSeq($prefix);
-		$return_id        = sprintf('%s-%s-%s', 'TD', $return_number);
+		$return_id        = sprintf('%s-%s', 'TD', $return_number);
 
 		$field['return_message']   = request_string("return_message");    //“退款/退货”说明
 		$field['return_reason_id']   = request_string("return_reason_id");  //“退款/退货”原因
@@ -779,7 +780,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		$Number_SeqModel  = new Number_SeqModel();
         $prefix           = sprintf('%s-', date('YmdHis'));
         $return_number    = $Number_SeqModel->createSeq($prefix);
-        $return_id        = sprintf('%s-%s-%s', 'TD', $return_number);
+        $return_id        = sprintf('%s-%s', 'TD', $return_number);
 
 		$field['return_message']       = __('服务商品过期自动退款');
 		$field['return_code']          = $return_id;
@@ -872,9 +873,11 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
         $edit_row['return_state'] = Order_ReturnModel::RETURN_GOODS;
         $flag = $this->orderReturnModel->editReturn($order_return_id, $edit_row);
         if ($goods['order_goods_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS){
+            $goods_edit['goods_refund_status'] = Order_GoodsModel::REFUND_IN;
+            $flag1 = $this->orderGoodsModel->editGoods($return['goods_id'], $goods_edit);
         }
 
-        if ($flag !== false)
+        if ($flag !== false && $flag1 !== false)
         {
             $status = 200;
             $msg    = __('success');
@@ -1157,7 +1160,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 		$Number_SeqModel  = new Number_SeqModel();
         $prefix           = sprintf('%s-', date('YmdHis'));
         $return_number    = $Number_SeqModel->createSeq($prefix);
-        $return_id        = sprintf('%s-%s-%s', 'SPTD', $return_number);
+        $return_id        = sprintf('%s-%s', 'SPTD', $return_number);
 
 		$cond_row['order_number'] = $order['order_id'];
 		$cond_row['return_message']  = $return_message;

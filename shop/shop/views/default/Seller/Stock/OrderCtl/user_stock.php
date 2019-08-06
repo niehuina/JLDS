@@ -52,7 +52,12 @@ if (!empty($goods)){
             </tr>
             <?php
             foreach ($goods['items'] as $stock_info){
-                $item = $stock_info['common_info'];
+                if(isset($stock_info['common_info'])) {
+                    $item = $stock_info['common_info'];
+                    $stock_info['alarm_stock'] = $stock_info['goods_alarm'];
+                }else{
+                    $item = $stock_info;
+                }
                 ?>
                 <tr id="tr_common_id_<?= $item['common_id']; ?>">
                     <td class="tl th" colspan="99">
@@ -88,9 +93,11 @@ if (!empty($goods)){
                     <td  <?php if($stock_info['goods_stock'] < $stock_info['alarm_stock']){?> class="colred" <?php }?>><?= $stock_info['goods_stock'] ?> <?=__('件')?></td>
                     <td>
                         <span class="edit">
-                            <a href="javascript:setAlarm(<?= $stock_info['goods_id'] ?>)">
-                                <i class="iconfont icon-zhifutijiao"></i><?=__('设置库存预警')?>
-                            </a>
+                            <?php if(isset($stock_info['common_info'])){ ?>
+                                <a href="javascript:setAlarm(<?= $stock_info['goods_id'] ?>)">
+                                    <i class="iconfont icon-zhifutijiao"></i><?=__('设置库存预警')?>
+                                </a>
+                            <?php } ?>
                         </span>
                     </td>
                 </tr>

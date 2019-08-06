@@ -51,7 +51,7 @@ include __DIR__.'/../../includes/header.php';
         </div>
     </header>
     <div class="nctouch-main-layout">
-        <div class="member-top member-top1">
+        <div class="member-top">
             <div class="member-info">
                 <div class="wallet-money mt5">
                     <i class="icon"><i class="icon icon-bg"></i></i>

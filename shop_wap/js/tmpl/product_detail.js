@@ -177,6 +177,8 @@ $(function () {
                         }
                     });
 
+                    var rec_html = template.render('productRecommendation', result.data);
+                    $("#product_recommendation_html").html(rec_html);
 
                     $("title").html(data.goods_info.goods_name);
                     //商品图片格式化数据
@@ -274,6 +276,9 @@ $(function () {
                             shop_id = data.store_info.shop_id;
                             virtual();
                         }
+
+
+                        $(".fixed-tab-pannel").html(result.data.goods_info.common_detail);
 
                         // 购物车中商品数量
                         if (getCookie('cart_count')) {

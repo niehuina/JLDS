@@ -1,8 +1,8 @@
 $(function () {
     var e = getCookie("key");
     if (!e) {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html";
-        return
+        login();
+        return;
     }
     var order_id = getQueryString("order_id");
     var express_id = getQueryString("express_id");

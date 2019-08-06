@@ -9,8 +9,8 @@ $(function ()
 {
     if (!k || !u)
     {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html";
-        return ; 
+        login();
+        return;
     }
     
     ajaxVoucher(state);

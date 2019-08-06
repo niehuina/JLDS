@@ -11,7 +11,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
             <div class="header">
                 <div class="title">
                     <a href="javascript:history.go(-1)"><</a>
-                    宜居通收银台
+                    一次方商城收银台
                 </div>
                 <?php if (!empty($banner)) { ?>
                     <div class="banner">
@@ -242,7 +242,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
                 margin: 0 !important;
                 border: none !important;
                 border-bottom: 1px solid #ddd !important;
-                width: 100% !important;
+                width: 99.5% !important;
             }
 
             .box input[type="checkbox"], .box input[type="radio"] {

@@ -518,7 +518,7 @@ class Seller_Service_ReturnCtl extends Seller_Controller
                 //如果是退货，商家确认收货后，则平台默认即通过
                 if($return['return_type'] ==  Order_ReturnModel::RETURN_TYPE_GOODS ){
                     $formvars['order_return_id'] = $order_return_id;
-                    $formvars['return_platform_message'] = "默认通过";
+                    $formvars['return_platform_message'] = "同意";
                     $rs = $this->getShopApi('Api_Trade_Return', 'agree', $formvars, 'json');
 
                     $status = $rs['status'];
@@ -572,19 +572,18 @@ class Seller_Service_ReturnCtl extends Seller_Controller
 			$edit_flag = $this->orderReturnModel->editReturn($order_return_id, $data);
 			check_rs($edit_flag, $rs_row);
 
-			if ($return['order_goods_id'])
-			{
-				$order                              = $this->orderBaseModel->getOne($return['order_number']);
-				$goods_field['goods_refund_status'] = Order_GoodsModel::REFUND_NO;
-				$edit_flag                          = $this->orderGoodsModel->editGoods($return['order_goods_id'], $goods_field);
-				check_rs($edit_flag, $rs_row);
-			}
-			else
-			{
-				$order_field['order_refund_status'] = Order_BaseModel::REFUND_NO;
-				$edit_flag                          = $this->orderBaseModel->editBase($return['order_number'], $order_field);
-				check_rs($edit_flag, $rs_row);
-			}
+//			if ($return['order_goods_id'])
+//			{
+//				$goods_field['goods_refund_status'] = Order_GoodsModel::REFUND_NO;
+//				$edit_flag                          = $this->orderGoodsModel->editGoods($return['order_goods_id'], $goods_field);
+//				check_rs($edit_flag, $rs_row);
+//			}
+//			else
+//			{
+//				$order_field['order_refund_status'] = Order_BaseModel::REFUND_NO;
+//				$edit_flag                          = $this->orderBaseModel->editBase($return['order_number'], $order_field);
+//				check_rs($edit_flag, $rs_row);
+//			}
 			$flag = is_ok($rs_row);
 			if ($flag && $this->orderReturnModel->sql->commitDb())
 			{

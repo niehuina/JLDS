@@ -3,7 +3,7 @@
  * @license    http://www.shopnc.net
  * @link       http://www.shopnc.net
 */
-var order_id,order_goods_id,goods_pay_price,goods_num;
+var order_id,order_goods_id,goods_pay_price,goods_num,return_type;
 $(function(){
 	var key = getCookie('key');
 	if(!key){
@@ -30,18 +30,20 @@ $(function(){
             $('.header-title').find('h1').html('申请退款');
             $(".reason").html('退款原因');
             $(".cash").html('退款金额');
-            $(".num").html('退货数量');
+            $(".num").html('商品数量');
             $(".remark").html('退款说明');
+            $(".textRemark").attr('placeholder','请输入退款说明');
 
             return_type = 1;
         }
-        if(result.data.order.order_status == 6)
+        if(result.data.order.order_status == 4)
         {
             $('.header-title').find('h1').html('申请退货');
             $(".reason").html('退货原因');
             $(".cash").html('退货金额');
             $(".num").html('退货数量');
             $(".remark").html('退货说明');
+            $(".textRemark").attr('placeholder','请输入退货说明');
 
             return_type = 2;
         }

@@ -73,14 +73,20 @@ include __DIR__ . '/../../includes/header.php';
                     <span class="arrow-r"></span></a>
             </li>
         </ul>
+<!--        <ul class="nctouch-default-list mt5">-->
+<!--            <li>-->
+<!--                <a href="member_account.html">-->
+<!--                    <h4>通用</h4>-->
+<!--                    <span class="arrow-r"></span></a>-->
+<!--            </li>-->
+<!--        </ul>-->
         <ul class="nctouch-default-list mt5">
             <li>
-                <a href="member_account.html">
-                    <h4>通用</h4>
+                <a href="member_version.php">
+                    <h4>关于我们</h4>
                     <span class="arrow-r"></span></a>
             </li>
         </ul>
-
         <ul class="nctouch-default-list mt5">
             <li>
                 <a id="logoutbtn" href="javascript:void(0);">

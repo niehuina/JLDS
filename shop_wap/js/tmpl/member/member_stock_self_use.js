@@ -34,6 +34,7 @@ $(function ()
             param.out_num_list = JSON.stringify(select_goods_list);
             param.k = getCookie("key");
             param.u = getCookie('id');
+            param.user_id = getCookie('id');
 
             //本系统登录
             $.ajax({
@@ -125,6 +126,7 @@ function get_list()
 
     param.k = getCookie("key");
     param.u = getCookie('id');
+    param.user_id = getCookie('id');
 
     $.getJSON(ApiUrl + "/index.php?ctl=Buyer_User&met=stock_goods&typ=json&ua=wap", param, function (e)
     {

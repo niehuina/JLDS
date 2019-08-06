@@ -18,7 +18,7 @@ include __DIR__ . '/../../includes/header.php';
     <link rel="stylesheet" type="text/css" href="../../css/nctouch_member.css">
 </head>
 <body>
-<header id="header">
+<header id="header" class="fixed">
     <div class="header-wrap">
         <div class="header-l"> <a href="javascript:history.go(-1)"> <i class="back"></i> </a> </div>
     <span class="header-title">
@@ -57,7 +57,7 @@ include __DIR__ . '/../../includes/header.php';
 
 
 
-    <h3 class="nctouch-default-list-tit">我的退款申请</h3>
+    <h3 class="nctouch-default-list-tit bgf">我的退款申请</h3>
     <ul class="nctouch-default-list">
         <li>
             <h4>退款编号</h4>
@@ -76,7 +76,7 @@ include __DIR__ . '/../../includes/header.php';
     <ul class="nctouch-default-list">
         <li>
             <h4>审核状态</h4>
-            <span class="num"><%=return_state_text%></span></li>
+            <span class="num"><%=return_shop_state_text%></span></li>
         <li>
             <h4>商家备注</h4>
             <span class="num"><%=return_shop_message%></span></li>
@@ -84,8 +84,8 @@ include __DIR__ . '/../../includes/header.php';
     <h3 class="nctouch-default-list-tit">商城退款审核</h3>
     <ul class="nctouch-default-list">
         <li>
-            <h4>平台确认</h4>
-            <span class="num"><%=return_state_text%></span></li>
+            <h4>审核状态</h4>
+            <span class="num"><%=return_platform_state_text%></span></li>
         <li>
             <h4>平台备注</h4>
             <span class="num"><%=return_platform_message%></span></li>
@@ -94,11 +94,11 @@ include __DIR__ . '/../../includes/header.php';
     <h3 class="nctouch-default-list-tit">退款详细</h3>
     <ul class="nctouch-default-list">
         <li>
-            <h4>支付方式</h4>
-            <span class="num">预存款</span></li>
+            <h4>退回方式</h4>
+            <span class="num">账户余额</span></li>
         <li>
-            <h4>预存款返还金额</h4>
-            <span class="num"><%= return_cash %></span></li>
+            <h4>退回金额</h4>
+            <span class="num">￥<%= return_cash %></span></li>
     </ul>
     <%}%>
 </script>

@@ -595,8 +595,10 @@ class Api_User_InfoCtl extends Yf_AppController
 
         //获取该用户的直属下级用户,并更新其user_parent_id
         $user_list = $this->userInfoModel->getKeyByWhere(['user_parent_id'=>$user_id]);
-        $flag1 = $this->userInfoModel->editInfo($user_list, ['user_parent_id'=>$user_parent_id]);
-        check_rs($flag1,$rs_row);
+        if(count($user_list) > 0) {
+            $flag1 = $this->userInfoModel->editInfo($user_list, ['user_parent_id' => $user_parent_id]);
+            check_rs($flag1, $rs_row);
+        }
 
         if (is_ok($rs_row) && $this->userInfoModel->sql->commitDb()) {
             $msg = 'success';
@@ -652,19 +654,21 @@ class Api_User_InfoCtl extends Yf_AppController
             check_rs($flag_gp2, $rs_row);
         }
 
-        //更新未确认收货的订单的上级未空，之后订单差价就不会返还给当前用户
-        $cond_row = array();
-        $cond_row['directseller_id'] = $user_id;
-        $cond_row['order_status:<'] = Order_StateModel::ORDER_FINISH;
-        $cond_row['order_is_virtual'] = Order_BaseModel::ORDER_IS_REAL;
-        $cond_row['order_finished_time:<='] = get_date_time();
-        $cond_row['(order_payment_amount-order_refund_amount):>'] = 0;
-        $cond_row['directseller_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
-        $order_row['order_finished_time'] = 'asc';
-        $order_key_list = $Order_BaseModel->getKeyByWhere($cond_row, $order_row);
-        $edit_row['directseller_id'] = '';
-        $flag_order = $Order_BaseModel->editBase($order_key_list, $edit_row);
-        check_rs($flag_order, $rs_row);
+        //更新未确认收货的订单的上级未空，之后订单差价就不会返还给当前用户//在自动任务时，将已退出的用户过滤掉
+//        $cond_row = array();
+//        $cond_row['directseller_id'] = $user_id;
+//        $cond_row['order_status:<'] = Order_StateModel::ORDER_FINISH;
+//        $cond_row['order_is_virtual'] = Order_BaseModel::ORDER_IS_REAL;
+//        $cond_row['order_finished_time:<='] = get_date_time();
+//        $cond_row['(order_payment_amount-order_refund_amount):>'] = 0;
+//        $cond_row['directseller_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
+//        $order_row['order_finished_time'] = 'asc';
+//        $order_key_list = $Order_BaseModel->getKeyByWhere($cond_row, $order_row);
+//        if(count($order_key_list) > 0){
+//            $edit_row['directseller_id'] = '';
+//            $flag_order = $Order_BaseModel->editBase($order_key_list, $edit_row);
+//            check_rs($flag_order, $rs_row);
+//        }
 
         return is_ok($rs_row);
     }

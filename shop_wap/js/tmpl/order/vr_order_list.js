@@ -7,7 +7,8 @@ var orderKey = "";
 $(function () {
     var e = getCookie("key");
     if (!e) {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html"
+        login();
+        return;
     }
     if (getQueryString("data-state") != "") {
         $("#filtrate_ul").find("li").has('a[data-state="' + getQueryString("data-state") + '"]').addClass("selected").siblings().removeClass("selected")

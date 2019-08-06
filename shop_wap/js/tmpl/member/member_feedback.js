@@ -3,8 +3,8 @@ $(function ()
     var e = getCookie("key");
     if (e === null)
     {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html";
-        return
+        login();
+        return;
     }
     $("#feedbackbtn").click(function ()
     {

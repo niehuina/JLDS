@@ -47,7 +47,7 @@ include __DIR__ . '/../../includes/header.php';
     </header>
     <div class="scroller-body mrb300">
         <div class="scroller-box">
-            <div class="member-top member-top1"></div>
+            <div class="member-top"></div>
             <!--        <div class="member-collect borb1">-->
         </div>
         <div class="member-center bort1 mt5 ">

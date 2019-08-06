@@ -231,6 +231,7 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         $desc = request_string('desc');
         $share_price = request_string('share_price');
         $shares_dividend = request_string('shares_dividend');
+        $dividend_id = request_string('dividend_id');
 
         $rs_row = array();
         $Consume_RecordModel = new Consume_RecordModel();
@@ -239,14 +240,19 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         $total_amount = 0;
         if($user_ids){
             $User_ResourceModel = new User_ResourceModel();
+            $User_InfoModel = new User_InfoModel();
+            $user_info_list = $User_InfoModel->getByWhere(['user_id:in'=>$user_ids]);
+            $user_resource_list = $User_ResourceModel->getByWhere(['user_id:in'=>$user_ids]);
             foreach ($user_ids as $user_id){
-                $user_resource = $User_ResourceModel->getOne($user_id);
+                $user_resource = $user_resource_list[$user_id];
                 $user_shares = $user_resource['user_shares']*1;
-                $amount = $user_shares/($share_price*1)*($shares_dividend*1);
+                $amount = $user_shares/($share_price*1)*($shares_dividend*1)/100;
 
                 //插入股金分红记录
                 $record_row = array(
+                    'order_id' => $dividend_id,
                     'user_id' => $user_id,
+                    'user_nickname' => $user_info_list[$user_id]['user_realname'],
                     'record_money' => $amount,
                     'record_date' => date("Y-m-d"),
                     'record_year' => date("Y"),
@@ -287,6 +293,39 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         }
         $data = array();
         $data['total_amount'] = $total_amount;
+        $this->data->addBody(-140, $data, $msg, $status);
+    }
+
+    public function getRecordListByOrderId()
+    {
+        $page = request_int('page');
+        $rows = request_int('rows');
+        $order_id  = request_string('order_id');   //用户Id
+        $trade_type_id = request_int('trade_type_id'); //交易类型
+        $user_type = request_int('user_type'); //用户入账类型
+        $status = request_int('status'); //是否已完成
+
+        $cond_row = array();
+        $cond_row['order_id'] = $order_id;
+        $cond_row['trade_type_id'] = $trade_type_id;
+        $cond_row['user_type'] = $user_type;
+        if($status) {
+            $cond_row['record_status'] = $status;
+        }
+
+        $order_row['record_time'] = 'desc';
+        $Consume_RecordModel = new Consume_RecordModel();
+        $data           = $Consume_RecordModel->listByWhere($cond_row,$order_row,$page,$rows);
+        if ($data)
+        {
+            $msg    = 'success';
+            $status = 200;
+        }
+        else
+        {
+            $msg    = 'failure';
+            $status = 250;
+        }
         $this->data->addBody(-140, $data, $msg, $status);
     }
 

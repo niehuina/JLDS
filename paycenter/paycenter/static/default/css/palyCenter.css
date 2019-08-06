@@ -293,8 +293,19 @@ a.pc_btn {
     .recharge2-content-top .box-public{
         margin-right:0 !important;
     }
+    .box input[type="checkbox"]:checked, .box input[type="radio"]:checked {
+        border-color: #06c1ae !important;
+        background-color: #06c1ae !important;;
+    }
     .pc_trans_btn .btn_big{
         float:none !important;
+    }
+    .pay-head .fr dd{
+        color: #06c1ae !important;
+    }
+    .submit_able{
+        background-color: #06c1ae !important;
+        border-color: #06c1ae !important;
     }
 }
 .splitLine-mg a{

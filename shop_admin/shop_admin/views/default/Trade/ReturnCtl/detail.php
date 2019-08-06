@@ -103,7 +103,8 @@ include $this->view->getTplPath() . '/' . 'header.php';
                     </ul>
                 </dd>
             </dl>
-            <?php if($data['return_state_etext'] == "seller_pass" || $data['return_state_etext'] == "seller_unpass" || $data['return_state_etext'] == "seller_goods" || $data['return_state_etext'] == "plat_pass")
+            <?php if($data['return_state_etext'] == "seller_pass" || $data['return_state_etext'] == "seller_unpass"
+                || $data['return_state_etext'] == "seller_goods" || $data['return_state_etext'] == "plat_pass" || $data['return_state_etext'] == "plat_unpass")
             { ?>
             <dl class="row">
                 <dt class="tit">商家退款处理</dt>
@@ -167,7 +168,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
                 </dd>
             </dl>
             <?php }?>
-            <?php if($data['return_state_etext'] == "plat_pass")
+            <?php if($data['return_state_etext'] == "plat_pass" || $data['return_state_etext'] == "plat_unpass")
             { ?>
                 <dl class="row">
                     <dt class="tit">平台退款处理</dt>
@@ -177,7 +178,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
                     <dd class="opt">
                         <ul class="nofloat">
                             <li>
-                                已完成
+                                <?= $data['return_platform_state_text'] ?>
                             </li>
                         </ul>
                     </dd>

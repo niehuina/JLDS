@@ -29,7 +29,7 @@ include __DIR__.'/../includes/header.php';
                 <li><a href="javascript:void(0);" id="goodsDetail">商品</a></li>
                 <li class="cur"><a href="javascript:void(0);" id="goodsBody">详情</a></li>
                 <li><a href="javascript:void(0);" id="goodsEvaluation">评价</a></li>
-                <li><a href="javascript:void(0);" id="goodsRecommendation">推荐</a></li>
+<!--                <li><a href="javascript:void(0);" id="goodsRecommendation">推荐</a></li>-->
             </ul>
             <div class="header-r"><a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a> </div>
         </div>

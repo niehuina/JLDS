@@ -7,7 +7,8 @@ var orderKey = "";
 $(function () {
     var e = getCookie("key");
     if (!e) {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html"
+        login();
+        return;
     }
     if (getQueryString("data-state") != "") {
         $("#filtrate_ul").find("li").has('a[data-state="' + getQueryString("data-state") + '"]').addClass("selected").siblings().removeClass("selected")
@@ -22,7 +23,8 @@ $(function () {
     function t() {
         if (reset) {
             curpage = 0;
-            hasMore = true
+            hasMore = true;
+            $("#order-list").html('');
         }
         $(".loading").remove();
         if (!hasMore) {
@@ -199,8 +201,8 @@ $(function () {
     $("#filtrate_ul").find("a").click(function () {
         $("#filtrate_ul").find("li").removeClass("selected");
         $(this).parent().addClass("selected").siblings().removeClass("selected");
-        reset = true;
         window.scrollTo(0, 0);
+        reset = true;
         t()
     });
     t();

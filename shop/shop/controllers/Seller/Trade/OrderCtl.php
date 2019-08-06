@@ -765,7 +765,11 @@ class Seller_Trade_OrderCtl extends Seller_Controller
                 $Goods_BaseModel = new Goods_BaseModel();
                 foreach ($order_goods_list as $key=>$goods) {
                     $goods_id = $goods['goods_id'];
-                    $flag_stock = $Goods_BaseModel->delStock($goods_id, $goods['order_goods_num'], $seller_user_id);
+                    $send_goods_num = $goods['order_goods_num'];
+                    if($goods['goods_return_status'] == 2 || $goods['goods_refund_status'] == 2) {
+                        $send_goods_num = $goods['order_goods_num'] * 1 - $goods['order_goods_returnnum'] * 1;
+                    }
+                    $flag_stock = $Goods_BaseModel->delStock($goods_id, $send_goods_num, $seller_user_id);
                     check_rs($flag_stock,$rs_row);
                 }
 

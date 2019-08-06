@@ -305,6 +305,8 @@ include $this->view->getTplPath() . '/' . 'seller_footer.php';
 
         $('.tabmenu > ul').find('li:lt(4)').remove();
         $('.tabmenu > ul').find('li:gt(0)').remove();
+        var href = window.location.href;
+        $('.tabmenu > ul > li > a').attr('href',href);
 
         //设置发货左侧tab优化
         // if (getQueryString("ctl") == "Seller_Stock_Order" && getQueryString("met") == "send") {

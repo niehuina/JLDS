@@ -5,7 +5,8 @@ $(function ()
     var u = getCookie("id");
     if (!e)
     {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html"
+        login();
+        return;
     }
     $.getJSON(ApiUrl + "/index.php?ctl=Buyer_Service_Return&met=index&act=add&typ=json", {
         k: e,

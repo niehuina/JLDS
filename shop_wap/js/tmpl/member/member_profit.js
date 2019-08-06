@@ -1,7 +1,7 @@
 $(function () {
     var key = getCookie('key');
     if (!key) {
-        window.location.href = WapSiteUrl + '/tmpl/member/login.html';
+        login();
         return;
     }
 
@@ -14,6 +14,7 @@ $(function () {
         var user_grade = result.data.user_grade;
         $(".v"+user_grade).show();
         if(result.data.self_user_id == getCookie('id')){
+            $(".shares").hide();
             $(".stock").hide();
         }
     });

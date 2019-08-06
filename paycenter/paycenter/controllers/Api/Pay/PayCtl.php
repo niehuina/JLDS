@@ -1375,7 +1375,7 @@ class Api_Pay_PayCtl extends Api_Controller
 
         //2.合并支付表
         $Union_OrderModel = new Union_OrderModel();
-        $union_row = $Union_OrderModel->getByWhere(array('inorder' => $order_id));
+        $union_row = $Union_OrderModel->getByWhere(array('inorder:in' => $order_id));
         $uorder_id = array_column($union_row,'union_order_id');
         $flag1 = $Union_OrderModel->editUnionOrder($uorder_id,array('order_state_id' => Union_OrderModel::FINISH));
         check_rs($flag1,$rs_row);
@@ -1386,20 +1386,6 @@ class Api_Pay_PayCtl extends Api_Controller
         $record_id_row = array_column($record_row,'consume_record_id');
         $flag2 = $Consume_RecordModel->editRecord($record_id_row,array('record_status' => RecordStatusModel::RECORD_FINISH));
         check_rs($flag2,$rs_row);
-
-        if($payment)
-        {
-            //4.减少买家的备货金
-            $union_row_buy = current($union_row);
-            $money = $union_row_buy['trade_payment_amount'];
-            $user_resource_edit_row = array();
-            $user_resource_edit_row['user_stocks'] = $money*(-1);
-
-            $User_ResourceModel = new User_ResourceModel();
-            $flag3 = $User_ResourceModel->editResource($union_row_buy['buyer_id'],$user_resource_edit_row,true);
-
-            check_rs($flag3,$rs_row);
-        }
 
         $flag = is_ok($rs_row);
 

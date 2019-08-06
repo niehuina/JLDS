@@ -1,11 +1,9 @@
 $(function () {
     var key = getCookie('key');
     if (!key) {
-        window.location.href = WapSiteUrl + '/tmpl/member/login.html';
+        login();
         return;
     }
-    var is_deliver = getQueryString('is_deliver');
-    is_deliver = is_deliver ? is_deliver : 0;
 
     template.helper("getPayUrl", function (orderid) {
         return WapSiteUrl + "/tmpl/member/money_deposit_pay.html?uorder=" + orderid;
@@ -22,7 +20,6 @@ $(function () {
                 u: getCookie('id'),
                 type: type,
                 user_id:getCookie('id'),
-                is_deliver:is_deliver,
             },
             'tmplid': 'list_model',
             'containerobj': $("#moneyloglist"),

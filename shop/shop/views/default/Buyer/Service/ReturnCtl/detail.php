@@ -29,7 +29,7 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                             <dd class="bg"></dd>
                         </dl>
                         <?php if ($data['return_goods_return'] && ($data['return_shop_handle'] == 2
-                            || ($data['return_shop_handle'] == 3 && $data['return_state'] >= 2 || $data['return_state'] == 21))) { ?>
+                            || ($data['return_shop_handle'] == 3 && $data['return_state'] >= 2 && $data['return_state'] != 3 || $data['return_state'] == 21))) { ?>
                             <dl id="state_talk" <?php if ($data['return_state'] >= 4 && $data['return_state'] != 3 || $data['return_state'] == 21) {
                                 echo 'class="current1"';
                             } ?>>
@@ -40,7 +40,7 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                         <dl id="state_handle" <?php if ($data['return_state'] >= 5 && $data['return_state'] <= 6 && $data['return_state'] != 3) {
                             echo 'class="current1"';
                         } ?>>
-                            <dt><?php if ($data['return_goods_return'] && $data['return_state'] >= 2 || $data['return_state'] == 21) {
+                            <dt><?php if ($data['return_goods_return'] && $data['return_state'] >= 2 && $data['return_state'] != 3 || $data['return_state'] == 21) {
                                     echo __("商家确认收货");
                                 }else{ ?><?= __('平台审核') ?><?php } ?></dt>
                             <dd class="bg"></dd>
@@ -130,7 +130,7 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                                 <dd><?= $data['return_shop_message'] ?></dd>
                             </dl>
                         <?php } ?>
-                        <?php if ($data['return_state_etext'] == "plat_pass"
+                        <?php if ($data['return_state_etext'] == "plat_pass" || $data['return_state_etext'] == "plat_unpass"
                             || ($data['return_state_etext'] == "seller_pass" && $data['return_shop_handle'] == 3)) { ?>
                             <h3><?= __('处理结果') ?></h3>
                             <dl class="return_dl">
@@ -153,13 +153,17 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                             </dl>
                             <dl class="return_dl">
                                 <dt><?= __('平台处理状态：') ?></dt>
-                                <dd><?= __('平台审核通过') ?></dd>
+                                <?php if ($data['return_state_etext'] == "plat_unpass") { ?>
+                                    <dd><?= __('审核未通过') ?></dd>
+                                <?php } else{ ?>
+                                <dd><?= __('审核通过') ?></dd>
+                                <?php } ?>
                             </dl>
                             <dl class="return_dl">
                                 <dt><?= __('平台备注：') ?></dt>
                                 <dd><?= $data['return_platform_message'] ?></dd>
                             </dl>
-                            <?php if($data['return_state_etext'] == "seller_pass" && $data['return_shop_handle'] == 3){?>
+                            <?php if($data['return_state_etext'] == "seller_pass" && $data['return_shop_handle'] == 3 && $data['return_state'] != 21){?>
                                 <h3><?=__('确认退货')?></h3>
                                 <dl>
                                     <form id="form2" action="#" method="post">

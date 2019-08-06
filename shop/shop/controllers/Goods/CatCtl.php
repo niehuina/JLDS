@@ -101,20 +101,27 @@ class Goods_CatCtl extends Controller
 		$Goods_CatModel = new Goods_CatModel();
 		$data           = $Goods_CatModel->getGoodsCatList();
 
-		//最近浏览
-		$user_id             = Perm::$userId;
-		$User_FootprintModel = new User_FootprintModel();
-		$data_foot           = $User_FootprintModel->getByWhere(array('user_id' => $user_id), array('footprint_time' => 'desc'));
-		$common_id_rows      = array_column($data_foot, 'common_id');
-		$common_id_rows      = array_unique($common_id_rows);
-		$common_id_rows      = array_slice($common_id_rows, 0, 4);
-		$Goods_CommonModel   = new Goods_CommonModel();
-		$data_recommon       = $Goods_CommonModel->listByWhere(array('common_id:in' => $common_id_rows), array('common_sell_time' => 'desc'), 0, 4);
-		$data_recommon_goods = $Goods_CommonModel->getRecommonRow($data_recommon);
+        //最近浏览
+        $user_id             = Perm::$userId;
+        $User_FootprintModel = new User_FootprintModel();
+        $data_foot           = $User_FootprintModel->getByWhere(array('user_id' => $user_id), array('footprint_time' => 'desc'));
+        $common_id_rows      = array_column($data_foot, 'common_id');
+        $common_id_rows      = array_unique($common_id_rows);
+        $common_id_rows      = array_slice($common_id_rows, 0, 4);
+        $Goods_CommonModel   = new Goods_CommonModel();
+        $data_recommon       = $Goods_CommonModel->listByWhere(array('common_id:in' => $common_id_rows), array('common_sell_time' => 'desc'), 0, 4);
+        $data_recommon_goods = $Goods_CommonModel->getRecommonRow($data_recommon);
 
-		include $this->view->getView();
+        include $this->view->getView();
 	}
 
+    public function goodsCatRecomendList()
+    {
+        $Goods_CatModel = new Goods_CatModel();
+        $data           = $Goods_CatModel->getGoodsCatRecomendList();
+
+        $this->data->addBody(-140, $data);
+    }
 }
 
 ?>

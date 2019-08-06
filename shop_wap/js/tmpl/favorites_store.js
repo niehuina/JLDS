@@ -5,7 +5,8 @@ $(function ()
     var t = getCookie("key");
     if (!t)
     {
-        location.href = "login.html"
+        login();
+        return;
     }
     var e = new ncScrollLoad;
     e.loadInit({

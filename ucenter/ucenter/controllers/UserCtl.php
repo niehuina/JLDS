@@ -1939,6 +1939,28 @@ class UserCtl extends Yf_AppController
         return $this->data->addBody(-140, $data, $msg, $status);
 
     }
+
+    public function updatepassword()
+    {
+        $user_id = request_string('user_id');
+        $password = request_string('password');
+        $user['user_id'] = $user_id;
+        $user['password'] = md5($password);
+        $UserInfoModel = new  User_InfoModel();
+
+        $flag = $UserInfoModel->editInfo($user_id, $user);
+
+        if ($flag) {
+            $status = 200;
+            $msg = __('success');
+        } else {
+            $status = 250;
+            $msg = __('failure');
+        }
+        $data = array();
+        $this->data->addBody(-140, $data, $msg, $status);
+
+    }
 }
 
 ?>

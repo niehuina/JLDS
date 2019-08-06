@@ -40,7 +40,7 @@ include __DIR__ . '/../../includes/header.php';
     </head>
 
     <body>
-    <header id="header" class="fixed">
+    <header id="header-member" class="fixed write">
         <div class="header-wrap">
             <div class="header-l">
                 <a href="../member/member.html"><i class="back"></i> </a>
@@ -51,7 +51,7 @@ include __DIR__ . '/../../includes/header.php';
         </div>
     </header>
     <div class="nctouch-main-layout">
-        <div class="member-top member-top1">
+        <div class="member-top">
             <div class="member-info">
                 <div class="wallet-money mt5">
                     <i class="icon"><i class="icon icon-bg"></i></i>
@@ -81,7 +81,7 @@ include __DIR__ . '/../../includes/header.php';
                 </a>
             </li>
         </ul>
-        <ul class="nctouch-default-list mt5 v3 v4">
+        <ul class="nctouch-default-list mt5 v3 v4 shares">
             <li>
                 <a href="profit_shares.html">
                     <h4>股金年度分红</h4>

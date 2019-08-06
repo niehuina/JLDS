@@ -3,8 +3,8 @@ $(function ()
     var a = getCookie("key");
     if (!a)
     {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html";
-        return
+        login();
+        return;
     }
     $.ajax({
         type: "get",
@@ -39,7 +39,7 @@ $(function ()
             }
         }
     });
-    $(".btn-green").click(function ()
+    $(".btn-submit").click(function ()
     {
         if ($.sValid())
         {

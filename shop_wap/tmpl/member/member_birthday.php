@@ -22,10 +22,13 @@ include __DIR__.'/../../includes/header.php';
     </head>
 
     <body>
-    <header id="header">
+    <header id="header" class="write">
         <div class="header-wrap">
             <div class="header-l">
                 <a href="javascript:history.go(-1);"> <i class="back"></i> </a>
+            </div>
+            <div class="header-title">
+                <h1>编辑生日</h1>
             </div>
             <div class="header-r"></div>
         </div>
@@ -38,11 +41,11 @@ include __DIR__.'/../../includes/header.php';
                         <h4>生日</h4>
                         <div class="input-box">
                             <input type="date" class="inp" id="date"  autocomplete="off"  oninput="writeClear($(this));" />
-                            <span class="input-del"></span> </div>
+<!--                            <span class="input-del"></span> </div>-->
                     </li>
                 </ul>
                 <div class="error-tips"></div>
-                <div class="form-btn"><a class="btn-green" href="javascript:;">保存</a></div>
+                <div class="form-btn"><a class="btn-submit" href="javascript:;">保存</a></div>
             </div>
         </form>
     </div>

@@ -123,11 +123,7 @@ include __DIR__.'/../../includes/header.php';
                     <li class="<%if(orderinfo.order_payment_amount){%>green-order-skin<%}else{%>gray-order-skin<%}%> <%if(i>0){%>mt10<%}%>">
                         <div class="nctouch-order-item">
                             <div class="nctouch-order-item-head">
-                                <%if (orderinfo.shop_self_support){%>
-                                <a class="store"><i class="icon"></i>自营店铺</a>
-                                <%}else{%>
-                                <a href="<%=WapSiteUrl%>/tmpl/store.html?shop_id=<%=orderinfo.shop_id%>" class="store"><i class="icon"></i><%= orderinfo.shop_name %><i class="arrow-r"></i></a>
-                                <%}%>
+                                <a class="store">订单：<%=orderinfo.order_id%></a>
                                 <span class="state">
                                     <%
                                         var stateClass ="ot-finish";
@@ -186,9 +182,9 @@ include __DIR__.'/../../includes/header.php';
                                     <%}%>
                             </div>
                             <div class="nctouch-order-item-footer">
-                                <div class="store-totle"
-                                    <span>共<em><%=count%></em>件商品，合计</span><span class="sum">￥<em><%= p2f(orderinfo.order_payment_amount) %></em></span><span class="freight">(含运费￥<%=orderinfo.order_shipping_fee%>)</span>
-                                </div>
+<!--                                <div class="store-totle"-->
+<!--                                    <span>共<em><%=count%></em>件商品，合计</span><span class="sum">￥<em><%= p2f(orderinfo.order_payment_amount) %></em></span><span class="freight">(含运费￥<%=orderinfo.order_shipping_fee%>)</span>-->
+<!--                                </div>-->
                                 <div class="handle">
                                     <a href="javascript:void(0)" order_id="<%=orderinfo.order_id%>" shop_id="<%=orderinfo.shop_id%>"
                                        promotion_type="<%=orderinfo.order_promotion_type%>" promotion_id="<%=orderinfo.order_promotion_id%>" class="btn again-order">再来一单</a>
@@ -198,12 +194,12 @@ include __DIR__.'/../../includes/header.php';
                                     <%if(orderinfo.order_status == 1){%>
                                     <a href="javascript:void(0)" order_id="<%=orderinfo.order_id%>" class="btn cancel-order">取消订单</a>
                                     <%}%>
-                                    <%if(orderinfo.order_status == 4 || orderinfo.order_status == 15){%>
-                                    <a href="javascript:void(0)" order_id="<%=orderinfo.order_id%>" class="btn key sure-order">确认收货</a>
+                                    <%if(orderinfo.order_status == 4 && orderinfo.can_confirm_order){%>
+                                    <a href="javascript:void(0)" order_id="<%=orderinfo.order_id%>" class="btn sure-order">确认收货</a>
                                     <%}%>
                                     <%if(orderinfo.order_status == 6){%>
                                         <%if(orderinfo.evala_status == 1){%>
-                                        <a href="javascript:void(0)" order_id="<%=orderinfo.order_id%>" class="btn key evaluation-order">评价</a>
+                                        <a href="javascript:void(0)" order_id="<%=orderinfo.order_id%>" class="btn evaluation-order">评价</a>
                                         <%}else if(orderinfo.evala_status == 2){%>
                                         <a href="javascript:void(0)" order_id="<%=orderinfo.order_id%>" class="btn evaluation-again-order">追加评价</a>
                                         <%}else if(orderinfo.evala_status == 3){%>
@@ -211,7 +207,7 @@ include __DIR__.'/../../includes/header.php';
                                         <%}%>
                                     <%}%>
                                     <%if(orderinfo.order_status == 1 && orderinfo.order_payment_amount>0){%>
-                                    <a href="javascript:;" onclick="payOrder('<%= orderinfo.payment_number %>','<%= orderinfo.order_id %>')" data-paySn="<%= orderinfo.order_id %>" class="btn key check-payment">订单支付</a>
+                                    <a href="javascript:;" onclick="payOrder('<%= orderinfo.payment_number %>','<%= orderinfo.order_id %>')" data-paySn="<%= orderinfo.order_id %>" class="btn check-payment">订单支付</a>
                                     <%}%>
                                 </div>
                             </div>

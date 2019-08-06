@@ -59,6 +59,8 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
 
     <script>
         $('.tabmenu > ul').find('li:lt(4)').remove();
+        var href = window.location.href;
+        $('.tabmenu > ul > li > a').attr('href',href);
     </script>
 <?php
 include $this->view->getTplPath() . '/' . 'seller_footer.php';

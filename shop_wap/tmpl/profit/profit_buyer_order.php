@@ -17,33 +17,10 @@ include __DIR__ . '/../../includes/header.php';
         <title></title>
         <link rel="stylesheet" type="text/css" href="../../css/base.css">
         <link rel="stylesheet" type="text/css" href="../../css/nctouch_member.css">
-        <style>
-            .nctouch-log-list li dl{
-                padding-left: 0px;
-            }
-            .nctouch-log-list li dt{
-                font-size: 0.6rem;
-                width: 240px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-            .nctouch-log-list li dd{
-                line-height: unset;
-            }
-            .nctouch-log-list li .money{
-                font-size: 0.6rem;
-            }
-            .nctouch-log-list li dl.pl45{
-                padding-left: 45px;
-            }
-            .nctouch-log-list li dl.pl45 dt{
-                width: 230px;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="../../css/member_profit.css">
     </head>
     <body>
-    <header id="header">
+    <header id="header-member">
         <div class="header-wrap">
             <div class="header-l">
                 <a href="member_profit.html"> <i class="back"></i> </a>
@@ -66,7 +43,7 @@ include __DIR__ . '/../../includes/header.php';
             </div>
         </div>
         <div id="fixed_nav" class="nctouch-single-nav">
-            <ul id="filtrate_ul" class="w20h">
+            <ul id="filtrate_ul" class="w33h">
                 <li class="selected"><a href="javascript:void(0);" data-status="0">未结算</a></li>
                 <li><a href="javascript:void(0);" data-status="1">待到账</a></li>
                 <li><a href="javascript:void(0);" data-status="2">已到账</a></li>
@@ -114,9 +91,13 @@ include __DIR__ . '/../../includes/header.php';
         <li data-order-id="<%=v.order_id;%>" class="deposit">
             <dl class="">
                 <dt>
-                    <%=v.record_title;%>
+                    <%=v.order_id;%>
                 </dt>
-                <dd><%=v.order_id;%></dd>
+                <% if(v.record_status == 1){%>
+                <dd>创建日：<%=v.record_time;%></dd>
+                <%}else{%>
+                <dd>到账日：<%=v.record_paytime;%></dd>
+                <%}%>
             </dl>
             <div class="money add">
                 <em>¥</em><%=v.record_money;%>

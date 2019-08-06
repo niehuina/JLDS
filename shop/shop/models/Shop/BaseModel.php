@@ -577,7 +577,7 @@ class Shop_BaseModel extends Shop_Base
         $orders = $orderModel->getByWhere($cond_row);
         $data = array();
         $data['sales_num'] = count($orders);
-        $data['order_sales'] = $orders ? array_sum(array_column($orders, 'order_payment_amount')) : 0;
+        $data['order_sales'] = $orders ? array_sum(array_column($orders, 'order_payment_amount')) - array_sum(array_column($orders, 'order_refund_amount')) : 0;
 
         return $data;
     }

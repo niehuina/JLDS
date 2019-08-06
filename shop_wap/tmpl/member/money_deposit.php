@@ -76,8 +76,8 @@ include __DIR__.'/../../includes/header.php';
                 </div>
             </ul>
             <div class="error-tips"></div>
-            <input type="button" class="btn-green mt5" id="deposit_btn" value="下一步">
-            <input type="button" class="btn-green mt5" id="deposit_card_btn" value="确认信息并充值" disabled="disabled"
+            <input type="button" class="btn-submit mt5" id="deposit_btn" value="下一步">
+            <input type="button" class="btn-submit mt5" id="deposit_card_btn" value="确认信息并充值" disabled="disabled"
                 style="display:none;">
         </div>
     </div>

@@ -91,8 +91,8 @@ $(function (){
         var key = getCookie('key');//登录标记
 
         if (!key) {
-            window.location.href = WapSiteUrl + '/tmpl/member/login.html';
-            return false;
+            login();
+            return;
         }
     })
     //点击立即兑换

@@ -217,7 +217,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
     <script type="text/javascript">
         $('.tabmenu > ul').find('li:gt(3)').remove();
         $('.tabmenu > ul').find('li:lt(3)').remove();
-        var href = window.location.href; ;
+        var href = window.location.href;
         $('.tabmenu > ul > li > a').attr('href',href);
         /*$($('.tabmenu > ul')[0]).find('li:lt(6)').remove();*/
 

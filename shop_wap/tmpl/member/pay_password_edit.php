@@ -64,7 +64,7 @@ include __DIR__.'/../../includes/header.php';
                     </li>
                 </ul>
                 <div class="error-tips"></div>
-                <div class="form-btn"><a class="btn-green" href="javascript:;">保存</a></div>
+                <div class="form-btn"><a class="btn-submit" href="javascript:;">保存</a></div>
             </div>
         </form>
     </div>

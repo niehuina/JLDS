@@ -12,7 +12,8 @@ $(function ()
  
 	if (!e) 
 	{
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html"
+        login();
+        return;
     }
    
     if (getQueryString("data-state") != "") 

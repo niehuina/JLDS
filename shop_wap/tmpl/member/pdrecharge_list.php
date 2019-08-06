@@ -100,7 +100,7 @@ include __DIR__.'/../../includes/header.php';
     <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
     <script type="text/javascript" src="../../js/libs/template.js"></script>
     <script type="text/javascript" src="../../js/common.js"></script>
-    <script type="text/javascript" src="../../js/zepto.waypoints.js"></script>
+    <script type="text/javascript" src="../../js/libs/zepto.waypoints.js"></script>
     <script type="text/javascript" src="../../js/libs/ncscroll-load.js"></script>
     <script>
         $(function () {

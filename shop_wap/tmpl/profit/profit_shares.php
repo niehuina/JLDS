@@ -16,34 +16,11 @@ include __DIR__ . '/../../includes/header.php';
         <title>账单明细</title>
         <link rel="stylesheet" type="text/css" href="../../css/base.css">
         <link rel="stylesheet" type="text/css" href="../../css/nctouch_member.css">
-        <style>
-            .nctouch-log-list li dl{
-                padding-left: 0px;
-            }
-            .nctouch-log-list li dt{
-                font-size: 0.6rem;
-                width: 240px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-            .nctouch-log-list li dd{
-                line-height: unset;
-            }
-            .nctouch-log-list li .money{
-                font-size: 0.6rem;
-            }
-            .nctouch-log-list li dl.pl45{
-                padding-left: 45px;
-            }
-            .nctouch-log-list li dl.pl45 dt{
-                width: 230px;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="../../css/member_profit.css">
     </head>
 
     <body>
-    <header id="header">
+    <header id="header-member">
         <div class="header-wrap">
             <div class="header-l"><a href="javascript:history.go(-1)"><i class="back"></i></a></div>
             <div class="header-title">
@@ -73,7 +50,7 @@ include __DIR__ . '/../../includes/header.php';
                 <dt>
                     <%=v.record_title;%>
                 </dt>
-                <dd><%=v.record_time;%></dd>
+                <dd>分红时间：<%=v.record_time;%></dd>
             </dl>
             <div class="money add">
                 <em>¥</em><%=v.record_money;%>

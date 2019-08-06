@@ -38,6 +38,7 @@ class Order_ReturnModel extends Order_Return
 	);
 
 	public $return_state;
+    public $return_plate_state;
 	public $return_type;
 
 	public function __construct()
@@ -46,12 +47,18 @@ class Order_ReturnModel extends Order_Return
 		$this->return_state = array(
 			'1' => __("等待卖家审核"),
             '2' => __("卖家审核通过"),
-            '21' => __("等待买家退货"),
+            '21' => __("等待卖家确认收货"),
 			'3' => __("卖家审核未通过"),
 			'4' => __("等待平台审核"),
 			'5' => __("退款/货完成"),
             '6' => __("退款/退款关闭"),
 		);
+		$this->return_plate_state = array(
+            '2' => __("平台审核通过"),
+            '21' => __("平台审核通过"),
+            '5' => __("平台审核通过"),
+            '6' => __("平台审核未通过"),
+        );
 		$this->return_type  = array(
 			'1' => __("退款"),
 			'2' => __("退货"),
@@ -72,13 +79,10 @@ class Order_ReturnModel extends Order_Return
 
 		foreach ($data['items'] as $k => $v)
 		{
-			if($v['return_shop_handle'] == 3 && $v['return_state'] == self::RETURN_SELLER_UNPASS)
+            $data['items'][$k]['return_state_text'] = @$this->return_state[$v['return_state']];
+			if($v['return_shop_handle'] == 3 && $v['return_state'] == self::RETURN_SELLER_PASS)
 			{
-				$data['items'][$k]['return_state_text'] = @$this->return_state[$v['return_state']].'('.@$this->return_state[$v['return_shop_handle']].')';
-			}
-			else
-			{
-				$data['items'][$k]['return_state_text'] = @$this->return_state[$v['return_state']];
+                $data['items'][$k]['return_state_text'] = '待买家退货';
 			}
 
 			$data['items'][$k]['return_type_text']  = @$this->return_state[$v['return_type']];
@@ -105,7 +109,7 @@ class Order_ReturnModel extends Order_Return
 		$data = $this->getOneByWhere($cond_row, $order_row);
 
 		$data['return_state_etext'] = self::$state[$data['return_state']];
-		$data['return_platform_state_text']  = @$this->return_state[$data['return_state']];
+		$data['return_platform_state_text']  = @$this->return_plate_state[$data['return_state']];
 		$data['return_shop_state_text']  = @$this->return_state[$data['return_shop_handle']];
 		if($data['return_shop_handle'] == 3)
 		{
@@ -123,7 +127,7 @@ class Order_ReturnModel extends Order_Return
 	{
 		$data                       = $this->getOne($id);
 		$data['return_state_etext'] = self::$state[$data['return_state']];
-		$data['return_platform_state_text']  = @$this->return_state[$data['return_state']];
+		$data['return_platform_state_text']  = @$this->return_plate_state[$data['return_state']];
 		$data['return_shop_state_text']  = @$this->return_state[$data['return_shop_handle']];
 		if($data['return_shop_handle'] == 3)
 		{

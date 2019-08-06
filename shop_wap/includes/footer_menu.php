@@ -2,7 +2,7 @@
 
 $footer_menu = [
 	'首页'=>'/index.html',
-	'分类'=>'/tmpl/product_first_categroy.html',
+	'商品'=>'/tmpl/cat_product_list.html',
 	'购物车'=>'/tmpl/cart_list.html',
 	'我的'=>'/tmpl/member/member.html',
 ];

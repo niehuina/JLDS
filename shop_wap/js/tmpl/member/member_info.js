@@ -3,8 +3,8 @@ $(function ()
     var e = getCookie("key");
     if (!e)
     {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html";
-        return
+        login();
+        return;
     }
     $.ajax({
         type: "get",  url:ApiUrl+"/index.php?ctl=Buyer_User&met=getUserInfo&typ=json", data: {k:e,u:getCookie('id'),}, dataType: "json", success: function (result)

@@ -91,6 +91,10 @@ class Order_BaseModel extends Order_Base
         '0' => 'is_uevaluate',
     );
 
+    public $cancelIdentity = null;
+    public $goodsRefundState = null;
+    public $goodsReturnState = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -109,7 +113,7 @@ class Order_BaseModel extends Order_Base
             //退货中
             '2' => __("退货完成"),
             //退货完成
-            '3' =>__("商家拒绝退货"),
+            '3' =>__("平台拒绝退货"),
         );
 
         $this->goodsReturnState = array(
@@ -119,7 +123,7 @@ class Order_BaseModel extends Order_Base
             //退货中
             '2' => __("退款完成"),
             //退货完成
-            '3' => __("商家拒绝退款"),
+            '3' => __("平台拒绝退款"),
         );
 
     }
@@ -223,6 +227,7 @@ class Order_BaseModel extends Order_Base
                 //查找订单商品
                 $order_goods = $Order_GoodsModel->getByWhere(array('order_id' => $val['order_id']));
 
+                $data['items'][$key]['can_confirm_order'] = true;
                 foreach ($order_goods as $okey => $oval) {
                     //判断该订单商品被评论的次数
                     $goods_evaluation_row = array();
@@ -237,23 +242,28 @@ class Order_BaseModel extends Order_Base
                     $order_goods[$okey]['goods_return_status_con'] = $this->goodsReturnState[$oval['goods_return_status']];
 
                     //查找退货id
-                    if ($oval['goods_refund_status'] !== Order_StateModel::ORDER_GOODS_RETURN_NO) {
+                    if ($oval['goods_return_status'] !== Order_StateModel::ORDER_GOODS_RETURN_NO) {
                         $Order_ReturnModel = new Order_ReturnModel();
                         $order_goods_return_id = $Order_ReturnModel->getKeyByWhere(array('order_number' => $val['order_id'],
                                                                                           'order_goods_id' => $oval['order_goods_id'],
                                                                                           'return_type' => 2,
                                                                                    ));
                         $order_goods[$okey]['order_refund_id'] = $order_goods_return_id[0];
-
+                        if($oval['goods_return_status'] == Order_GoodsModel::REFUND_IN){
+                            $data['items'][$key]['can_confirm_order'] = false;
+                        }
                     }
 
                     //查找退款id
-                    if ($oval['goods_refund_status'] !== Order_StateModel::ORDER_GOODS_RETURN_NO) {
+                    if ($oval['goods_refund_status'] !== Order_StateModel::ORDER_REFUND_NO) {
                         $Order_ReturnModel = new Order_ReturnModel();
                         $order_goods_return_id = $Order_ReturnModel->getKeyByWhere(array('order_number' => $val['order_id'],
                                                                                        'order_goods_id' => $oval['order_goods_id'],
                                                                                        'return_type' => 1,));
                         $order_goods[$okey]['order_return_id'] = $order_goods_return_id[0];
+                        if($oval['goods_refund_status'] == Order_GoodsModel::REFUND_IN){
+                            $data['items'][$key]['can_confirm_order'] = false;
+                        }
                     }
 
                     //如果订单是服务订单
@@ -421,6 +431,7 @@ class Order_BaseModel extends Order_Base
         $Order_GoodsModel = new Order_GoodsModel();
         $Goods_EvaluationModel = new Goods_EvaluationModel();
         $order_goods = $Order_GoodsModel->getByWhere(array('order_id' => $data['order_id']));
+        $data['can_confirm_order'] = true;
         foreach ($order_goods as $okey => $oval) {
             //判断该订单商品被评论的次数
             $goods_evaluation_row = array();
@@ -434,6 +445,12 @@ class Order_BaseModel extends Order_Base
             $order_goods[$okey]['goods_refund_status_con'] = $this->goodsRefundState[$oval['goods_refund_status']];
             $order_goods[$okey]['goods_return_status_con'] = $this->goodsReturnState[$oval['goods_return_status']];
 
+            if($oval['goods_refund_status'] == Order_GoodsModel::REFUND_IN){
+                $data['can_confirm_order'] = false;
+            }
+            if($oval['goods_return_status'] == Order_GoodsModel::REFUND_IN){
+                $data['can_confirm_order'] = false;
+            }
             //若为退款中订单，则查找退货单id
             if ($oval['goods_refund_status'] !== Order_StateModel::ORDER_REFUND_NO) {
                 $Order_ReturnModel = new Order_ReturnModel();
@@ -665,7 +682,7 @@ class Order_BaseModel extends Order_Base
                     $goods_return       = $Order_ReturnModel->getByWhere(array(
                                                                              'order_goods_id' => $v['order_goods_id'],
 //                                                                             'return_type' => Order_ReturnModel::RETURN_TYPE_ORDER,
-                                                                             'return_shop_handle:!=' => Order_ReturnModel::RETURN_SELLER_UNPASS,
+                                                                             'return_shop_handle:!=' => Order_ReturnModel::RETURN_PLAT_UNPASS,
                                                                          ), ['return_add_time'=>'desc']);
 
                     $return_txt = '';
@@ -676,8 +693,16 @@ class Order_BaseModel extends Order_Base
                         if($goods_return['return_state'] == Order_ReturnModel::RETURN_PLAT_PASS)
                         {
                             $return_txt = "<span class='colred'>已退".$goods_return['order_goods_num']."件</span>";
-                        }else{
-
+                            //$data['items'][$key]['goods_list'][$k]['order_goods_num'] = $v['order_goods_num']*1 - $goods_return['order_goods_num']*1;
+                        }else if($goods_return['return_state'] == Order_ReturnModel::RETURN_PLAT_UNPASS){
+                            if($goods_return['return_type'] == Order_ReturnModel::RETURN_TYPE_GOODS){
+                                $return_type_text = "平台拒绝退货";
+                            }else{
+                                $return_type_text = "平台拒绝退款";
+                            }
+                            $return_txt = "<span class='colred'>{$return_type_text}</span>";
+                        }
+                        else{
                             if($deilve_able)
                             {
                                 if($goods_return['return_type'] == Order_ReturnModel::RETURN_TYPE_GOODS){
@@ -689,7 +714,6 @@ class Order_BaseModel extends Order_Base
                                 }
                             }
                         }
-
                     }
                     $data['items'][$key]['goods_list'][$k]['return_txt'] = $return_txt;
                 }
@@ -1286,8 +1310,46 @@ class Order_BaseModel extends Order_Base
         $order_base = $this->getOne($order_id);
         $order_payment_amount = $order_base['order_payment_amount'];
 
+        //查询是否有未完成的退款/退货订单
+        $Order_ReturnModel = new Order_ReturnModel();
+        $return_ids = $Order_ReturnModel->getKeyByWhere(['order_number'=>$order_id,
+            'return_state:not in'=>[Order_ReturnModel::RETURN_PLAT_PASS, Order_ReturnModel::RETURN_PLAT_UNPASS]]);
+        if(count($return_ids) > 0){
+            foreach ($return_ids as $return_id){
+                $return = $Order_ReturnModel->getOne($return_id);
+                if($return['return_type'] == Order_ReturnModel::RETURN_TYPE_ORDER){
+                    //如果退款，商家还未处理，或者商家拒绝。则相当于平台拒绝。否则即已同意
+                    $no_reply_return = [Order_ReturnModel::RETURN_WAIT_PASS, Order_ReturnModel::RETURN_SELLER_UNPASS];
+                    if(in_array($return['return_state'], $no_reply_return)){
+                        $formvars['order_return_id'] = $return_id;
+                        $formvars['return_platform_message'] = "拒绝退款申请";
+                        $rs = $this->getShopApi('Api_Trade_Return', 'refuse', $formvars, 'json');
+                    }else{
+                        $formvars['order_return_id'] = $return_id;
+                        $formvars['return_platform_message'] = "同意";
+                        $rs = $this->getShopApi('Api_Trade_Return', 'agree', $formvars, 'json');
+                    }
+                }else{
+                    //如果退货，卖家未退回货之前。则相当于平台拒绝。其他默认同意
+                    $no_reply_return = [Order_ReturnModel::RETURN_WAIT_PASS,
+                        Order_ReturnModel::RETURN_SELLER_PASS,
+                        Order_ReturnModel::RETURN_SELLER_UNPASS];
+                    if(in_array($return['return_state'], $no_reply_return)){
+                        $formvars['order_return_id'] = $return_id;
+                        $formvars['return_platform_message'] = "拒绝退货申请";
+                        $rs = $this->getShopApi('Api_Trade_Return', 'refuse', $formvars, 'json');
+                    }else{
+                        $formvars['order_return_id'] = $return_id;
+                        $formvars['return_platform_message'] = "同意";
+                        $rs = $this->getShopApi('Api_Trade_Return', 'agree', $formvars, 'json');
+                    }
+                }
+            }
+        }
+
         $condition['order_status'] = Order_StateModel::ORDER_FINISH;
         $condition['order_finished_time'] = get_date_time();
+        $this->editBase($order_id, $condition);
 
         $Order_GoodsModel = new Order_GoodsModel();
         $order_goods_data = $Order_GoodsModel->getByWhere(array('order_id'=>$order_id));
@@ -1298,7 +1360,6 @@ class Order_BaseModel extends Order_Base
             $condition['order_directseller_commission'] = $order_directseller_commission;
             //END
         }
-        $flag = $this->editBase($order_id, $condition);
 
         //修改订单商品表中的订单状态
         $edit_row['order_goods_status'] = Order_StateModel::ORDER_FINISH;
@@ -1318,40 +1379,9 @@ class Order_BaseModel extends Order_Base
 
         $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=confirmOrder&typ=json', $url), $formvars);
 
-        //个人仓库
+        //添加到个人仓库
         $User_Stock_Model = new User_StockModel();
-        $user_stock_list = $User_Stock_Model->getByWhere(['user_id'=>$order_base['buyer_user_id']]);
-        $goods_id_array = array_reduce($user_stock_list, function($carry,$item){
-            $carry[$item['goods_id']] = $item['stock_id'];
-            return $carry;
-        });
-
-        foreach($order_goods_data as $i=>$order_goods){
-            $goods_id = $order_goods['goods_id'];
-            if(array_key_exists($goods_id, $goods_id_array)){
-                $stock_row = array();
-                $stock_row['goods_stock'] = $order_goods['order_goods_num'];
-
-                //修改用户仓储商品数量
-                $stock_id = $goods_id_array[$goods_id];
-                $s_flag = $User_Stock_Model->editUserStock($stock_id,$stock_row, true);
-                check_rs($s_flag,$rs_row);
-            }else{
-                $stock_row = array();
-                $stock_row['user_id'] = $order_base['buyer_user_id'];
-                $stock_row['user_name'] = $order_base['buyer_user_name'];
-                $stock_row['goods_id'] = $order_goods['goods_id'];
-                $stock_row['common_id'] = $order_goods['common_id'];
-                $stock_row['goods_name'] = $order_goods['goods_name'];
-                $stock_row['goods_stock'] = $order_goods['order_goods_num'];
-                $stock_row['alarm_stock'] = 0;
-                $stock_row['stock_date_time'] = get_date_time();
-
-                //添加到用户仓储
-                $s_flag = $User_Stock_Model->addUserStock($stock_row);
-                check_rs($s_flag,$rs_row);
-            }
-        }
+        $User_Stock_Model->editStockFromOrder($order_goods_data, $order_base['buyer_user_id'], $order_base['buyer_user_name']);
 
         $this->confirmOrder_user_log($order_payment_amount, $order_base['buyer_user_id'], $order_base['buyer_user_name']);
     }
@@ -1442,7 +1472,7 @@ class Order_BaseModel extends Order_Base
 
             $prefix           = sprintf('%s-', date('YmdHis'));
             $return_number    = $Number_SeqModel->createSeq($prefix);
-            $return_id        = sprintf('%s-%s-%s', 'TD', $return_number);
+            $return_id        = sprintf('%s-%s', 'TD', $return_number);
 
             $field['return_message']       = __('服务商品过期自动退款');
             $field['return_code']          = $return_id;

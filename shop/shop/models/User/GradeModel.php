@@ -323,7 +323,7 @@ class User_GradeModel extends User_Grade
             //更新用户级别
             $u_row['user_grade'] = $user_grade;
             $u_row['user_grade_update_date'] = get_date_time();
-            $u_row['uset_update_g_partner_date'] = get_date_time();
+            $u_row['user_update_g_partner_date'] = get_date_time();
             $u_row['user_parent_id'] = 0;
             $flag = $User_InfoModel->editInfo($user_id, $u_row);
 

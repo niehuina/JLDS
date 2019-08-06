@@ -34,7 +34,6 @@ class User_SettleProfitModel extends Yf_Model
         $order_list = $Order_BaseModel->getByWhere($cond_row, $order_row);
 
         //开启事物
-        $Order_BaseModel->sql->startTransactionDb();
         $rs_row = array();
         foreach ($order_list as $key=>$order) {
             $directseller_member[0] = $order['directseller_id'];     //直属一级
@@ -48,8 +47,17 @@ class User_SettleProfitModel extends Yf_Model
 
             $directseller_commission = array(0);
             foreach ($order_goods_list as $k => $v) {
-                if ($v['goods_refund_status'] == 0 && $v['directseller_flag']) {
+                if ($v['goods_return_status'] == 0 && ($v['goods_refund_status'] == 0 || $v['goods_refund_status'] == 3)
+                    || ($v['goods_return_status'] == 3 && ($v['goods_refund_status'] == 0 || $v['goods_refund_status'] == 3))
+                    && $v['directseller_flag']) {
                     $directseller_commission[0] += $v['directseller_commission_0'];  //一级分佣
+//                $directseller_commission[1] += $v['directseller_commission_1'];  //二级级分佣
+//                $directseller_commission[2] += $v['directseller_commission_2'];  //三级分佣
+                }else if(($v['goods_return_status'] == 2 || $v['goods_refund_status'] == 2) && $v['directseller_flag']){
+                    $order_goods_num = $v['order_goods_num']*1;
+                    $order_goods_returnnum = $v['order_goods_returnnum']*1;
+                    $order_goods_real = $order_goods_num - $order_goods_returnnum;
+                    $directseller_commission[0] += $v['directseller_commission_0'] / $order_goods_num * $order_goods_real;  //一级分佣
                 }
 
                 $goods_field['directseller_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
@@ -101,10 +109,12 @@ class User_SettleProfitModel extends Yf_Model
         $user_grade = $User_GradeModel->getOne(3);
 
         //合伙人只计算其直属下级用户的所有订单
-        $user_children_ids = $User_InfoModel->getUserDirectChildrenNoPartner($user_id);
-        Yf_Log::log($user_children_ids, Yf_Log::LOG, 'user_settle');
-        if(count($user_children_ids) == 0) return true;
-        $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
+//        $user_children_ids = $User_InfoModel->getUserDirectChildrenNoPartner($user_id);
+//        Yf_Log::log($user_children_ids, Yf_Log::LOG, 'user_settle');
+//        if(count($user_children_ids) == 0) return true;
+//        $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
+
+        $cond_row['directseller_p_id'] = $user_id;
         $cond_row['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
         $cond_row['rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
         $cond_row['order_create_time:>='] = $user_info['user_grade_update_date'];
@@ -113,7 +123,7 @@ class User_SettleProfitModel extends Yf_Model
         Yf_Log::log("partner order:".count($user_orders), Yf_Log::LOG, 'user_settle');
 
         $rs_row = array();
-        if ($user_orders) {
+        if (count($user_orders) > 0) {
             //计算其直属下级用户的未结算的订单总额
             $user_order_pay_amount = array_sum(array_column($user_orders, 'order_payment_amount'));
             $user_order_refund_amount = array_sum(array_column($user_orders, 'order_refund_amount'));
@@ -173,7 +183,7 @@ class User_SettleProfitModel extends Yf_Model
                 $formvars['user_money'] = $order_rebate_value_temp;
                 $formvars['reason'] = '合伙人订单提成结算';
                 $current_year = date('Y');
-                $formvars['desc'] = "{$current_year}年度累计订单金额{$total_children_order_total_amount}";
+                $formvars['desc'] = "订单金额{$order_amount},{$current_year}年度累计订单金额{$total_children_order_total_amount}";
                 $formvars['app_id'] = $paycenter_app_id;
                 $formvars['trade_type'] = 15;
                 $formvars['type'] = 'row';
@@ -207,7 +217,7 @@ class User_SettleProfitModel extends Yf_Model
         //计算高级合伙人的提成比例
         $grade_order_rebate1 = $user_g_grade['order_rebate1'] * 1/100;
         $grade_order_rebate2 = $user_g_grade['order_rebate2'] * 1/100;
-        $grade_order_rebate_top = $user_g_grade['order_rebate_top'] * 1;
+        $grade_order_rebate_top = $user_g_grade['order_rebate_top'] * 1/100;
         $partner_count = $user_info['current_year_partner_count'];
         $order_rebate = $grade_order_rebate1 * 1 + $grade_order_rebate2 * $partner_count;
         if ($order_rebate > $grade_order_rebate_top) {
@@ -216,9 +226,10 @@ class User_SettleProfitModel extends Yf_Model
         if ($order_rebate == 0) return true;
 
         //获取高级合伙人所有线下的未结算订单
-        $user_children_ids = $User_InfoModel->getUserChildren($user_id, 0);
-        if(!$user_children_ids) return true;
-        $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
+//        $user_children_ids = $User_InfoModel->getUserChildren($user_id, 0);
+//        if(!$user_children_ids) return true;
+//        $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
+        $cond_row['directseller_gp_id'] = $user_id;
         $cond_row['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
         $cond_row['g_rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
         $cond_row['order_create_time:>='] = $user_info['user_grade_update_date'];//订单是升级成为高级合伙人后的订单
@@ -252,7 +263,8 @@ class User_SettleProfitModel extends Yf_Model
                 $formvars['order_id'] = $order['order_id'];
                 $formvars['user_money'] = $order_rebate_value_temp;
                 $formvars['reason'] = '高级合伙人订单提成结算';
-                $formvars['desc'] = "订单结算时提成比例为{$order_rebate}";
+                $order_rebate_temp = $order_rebate*100;
+                $formvars['desc'] = "订单金额{$order_amount},订单结算时提成比例为{$order_rebate_temp}%";
                 $formvars['app_id'] = $paycenter_app_id;
                 $formvars['trade_type'] = 15;
                 $formvars['type'] = 'row';

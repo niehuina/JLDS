@@ -1680,11 +1680,14 @@ class Buyer_UserCtl extends Buyer_Controller
      */
     public function getRecordListForWap()
     {
-        $Yf_Page           = new Yf_Page();
-        $Yf_Page->listRows = request_int('listRows')?request_int('listRows'):10;
-        $rows              = $Yf_Page->listRows;
-        $offset            = request_int('firstRow', 0);
-        $page              = ceil_r($offset / $rows);
+//        $Yf_Page           = new Yf_Page();
+//        $Yf_Page->listRows = request_int('listRows')?request_int('listRows'):10;
+//        $rows              = $Yf_Page->listRows;
+//        $offset            = request_int('firstRow', 0);
+//        $page              = ceil_r($offset / $rows);
+
+        $page            = request_int('curpage', 0);
+        $rows            = request_int('page', 10);
 
         $data['page'] = $page;
         $data['rows'] = $rows;
@@ -1923,18 +1926,29 @@ class Buyer_UserCtl extends Buyer_Controller
             $real_stock_list = request_string('real_stock_list');
             $real_stock_list = decode_json($real_stock_list);
 
-            $User_Stock_Model = new User_StockModel();
             $Stock_CheckModel = new Stock_CheckModel();
             $Stock_CheckGoodsModel = new Stock_CheckGoodsModel();
 
-            $cond_row['user_id'] = Perm::$userId;
-            $goods_stock_list = $User_Stock_Model->getByWhere($cond_row);
+            //如果是高级合伙人
+            $user_id = request_int('user_id');
+            if($user_id != Web_ConfigModel::value('self_user_id')) {
+                $User_Stock_Model = new User_StockModel();
 
-            $User_Stock_Model->sql->startTransactionDb();
+                $cond_row['user_id'] = $user_id;
+                $goods_stock_list = $User_Stock_Model->getByWhere($cond_row);
+            }else{
+                $Goods_CommonModel = new Goods_CommonModel();
+                $Goods_BaseModel = new Goods_BaseModel();
+
+                $cond_row['shop_id'] = Web_ConfigModel::value('self_shop_id');
+                $goods_stock_list = $Goods_BaseModel->getByWhere($cond_row);
+            }
+
+            $Stock_CheckModel->sql->startTransactionDb();
             $rs_row = array();
             //添加盘点记录表
             $add_row = array();
-            $add_row['user_id'] = Perm::$userId;
+            $add_row['user_id'] = $user_id;
             $add_row['user_name'] = '';
             $add_row['check_date'] = date('Y-m-d');
             $add_row['check_date_time'] = get_date_time();
@@ -1947,7 +1961,7 @@ class Buyer_UserCtl extends Buyer_Controller
                     //添加盘点明细表
                     $add_goods_row = array();
                     $add_goods_row['check_id'] = $check_id;
-                    $add_goods_row['user_id'] = Perm::$userId;
+                    $add_goods_row['user_id'] = $user_id;
                     $add_goods_row['goods_id'] = $goods_stock['goods_id'];
                     $add_goods_row['common_id'] = $goods_stock['common_id'];
                     $add_goods_row['goods_name'] = $goods_stock['goods_name'];
@@ -1965,26 +1979,41 @@ class Buyer_UserCtl extends Buyer_Controller
                     $add_flag = $Stock_CheckGoodsModel->addCheckGoods($add_goods_row);
                     check_rs($add_flag, $rs_row);
 
-                    //修改商品库存
-                    if($real_num != $goods_stock['goods_stock']) {
-                        $edit_row = array();
-                        $edit_row['goods_stock'] = $real_num;
-                        $edit_flag = $User_Stock_Model->editUserStock($stock_id, $edit_row);
-                        check_rs($edit_flag, $rs_row);
+                    if($user_id != Web_ConfigModel::value('self_user_id')) {
+                        //修改商品库存
+                        if ($real_num != $goods_stock['goods_stock']) {
+                            $edit_row = array();
+                            $edit_row['goods_stock'] = $real_num;
+                            $edit_flag = $User_Stock_Model->editUserStock($stock_id, $edit_row);
+                            check_rs($edit_flag, $rs_row);
+                        }
+                    }else{
+                        //修改店铺商品库存
+                        if ($real_num != $goods_stock['goods_stock']) {
+                            $edit_row = array();
+                            $edit_row['goods_stock'] = $real_num;
+                            $edit_flag = $Goods_BaseModel->editBase($stock_id, $edit_row,false);
+                            check_rs($edit_flag, $rs_row);
+
+                            $edit_row2 = array();
+                            $edit_row2['common_stock'] = $real_num;
+                            $edit_flag2 = $Goods_CommonModel->editCommon($goods_stock['common_id'], $edit_row2);
+                            check_rs($edit_flag2, $rs_row);
+                        }
                     }
                 }
             }catch (Exception $e){
-                $User_Stock_Model->sql->rollBackDb();
+                $Stock_CheckModel->sql->rollBackDb();
                 $msg =  __('failure');
                 $status = 250;
             }
 
-            if(is_ok($rs_row) && $User_Stock_Model->sql->commitDb()){
+            if(is_ok($rs_row) && $Stock_CheckModel->sql->commitDb()){
                 $msg =  __('success');
                 $status = 200;
             }else{
-                $User_Stock_Model->sql->rollBackDb();
-                $m = $User_Stock_Model->msg->getMessages();
+                $Stock_CheckModel->sql->rollBackDb();
+                $m = $Stock_CheckModel->msg->getMessages();
                 $msg = $m ? $m[0] : __('failure');
                 $status = 250;
             }
@@ -1999,14 +2028,42 @@ class Buyer_UserCtl extends Buyer_Controller
         $rows    = request_int('rows', 20);
         $goods_key = request_string('goods_key', '');
 
-        $User_Stock_Model = new User_StockModel();
-        $cond_row['user_id'] = Perm::$userId;
-        if (!empty($goods_key)) {
-            $cond_row['goods_name:like'] = '%' . $goods_key . '%';
+        $user_id = request_int('user_id');
+        if($user_id != Web_ConfigModel::value('self_user_id')) {
+            $User_Stock_Model = new User_StockModel();
+            $cond_row['user_id'] = $user_id;
+            if (!empty($goods_key)) {
+                $cond_row['goods_name:like'] = '%' . $goods_key . '%';
+            }
+            $order_row['CONVERT(goods_name USING gbk)'] = 'asc';
+            $goods = $User_Stock_Model->getUserStockList($cond_row, $order_row, $page, $rows);
+
+            $this->data->addBody(-140, $goods);
+        }else{
+            $cront_row = array(
+                'shop_id' => Web_ConfigModel::value('self_shop_id'),
+                'common_state' => Goods_CommonModel::GOODS_STATE_NORMAL,
+                'common_verify' => Goods_CommonModel::GOODS_VERIFY_ALLOW
+            );
+            if (!empty($goods_key) && isset($goods_key)) {
+                $cront_row['common_name:like'] = '%' . $goods_key . '%';
+            }
+            $order_row['CONVERT(common_name USING gbk)'] = 'asc';
+            $Goods_CommonModel = new Goods_CommonModel();
+            $Goods_BaseModel = new Goods_BaseModel();
+            $goods_common_list = $Goods_CommonModel->listByWhere($cront_row, $order_row, $page, $rows, true);
+            foreach($goods_common_list['items'] as $key=>$common){
+                $goods_base = $Goods_BaseModel->getOneByWhere(['common_id'=>$common['common_id']]);
+
+                $goods_common_list['items'][$key]['stock_id'] = $goods_base['goods_id'];
+                $goods_common_list['items'][$key]['goods_id'] = $goods_base['goods_id'];
+                $goods_common_list['items'][$key]['goods_name'] = $goods_base['goods_name'];
+                $goods_common_list['items'][$key]['goods_stock'] = $goods_base['goods_stock'];
+            }
+
+            $this->data->addBody(-140, $goods_common_list);
         }
-        $order_row['CONVERT(goods_name USING gbk)'] = 'asc';
-        $goods = $User_Stock_Model->getUserStockList($cond_row, $order_row, $page, $rows);
-        $this->data->addBody(-140, $goods);
+
     }
 
     public function stock_self_use()
@@ -2018,15 +2075,25 @@ class Buyer_UserCtl extends Buyer_Controller
             $out_num_list = request_string('out_num_list');
             $out_num_list = decode_json($out_num_list);
 
-            $User_Stock_Model = new User_StockModel();
             $User_StockOutModel = new User_StockOutModel();
 
-            $cond_row = array();
-            $cond_row['user_id'] = Perm::$userId;
-            $goods_stock_list = $User_Stock_Model->getByWhere($cond_row);
+            //如果是高级合伙人
+            $user_id = request_int('user_id');
+            if($user_id != Web_ConfigModel::value('self_user_id')) {
+                $User_Stock_Model = new User_StockModel();
 
-            $user_id = Perm::$userId;
-            $prefix = sprintf('%s-%s-', date('Ymd'), $user_id);
+                $cond_row = array();
+                $cond_row['user_id'] = $user_id;
+                $goods_stock_list = $User_Stock_Model->getByWhere($cond_row);
+            }else{
+                $Goods_CommonModel = new Goods_CommonModel();
+                $Goods_BaseModel = new Goods_BaseModel();
+
+                $cond_row['shop_id'] = Web_ConfigModel::value('self_shop_id');
+                $goods_stock_list = $Goods_BaseModel->getByWhere($cond_row);
+            }
+
+            $prefix = sprintf('%s-%s-%s', Yf_Registry::get('shop_app_id'), date('Ymd'), $user_id);
             $Number_SeqModel = new Number_SeqModel();
             $order_number = $Number_SeqModel->createSeq($prefix);
             $order_id = sprintf('%s-%s', 'ZY', $order_number);
@@ -2051,12 +2118,27 @@ class Buyer_UserCtl extends Buyer_Controller
                     $add_flag = $User_StockOutModel->addStockOut($add_row);
                     check_rs($add_flag, $rs_row);
 
-                    //修改商品库存
-                    if($out_num) {
-                        $edit_row = array();
-                        $edit_row['goods_stock'] = $out_num * -1;
-                        $edit_flag = $User_Stock_Model->editUserStock($stock_id, $edit_row, true);
-                        check_rs($edit_flag, $rs_row);
+                    if($user_id != Web_ConfigModel::value('self_user_id')) {
+                        //修改商品库存
+                        if ($out_num) {
+                            $edit_row = array();
+                            $edit_row['goods_stock'] = $out_num * -1;
+                            $edit_flag = $User_Stock_Model->editUserStock($stock_id, $edit_row, true);
+                            check_rs($edit_flag, $rs_row);
+                        }
+                    }else{
+                        //修改店铺商品库存
+                        if ($out_num) {
+                            $edit_row = array();
+                            $edit_row['goods_stock'] = $out_num * -1;
+                            $edit_flag = $Goods_BaseModel->editBase($stock_id, $edit_row, true);
+                            check_rs($edit_flag, $rs_row);
+
+                            $edit_row2 = array();
+                            $edit_row2['common_stock'] = $out_num * -1;
+                            $edit_flag2 = $Goods_CommonModel->editCommon($goods_stock['common_id'], $edit_row2, true);
+                            check_rs($edit_flag2, $rs_row);
+                        }
                     }
                 }
 

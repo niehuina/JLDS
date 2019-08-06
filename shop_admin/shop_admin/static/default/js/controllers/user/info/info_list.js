@@ -21,15 +21,15 @@ var THISPAGE = {
         var colModel = [
             {name: 'user_id', label: '会员id', width: 100, align: "center"},
             {name: 'user_name', label: '会员名称', width: 200, align: 'center'},
-            {name: 'user_realname', label: '真实姓名', width: 100, align: "center"},
-            {name: 'user_mobile', label: '会员手机', width: 100, align: "center"},
+            {name: 'user_realname', label: '真实姓名', width: 120, align: "center"},
+            {name: 'user_mobile', label: '会员手机', width: 120, align: "center"},
             {name: 'user_sex', label: '会员性别', width: 100, align: "center"},
-            {name: 'user_birthday', label: '出生日期', width: 150, align: "center", "formatter": timeType},
+            {name: 'user_birthday', label: '出生日期', width: 100, align: "center", "formatter": timeType},
             {name: 'user_email', label: '会员邮箱', width: 200, align: 'center'},
-            {name: 'user_regtime', label: '注册时间', width: 150, align: "center", "formatter": timeType},
-            {name: 'shop_type', label: '商家类型', width: 100, align: "center", "formatter": shop_type},
+            // {name: 'shop_type', label: '商家类型', width: 100, align: "center", "formatter": shop_type},
             {name: 'user_grade', label: '会员等级', width: 200, align: 'center'},
             {name: 'user_parent', label: '推荐人', width: 100, align: "center"},
+            {name: 'user_regtime', label: '注册时间', width: 150, align: "center", "formatter": timeType},
             {name: 'lastlogintime', label: '最后登录时间', width: 150, align: "center", "formatter": timeType}
 
         ];

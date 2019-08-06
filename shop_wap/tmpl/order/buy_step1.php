@@ -24,6 +24,15 @@ include __DIR__.'/../../includes/header.php';
         .jia-shop .fr a.min.disabled, .jia-shop .fr a.max.disabled{
             background: #eeeeee;
         }
+        .nctouch-cart-item li .goods-num{
+            display: inline-block;
+            font-size: 0.6rem;
+            position: relative;
+            z-index: 1;
+            float: right;
+            top: unset;
+            right: unset;
+        }
     </style>
 </head>
 <body>
@@ -88,6 +97,72 @@ include __DIR__.'/../../includes/header.php';
             <div id="addresslist" class="mt10" style="position: absolute; right: 0; left: 0; bottom: 0; z-index: 1;"> <a href="javascript:void(0);" class="btn-l" id="new-address-valve">新增收货地址</a> </div>
         </div>
     </div>
+    <!--发票信息Begin-->
+    <div class="nctouch-cart-block">
+        <div class="mrl54 borb1 pdt2">
+            <a href="javascript:void(0);" class="posr" id="invoice-valve">
+                <h3>发票信息：</h3>
+                <div class="current-con">
+                    <p id="invContent">不需要发票</p>
+                    <input type="hidden" name="invoice_id" value='0' id='order_invoice_id'/>
+                    <input type="hidden" name="order_invoice_title" value='个人' id='order_invoice_title'/>
+                    <input type="hidden" name="order_invoice_content" value='' id='order_invoice_content'/>
+                </div>
+                <i class="icon-arrow"></i> </a>
+        </div>
+    </div>
+    <!--发票信息End-->
+
+    <!--管理发票信息Begin-->
+    <div id="invoice-wrapper" class="nctouch-full-mask hide">
+        <div class="nctouch-full-mask-bg"></div>
+        <div class="nctouch-full-mask-block">
+            <div class="header">
+                <div class="header-wrap">
+                    <div class="header-l"> <a href="javascript:void(0);"> <i class="back"></i> </a> </div>
+                    <div class="header-title">
+                        <h1>修改发票信息</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="nctouch-main-layout"  style="width:100%;height:100%; overflow-y:scroll;">
+                <div class="nctouch-sel-box">
+                    <div class="sel-con">
+                        <div class="tic-tab"><a href="javascript:void(0);" class="sel" id="invoice-noneed">不需要开发票</a></div>
+                        <div class="tic-tab"> <a href="javascript:void(0);" id="invoice-need">需要开发票</a></div>
+                    </div>
+                </div>
+                <div id="invoice-div" class="">
+                    <div class="nctouch-inp-con" id="invoice_add" style="display:none">
+                        <ul class="form-box">
+                            <li class="form-item mrl0 bgf5">
+                                <div id="invoice_type" class="input-box btn-style">
+                                    <label class="checked">
+                                        <input type="radio" checked="checked" name="inv_title_select" value="normal" id="norm" >
+                                        增值税普通发票 </label>
+                                    <label>
+                                        <input type="radio" name="inv_title_select" value="electronics" id="electronics">
+                                        电子发票 </label>
+                                    <label>
+                                        <input type="radio" name="inv_title_select" value="increment" id="increment">
+                                        增值税专用发票 </label>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <ul id="invoice-list" class="nctouch-sel-list bort1 borb1">
+                        </ul>
+                    </div>
+
+                    <a href="javascript:void(0);" class="btn-l mt10">确定</a>
+                    <div style="width:100%; height: 50px;"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--管理发票信息End-->
+
     <!--选择收货地址End-->
     <!--新增收货地址Begin-->
     <div id="new-address-wrapper" class="nctouch-full-mask hide">
@@ -139,127 +214,25 @@ include __DIR__.'/../../includes/header.php';
     </div>
     <!--新增收货地址End-->
 
-
-   
-
-    <!--发票信息Begin-->
-    <div class="nctouch-cart-block">
-        <div class="mrl54 borb1 pdt2">
-            <a href="javascript:void(0);" class="posr" id="invoice-valve">
-            <h3>发票信息：</h3>
-            <div class="current-con">
-                <p id="invContent">不需要发票</p>
-                <input type="hidden" name="invoice_id" value='0' id='order_invoice_id'/>
-                <input type="hidden" name="order_invoice_title" value='个人' id='order_invoice_title'/>
-                <input type="hidden" name="order_invoice_content" value='' id='order_invoice_content'/>
-            </div>
-            <i class="icon-arrow"></i> </a>  
-        </div>
-   </div>
-    <!--发票信息End-->
-
-    <!--管理发票信息Begin-->
-    <div id="invoice-wrapper" class="nctouch-full-mask hide">
-        <div class="nctouch-full-mask-bg"></div>
-        <div class="nctouch-full-mask-block">
-            <div class="header">
-                <div class="header-wrap">
-                    <div class="header-l"> <a href="javascript:void(0);"> <i class="back"></i> </a> </div>
-                    <div class="header-title">
-                        <h1>修改发票信息</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="nctouch-main-layout"  style="width:100%;height:100%; overflow-y:scroll;">
-                <div class="nctouch-sel-box">
-                    <div class="sel-con">
-                        <div class="tic-tab"><a href="javascript:void(0);" class="sel" id="invoice-noneed">不需要开发票</a></div>
-                        <div class="tic-tab"> <a href="javascript:void(0);" id="invoice-need">需要开发票</a></div>
-                    </div>
-                </div>
-                <div id="invoice-div" class="">
-                    <div class="nctouch-inp-con" id="invoice_add" style="display:none">
-                        <ul class="form-box">
-                            <li class="form-item mrl0 bgf5">
-                                <div id="invoice_type" class="input-box btn-style">
-                                    <label class="checked">
-                                        <input type="radio" checked="checked" name="inv_title_select" value="normal" id="norm" >
-                                        增值税普通发票 </label>
-                                    <label>
-                                        <input type="radio" name="inv_title_select" value="electronics" id="electronics">
-                                        电子发票 </label>
-                                    <label>
-                                        <input type="radio" name="inv_title_select" value="increment" id="increment">
-                                        增值税专用发票 </label>
-                                </div>
-                            </li>
-                        </ul>
-
-                        <ul id="invoice-list" class="nctouch-sel-list bort1 borb1">
-                        </ul>
-                    </div>
-                   
-                    <a href="javascript:void(0);" class="btn-l mt10">确定</a> 
-                    <div style="width:100%; height: 50px;"></div>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-    <!--管理发票信息End-->
-     <!--付款方式Begin-->
-    <div class="nctouch-cart-block borb1">
-        <div class="mrl54 pdb2">
-           <a href="javascript:void(0);" class="posr" id="select-payment-valve">
-            <h3>支付方式：</h3>
-            <div class="current-con">在线付款</div>
-            <input type="hidden" name="pay-selected" id="pay-selected" value="1">
-            <!--<div class="current-con">货到付款</div>-->
-            <i class="icon-arrow"></i> </a> 
-        </div> 
-    </div>
-        
-    <!--付款方式End-->
-
-    <!--选择付款方式Begin-->
-    <div id="select-payment-wrapper" class="nctouch-full-mask hide">
-        <div class="nctouch-full-mask-bg"></div>
-        <div class="nctouch-full-mask-block">
-            <div class="header">
-                <div class="header-wrap">
-                    <div class="header-l"> <a href="javascript:void(0);"> <i class="back"></i> </a> </div>
-                    <div class="header-title">
-                        <h1>选择支付方式</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="nctouch-main-layout">
-                <div class="nctouch-sel-box">
-                    <h4 class="tit">支付方式</h4>
-                    <div class="sel-con"> <a href="javascript:void(0);" class="sel" id="payment-online">在线支付</a> <a href="javascript:void(0);" id="payment-offline">货到付款</a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--选择付款方式End-->
+    <div class="shipTopBg"></div>
 
     <!--商品列表Begin-->
-    <div id="goodslist_before" class="mt5">
+    <div id="goodslist_before">
         <div id="deposit"> </div>
     </div>
     <!--商品列表End-->
 
     <!--合计支付金额Begin-->
-    <div id="rptVessel" class="nctouch-cart-block mt5">
-        <div class="current-con">
-            <dl class="total-money">
-            合计：<span class="col4 fz8">￥<em id="totalPrice">0.00</em></span>
-            </dl>
-            <dl class="total-money rate-money" style="display: none;">
-                会员折扣：<span class="col-red">￥<em id="ratePrice">0.00</em></span>
-            </dl>
-        </div>
-    </div>
+<!--    <div id="rptVessel" class="nctouch-cart-block mt5">-->
+<!--        <div class="current-con">-->
+<!--            <dl class="total-money">-->
+<!--            合计：<span class="col4 fz8">￥<em id="totalPrice">0.00</em></span>-->
+<!--            </dl>-->
+<!--            <dl class="total-money rate-money" style="display: none;">-->
+<!--                会员折扣：<span class="col-red">￥<em id="ratePrice">0.00</em></span>-->
+<!--            </dl>-->
+<!--        </div>-->
+<!--    </div>-->
     <!--合计支付金额End-->
 
     <!--红包使用Begin-->
@@ -277,83 +250,21 @@ include __DIR__.'/../../includes/header.php';
     <div class="nctouch-cart-bottom">
         <div class="total"><span id="online-total-wrapper"></span>
             <dl class="total-money">
-                <!--<dt>合计：</dt>
-                <dd>￥<em id="totalPrice"></em></dd>-->
-<!--                <dt>支付总金额：</dt>
-                <dd>￥<em id="totalPayPrice"></em></dd>-->
+                <dt>总计：</dt>
+                <dd>￥<em id="totalPrice"></em></dd>
+<!--                <dt>总支付：</dt>-->
+<!--                <dd>￥<em id="totalPayPrice"></em></dd>-->
             </dl>
         </div>
+        <input type="hidden" name="pay-selected" id="pay-selected" value="1">
         <div class="check-out"><a href="javascript:void(0);" id="ToBuyStep2">提交订单</a></div>
     </div>
     <!--底部总金额固定层End-->
-    <div class="nctouch-bottom-mask">
-        <div class="nctouch-bottom-mask-bg"></div>
-        <div class="nctouch-bottom-mask-block">
-            <div class="nctouch-bottom-mask-tip"><i></i>点击此处返回</div>
-            <div class="nctouch-bottom-mask-top">
-                <p class="nctouch-cart-num">本次交易需在线支付<em id="onlineTotal">0.00</em>元</p>
-                <p style="display:none" id="isPayed"></p>
-                <a href="javascript:void(0);" class="nctouch-bottom-mask-close"><i></i></a> </div>
-            <div class="nctouch-inp-con nctouch-inp-cart">
-                <ul class="form-box" id="internalPay">
-                    <p class="rpt_error_tip" style="display:none;color:red;"></p>
-                    <li class="form-item" id="wrapperUseRCBpay">
-                        <div class="input-box pl5">
-                            <label>
-                                <input type="checkbox" class="checkbox" id="useRCBpay" autocomplete="off" />
-                                使用充值卡支付 <span class="power"><i></i></span> </label>
-                            <p>可用充值卡余额 ￥<em id="availableRcBalance"></em></p>
-                        </div>
-                    </li>
-                    <li class="form-item" id="wrapperUsePDpy">
-                        <div class="input-box pl5">
-                            <label>
-                                <input type="checkbox" class="checkbox" id="usePDpy" autocomplete="off" />
-                                使用预存款支付 <span class="power"><i></i></span> </label>
-                            <p>可用预存款余额 ￥<em id="availablePredeposit"></em></p>
-                        </div>
-                    </li>
-                    <li class="form-item" id="wrapperPaymentPassword" style="display:none">
-                        <div class="input-box"> <span class="txt">输入支付密码</span>
-                            <input type="password" class="inp" id="paymentPassword" autocomplete="off" />
-                            <span class="input-del"></span> </div>
-                        <a href="../member/member_paypwd_step1.html" class="input-box-help" style="display:none"><i>i</i>尚未设置</a> </li>
-                </ul>
-                <div class="nctouch-pay">
-                    <div class="spacing-div"><span>在线支付方式</span></div>
-                    <div class="pay-sel">
-                        <label style="display:none">
-                            <input type="radio" name="payment_code" class="checkbox" id="alipay" autocomplete="off" />
-                            <span class="alipay">支付宝</span></label>
-                        <label style="display:none">
-                            <input type="radio" name="payment_code" class="checkbox" id="wxpay_jsapi" autocomplete="off" />
-                            <span class="wxpay">微信</span></label>
-                    </div>
-                </div>
-                <div class="pay-btn"> <a href="javascript:void(0);" id="toPay" class="btn-l">确认支付</a> </div>
-            </div>
-        </div>
-    </div>
 </div>
 <script type="text/html" id="goods_list">
     <% var store_cart_list = glist; %>
     <% for (var k in store_cart_list) { %>
     <div class="nctouch-cart-container">
-        <dl class="nctouch-cart-store">
-            <dt><i class="icon-store"></i><%=store_cart_list[k].shop_name%><span data-store_id="<%=k%>" class="store-cod-supported" style="display:none;">（该店铺不支持选定收货地址的货到付款）</span>
-                <% if (store_cart_list[k].voucher_base != '') { %>
-        <!--						<span class="handle">
-							<a href="javascript:void(0);" class="voucher animation-up animation-up<%=k%>"><i></i>使用代金券</a>
-						</span>-->
-                <% } %>
-            </dt>
-            <% if(store_cart_list[k].mansong_info.common_id != 0){ %>
-            <dd class="store-activity">
-                <em>满即送</em>
-                <span><%if(store_cart_list[k].mansong_info.rule_discount){%>店铺优惠<%=store_cart_list[k].mansong_info.rule_discount%>。<%}%><%if(store_cart_list[k].mansong_info.goods_name){%><%=store_cart_list[k].mansong_info.goods_name%><%if (store_cart_list[k].mansong_info.goods_image) {%>，送<img src="<%=store_cart_list[k].mansong_info.goods_image%>"><%}%><%}%></span>
-            </dd>
-            <% } %>
-        </dl>
         <ul class="nctouch-cart-item">
             <% for (var l in store_cart_list[k].goods) { var v1 = store_cart_list[k].goods[l]%>
             <li class="buy-item bgf6" data-buy_able="<%=v1.buy_able%>" data-goods_name="<%=v1.goods_base.goods_name%>">
@@ -371,14 +282,14 @@ include __DIR__.'/../../includes/header.php';
                             </a>
                         </dt>
                         <dd class="goods-type"><%=v1.goods_base.spec_str%></dd>
+                        <div class="goods-subtotal">
+                            <span class="goods-price">￥<em><%=sprintf('%.2f', v1.now_price)%></em></span>
+                        </div>
+                        <div class="goods-num">
+                            <em>x<%=v1.goods_num%></em>
+                        </div>
+                        <div class="notransport" style="display:none;"><p>该商品不支持配送</p></div>
                     </dl>
-                    <div class="goods-subtotal">
-                        <span class="goods-price">￥<em><%=sprintf('%.2f', v1.now_price)%></em></span>
-                    </div>
-                    <div class="goods-num">
-                        <em>x<%=v1.goods_num%></em>
-                    </div>
-                    <div class="notransport" style="display:none;"><p>该商品不支持配送</p></div>
                 </div>
                 
             </li>
@@ -514,7 +425,7 @@ include __DIR__.'/../../includes/header.php';
                                                 <div class="fr mrt4 JS_operation">
                                                     <span><a href="javascript:void(0)" class="min disabled">-</a></span>
                                                     <span>
-                                                        <input type="number" readonly="readonly" value="0" name="jjg_goods<%= rules[b].rule_id; %>" data-jjg_goods_id="<%= redemption_goods[c].goods_id %>" data-promotion_price="<%= redemption_goods[c].redemp_price %>">
+                                                        <input type="text" readonly="readonly" value="0" name="jjg_goods<%= rules[b].rule_id; %>" data-jjg_goods_id="<%= redemption_goods[c].goods_id %>" data-promotion_price="<%= redemption_goods[c].redemp_price %>">
                                                     </span>
                                                     <span><a href="javascript:void(0)" class="max">+</a></span>
                                                 </div>
@@ -545,7 +456,7 @@ include __DIR__.'/../../includes/header.php';
                 <dt>物流配送</dt>
                 <dd><em id="storeFreight<%=k%>"><%= store_cart_list[k].freight %></em>元</dd>
             </dl>
-            <dl class="message">
+            <dl class="message borb1">
                 <dt><label for="storeMessage<%=k%>">买家留言：</label></dt>
                 <dd>
                     <input type="text" name="remarks" placeholder="店铺订单留言" rel="<%=k%>" id="storeMessage<%=k%>">
@@ -588,7 +499,7 @@ include __DIR__.'/../../includes/header.php';
                                     <dd class="need">需消费<%=voucher.voucher_limit%>使用</dd>
                                     <dd class="time">至<%=voucher.voucher_end_date%>前使用</dd>
                                 </dl>
-                                <a href="javascript:void(0);" class="btn" onclick="getvoucher(<%=voucher.voucher_id%>)" data-tid=<%=voucher.voucher_id%>>领取</a>
+                                <a href="javascript:void(0);" class="btn" onclick="getvoucher('<%=voucher.voucher_id%>')" data-tid=<%=voucher.voucher_id%>>领取</a>
                             </li>
                             <% } %>
                         </ul>
@@ -800,9 +711,9 @@ include __DIR__.'/../../includes/header.php';
 <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
 <script type="text/javascript" src="../../js/libs/template.js"></script>
 <script type="text/javascript" src="../../js/common.js"></script>
-<script type="text/javascript" src="../../js/iscroll.js"></script>
+<script type="text/javascript" src="../../js/libs/iscroll.js"></script>
 <script type="text/javascript" src="../../js/libs/simple-plugin.js"></script>
-<script type="text/javascript" src="../..//js/fly/requestAnimationFrame.js"></script>
+<script type="text/javascript" src="../../js/fly/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../../js/fly/zepto.fly.min.js"></script>
 <script type="text/javascript" src="../../js/tmpl/order/order_payment_common.js"></script>
 <script type="text/javascript" src="../../js/tmpl/buy_step1.js"></script>

@@ -5,7 +5,7 @@ $(function(){
     var bt_payway = false;
 
     $("#deposit_btn").click(function () {
-        var online_payway = $(".checked > .checkbox").val();
+        var online_payway = $("#payment_code").val();
         var uorder_id = $("#uorder").text();
         var data = {
             k:getCookie('key'),u:getCookie('id'),

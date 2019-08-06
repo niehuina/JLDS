@@ -56,14 +56,17 @@ if ($data['items']) {
         $directseller_commission = array(0);
         //将佣金结算给对应的上级
         foreach ($val['goods_list'] as $k => $v) {
-            if ($v['goods_return_status'] == 0 && $v['goods_refund_status'] == 0 && $v['directseller_flag']) {
+            if ($v['goods_return_status'] == 0 && ($v['goods_refund_status'] == 0 || $v['goods_refund_status'] == 3)
+                || ($v['goods_return_status'] == 3 && ($v['goods_refund_status'] == 0 || $v['goods_refund_status'] == 3))
+                && $v['directseller_flag']) {
                 $directseller_commission[0] += $v['directseller_commission_0'];  //一级分佣
 //                $directseller_commission[1] += $v['directseller_commission_1'];  //二级级分佣
 //                $directseller_commission[2] += $v['directseller_commission_2'];  //三级分佣
             }else if(($v['goods_return_status'] == 2 || $v['goods_refund_status'] == 2) && $v['directseller_flag']){
                 $order_goods_num = $v['order_goods_num']*1;
                 $order_goods_returnnum = $v['order_goods_returnnum']*1;
-                $directseller_commission[0] += $v['directseller_commission_0']/$order_goods_num*$order_goods_returnnum;  //一级分佣
+                $order_goods_real = $order_goods_num - $order_goods_returnnum;
+                $directseller_commission[0] += $v['directseller_commission_0'] / $order_goods_num * $order_goods_real;  //一级分佣
             }
 
             $goods_field['directseller_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
@@ -75,6 +78,7 @@ if ($data['items']) {
             if ($vs) {
                 if($directseller_commission[$ks] == 0) continue;
                 $user_info = $User_InfoModel->getOne($vs);
+                if($user_info['user_statu'] == 1) continue;
                 $edit_row['user_directseller_commission'] = $user_info['user_directseller_commission'] + $directseller_commission[$ks];
                 $User_InfoModel->editInfo($vs, $edit_row);
 

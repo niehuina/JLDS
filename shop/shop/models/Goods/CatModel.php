@@ -229,6 +229,41 @@ class Goods_CatModel extends Goods_Cat
 		return $re;
 	}
 
+    public function getGoodsCatRecomendList()
+    {
+        $Goods_CatModel = new Goods_CatModel();
+        $data_re        = array();
+        //取所有一级分类
+        $data_cat = $Goods_CatModel->getByWhere(array('cat_parent_id' => 0));
+        if (!empty($data_cat))
+        {
+            foreach ($data_cat as $key => $value)
+            {
+                $cat_id = $value['cat_id'];
+                //一级分类下的热卖商品
+                $data_re[$key]['cat_name'] = $value['cat_name'];
+                $data_re[$key]['cat_id']   = $cat_id;
+                $child_ids = $this->getCatChildId($cat_id);
+                $child_ids[] = $cat_id;
+                $rec_goods                 = $this->getRecomendByCatId($child_ids);
+                $data_re[$key]['rec_goods']= $rec_goods;
+//                $cat                       = $this->getChildCat($cat_id);
+//                $data_re[$key]['cat']      = $cat;
+            }
+        }
+        return $data_re;
+    }
+
+	public function getRecomendByCatId($cat_id)
+    {
+        $re                = array();
+        $Goods_CommonModel = new Goods_CommonModel();
+
+        $data = $Goods_CommonModel->getCommonList(array('cat_id:in' => $cat_id,'common_state'=>$Goods_CommonModel::GOODS_STATE_NORMAL, 'common_is_recommend'=>2), array('common_id' => 'desc'), 1, 4);
+        $re   = $Goods_CommonModel->getRecommonRow($data);
+        return $re;
+    }
+
     /*
      * 获取自分类id
      * @param int $cat_id 商品分类

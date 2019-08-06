@@ -66,16 +66,6 @@ include __DIR__ . '/../../includes/header.php';
                 <a href="javascript:void(0);" class="JS-edit fr text">提交</a>
             </div>
         </div>
-        <div class="nctouch-nav-layout">
-            <div class="nctouch-nav-menu"><span class="arrow"></span>
-                <ul>
-                    <li><a href="../index.html"><i class="home"></i>首页</a></li>
-                    <li><a href="../tmpl/cart_list.html"><i class="cart"></i>购物车<sup></sup></a></li>
-                    <li><a href="../tmpl/member/member.html"><i class="member"></i>我的商城</a></li>
-                    <li><a href="javascript:void(0);"><i class="message"></i>消息<sup></sup></a></li>
-                </ul>
-            </div>
-        </div>
     </header>
     <div class="nctouch-main-layout mb20">
         <div class="nctouch-order-search">
@@ -98,7 +88,14 @@ include __DIR__ . '/../../includes/header.php';
         <% var goods_list = data.items; %>
         <% if(data.records >0){%>
         <% for(j=0;j<goods_list.length;j++){ %>
-        <% var goods = goods_list[j]; var goods_id = goods.goods_id; %>
+        <% var goods = goods_list[j];
+            if(goods_list[j].common_info){
+                var goods = goods_list[j].common_info;
+                goods.goods_stock = goods_list[j].goods_stock;
+                goods.goods_id = goods_list[j].goods_id;
+                goods.stock_id = goods_list[j].stock_id;
+            }
+        %>
         <li class="cart-litemw-cnt" id="<%=goods.stock_id;%>">
             <div class="buy-li">
                 <div class="goods-check">
@@ -107,11 +104,13 @@ include __DIR__ . '/../../includes/header.php';
                 </div>
                 <div class="goods-pic">
                     <a href="<%=WapSiteUrl%>/tmpl/product_detail.html?goods_id=<%=goods.goods_id%>">
-                        <img src="<%=goods.common_info.common_image%>" /> </a>
+                        <img src="<%=goods.common_image%>" /> </a>
                 </div>
                 <dl class="goods-info">
                     <dt class="goods-name">
-                        <a href="<%=WapSiteUrl%>/tmpl/product_detail.html?goods_id=<%=goods.goods_id%>"> <%=goods.common_info.common_name%> </a>
+                        <a href="<%=WapSiteUrl%>/tmpl/product_detail.html?goods_id=<%=goods.goods_id%>">
+                            <%=goods.common_name%>
+                        </a>
                     </dt>
                     <span class="goods-price">库存：<em><%=goods.goods_stock%></em></span>
                     <div class="edit-area">
@@ -120,7 +119,7 @@ include __DIR__ . '/../../includes/header.php';
                                 <span class="minus"><a href="javascript:reduceNum('<%=goods.stock_id;%>');">&nbsp;</a></span>
                                 <!-- s 获取并设置限用数量 -->
                                 <span>
-                                    <input type="number" min="0" class="buy-num buynum" name="out_num"
+                                    <input type="text" min="0" class="buy-num buynum" name="out_num"
                                            data-max="<%=goods.goods_stock%>" data-min="0" value="0" />
                                 </span>
                                 <!-- e 获取并设置限用数量-->

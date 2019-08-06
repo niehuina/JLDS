@@ -1,8 +1,8 @@
 $(function () {
     var e = getCookie("key");
     if (!e) {
-        window.location.href = WapSiteUrl + "/tmpl/member/login.html";
-        return
+        login();
+        return;
     }
     var r = getQueryString("order_id");
     $.getJSON(ApiUrl + "/index.php?ctl=Buyer_Order&met=evaluation&act=add&typ=json", {key: e, order_id: r}, function (a) {

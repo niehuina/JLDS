@@ -94,9 +94,9 @@
     <!--<p class="load-more tc">加载更多</p>-->
 
     <!-- 底部 -->
-    <?php 
-				include __DIR__.'/includes/footer_menu.php';
-		?>
+    <?php
+    include __DIR__.'/includes/footer_menu.php';
+    ?>
 
 <script type="text/html" id="slider_list">
 	<div class="swiper-wrapper">

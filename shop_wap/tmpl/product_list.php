@@ -23,6 +23,9 @@ include __DIR__ . '/../includes/header.php';
             .nctouch-full-mask.left {
                 left: 25%;
             }
+            .nctouch-product-header .header-inp{
+                margin: 0.275rem 2.5rem 0 2rem;
+            }
             .nctouch-main-layout-a {
                 top: 0;
             }
@@ -39,8 +42,10 @@ include __DIR__ . '/../includes/header.php';
         <div class="header-wrap">
             <div class="header-l"><a href="javascript:history.go(-1)"> <i class="back"></i> </a></div>
             <div class="header-inp clearfix"><i class="icon"></i> <span class="search-input" id="keyword">请输入关键词</span></div>
-            <div class="header-r"><a href="../tmpl/product_first_categroy.html" class="categroy"><i></i> </a>
-                <a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a></div>
+            <div class="header-r">
+<!--                <a href="../tmpl/product_first_categroy.html" class="categroy"><i></i> </a>-->
+                <a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a>
+            </div>
         </div>
         <div class="nctouch-nav-layout">
             <div class="nctouch-nav-menu"><span class="arrow"></span>
@@ -91,7 +96,7 @@ include __DIR__ . '/../includes/header.php';
         </div>
     </div>
     <div class="fix-block-r">
-        <a href="member/views_list.html" class="browse-btn"><i></i></a>
+<!--        <a href="member/views_list.html" class="browse-btn"><i></i></a>-->
         <a href="javascript:void(0);" class="gotop-btn gotop hide" id="goTopBtn"><i></i></a>
     </div>
     <footer id="footer" class="bottom"></footer>
@@ -203,7 +208,13 @@ include __DIR__ . '/../includes/header.php';
     <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript" src="../js/tmpl/product_list.js"></script>
 <!--    <script type="text/javascript" src="../js/tmpl/footer.js"></script>-->
-    </body></html>
+
+    <!-- 底部 -->
+    <?php
+    include __DIR__.'/../includes/footer_menu.php';
+    ?>
+    </body>
+</html>
 <?php
 include __DIR__ . '/../includes/footer.php';
 ?>

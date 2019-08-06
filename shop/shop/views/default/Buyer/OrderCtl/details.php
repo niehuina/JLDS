@@ -137,7 +137,7 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                             <time><?= ($data['order_receiver_date']) ?></time>
                             <?= __('自动完成“确认收货”，完成交易。') ?></li>
 
-                        <?php if ($data['buyer_user_id'] == Perm::$userId) { ?>
+                        <?php if ($data['buyer_user_id'] == Perm::$userId && $data['can_confirm_order']) { ?>
                             <li><?= __('3. 如果您已收到货，且对商品满意，您可以 ') ?><a onclick="confirmOrder('<?= $data['order_id'] ?>')"
                                                                       class="ncbtn-mini bbc_btns"><?= __('确认收货') ?></a><?= __('完成交易。 ') ?>
                             </li>
@@ -281,9 +281,9 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                                         <?php
                                         //已经付款（但是没有退款的商品），已经完成（但是没有退货的商品）出现“退款/退货”按钮
                                         //由于之前数据的影响，之前订单存在退款的商品的“退款/退货”按钮也不显示
-                                        if ((($data['order_status'] == Order_StateModel::ORDER_PAYED
-                                                    && $ogval['goods_return_status'] == Order_StateModel::ORDER_GOODS_RETURN_NO)
-                                                || ($data['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS && $ogval['goods_refund_status'] == Order_StateModel::ORDER_GOODS_RETURN_NO)) && !$data['order_source_id'] && $data['order_refund_status'] == Order_StateModel::ORDER_REFUND_NO && $ogval['order_goods_num'] > $ogval['order_goods_returnnum'] && $ogval['goods_price'] > 0
+                                        if ((($data['order_status'] == Order_StateModel::ORDER_PAYED && $ogval['goods_return_status'] == Order_StateModel::ORDER_GOODS_RETURN_NO)
+                                                || ($data['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS && $ogval['goods_refund_status'] == Order_StateModel::ORDER_GOODS_RETURN_NO))
+                                            && !$data['order_source_id'] && $data['order_refund_status'] == Order_StateModel::ORDER_REFUND_NO && $ogval['order_goods_num'] > $ogval['order_goods_returnnum'] && $ogval['goods_price'] > 0
                                         ) {
                                             ?>
                                             <!--不能退的商品，不能退换货-->
@@ -302,6 +302,8 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                                                            class="to_views"><?= __('退款/退货') ?></a>
                                                     </p>
                                                 <?php } ?>
+                                            <?php } else { ?>
+                                                <p>商品不可退</p>
                                             <?php }
                                         } ?>
 
@@ -412,7 +414,7 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                     <!--E  未付款订单 -->
                     <?php if ($data['buyer_user_id'] == Perm::$userId) { ?>
 
-                        <?php if ($data['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS): ?>
+                        <?php if ($data['order_status'] == Order_StateModel::ORDER_WAIT_CONFIRM_GOODS && $data['can_confirm_order']): ?>
                             <p class="rest">
                                 <span class="iconfont icon-shijian2"></span>
                                 <span class="fnTimeCountDown" data-end="<?= $data['order_receiver_date'] ?>">

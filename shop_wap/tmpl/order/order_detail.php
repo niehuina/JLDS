@@ -20,7 +20,7 @@ include __DIR__.'/../../includes/header.php';
     <body>
     <header id="header" class="fixed">
         <div class="header-wrap">
-            <div class="header-l"> <a href="order_list.html"> <i class="back"></i> </a> </div>
+            <div class="header-l"> <a href="javascript:history.go(-1);"> <i class="back"></i> </a> </div>
             <div class="header-title">
                 <h1>订单详情</h1>
             </div>
@@ -140,28 +140,34 @@ include __DIR__.'/../../includes/header.php';
                             order_spec_info += goods_list[i].order_spec_info[j] + '; ';
                             }
                             %>
-
                             <dd class="goods-type"><%=order_spec_info%></dd>
                             <%  } %>
                         </dl>
+
+                        <%
+                        var goods_returns_setting = goods_list[i].goods_returns_setting;
+                        var refund_status = goods_list[i].goods_refund_status;
+                        var return_status = goods_list[i].goods_return_status;
+                        %>
                         <div class="goods-subtotal">
                             <span class="goods-price">￥<em><%=goods_list[i].goods_price%></em></span>
                             <span class="goods-num">x<%=goods_list[i].order_goods_num%></span>
                             <div>
-                                <% if(goods_list[i].goods_return_status > 0) {%>
+                                <% if(order_status == 4 && return_status > 0 && return_status != 3) {%>
                                 <a href="<%=WapSiteUrl%>/tmpl/order/member_refund_info.html?refund_id=<%=goods_list[i].order_return_id%>" class="ml4"><span class="goods-price"><%=goods_list[i].goods_return_status_con%></span></a>
                                 <% } %>
-                                <% if(goods_list[i].goods_refund_status  > 0) {%>
+                                <% if(refund_status > 0 && refund_status != 3) {%>
                                 <a href="<%=WapSiteUrl%>/tmpl/order/member_return_info.html?refund_id=<%=goods_list[i].order_refund_id%>" class="ml4"><span class="goods-price"><%=goods_list[i].goods_refund_status_con%></span></a>
                                 <% } %>
                             </div>
-
                         </div>
-                        <% if (goods_list[i].goods_refund_status == 0 && order_status == 6 && goods_list[i].goods_price !=0) {%>
-                        <a href="javascript:void(0)" order_id="<%=order_id%>" order_goods_id="<%=goods_list[i].order_goods_id%>" class="goods-return">退货</a>
-                        <%}%>
-                        <% if (goods_list[i].goods_return_status == 0 && order_status == 2 && goods_list[i].goods_price !=0) {%>
-                        <a href="javascript:void(0)" order_id="<%=order_id%>" order_goods_id="<%=goods_list[i].order_goods_id%>" class="goods-return">退款</a>
+                        <% if(goods_returns_setting != 1){%>
+                            <% if((refund_status == 0) && order_status == 4 && goods_list[i].goods_price !=0) {%>
+                            <a href="javascript:void(0)" order_id="<%=order_id%>" order_goods_id="<%=goods_list[i].order_goods_id%>" class="goods-return">退货</a>
+                            <%}%>
+                            <% if((return_status == 0) && order_status == 2 && goods_list[i].goods_price !=0) {%>
+                            <a href="javascript:void(0)" order_id="<%=order_id%>" order_goods_id="<%=goods_list[i].order_goods_id%>" class="goods-return">退款</a>
+                            <%}%>
                         <%}%>
                     </a>
                 </div>
@@ -170,7 +176,11 @@ include __DIR__.'/../../includes/header.php';
                 <div class="goods-subtotle">
                     <dl>
                         <dt>运费</dt>
+                        <% if(order_shipping_fee>0) {%>
                         <dd>￥<em><%=order_shipping_fee%></em></dd>
+                        <%}else{%>
+                        <dd><em>免运费</em></dd>
+                        <%}%>
                     </dl>
                     <dl class="t">
                         <dt>实付款<em class="col8 fz4">（含运费）</em></dt>
@@ -210,20 +220,20 @@ include __DIR__.'/../../includes/header.php';
             <% if (order_status == 4) { %>
             <a href="javascript:void(0)" order_id="<%=order_id%>" class="btn viewdelivery-order">查看物流</a>
             <%}%>
-            <% if (order_status == 4){ %>
-            <a href="javascript:void(0)" order_id="<%=order_id%>" class="btn key sure-order">确认收货</a>
+            <% if (order_status == 4 && can_confirm_order){ %>
+            <a href="javascript:void(0)" order_id="<%=order_id%>" class="btn sure-order">确认收货</a>
             <% } %>
             <% if (order_status == 6) {%>
             <a href="javascript:void(0)" order_id="<%=order_id%>" class="btn delete-order">删除订单</a>
             <% } %>
             <% if (order_status == 6 && order_buyer_evaluation_status == 0) {%>
-            <a href="javascript:void(0)" order_id="<%=order_id%>" class="btn key evaluation-order">评价订单</a>
+            <a href="javascript:void(0)" order_id="<%=order_id%>" class="btn evaluation-order">评价订单</a>
             <% } %>
             <% if (order_buyer_evaluation_status == 1){ %>
             <a href="javascript:void(0)" order_id="<%=order_id%>" class="btn evaluation-again-order">追加评价</a>
             <% } %>
             <%if(order_status == 1 && order_payment_amount > 0){%>
-            <a href="javascript:;" onclick="payOrder('<%= payment_number %>','<%=order_id %>')" data-paySn="<%=order_id %>" class="btn key check-payment">订单支付</a>
+            <a href="javascript:;" onclick="payOrder('<%= payment_number %>','<%=order_id %>')" data-paySn="<%=order_id %>" class="btn check-payment">订单支付</a>
             <% } %>
         </div>
     </script>

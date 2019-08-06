@@ -14,9 +14,9 @@
 .goods-search-list-nav ul li { vertical-align: top; display: inline-block; width: 30%;}
 .goods-search-list-nav ul li:first-child { width: 40%;}
 .goods-search-list-nav ul li a,.ser-adv a { font-size: 0.65rem; color: #888; line-height: 1.95rem; text-align: center; display: block; height: 1.95rem;}
-.goods-search-list-nav ul li a.current { color: #F60;}
+.goods-search-list-nav ul li a.current { color: #06c1ae;}
 .goods-search-list-nav ul li a i { font-size: 0px; line-height: 0; vertical-align: middle; display: inline-block; width: 0px; height: 0px; margin-left: 0.2rem; border-width: 0.2rem; border-color: #AAA transparent transparent transparent; border-style:solid dashed dashed dashed;}
-.goods-search-list-nav ul li a.current i { border-color: #F60 transparent transparent transparent;}
+.goods-search-list-nav ul li a.current i { border-color: #06c1ae transparent transparent transparent;}
 .goods-search-list-nav ul li a span.screen { background-image: url(../images/screen.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 100%;}
 .ser-adv a i{width:0.6rem;height:0.6rem;display:inline-block;background:url(../images/new/sel.png) no-repeat center;background-size:contain;margin-left:0.1rem;vertical-align:middle;}
 /*.goods-search-list-nav .browse-mode { display: block; width: 14.5%; float: right;}
@@ -29,7 +29,7 @@
 .goods-sort-inner span { background-color: #FFF; display: block; padding-left: 0.38rem;}
 .goods-sort-inner span a { font-size: 0.6rem; line-height: 1rem; color: #777; display: block; height: 1rem; padding: 0.5rem 0.75rem 0.5rem 0.38rem; border-top: solid 0.05rem #EEE;}
 .goods-sort-inner span a i { background-image: url(../images/new/ok.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 100%; display: none; width: 0.7rem; height: 0.7rem; float: right; margin: 0.15rem;}
-.goods-sort-inner span a.cur { color: #F60;}
+.goods-sort-inner span a.cur { color: #06c1ae;}
 .goods-sort-inner span a.cur i { display: block;}
 /*商品筛选层*/
 .secreen-layout dl { display: block; padding: 0 0.5rem; background-color: #FFF; border-bottom: solid #EEE 0.05rem;}
@@ -49,20 +49,20 @@
 /*列表模式*/
 .list .goods-secrch-list { display: block;}
 .list .goods-secrch-list  a { display: block; color: #111;}
-.list .goods-secrch-list .goods-item { background-color: #FFF; display: block; clear: both; position: relative;overflow:hidden;}
+.list .goods-secrch-list .goods-item { background-color: #FFF; display: block; clear: both; position: relative;overflow:hidden;border-bottom: solid 0.05rem #EEE;}
 /*商品图片*/
 .list .goods-secrch-list .goods-pic { display: block; width: 4rem;padding: 0.38rem; position: absolute; z-index: 1; top: 0; left: 0;}
 .list .goods-secrch-list .goods-pic a { width: 100%; height: 100%;text-align:center;}
 .list .goods-secrch-list .goods-pic img { width: 100%; height: 100%;}
 /*右侧商品介绍*/
-.list .goods-secrch-list .goods-info { display: block;padding: 0.38rem 0.38rem 0 0; margin-left: 4.58rem; border-bottom: solid 0.05rem #EEE;}
+.list .goods-secrch-list .goods-info { display: block;padding: 0.38rem; margin-left: 4.58rem; }
 /*商品名称*/
-.list .goods-secrch-list .goods-name { display: block; height: 2.4rem; overflow: hidden; }
+.list .goods-secrch-list .goods-name { display: block; height: 2rem; overflow: hidden; }
 .list .goods-secrch-list .goods-name h4 { font-size: 0.5rem; line-height: 0.8rem; height: 1.5rem; overflow: hidden; font-weight: 500}
 .list .goods-secrch-list .goods-name h6 { font-size: 0.5rem; color: #999; line-height: 0.9rem; height: 0.9rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 /*商品价格与促销*/
 .list .goods-secrch-list .goods-sale { display: block; height: 0.9rem; padding: 0.2rem 0; overflow: hidden;}
-.list .goods-secrch-list .goods-price { color: #EC5464; font-size: 0.6rem; line-height: 0.9rem; display: block; float: left;}
+.list .goods-secrch-list .goods-price { color: #06c1ae; font-size: 0.6rem; line-height: 0.9rem; display: block; float: left;}
 .list .goods-secrch-list .goods-price em { font-size: 0.8rem; line-height: 0.9rem; vertical-align: top; display: inline-block;}
 .list .goods-secrch-list .goods-price .phone-sale { font-size: 0.45rem; line-height: 0.6rem; vertical-align: top; display: inline-block; height: 0.6rem; padding-right: 0.1rem; margin-top: 0.05rem; border: solid #EC5464 0.05rem; }
 .list .goods-secrch-list .goods-price .phone-sale i { display: inline-block; vertical-align: middle; margin-right: 0.1rem; width: 0.6rem; height: 0.6rem; background: #F60 url(../images/mobile_w.png) no-repeat 50% 50%; background-size: 80%;}

@@ -20,13 +20,14 @@ include __DIR__ . '/../../includes/header.php';
 </head>
 
 <body>
-    <header id="header">
+    <header id="header" class="fixed">
         <div class="header-wrap">
             <div class="header-l">
                 <a href="../member/member.html"> <i class="back"></i> </a>
             </div>
-            <span class="header-tab"><a href="../order/member_refund.html">退款列表</a><a href="javascript:void(0);" class="cur">退货列表</a></span>
-            <div class="header-r"> <a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a> </div>
+            <div class="header-title">
+                <h1>退款/退货</h1>
+            </div>
         </div>
         <div class="nctouch-nav-layout">
             <div class="nctouch-nav-menu"> <span class="arrow"></span>
@@ -39,7 +40,13 @@ include __DIR__ . '/../../includes/header.php';
         </div>
     </header>
     <div class="nctouch-main-layout">
-        <div class="nctouch-order-list">
+        <div id="fixed_nav" class="nctouch-single-nav fixed">
+            <ul id="filtrate_ul" class="w50h">
+                <li><a href="../order/member_refund.html">退款列表</a></li>
+                <li class="selected"><a href="javascript:void(0);">退货列表</a></li>
+            </ul>
+        </div>
+        <div class="nctouch-order-list mt20">
             <ul id="return-list">
             </ul>
         </div>
@@ -54,7 +61,11 @@ include __DIR__ . '/../../includes/header.php';
                 <li class=" <%if(i>0){%>mt10<%}%>">
                     <div class="nctouch-order-item">
                         <div class="nctouch-order-item-head">
-                            <a href="javascript:void(0);" class="store"><i class="icon"></i><%=return_list[i].seller_user_account%></a><span class="state"><%=return_list[i].return_state_text%></span>
+<!--                            <a href="javascript:void(0);" class="store"><i class="icon"></i><%=return_list[i].seller_user_account%></a>-->
+
+                            <a href="order_detail.html?order_id=<%= return_list[i].order_number %>"
+                                    class="store word-ellipsis">订单：<%= return_list[i].order_number %></a>
+                            <span class="state"><%=return_list[i].return_state_text%></span>
                         </div>
                         <div class="nctouch-order-item-con">
                             <div class="goods-block">

@@ -25,8 +25,6 @@ $file_name_row = pathinfo(__FILE__);
 $crontab_file = $file_name_row['basename'];
 
 //自动确认收货(实物订单)
-
-
 $Order_BaseModel = new Order_BaseModel();
 $Order_GoodsModel = new Order_GoodsModel();
 
@@ -47,88 +45,37 @@ if($order_list)
 	foreach ($order_list as $key => $val)
 	{
 		$order_row[] = $val;
-		$order_id = $val;
+        $order_id = $val;
+        $Order_BaseModel->confirmOrder($order_id);
 
-		$order_base           = $Order_BaseModel->getOne($order_id);
-		$order_payment_amount = $order_base['order_payment_amount'];
-
-		$condition['order_status'] = Order_StateModel::ORDER_FINISH;
-
-		$condition['order_finished_time'] = get_date_time();
-
-		$flag = $Order_BaseModel->editBase($order_id, $condition);
-
-		//修改订单商品表中的订单状态
-		$edit_row['order_goods_status'] = Order_StateModel::ORDER_FINISH;
-
-		$order_goods_id = $Order_GoodsModel->getKeyByWhere(array('order_id' => $order_id));
-
-		$Order_GoodsModel->editGoods($order_goods_id, $edit_row);
-
-
-		/*
-        *  经验与成长值
-        */
-		$user_points        = Web_ConfigModel::value("points_recharge");//订单每多少获取多少积分
-		$user_points_amount = Web_ConfigModel::value("points_order");//订单每多少获取多少积分
-
-		if ($order_payment_amount / $user_points < $user_points_amount)
-		{
-			$user_points = floor($order_payment_amount / $user_points);
-		}
-		else
-		{
-			$user_points = $user_points_amount;
-		}
-
-		$user_grade        = Web_ConfigModel::value("grade_recharge");//订单每多少获取多少积分
-		$user_grade_amount = Web_ConfigModel::value("grade_order");//订单每多少获取多少成长值
-
-		if ($order_payment_amount / $user_grade < $user_grade_amount)
-		{
-			$user_grade = floor($order_payment_amount / $user_grade);
-		}
-		else
-		{
-			$user_grade = $user_grade_amount;
-		}
-
-		$User_ResourceModel = new User_ResourceModel();
-		//获取积分经验值
-		$ce = $User_ResourceModel->getResource($order_base['buyer_user_id']);
-
-		$resource_row['user_points'] = $ce[$order_base['buyer_user_id']]['user_points'] * 1 + $user_points * 1;
-		$resource_row['user_growth'] = $ce[$order_base['buyer_user_id']]['user_growth'] * 1 + $user_grade * 1;
-
-		$res_flag = $User_ResourceModel->editResource($order_base['buyer_user_id'], $resource_row);
-
-		$User_GradeModel = new User_GradeModel;
-		//升级判断
-		$res_flag = $User_GradeModel->upGrade($order_base['buyer_user_id'], $resource_row['user_growth']);
-		//积分
-		$points_row['user_id']           = $order_base['buyer_user_id'];
-		$points_row['user_name']         = $order_base['buyer_user_name'];
-		$points_row['class_id']          = Points_LogModel::ONBUY;
-		$points_row['points_log_points'] = $user_points;
-		$points_row['points_log_time']   = get_date_time();
-		$points_row['points_log_desc']   = '确认收货';
-		$points_row['points_log_flag']   = 'confirmorder';
-
-		$Points_LogModel = new Points_LogModel();
-
-		$Points_LogModel->addLog($points_row);
-
-		//成长值
-		$grade_row['user_id']         = $order_base['buyer_user_id'];
-		$grade_row['user_name']       = $order_base['buyer_user_name'];
-		$grade_row['class_id']        = Grade_LogModel::ONBUY;
-		$grade_row['grade_log_grade'] = $user_grade;
-		$grade_row['grade_log_time']  = get_date_time();
-		$grade_row['grade_log_desc']  = '确认收货';
-		$grade_row['grade_log_flag']  = 'confirmorder';
-
-		$Grade_LogModel = new Grade_LogModel;
-		$Grade_LogModel->addLog($grade_row);
+//		$order_base           = $Order_BaseModel->getOne($order_id);
+//		$order_payment_amount = $order_base['order_payment_amount'];
+//
+//		$condition['order_status'] = Order_StateModel::ORDER_FINISH;
+//
+//		$condition['order_finished_time'] = get_date_time();
+//
+//		$flag = $Order_BaseModel->editBase($order_id, $condition);
+//
+//		//修改订单商品表中的订单状态
+//		$edit_row['order_goods_status'] = Order_StateModel::ORDER_FINISH;
+//
+//		$order_goods_id = $Order_GoodsModel->getKeyByWhere(array('order_id' => $order_id));
+//
+//		$Order_GoodsModel->editGoods($order_goods_id, $edit_row);
+//
+//        $order_goods_data = $Order_GoodsModel->getByWhere(array('order_id' => $order_id));
+//        if (Web_ConfigModel::value('Plugin_Directseller')) {
+//            //确认收货以后将总佣金写入商品订单表
+//            $order_directseller_commission = array_sum(array_column($order_goods_data, 'directseller_commission_0')) + array_sum(array_column($order_goods_data, 'directseller_commission_1')) + array_sum(array_column($order_goods_data, 'directseller_commission_2'));
+//            $condition['order_directseller_commission'] = $order_directseller_commission;
+//        }
+//
+//        //添加到个人仓库
+//        $User_Stock_Model = new User_StockModel();
+//        $User_Stock_Model->editStockFromOrder($order_goods_data, $order_base['buyer_user_id'], $order_base['buyer_user_name']);
+//
+//        $Order_BaseModel->confirmOrder_user_log($order_payment_amount, $order_base['buyer_user_id'], $order_base['buyer_user_name']);
 	}
 
 	//将需要确认的订单号远程发送给Paycenter修改订单状态

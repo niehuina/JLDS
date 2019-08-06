@@ -20,12 +20,13 @@ var THISPAGE = {
     loadGrid: function(){
         var gridWH = Public.setGrid(), _self = this;
         var colModel = [
-//            {name:'operating', label:'操作', width:40, fixed:true, formatter:operFmatter, align:"center"},
             {name:'dividend_year', label:'分红年份', width:150,align:'center'},
             {name:'dividend_amount', label:'分红总金额', width:200, align:"center"},
-            {name:'shares_price', label:'每股价格(元)', width:250,align:'center'},
-            {name:'shares_dividend', label:'股份分红比例(每股)', width:250, align:"center"},
-            {name:'dividend_datetime', label:'分红操作时间', width:250, align:"center"},
+            {name:'shares_member', label:'分红明细', width:200, align:"center", "formatter":function (val, opt, row) {
+                    return '<span class="view_shares ui-label ui-label-success" data-id="' + row.id+ '">分红明细</span>';
+                }},
+            {name:'shares_dividend', label:'股份分红比例(%)', width:250, align:"center"},
+            {name:'dividend_datetime', label:'分红时间', width:250, align:"center"},
         ];
         this.mod_PageConfig.gridReg('grid', colModel);
         colModel = this.mod_PageConfig.conf.grids['grid'].colModel;
@@ -75,7 +76,6 @@ var THISPAGE = {
             position:"last"
         });
 
-
 //        function operFmatter (val, opt, row) {
 //            var html_con = '<div class="operating" data-id="' + row.id+ '">--</div>';
 //            return html_con;
@@ -97,7 +97,7 @@ var THISPAGE = {
         $('#search').click(function(){
 
             queryConditions.page = 1;
-            queryConditions.year = _self.$_searchYear.val() === '请输入相关数据...' ? '' : _self.$_searchYear.val();
+            queryConditions.year = _self.$_searchYear.val() === '请输入分红年份...' ? '' : _self.$_searchYear.val();
             THISPAGE.reloadData(queryConditions);
         });
 
@@ -105,7 +105,6 @@ var THISPAGE = {
         {
             THISPAGE.reloadData('');
             _self.$_searchYear.val('请输入分红年份...');
-
         });
 
         $(window).resize(function(){
@@ -127,4 +126,19 @@ var handle = {
 };
 $(function(){
     THISPAGE.init();
+
+    $('#grid').on('click', '.view_shares', function (e) {
+        var devidend_id = $(this).data('id');
+        var data = {
+            rowId: devidend_id,
+            callback: this.callback
+        };
+        $.dialog({
+            title: '分红明细',
+            content: 'url:' + SITE_URL + '?ctl=User_Shares&met=details&typ=e&id=' + devidend_id,
+            data: data,
+            width: 550,
+            height: 480,
+        });
+    })
 });

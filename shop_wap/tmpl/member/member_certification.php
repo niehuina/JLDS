@@ -86,7 +86,7 @@ include __DIR__.'/../../includes/header.php';
                         <h4>证件正面照</h4>
                         <div class="input-box">
                            <input type="file" name="upfile" id="face" style="display: none" />
-                            <input type="button" id="btnFace" value="上传正面照" class="btn-green" style="width: auto;line-height: 1rem;margin-left: 0rem">
+                            <input type="button" id="btnFace" value="上传正面照" class="btn-submit" style="width: auto;line-height: 1rem;margin-left: 0rem">
                             <input type="hidden" id="face_logo_url" value=""  />
                             <span class="input-del"></span> </div>
                     </li>
@@ -100,7 +100,7 @@ include __DIR__.'/../../includes/header.php';
                         <h4>证件背面照</h4>
                         <div class="input-box">
                             <input type="file" name="upfile" id="font"  style="display: none" />
-                            <input type="button" id="btnFont" value="上传背面照" class="btn-green" style="width: auto;line-height: 1rem;margin-left: 0rem">
+                            <input type="button" id="btnFont" value="上传背面照" class="btn-submit" style="width: auto;line-height: 1rem;margin-left: 0rem">
                             <input type="hidden" id="font_logo_url" value="" />
                             <span class="input-del"></span> </div>
                     </li>

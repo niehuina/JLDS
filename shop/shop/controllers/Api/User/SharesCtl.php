@@ -24,7 +24,7 @@ class Api_User_SharesCtl extends Yf_AppController
     {
         $page = request_int('page', 1);
         $rows = request_int('rows', 20);
-        $year = request_string('year');
+        $year = request_string('year', '');
 
         $cond_row = array();
         if($year){
@@ -61,6 +61,8 @@ class Api_User_SharesCtl extends Yf_AppController
             $shares_dividend = Web_ConfigModel::value('shares_dividend');
             $User_InfoModel = new User_InfoModel();
             $User_GradeLogModel = new User_GradeLogModel();
+            $dividend_id = time();
+            $total_amount = 0;
             if (array_search($type, ['all', 'all_g_partner', 'all_partner']) !== false) {
                 $cond_row = array();
                 if ($type == "all") {
@@ -84,13 +86,14 @@ class Api_User_SharesCtl extends Yf_AppController
                     $user_ids = array_column($user_list['items'], 'user_id');
                     Yf_Log::log($user_ids, Yf_Log::LOG, 'shares');
 
-                    $rs = self::shares_profit($user_ids, $dividend_year, $share_price, $shares_dividend);
+                    $rs = self::shares_profit($user_ids, $dividend_year, $share_price, $shares_dividend, $dividend_id);
                     if ($rs['status'] == 250) {
                         $flag = false;
                         break;
                     } else {
                         $total_amount += $rs['data']['total_amount'] * 1;
                     }
+                    $add_row['user_ids'] = implode(',', $user_ids);
                 }
             } else if (array_search($type, ['all_one_year', 'part']) !== false) {
                 $cond_row = array();
@@ -112,12 +115,13 @@ class Api_User_SharesCtl extends Yf_AppController
                     $user_ids = decode_json($user_ids);
                     Yf_Log::log($user_ids, Yf_Log::LOG, 'shares');
                 }
+                $add_row['user_ids'] = implode(',', $user_ids);
 
                 $rows = 500;
                 $total_amount = 0;
                 for ($i = 0; $i < count($user_ids); $i = $i + $rows) {
                     $user_ids_temps = array_slice($user_ids, $i, $rows);
-                    $rs = self::shares_profit($user_ids_temps, $dividend_year, $share_price, $shares_dividend);
+                    $rs = self::shares_profit($user_ids_temps, $dividend_year, $share_price, $shares_dividend, $dividend_id);
                     if ($rs['status'] == 250) {
                         $flag = false;
                         break;
@@ -133,6 +137,7 @@ class Api_User_SharesCtl extends Yf_AppController
                 $add_row['shares_price'] = $share_price;
                 $add_row['shares_dividend'] = $shares_dividend;
                 $add_row['dividend_amount'] = $total_amount;
+                $add_row['dividend_id'] = $dividend_id;
                 $id = $Shares_DividendModel->addSharesDividend($add_row, true);
             }
 
@@ -147,7 +152,7 @@ class Api_User_SharesCtl extends Yf_AppController
         }
     }
 
-    private function shares_profit($user_ids, $dividend_year, $share_price, $shares_dividend)
+    private function shares_profit($user_ids, $dividend_year, $share_price, $shares_dividend, $dividend_id)
     {
         //将需要确认的订单号远程发送给Paycenter修改订单状态
         //远程修改paycenter中的订单状态
@@ -161,8 +166,24 @@ class Api_User_SharesCtl extends Yf_AppController
         $formvars['desc'] = "{$dividend_year}年度股金分红";
         $formvars['share_price'] = $share_price;
         $formvars['shares_dividend'] = $shares_dividend;
+        $formvars['dividend_id'] = $dividend_id;
 
         $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Paycen_PayRecord&met=shares_profit&typ=json', $url), $formvars);
+        return $rs;
+    }
+
+    private function getUserResource($user_ids){
+        //将需要确认的订单号远程发送给Paycenter修改订单状态
+        //远程修改paycenter中的订单状态
+        $key = Yf_Registry::get('paycenter_api_key');
+        $url = Yf_Registry::get('paycenter_api_url');
+        $paycenter_app_id = Yf_Registry::get('paycenter_app_id');
+
+        $formvars = array();
+        $formvars['app_id'] = $paycenter_app_id;
+        $formvars['user_id_row'] = $user_ids;
+
+        $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=getUserRowsResourceInfo&typ=json', $url), $formvars);
         return $rs;
     }
 
@@ -175,6 +196,7 @@ class Api_User_SharesCtl extends Yf_AppController
         $rows = request_int('rows', 20);
 
         $cond_row = array();
+        $cond_row['user_name:<>'] = 'admin';
         $cond_row['user_statu'] = 0;
         $cond_row['user_grade:>='] = 3;
         $cond_row['user_grade:<='] = 4;
@@ -182,6 +204,15 @@ class Api_User_SharesCtl extends Yf_AppController
         $sort     = array();
         $sort['user_regtime'] = 'desc';
         $user_list = $User_InfoModel->listByWhere($cond_row, $sort, $page, $rows);
+        $user_ids = array_column($user_list['items'], 'user_id');
+        if(count($user_ids) > 0) {
+            $user_resource_list = $this->getUserResource($user_ids);
+            $user_resource_list = $user_resource_list['data'];
+            Yf_Log::log($user_resource_list, Yf_Log::LOG, 'shares');
+        }
+
+        $User_GradeModel = new User_GradeModel();
+        $user_grade_list = $User_GradeModel->getByWhere();
         foreach ($user_list['items'] as $key=>$user){
             $cond_log['user_id'] = $user['user_id'];
             $cond_log['user_grade_to:in'] = [3,4];
@@ -193,6 +224,12 @@ class Api_User_SharesCtl extends Yf_AppController
             $diffDate = self::diffDate($log_date_time, get_date_time());
             $year = $diffDate['year'];
             $user_list['items'][$key]['update_date'] = $year;
+            $user_list['items'][$key]['user_grade_text'] = $user_grade_list[$user['user_grade']]['user_grade_name'];
+            if(isset($user_resource_list[$user['user_id']])) {
+                $user_list['items'][$key]['user_shares'] = $user_resource_list[$user['user_id']]['user_shares'];
+            }else{
+                $user_list['items'][$key]['user_shares'] = 0;
+            }
         }
         $this->data->addBody(-140, $user_list);
     }
@@ -223,5 +260,30 @@ class Api_User_SharesCtl extends Yf_AppController
             $Y--;
         }
         return array('year'=>$Y,'month'=>$m,'day'=>$d);
+    }
+
+    public function getDiviendDetails()
+    {
+        $page = request_int('page', 1);
+        $rows = request_int('rows', 20);
+        $dividend_id = request_string('id');
+
+        //将需要确认的订单号远程发送给Paycenter修改订单状态
+        //远程修改paycenter中的订单状态
+        $key = Yf_Registry::get('paycenter_api_key');
+        $url = Yf_Registry::get('paycenter_api_url');
+        $paycenter_app_id = Yf_Registry::get('paycenter_app_id');
+
+        $formvars = array();
+        $formvars['app_id'] = $paycenter_app_id;
+        $formvars['page'] = $page;
+        $formvars['rows'] = $rows;
+        $formvars['order_id'] = $dividend_id;
+        $formvars['trade_type_id'] = 16;
+        $formvars['user_type'] = 1;
+        $formvars['status'] = 2;
+
+        $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Paycen_PayRecord&met=getRecordListByOrderId&typ=json', $url), $formvars);
+        $this->data->addBody(-140, $rs['data'], $rs['msg'], $rs['status']);
     }
 }

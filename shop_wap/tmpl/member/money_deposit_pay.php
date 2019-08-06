@@ -53,7 +53,7 @@ include __DIR__.'/../../includes/header.php';
         <div class="nctouch-inp-con bgf">
             <div class="nctouch-pay">
                 <div class="spacing-div"><span>在线支付方式</span></div>
-                <input type="hidden" name="payment_code" value="wx_native">
+                <input type="hidden" id="payment_code" value="wx_native">
                 <div class="pay-sel">
                     <label>
                         <span class="wxpay">微信</span>
@@ -61,7 +61,7 @@ include __DIR__.'/../../includes/header.php';
                     </label>
                 </div>
             </div>
-            <input type="button" class="btn-green mt5" id="deposit_btn" value="确认付款">
+            <input type="button" class="btn-submit mt5" id="deposit_btn" value="确认付款">
         </div>
     </div>
     <footer id="footer"></footer>

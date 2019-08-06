@@ -1,4 +1,19 @@
 
+function login()
+{
+    callback = WapSiteUrl + '/tmpl/member/member.html';
+
+    login_url   = UCenterApiUrl + '?ctl=Login&met=index&typ=e';
+
+
+    callback = ApiUrl + '?ctl=Login&met=check&typ=e&redirect=' + encodeURIComponent(callback);
+
+
+    login_url = login_url + '&from=wap&callback=' + encodeURIComponent(callback);
+
+    window.location.href = login_url;
+}
+
 document.write('<div class="tip" style="display: none;"><div class="relative"><div class="tip-area"><h5><span class="icon"></span>提示</h5><div class="tip-cont"></div><div class="clearfix"><a href="javascript:;" class="btn-sure">确定</a> </div></div><a href="javascript:;" class="btn-close"></a></div></div><style>.tip-area{width:300px;background:#fff;padding:50px 0 20px;position:relative;margin:auto;overflow:hidden;}.tip-area h5{font-size:14px;position:absolute;left:-25px;top:-24px;background:#F60;color:#fff;padding: 30px 20px 6px 40px;font-weight:normal;border-radius:26px;letter-spacing:3px;}.tip-area h5 span{width:16px;height:16px;display:inline-block;background:url(./analytics/static/default/images/icon-tip.png) no-repeat;vertical-align:middle;margin-right:6px;}.tip-area .tip-cont{padding:30px 0;text-align:center;color:#333;}.tip-area .btn-sure{ text-decoration:none; float:right;line-height:26px;border:1px solid #999;padding:0 10px;margin-right:30px;color:#333;border-radius:2px;font-size:14px;}.tip-area .btn-sure:hover{color:#00a3ee;border-color:#00a3ee;} .tip .btn-close{text-decoration: none;line-height: 26px;border: 0;padding: 5px 10px;margin-right: 0px;color: #333;border-radius: 2px;font-size: 14px;margin-top: 5px;}a.btn-close{ cursor: pointer;display: inline-block;height: 30px;position: absolute;right: -9px;top: -7px;width: 30px;background:url(./analytics/static/default/images/icon-close.png) no-repeat;background-size:cover;}a.btn-close:hover{background:url(./analytics/static/default/images/icon-close-hov.png) no-repeat;background-size:cover;transition:0.3s;}.relative{position:relative;display: inline-block;}.tip{width:100%;text-align:center;z-index:999;font-size:16px;padding:50px 0;position:fixed; left:50%; top:50%; width: 300px;height: 200px;margin-left:-150px;margin-top:-100px;}</style>');
 function alert_box(msg){
                     $('.btn-sure').attr('href','javascript:;');  
@@ -251,7 +266,7 @@ function delCookie(name){//删除cookie
 
 function checkLogin(state){
 	if(state == 0){
-		location.href = WapSiteUrl+'/tmpl/member/login.html';
+        login();
 		return false;
 	}else {
 		return true;

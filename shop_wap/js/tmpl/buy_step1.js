@@ -88,12 +88,6 @@ $(function() {
         wrapper : '#new-address-wrapper',
         scroll : ''
     });
-    // 支付方式
-    $.animationLeft({
-        valve : '#select-payment-valve',
-        wrapper : '#select-payment-wrapper',
-        scroll : ''
-    });
 
     // 地区选择
     $('#new-address-wrapper').on('click', '#varea_info', function(){
@@ -246,7 +240,7 @@ $(function() {
 
                 // var rate_price = gptotl * (100 - result.data.user_rate)/100;
 
-                $('#totalPrice,#onlineTotal').text(result.data.order_discounted_price);
+                $('#totalPrice,#onlineTotal').text(result.data.order_discounted_price.toFixed(2));
                 result.data.order_cost_sum > 0 && $("#ratePrice").text(-result.data.order_cost_sum).parents("dl").show();
 
                 /*****加价购、代金券*****/

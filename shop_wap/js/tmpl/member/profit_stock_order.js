@@ -1,7 +1,7 @@
 $(function () {
     var key = getCookie('key');
     if (!key) {
-        window.location.href = WapSiteUrl + '/tmpl/member/login.html';
+        login();
         return;
     }
 
@@ -18,6 +18,7 @@ $(function () {
                 'getparam': {
                     k: key,
                     u: getCookie('id'),
+                    user_id: getCookie('id'),
                     status: status,
                 },
                 'tmplid': 'list_model',
@@ -34,6 +35,7 @@ $(function () {
                 'getparam': {
                     k: key,
                     u: getCookie('id'),
+                    user_id: getCookie('id'),
                     status: status,
                     type: 13,
                 },

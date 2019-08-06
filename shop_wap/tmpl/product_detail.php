@@ -42,7 +42,7 @@ include __DIR__ . '/../includes/header.php';
                 <li class="cur"><a href="javascript:void(0);">商品</a></li>
                 <li><a href="javascript:void(0);" id="goodsBody">详情</a></li>
                 <li><a href="javascript:void(0);" id="goodsEvaluation">评价</a></li>
-                <li><a href="javascript:void(0);" id="goodsRecommendation">推荐</a></li>
+<!--                <li><a href="javascript:void(0);" id="goodsRecommendation">推荐</a></li>-->
             </ul>
             <div class="header-r"><a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a>
             </div>
@@ -69,7 +69,11 @@ include __DIR__ . '/../includes/header.php';
         </div>
     </header>
     <div id="product_detail_html" style="position: relative; z-index: 1;"></div>
+
+    <div id="product_recommendation_html" class="bgf"></div>
+
     <div id="product_detail_spec_html" class="nctouch-bottom-mask"></div>
+
     <!-- 新增促销 2017.7.17 -->
     <div class="nctouch-bottom-mask" id="sale-activity-html"></div>
     <!-- 代金券 -->
@@ -79,17 +83,14 @@ include __DIR__ . '/../includes/header.php';
         <div class="goods-detail-top">
             <div class="goods-detail-pic" id="mySwipe">
                 <ul>
-                    <% for (var i =0;i
-                    <goods_image.length
-                    ;i++){ %>
+                    <% for (var i =0;i<goods_image.length;i++){ %>
                     <li><img src="<%=goods_image[i]%>"/></li>
                     <% } %>
                 </ul>
             </div>
             <div class="goods-detail-turn">
-                <ul><% for (var i =0;i
-                    <goods_image.length
-                    ;i++){ %>
+                <ul>
+                    <% for (var i =0;i<goods_image.length;i++){ %>
                     <li class="<% if(i == 0) { %>cur<%}%>"></li>
                     <% } %>
                 </ul>
@@ -104,7 +105,7 @@ include __DIR__ . '/../includes/header.php';
                         '1') { %><span>预售</span><% } %><% if (goods_info.is_fcode == '1') { %><span>F码</span><% }
                         %><%=goods_info.goods_name%>
                     </dt>
-                    <dd><%=goods_info.goods_promotion_tips.substring(0,50)%>...</dd>
+                    <dd><%=goods_info.goods_promotion_tips.substring(0,50)%></dd>
                 </dl>
             </div>
             <% if(goods_info.promotion_type == 'groupbuy' && goods_info.promotion_is_start == 1){ %>
@@ -247,7 +248,7 @@ include __DIR__ . '/../includes/header.php';
                                     <% if(goods_map_spec.length>0){%>
                                     <% for(var i =0;i
                                     <goods_map_spec.length
-                                    ;i++){%>
+                                            ;i++){%>
                                     <span>
 							<%=goods_map_spec[i].goods_spec_name%>
 							<%for(var j = 0;j<goods_map_spec[i].goods_spec_value.length;j++){%>
@@ -256,10 +257,10 @@ include __DIR__ . '/../includes/header.php';
 								<%}%>
 							<%}%>
 							</span>
-                                    <%}%>
-                                    <%}} else { %>
-                                    <span>默认</span>
-                                    <% } %>
+                                        <%}%>
+                                        <%}} else { %>
+                                        <span>默认</span>
+                                        <% } %>
                                 </dt>
                             </dl>
                         </div>
@@ -281,47 +282,24 @@ include __DIR__ . '/../includes/header.php';
                     </div>
                     <% } %>
 
-
+                    <!--商品评价-->
                     <section id="s-rate" data-spm="" class="mt5"></section>
 
-                    <% if (store_info.shop_self_support != "true") {%>
-                    <div class="goods-detail-store">
-                        <a href="store.html?shop_id=<%= store_info.store_id %>">
-                            <div class="store-name"><i class="icon-store"></i><%= store_info.store_name %></div>
-                            <div class="store-rate">
-                                <span class="<%= store_info.store_credit.store_desccredit.percent_class %>">
-                                    <b class="icon1"></b>
-                                    <strong>描述相符</strong>
-                                    <em><%= store_info.store_credit.store_desccredit.credit %></em>
-                                    <i><%= store_info.store_credit.store_desccredit.percent_text %></i>
-                                </span>
-                                <span class="<%= store_info.store_credit.store_servicecredit.percent_class %>">
-                                    <b class="icon2"></b>
-                                    <strong>服务态度</strong>
-                                    <em><%= store_info.store_credit.store_servicecredit.credit %></em>
-                                    <i><%= store_info.store_credit.store_servicecredit.percent_text %></i>
-                                </span>
-                                <span class="<%= store_info.store_credit.store_deliverycredit.percent_class %>">
-                                    <b class="icon3"></b>
-                                    <strong>发货速度</strong>
-                                    <em><%= store_info.store_credit.store_deliverycredit.credit %></em>
-                                    <i><%= store_info.store_credit.store_deliverycredit.percent_text %></i>
-                                </span>
-                            </div>
-                            <div class="item-more"></div>
-                        </a>
+                    <!--商品详情-->
+                    <div class="goods-detail-bottom">
+<!--                        <a href="javascript:void(0);" id="goodsBody1">点击查看商品详情</a>-->
+                        <div class="tabPanel">----  商品详情  -----</div>
+                        <div class="fixed-tab-pannel">
+                        </div>
                     </div>
-                    <% } %>
-
-
-                    <div class="goods-detail-bottom"><a href="javascript:void(0);" id="goodsBody1">点击查看商品详情</a></div>
-                    <div class="goods-detail-foot">
+                    <div class="goods-detail-foot bgf">
                         <div class="otreh-handle">
-                            <!--                            <a href="javascript:void(0);" class="kefu wp30"><i></i><p>客服</p></a>-->
-                            <a href="javascript:void(0);"
-                               class="borl1 wp50 collect pd-collect <% if (is_favorate) { %>favorate<% } %>"><i></i>
-                                <p>收藏</p></a>
-                            <a href="../tmpl/cart_list.html" class="cart wp50"><i></i>
+                            <a href="../index.html" class="index wp30"><i></i><p>首页</p></a>
+                            <a href="javascript:void(0);" class="borl1 kefu wp30"><i></i><p>客服</p></a>
+<!--                            <a href="javascript:void(0);"-->
+<!--                               class="borl1 wp30 collect pd-collect <% if (is_favorate) { %>favorate<% } %>"><i></i>-->
+<!--                                <p>收藏</p></a>-->
+                            <a href="../tmpl/cart_list.html" class="cart"><i></i>
                                 <p>购物车</p><span id="cart_count"></span></a>
                         </div>
                         <div class="buy-handle <%if(!goods_hair_info.if_store || goods_info.goods_storage == 0){%>no-buy<%}%>">
@@ -404,7 +382,8 @@ include __DIR__ . '/../includes/header.php';
                             promotion = 0;
                         }
                         %>
-                        <input type="text" pattern="[0-9]*" class="buy-num" promotion="<%=promotion%>" data-max="<%=data_max%>"
+                        <input type="text" pattern="[0-9]*" class="buy-num" promotion="<%=promotion%>"
+                               data-max="<%=data_max%>"
                                data-min="<%=data_min%>" id="buynum" value="<%=data_min%>"/>
                     </span>
                     <span class="add">
@@ -585,6 +564,31 @@ include __DIR__ . '/../includes/header.php';
         </li>
         <% } %>
     </script>
+
+
+    <script type="text/html" id="productRecommendation">
+        <div class="tabPanel">推荐商品</div>
+        <div class="goods-detail-recom">
+            <ul>
+                <% if(goods_commend_list){ %>
+                <% for (var i = 0; i<goods_commend_list.length ;i++){ %>
+                    <li>
+                        <a href="product_detail.html?goods_id=<%=goods_commend_list[i].goods_id%>">
+                            <div class="pic">
+                                <img src="<%=goods_commend_list[i].common_image%>">
+                            </div>
+                            <dl>
+                                <dt><%=goods_commend_list[i].common_name%></dt>
+                                <dd>￥<em><%=goods_commend_list[i].common_price%></em></dd>
+                            </dl>
+                        </a>
+                    </li>
+                    <% } %>
+                    <% } %>
+            </ul>
+        </div>
+    </script>
+
     <script type="text/javascript" src="../js/libs/zepto.min.js"></script>
 
     <script type="text/javascript" src="../js/libs/template.js"></script>
