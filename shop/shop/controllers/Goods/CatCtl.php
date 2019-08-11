@@ -120,6 +120,10 @@ class Goods_CatCtl extends Controller
         $Goods_CatModel = new Goods_CatModel();
         $data           = $Goods_CatModel->getGoodsCatRecomendList();
 
+        $Mb_BannerImageModel = new Mb_BannerImageModel();
+        $banner_img = $Mb_BannerImageModel->getOneByWhere(['banner_type'=>'ssBanner']);
+        $data['banner_img'] = $banner_img;
+
         $this->data->addBody(-140, $data);
     }
 }

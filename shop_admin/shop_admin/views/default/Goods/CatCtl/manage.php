@@ -1,6 +1,7 @@
 <?php if (!defined('ROOT_PATH')) {exit('No Permission');}?>
 <?php
 include $this->view->getTplPath() . '/'  . 'header.php';
+
 ?>
 <link href="<?=$this->view->css?>/index.css" rel="stylesheet" type="text/css">
 <link href="<?= $this->view->css_com ?>/webuploader.css" rel="stylesheet" type="text/css">
@@ -174,7 +175,7 @@ body{background: #fff;}
             <dd class="opt">
                 <textarea value="" name="cat_app_home_click_url" id="cat_app_home_click_url" class="ui-input ui-input-ph" /></textarea>
                 <span class="err"></span>
-                <p class="notic">商品分类在APP首页点击后的跳转链接</p>
+                <p class="notic">商品分类在APP首页点击后的跳转链接, 默认为<?=Yf_Registry::get('shop_wap_cat_url')?>id</p>
             </dd>
         </dl>
     </div>

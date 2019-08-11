@@ -454,7 +454,11 @@ include __DIR__.'/../../includes/header.php';
             </dl>
             <dl class="borb1">
                 <dt>物流配送</dt>
+                <%if(store_cart_list[k].freight > 0){%>
                 <dd><em id="storeFreight<%=k%>"><%= store_cart_list[k].freight %></em>元</dd>
+                <% }else{ %>
+                <dd><em id="storeFreight<%=k%>">免运费</em></dd>
+                <% } %>
             </dl>
             <dl class="message borb1">
                 <dt><label for="storeMessage<%=k%>">买家留言：</label></dt>
@@ -468,7 +472,7 @@ include __DIR__.'/../../includes/header.php';
                 </div>
             <% } %>
             <div class="store-total">
-                本店合计：<span><em id="storeTotal<%=k%>" class="js_store_total"><%= store_cart_list[k].shop_discounted_price %></em></span>元
+                商品合计：<span><em id="storeTotal<%=k%>" class="js_store_total"><%= store_cart_list[k].shop_discounted_price %></em></span>元
             </div>
             <% if(store_cart_list[k].mansong_info.rule_discount){ %>
                 <div class="store-total">
@@ -476,7 +480,6 @@ include __DIR__.'/../../includes/header.php';
                 </div>
             <% } %>
         </div>
-
 
         <% if (store_cart_list[k].voucher_base != '') { %>
         <div class="nctouch-bottom-mask nctouch-bottom-mask<%=k%>">

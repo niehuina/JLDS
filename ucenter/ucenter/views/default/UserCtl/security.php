@@ -157,7 +157,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
 									<span class="text"><?=_('您的证件已到期，为了保证账户安全，请进行修改！')?></span>
 									<?php } ?>
 								</p>
-								<div><a href="<?=Yf_Registry::get('paycenter_api_url')?>?ctl=Info&met=account&typ=e" class="btn btn-sure lh36"><?=_('立即修改')?></a></div>
+								<div><a href="<?=Yf_Registry::get('paycenter_api_url')?>?ctl=Info&met=account&typ=e&k=<?=$_COOKIE[Perm::$cookieName]?>&u=<?=$user_id?>" class="btn btn-sure lh36"><?=_('立即修改')?></a></div>
 							</div>
 						</div>
 					</div>

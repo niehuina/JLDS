@@ -116,7 +116,7 @@ to { opacity: 0;  display: none;}
 .nctouch-cart-add-default { position: relative; z-index: 1; width: 100%;}
 .nctouch-cart-add-default a { color: #555;}
 .nctouch-cart-add-default i.icon-add { position: absolute; z-index: 1; top: 0; left: 0.5rem; display: block; width: 0.8rem; height: 100%; background-image: url(../images/location_b.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 100%; }
-.nctouch-cart-add-default dl { margin: 0 0 0 1.6rem; padding: 0.5rem 0;}
+.nctouch-cart-add-default dl { margin: 0 1.3rem 0 1.6rem; padding: 0.5rem 0;}
 .nctouch-cart-add-default dt { display: block; height: 0.9rem; font-size: 0.7rem; line-height: 0.9rem;}
 .nctouch-cart-add-default dt span { margin-left: 0.3rem; font-weight: 600;}
 .nctouch-cart-add-default dd { display: block; min-height: 0.9rem; max-height: 1.6rem; font-size: 0.6rem; line-height: 0.9rem;}

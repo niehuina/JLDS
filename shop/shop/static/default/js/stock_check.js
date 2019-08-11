@@ -185,7 +185,8 @@ $(function () {
                     parent.Public.tips({
                         content: '库存盘点成功',
                         type: 3
-                    }), window.location.reload();
+                    }),
+                    window.location.href = "index.php?ctl=Seller_Stock_Order&met=stock_check_list";
                     return true;
                 } else {
                     parent.Public.tips({

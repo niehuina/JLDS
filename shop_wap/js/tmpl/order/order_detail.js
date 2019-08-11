@@ -21,6 +21,7 @@ $(function () {
         });
 
         $("#order-info-container").html(template.render("order-info-tmpl", t.data));
+        $(".delete-order").click(p);
         $(".cancel-order").click(e);
         $(".sure-order").click(o);
         $(".evaluation-order").click(d);
@@ -91,6 +92,30 @@ $(function () {
             }
         })
     }
+    function p() {
+        var e = $(this).attr("order_id");
+        $.sDialog({
+            content: "是否移除订单？", okFn: function () {
+                hideOrder(e)
+            }
+        })
+    }
+
+    function hideOrder(id) {
+        $.ajax({
+            type: "post",
+            url: ApiUrl + "/index.php?ctl=Buyer_Order&met=hideOrder&typ=json",
+            data: {order_id: id, k: r, u: getCookie('id'), user: 'buyer'},
+            dataType: "json",
+            success: function (e) {
+                if (e.status == 200) {
+                    window.location.href = "order_list.html";
+                } else {
+                    $.sDialog({skin: "red", content: "操作失败！", okBtn: false, cancelBtn: false})
+                }
+            }
+        })
+    }
 
     function o() {
         var r = $(this).attr("order_id");
@@ -129,16 +154,18 @@ $(function () {
 
     function l() {
         var r = $(this).attr("order_id");
-        location.href = WapSiteUrl + "/tmpl/member/order_delivery.html?order_id=" + r
+        location.href = WapSiteUrl + "/tmpl/order/order_delivery.html?order_id=" + r
     }
 
-    function c() {
+    function c(event) {
+        event.stopPropagation();
         var r = $(this).attr("order_id");
         var e = $(this).attr("order_goods_id");
-        location.href = WapSiteUrl + "/tmpl/member/refund.html?order_id=" + r + "&order_goods_id=" + e
+        location.href = WapSiteUrl + "/tmpl/order/return.html?order_id=" + r + "&order_goods_id=" + e
     }
 
-    function _() {
+    function _(event) {
+        event.stopPropagation();
         var sear=new RegExp('白条支付');
         if(sear.test(payment_name))
         {

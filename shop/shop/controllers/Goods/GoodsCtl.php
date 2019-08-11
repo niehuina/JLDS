@@ -1270,7 +1270,7 @@ class Goods_GoodsCtl extends Controller
 				$goods_hair_info['district_id'] = 0;
 			}
 			if(isset($goods_hair_info['transport_data']) && $goods_hair_info['transport_data']['result']
-            || ($goods_hair_info['area_name'] == __('全国'))){
+            || ($goods_hair_info['area_name'] == __('全国') && (!empty($goods_detail['goods_base']['goods_stock']) && $goods_detail['goods_base']['goods_stock'] > 0))){
                 $goods_hair_info['if_store_cn'] = __('有货');
                 $goods_hair_info['if_store'] = true;
             }else{
@@ -2451,7 +2451,19 @@ class Goods_GoodsCtl extends Controller
         $cookie_area = $this->getCookieArea();
         return $this->data->addBody(-140, $cookie_area);
     }
-    
+
+
+    public function getRecomendProduct()
+    {
+        $Goods_CommonModel = new Goods_CommonModel();
+        $shop_id = Web_ConfigModel::value('self_shop_id');
+        $data_hot_salle = $Goods_CommonModel->getHotSalle($shop_id);
+        $data_salle     = $Goods_CommonModel->getRecommonRow($data_hot_salle);
+
+        $data = array();
+        $data['goods_commend_list'] = $data_salle;
+        $this->data->addBody(-140, $data);
+    }
 }
 
 ?>

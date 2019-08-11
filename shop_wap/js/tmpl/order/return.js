@@ -22,6 +22,7 @@ $(function(){
 	}
     $.getJSON(ApiUrl + '/index.php?ctl=Buyer_Service_Return&met=index&act=add&typ=json',{k:key,u: getCookie('id'),oid:getQueryString('order_id'),gid:getQueryString('order_goods_id')}, function(result) {
         console.info(result);
+        if(result.data.reason == "") return false;
         result.data.WapSiteUrl = WapSiteUrl;
         $('#order-info-container').html(template.render('order-info-tmpl',result.data));
 

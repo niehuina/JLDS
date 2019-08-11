@@ -140,6 +140,7 @@ class Consume_RecordModel extends Consume_Record
 		$RecordStatusModel = new RecordStatusModel();
 		$Consume_TradeModel = new Consume_TradeModel();
 		$Order_StateModel = new Order_StateModel();
+        $Trade_TypeModel = new Trade_TypeModel();
 		$Union_Order = new Union_Order();
 		foreach ($data["items"] as $key => $value)
 		{
@@ -168,6 +169,7 @@ class Consume_RecordModel extends Consume_Record
 				{
 					$data["items"][$key]['act'] = 'info';
 				}
+                $data["items"][$key]['trade_type_con'] = $value['record_title'];
 			}
 			else
 			{
@@ -180,8 +182,8 @@ class Consume_RecordModel extends Consume_Record
 				{
 					$data["items"][$key]['act'] = 'info';
 				}
+                $data["items"][$key]['trade_type_con'] = $Trade_TypeModel->trade_type[$value['trade_type_id']];
 			}
-
 
 		}
 		return $data;

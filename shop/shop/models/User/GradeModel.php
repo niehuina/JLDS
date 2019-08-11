@@ -157,6 +157,7 @@ class User_GradeModel extends User_Grade
         }else if($user_grade == 2){
             $can_update_grade = !$is_need_search;
         }else if($user_grade == 3){
+            //如果当前用户是会员，检查自己是否可升级为合伙人
             $this->updateGradePartner($user_id);
         }
 
@@ -181,7 +182,8 @@ class User_GradeModel extends User_Grade
             $this->updateUserGradeToUcenter($user_id, $user['user_grade']);
         }
 
-        if($user_grade == 3){
+        //如果当前用户升级成为了会员，检查上级会员是否可晋级为合伙人
+        if($user_grade == 2){
             //检查上级会员是否可以晋级
             $user_parent_id = $user['user_parent_id'];
             if($user_parent_id){

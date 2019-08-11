@@ -358,8 +358,12 @@ class Buyer_Service_ComplainCtl extends Buyer_Controller
 		$field['order_id']                 = $goods['order_id'];
 		$field['user_id_accuser']          = Perm::$userId;
 		$field['user_account_accuser']     = Perm::$row['user_account'];
-		$User_InfoModel = new User_InfoModel();
-		$user_parent_id = $User_InfoModel->getParentId(Perm::$userId);
+		if($this->is_partner) {
+            $user_parent_id = Web_ConfigModel::value('self_user_id');
+        }else{
+            $User_InfoModel = new User_InfoModel();
+            $user_parent_id = $User_InfoModel->getParentId(Perm::$userId);
+        }
 		$Shop_BaseModel = new Shop_BaseModel();
 		$parent_shop = $Shop_BaseModel->getOneByWhere(['user_id'=>$user_parent_id]);
 		$field['user_id_accused']          = $parent_shop['shop_id'];

@@ -48,7 +48,7 @@
 .goods-detail-price { position: relative; z-index: 1; display: block; padding: 0 0.5rem; background-color: #FFF;}
 /*.goods-detail-price dl { display: inline-block;}*/
 .goods-detail-price dt { display: inline-block; font-size: 0.55rem; color: #DB4453; line-height: 1rem;margin-bottom:0.2rem;}
-.goods-detail-price dt em { font-size: 1rem;}
+.goods-detail-price dt em { font-size: 0.9rem;}
 .goods-detail-price dd { display: inline-block; font-size: 0.55rem; text-decoration: line-through; color: #999; line-height: 0.9rem;}
 .goods-detail-price .activity { display: inline-block; font-size: 0.45rem;}
 .goods-detail-price .sold { position: absolute; z-index: 1; top: 0.1rem; right:0.75rem; display: block; font-size: 0.55rem; line-height: 1rem; height: 1rem;}

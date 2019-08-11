@@ -446,7 +446,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 
         $flag = $Order_BaseModel->editBase($order_id, $edit_row);
 
-        if ($flag) {
+        if ($flag !== false) {
             $status = 200;
             $msg = __('success');
         } else {
@@ -4673,44 +4673,37 @@ class Buyer_OrderCtl extends Buyer_Controller
                 $order_rebate = $grade_order_rebate_top;
             }
             Yf_Log::log("g_partner order_rebate:".$order_rebate, Yf_Log::LOG, 'user_settle_search');
-            if ($order_rebate == 0) {
-                $user_orders['items'] = [];
-                $user_orders['page'] = 1;
-                $user_orders['records'] = 0;
-                $user_orders['total'] = 0;
-                $user_orders['totalsize'] = 0;
-                $user_orders['hasmore'] = false;
-            }else {
+
 //                $user_children_ids = $User_InfoModel->getUserChildren($user_id, 0);
 //                if (!$user_children_ids) return true;
 //                $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
-                $cond_row['directseller_gp_id'] = $user_id;
-                $cond_row['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
-                $cond_row['g_rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
-                $cond_row['order_create_time:>='] = $user_info['user_update_g_partner_date'];
-                $order_row['order_finished_time'] = 'desc';
-                $user_orders = $Order_BaseModel->listByWhere($cond_row, $order_row, $page, $rows);
-                Yf_Log::log($user_orders, Yf_Log::LOG, 'user_settle_search');
-                Yf_Log::log("g_partner user_order_count:" . count($user_orders), Yf_Log::LOG, 'user_settle_search');
+            $cond_row['directseller_gp_id'] = $user_id;
+            $cond_row['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
+            $cond_row['g_rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
+            $cond_row['order_create_time:>='] = $user_info['user_update_g_partner_date'];
+            $order_row['order_finished_time'] = 'desc';
+            $user_orders = $Order_BaseModel->listByWhere($cond_row, $order_row, $page, $rows);
+            Yf_Log::log($user_orders, Yf_Log::LOG, 'user_settle_search');
+            Yf_Log::log("g_partner user_order_count:" . count($user_orders), Yf_Log::LOG, 'user_settle_search');
 
-                if (count($user_orders) > 0) {
-                    $user_order_pay_amount = array_sum(array_column($user_orders, 'order_payment_amount'));
-                    $user_order_refund_amount = array_sum(array_column($user_orders, 'order_refund_amount'));
-                    $user_order_amount = $user_order_pay_amount - $user_order_refund_amount;
-                    Yf_Log::log("g_partner user_order_amount:" . $user_order_amount, Yf_Log::LOG, 'user_settle_search');
+            if (count($user_orders) > 0) {
+                $user_order_pay_amount = array_sum(array_column($user_orders, 'order_payment_amount'));
+                $user_order_refund_amount = array_sum(array_column($user_orders, 'order_refund_amount'));
+                $user_order_amount = $user_order_pay_amount - $user_order_refund_amount;
+                Yf_Log::log("g_partner user_order_amount:" . $user_order_amount, Yf_Log::LOG, 'user_settle_search');
 
-                    foreach ($user_orders['items'] as $k => $order) {
-                        $order_amount = $order['order_payment_amount'] * 1 - $order['order_refund_amount'] * 1;
-                        $order_rebate_value_temp = $order_amount * $order_rebate;
-                        Yf_Log::log($order_rebate_value_temp, Yf_Log::LOG, 'user_settle_search');
+                foreach ($user_orders['items'] as $k => $order) {
+                    $order_amount = $order['order_payment_amount'] * 1 - $order['order_refund_amount'] * 1;
+                    $order_rebate_value_temp = $order_amount * $order_rebate;
+                    Yf_Log::log($order_rebate_value_temp, Yf_Log::LOG, 'user_settle_search');
 
 //                    if ($order_rebate_value_temp == 0) continue;
-                        $order_rebate_value_temp = round($order_rebate_value_temp, 2);
+                    $order_rebate_value_temp = round($order_rebate_value_temp, 2);
 
-                        $user_orders['items'][$k]['order_create_text'] = '完成时间：' . date('Y-m-d H:i', strtotime($order['order_finished_time']));
-                        $user_orders['items'][$k]['order_settlement_text'] = '';
-                        $user_orders['items'][$k]['order_commission'] = $order_rebate_value_temp;
-                    }
+                    $user_orders['items'][$k]['order_create_text'] = '完成时间：' . date('Y-m-d H:i', strtotime($order['order_finished_time']));
+                    $user_orders['items'][$k]['order_settlement_text'] = '';
+                    $user_orders['items'][$k]['order_commission'] = $order_rebate_value_temp;
+                    $user_orders['items'][$k]['order_payment_amount'] = $order_amount;
                 }
             }
         }

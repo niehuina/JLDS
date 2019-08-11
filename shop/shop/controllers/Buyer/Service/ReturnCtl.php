@@ -59,6 +59,7 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 			fb($data);
 			fb('申请退款退货订单信息');
 
+            $d = array($data);
 			if ($data == -3)
 			{
 				$this->view->setMet('error3');
@@ -76,8 +77,8 @@ class Buyer_Service_ReturnCtl extends Buyer_Controller
 			else
 			{
 				$this->view->setMet('add');
+                $d = $data;
 			}
-			$d = $data;
 
 		}
 		else

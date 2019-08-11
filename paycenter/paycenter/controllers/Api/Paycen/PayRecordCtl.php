@@ -376,10 +376,10 @@ class Api_Paycen_PayRecordCtl extends Api_Controller
         $flag1 = $Consume_RecordModel->editRecord($user_id, $record_edit);
         check_rs($flag1, $rs_row);
 
-        $user_resource_edit['user_money'] = 0;
-        $user_resource_edit['user_money_frozen'] = 0;
-        $flag2 = $User_ResourceModel->editResource($user_id, $user_resource_edit);
-        check_rs($flag2, $rs_row);
+//        $user_resource_edit['user_money'] = 0;
+//        $user_resource_edit['user_money_frozen'] = 0;
+//        $flag2 = $User_ResourceModel->editResource($user_id, $user_resource_edit);
+//        check_rs($flag2, $rs_row);
 
         $flag3 = $User_BaseModel->editBase($user_id, ['exit_settle_status'=>1]);
         check_rs($flag3, $rs_row);

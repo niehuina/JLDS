@@ -170,15 +170,12 @@ $(function () {
                         if (st == 1) {
                             $('.goods-detail-foot .kefu').show();
                         } else if (tel) {
-                          
+
                             setTimeout(function () {
                                 $('.goods-detail-foot .kefu').addClass('phone').attr('href', "tel:" + tel).show();
                             }, 500);
                         }
                     });
-
-                    var rec_html = template.render('productRecommendation', result.data);
-                    $("#product_recommendation_html").html(rec_html);
 
                     $("title").html(data.goods_info.goods_name);
                     //商品图片格式化数据
@@ -267,7 +264,7 @@ $(function () {
                             $("#voucher_html").hide();
                             $("#getVoucher").hide();
                         }
-                        
+
                         //渲染模板
                         var html = template.render('sale-activity', data);
                         $("#sale-activity-html").html(html);
@@ -279,6 +276,12 @@ $(function () {
 
 
                         $(".fixed-tab-pannel").html(result.data.goods_info.common_detail);
+
+                        var rec_html = template.render('productRecommendation', result.data);
+                        $("#product_recommendation_html").html(rec_html);
+
+                        var detail_foot_html = template.render('goods_detail_foot', data);
+                        $("#product_detail_html").append(detail_foot_html);
 
                         // 购物车中商品数量
                         if (getCookie('cart_count')) {
@@ -341,11 +344,11 @@ $(function () {
                                     });
                                     return false;
                                 }
-                                
+
                                 $(".buy-num").val(parseInt(data_max));
                             }
                             else {
-                                
+
                                 $(".buy-num").val(parseInt(buynum + 1));
                             }
 
@@ -421,7 +424,7 @@ $(function () {
                             }
                             var key = getCookie('key');//登录标记
                             var quantity = parseInt($(".buy-num").val());
-                            if (!key) { 
+                            if (!key) {
                                 var goods_info = decodeURIComponent(getCookie('goods_cart'));
                                 if (goods_info == null) {
                                     goods_info = '';
@@ -442,26 +445,26 @@ $(function () {
                                         var arr = goodsarr[i].split(',');
                                         if (contains(arr, goods_id)) {
                                             $(".nctouch-bottom-mask-bg").trigger("click");
-                                            
+
                                                 show_tip();
-                                            
+
                                             return false;
                                         }
                                     }
                                     goods_info += '|' + goods_id + ',' + quantity;
                                     cart_count = goodsarr.length;
-                                } 
+                                }
                                 // 加入cookie
                                 addCookie('goods_cart', goods_info);
                                 // 更新cookie中商品数量
                                 addCookie('cart_count', cart_count);
                                 show_tip();
                                 getCartCount();
- 
+
 
                                 $('#cart_count,#cart_count1').html('<sup>' + cart_count + '</sup>');
 
-                               
+
                                 // $(".nctouch-bottom-mask-bg").trigger("click");
 
 
@@ -520,7 +523,7 @@ $(function () {
                                                 getCartCount();
                                                 $('#cart_count,#cart_count1').html('<sup>' + getCookie('cart_count') + '</sup>');
 
-                                                
+
                                                 $("#product_detail_spec_html>.nctouch-bottom-mask-bg").trigger("click");
                                             } else {
                                                 $.sDialog({
@@ -874,43 +877,41 @@ $(function () {
                     $(this).add('down');
                 });
 
-                
+
                     // 联系客服
                     $('.kefu').click(function () {
                         //判断不是手机号时使用IM
-                        // if( $(this).attr('href').indexOf('tel:')==-1){
-                        //         if (!getCookie('user_account') || getCookie('user_account') == undefined) {
-                        //             alert_box('请先登录');
-                        //             return false;
-                        //         }
-                        //
-                        //         if (window.chatTo) {
-                        //             chatTo(result.data.store_info.member_name.toString());
-                        //
-                        //         }
-                        //         else if (window.android) {
-                        //             if (window.android.chatTo) {
-                        //                 window.android.chatTo(result.data.store_info.member_name.toString(), result.data.store_info.store_name, data.store_info.store_logo);
-                        //             }else{
-                        //                 window.location.href = WapSiteUrl + '/tmpl/im-chatinterface.html?contact_type=C&contact_you=' + result.data.store_info.member_name + '&uname=' + getCookie('user_account');
-                        //             }
-                        //
-                        //         }
-                        //         else {
-                        //             //tmpl/im-chatinterface.html?contact_type=C&contact_you=5522aa&uname=5511aa
-                        //             window.location.href = WapSiteUrl + '/tmpl/im-chatinterface.html?contact_type=C&contact_you=' + result.data.store_info.member_name + '&uname=' + getCookie('user_account');
-                        //         }
-                        // }
+                        if( $(this).attr('href').indexOf('tel:')==-1){
+                                if (!getCookie('user_account') || getCookie('user_account') == undefined) {
+                                    alert_box('请先登录');
+                                    return false;
+                                }
 
-                        
+                                if (window.chatTo) {
+                                    chatTo(result.data.store_info.member_name.toString());
+
+                                }
+                                else if (window.android) {
+                                    if (window.android.chatTo) {
+                                        window.android.chatTo(result.data.store_info.member_name.toString(), result.data.store_info.store_name, data.store_info.store_logo);
+                                    }else{
+                                        window.location.href = WapSiteUrl + '/tmpl/im-chatinterface.html?contact_type=C&contact_you=' + result.data.store_info.member_name + '&uname=' + getCookie('user_account');
+                                    }
+
+                                }
+                                else {
+                                    //tmpl/im-chatinterface.html?contact_type=C&contact_you=5522aa&uname=5511aa
+                                    window.location.href = WapSiteUrl + '/tmpl/im-chatinterface.html?contact_type=C&contact_you=' + result.data.store_info.member_name + '&uname=' + getCookie('user_account');
+                                }
+                        }
 
                     })
-               
+
                 getGoodsNewReview();
 
                 option_window && initOptionWindow(option_window);
             }
-            
+
         });
     }
 

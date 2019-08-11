@@ -159,7 +159,7 @@ class Goods_BaseModel extends Goods_Base
             $edit_base_row = array('goods_stock' => $edit_base_num);
             $flag = $this->editBase($goods_id, $edit_base_row, false);
 
-            if ($flag) {
+            if ($flag !== false) {
                 $Goods_CommonModel = new Goods_CommonModel();
                 $common_base = $Goods_CommonModel->getOne($goods_base['common_id']);
 

@@ -49,15 +49,15 @@ $menus = $this->getThisMenus();
             <input type="hidden" name="config_type[]" value="set"/>
             <div class="ncap-form-default">
 
-                <dl class="row">
-                    <dt class="tit">
-                        <label for="volunteerservice_scope">义工服务范围(km)</label>
-                    </dt>
-                    <dd class="opt">
-                        <input id="volunteerservice_scope" name="set[volunteerservice_scope]" value="<?=(@$data['volunteerservice_scope']['config_value'])?>" class="ui-input w400" type="text"/>
-                        <p class="notic"></p>
-                    </dd>
-                </dl>
+<!--                <dl class="row">-->
+<!--                    <dt class="tit">-->
+<!--                        <label for="volunteerservice_scope">义工服务范围(km)</label>-->
+<!--                    </dt>-->
+<!--                    <dd class="opt">-->
+<!--                        <input id="volunteerservice_scope" name="set[volunteerservice_scope]" value="--><?//=(@$data['volunteerservice_scope']['config_value'])?><!--" class="ui-input w400" type="text"/>-->
+<!--                        <p class="notic"></p>-->
+<!--                    </dd>-->
+<!--                </dl>-->
                 <dl class="row">
                     <dt class="tit">
                         <label for="webservice_qq">平台客服QQ号</label>
@@ -67,24 +67,24 @@ $menus = $this->getThisMenus();
                         <p class="notic"></p>
                     </dd>
                 </dl>
-                <dl class="row">
-                    <dt class="tit">
-                        <label for="consumption_tax">消费税率</label>
-                    </dt>
-                    <dd class="opt">
-                        <input id="consumption_tax" name="set[consumption_tax]" value="<?=(@$data['consumption_tax']['config_value'])?>" class="ui-input w400" type="text"/>
-                        <p class="notic"></p>
-                    </dd>
-                </dl>
-                <dl class="row">
-                    <dt class="tit">
-                        <label for="value_added_tax">增值税率</label>
-                    </dt>
-                    <dd class="opt">
-                        <input id="value_added_tax" name="set[value_added_tax]" value="<?=(@$data['value_added_tax']['config_value'])?>" class="ui-input w400" type="text"/>
-                        <p class="notic"></p>
-                    </dd>
-                </dl>
+<!--                <dl class="row">-->
+<!--                    <dt class="tit">-->
+<!--                        <label for="consumption_tax">消费税率</label>-->
+<!--                    </dt>-->
+<!--                    <dd class="opt">-->
+<!--                        <input id="consumption_tax" name="set[consumption_tax]" value="--><?//=(@$data['consumption_tax']['config_value'])?><!--" class="ui-input w400" type="text"/>-->
+<!--                        <p class="notic"></p>-->
+<!--                    </dd>-->
+<!--                </dl>-->
+<!--                <dl class="row">-->
+<!--                    <dt class="tit">-->
+<!--                        <label for="value_added_tax">增值税率</label>-->
+<!--                    </dt>-->
+<!--                    <dd class="opt">-->
+<!--                        <input id="value_added_tax" name="set[value_added_tax]" value="--><?//=(@$data['value_added_tax']['config_value'])?><!--" class="ui-input w400" type="text"/>-->
+<!--                        <p class="notic"></p>-->
+<!--                    </dd>-->
+<!--                </dl>-->
 
                 <div class="bot"><a href="javascript:void(0);" class="ui-btn ui-btn-sp submit-btn">确认提交</a></div>
             </div>

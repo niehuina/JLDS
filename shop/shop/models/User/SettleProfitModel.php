@@ -130,6 +130,7 @@ class User_SettleProfitModel extends Yf_Model
             $user_order_amount = $user_order_pay_amount - $user_order_refund_amount;
             Yf_Log::log("partner user_order_amount:".$user_order_amount, Yf_Log::LOG, 'user_settle');
 
+            //更新订单提成结算状态
             $user_order_ids = array_column($user_orders, 'order_id');
             $order_edit_row['rebate_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
             $flag = $Order_BaseModel->editBase($user_order_ids, $order_edit_row);
@@ -214,17 +215,6 @@ class User_SettleProfitModel extends Yf_Model
         $Order_BaseModel = new Order_BaseModel();
         $user_g_grade = $User_GradeModel->getOne(4);
 
-        //计算高级合伙人的提成比例
-        $grade_order_rebate1 = $user_g_grade['order_rebate1'] * 1/100;
-        $grade_order_rebate2 = $user_g_grade['order_rebate2'] * 1/100;
-        $grade_order_rebate_top = $user_g_grade['order_rebate_top'] * 1/100;
-        $partner_count = $user_info['current_year_partner_count'];
-        $order_rebate = $grade_order_rebate1 * 1 + $grade_order_rebate2 * $partner_count;
-        if ($order_rebate > $grade_order_rebate_top) {
-            $order_rebate = $grade_order_rebate_top;
-        }
-        if ($order_rebate == 0) return true;
-
         //获取高级合伙人所有线下的未结算订单
 //        $user_children_ids = $User_InfoModel->getUserChildren($user_id, 0);
 //        if(!$user_children_ids) return true;
@@ -243,6 +233,22 @@ class User_SettleProfitModel extends Yf_Model
             $user_order_refund_amount = array_sum(array_column($user_orders, 'order_refund_amount'));
             $user_order_amount = $user_order_pay_amount - $user_order_refund_amount;
             Yf_Log::log("g_partner user_order_amount:".$user_order_amount, Yf_Log::LOG, 'user_settle');
+
+            //更新订单提成结算状态
+            $user_order_ids = array_column($user_orders, 'order_id');
+            $order_edit_row['g_rebate_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
+            $flag = $Order_BaseModel->editBase($user_order_ids, $order_edit_row);
+
+            //计算高级合伙人的提成比例
+            $grade_order_rebate1 = $user_g_grade['order_rebate1'] * 1/100;
+            $grade_order_rebate2 = $user_g_grade['order_rebate2'] * 1/100;
+            $grade_order_rebate_top = $user_g_grade['order_rebate_top'] * 1/100;
+            $partner_count = $user_info['current_year_partner_count'];
+            $order_rebate = $grade_order_rebate1 * 1 + $grade_order_rebate2 * $partner_count;
+            if ($order_rebate > $grade_order_rebate_top) {
+                $order_rebate = $grade_order_rebate_top;
+            }
+            if ($order_rebate == 0) return true;
 
             foreach ($user_orders as $k=>$order){
                 $order_amount = $order['order_payment_amount'] * 1 - $order['order_refund_amount'] * 1;
@@ -271,10 +277,6 @@ class User_SettleProfitModel extends Yf_Model
 
                 $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=directsellerOrder&typ=json', $url), $formvars);
             }
-
-            $user_order_ids = array_column($user_orders, 'order_id');
-            $order_edit_row['g_rebate_is_settlement'] = Order_BaseModel::IS_SETTLEMENT;
-            $flag = $Order_BaseModel->editBase($user_order_ids, $order_edit_row);
         }
 
         return $flag;

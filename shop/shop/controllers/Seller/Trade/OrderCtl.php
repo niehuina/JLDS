@@ -676,7 +676,7 @@ class Seller_Trade_OrderCtl extends Seller_Controller
                     }else{
                         $data['goods_list'][$key]['goods_stock'] = 0;
                     }
-                    $temp_can_send = $user_stock['goods_stock']*1 >= $goods['order_goods_num'];
+                    $temp_can_send = $user_stock['goods_stock']*1 >= $goods['order_goods_num']-$goods['order_goods_returnnum'];
                     if(!$temp_can_send) {
                         $can_send = 0;
                         break;
@@ -691,7 +691,7 @@ class Seller_Trade_OrderCtl extends Seller_Controller
                     }else{
                         $data['goods_list'][$key]['goods_stock'] = 0;
                     }
-                    $temp_can_send = $goods_base['goods_stock']*1 >= $goods['order_goods_num'];
+                    $temp_can_send = $goods_base['goods_stock']*1 >= $goods['order_goods_num']-$goods['order_goods_returnnum'];
                     if(!$temp_can_send) {
                         $can_send = 0;
                         break;

@@ -104,7 +104,7 @@ include __DIR__ . '/../includes/header.php';
     <script type="application/javascript">
         //渲染页面
         $.ajax({
-            url: ApiUrl + "/index.php?ctl=Goods_Goods&met=goods&typ=json",
+            url: ApiUrl + "/index.php?ctl=Goods_Goods&met=getRecomendProduct&typ=json",
             type: "get",
             data: { goods_id: getQueryString("goods_id"),
                     k: getCookie('key'),

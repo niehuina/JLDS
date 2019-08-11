@@ -31,7 +31,7 @@ $menus = $this->getThisMenus();
                         if(in_array($val['rights_id'],$admin_rights)||$val['rights_id']==0){
                             ?>
                             <li><a <?php if(!array_diff($menus['this_menu'], $val)){?> class="current"<?php }?>
-                                    href="<?= Yf_Registry::get('url') ?>?ctl=<?=$val['menu_url_ctl']?>&met=<?=$val['menu_url_met']?><?php if($val['menu_url_parem']){?>&<?=$val['menu_url_parem']?><?php }?>"><span><?=$val['menu_name']?></span></a></li>
+                                        href="<?= Yf_Registry::get('url') ?>?ctl=<?=$val['menu_url_ctl']?>&met=<?=$val['menu_url_met']?><?php if($val['menu_url_parem']){?>&<?=$val['menu_url_parem']?><?php }?>"><span><?=$val['menu_name']?></span></a></li>
                             <?php
                         }
                     }
@@ -55,12 +55,13 @@ $menus = $this->getThisMenus();
                         <label>展示图片</label>
                     </dt>
                     <dd class="opt">
-                        <img id="banner_image" name="" alt="选择图片" src="" width="90px" height="90px"/>
+                        <img id="banner_image" name="" alt="选择图片" src="http://127.0.0.1/yf_shop_admin/shop_admin/static/default/images/default_user_portrait.gif"
+                             width="640px" height="305px"/>
 
                         <div class="image-line upload-image" id="banner_image_upload">上传图片<i class="iconfont icon-tupianshangchuan"></i></div>
 
                         <input id="banner_image_logo"  name="" value="" class="ui-input w400" type="hidden"/>
-                        <p class="notic">商品图片,最佳显示尺寸为90*90像素</p>
+                        <p class="notic">展示图片，建议大小640x305像素PNG图片。</p>
                     </dd>
                 </dl>
                 <dl class="row">
@@ -91,8 +92,8 @@ $menus = $this->getThisMenus();
                         $('#id').val(rData.mb_banner_image_id);
                         $('#banner_type').val(rData.banner_type);
                         $('#banner_url').val(rData.banner_url);
-                        $('#textfield1').prop('src', rData.banner_image);
-                        $('#banner_image').val(rData.banner_image);
+                        $('#banner_image').prop('src', rData.banner_image);
+                        $('#banner_image_logo').val(rData.banner_image);
 
                         return true;
                     } else {
@@ -103,8 +104,8 @@ $menus = $this->getThisMenus();
 
             //图片上传
             new UploadImage({
-                thumbnailWidth: 300,
-                thumbnailHeight: 300,
+                thumbnailWidth: 640,
+                thumbnailHeight: 305,
                 imageContainer: '#banner_image',
                 uploadButton: '#banner_image_upload',
                 inputHidden: '#banner_image_logo'
@@ -114,8 +115,8 @@ $menus = $this->getThisMenus();
                 parent.$.dialog.confirm('修改立马生效,是否继续？', function ()
                     {
                         var param = {
-                            mb_banner_image_id: 51,
-                            banner_image: $('#banner_image').val(),
+                            mb_banner_image_id: $('#id').val(),
+                            banner_image: $('#banner_image_logo').val(),
                             banner_url: $("#banner_url").val(),
                         };
 

@@ -7,7 +7,7 @@ $PayCenterWapUrl    = "http://localhost:8005/";
 $ImApiUrl 			= "http://imbuilder.local.yuanfeng021.com/index.php";
 
 $copyright 			= "Copyright&nbsp;&copy;&nbsp;2007-2017 版权所有";
-$title              = "商城触屏版";
+$title              = "一次方商城";
 $paySiteName        = "网付宝";
 
 $openWeixinLoginInWeixin = 0;

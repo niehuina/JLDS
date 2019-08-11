@@ -18,6 +18,7 @@ class Rights_BaseModel extends Rights_Base
 	 */
 	public function getBaseList($cond_row = array(), $order_row = array(), $page = 1, $rows = 100)
 	{
+        $cond_row['rights_enable'] = 1;
 		return $this->getByWhere($cond_row, $order_row, $page, $rows);
 	}
 

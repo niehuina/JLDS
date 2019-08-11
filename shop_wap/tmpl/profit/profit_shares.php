@@ -20,15 +20,13 @@ include __DIR__ . '/../../includes/header.php';
     </head>
 
     <body>
-    <header id="header-member">
+    <header id="header-member" class="fixed write">
         <div class="header-wrap">
             <div class="header-l"><a href="javascript:history.go(-1)"><i class="back"></i></a></div>
             <div class="header-title">
                 <h1>股金分红</h1>
             </div>
         </div>
-    </header>
-    <div class="nctouch-main-layout">
         <div class="nctouch-asset-info">
             <div class="container pre">
                 <i class="icon"></i>
@@ -38,6 +36,8 @@ include __DIR__ . '/../../includes/header.php';
                 </dl>
             </div>
         </div>
+    </header>
+    <div class="nctouch-main-layout mt50">
         <ul id="profit-list" class="nctouch-log-list">
         </ul>
     </div>

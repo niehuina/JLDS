@@ -217,8 +217,8 @@ include $this->view->getTplPath() . '/' . 'site_nav.php';
                                 </td>
 
                                 <td class="goods_price">
-                                    <?php if ($v['old_price'] > 0) { ?><p
-                                            class="ori_price"><?= ($v['old_price']) ?></p><?php } ?>
+<!--                                    --><?php //if ($v['old_price'] > 0) { ?><!--<p-->
+<!--                                            class="ori_price">--><?//= ($v['old_price']) ?><!--</p>--><?php //} ?>
                                     <p class="now_price"><?= ($v['now_price']) ?></p>
 
                                 </td>

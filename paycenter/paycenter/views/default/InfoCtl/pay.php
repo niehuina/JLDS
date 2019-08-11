@@ -6,11 +6,12 @@ include $this->view->getTplPath() . '/' . 'header.php';
 
 ?>
 <?php if ($uorder_base) { ?>
+
     <form style="padding-left:6px;">
         <div class="recharge2-content-top content-public clearfix">
             <div class="header">
                 <div class="title">
-                    <a href="javascript:history.go(-1)"><</a>
+                    <a href="<?=Yf_Registry::get('shop_wap_url')?>tmpl/order/order_detail.html?order_id=<?=$uorder_base['inorder']?>"><</a>
                     一次方商城收银台
                 </div>
                 <?php if (!empty($banner)) { ?>

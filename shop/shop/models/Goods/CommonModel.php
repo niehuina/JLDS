@@ -52,7 +52,16 @@ class Goods_CommonModel extends Goods_Common
 	 */
 	public function getCommonList($cond_row = array(), $order_row = array(), $page = 1, $rows = 100)
 	{
-		return $this->listByWhere($cond_row, $order_row, $page, $rows);
+	    $data = $this->listByWhere($cond_row, $order_row, $page, $rows);
+	    foreach ($data['items'] as $key=>$common_base){
+            $user_grade = Perm::$row['user_grade'];
+            if($user_grade == '2'){
+                $data['items'][$key]['common_price'] = $common_base['common_price_vip'];
+            }else if($user_grade == '3' || $user_grade == '4'){
+                $data['items'][$key]['common_price'] = $common_base['common_price_partner'];
+            }
+        }
+		return $data;
 	}
 
 
@@ -67,7 +76,16 @@ class Goods_CommonModel extends Goods_Common
 	{
 		$cond_row['shop_id'] = Perm::$shopId;
 		$cond_row['common_state'] = Goods_CommonModel::GOODS_STATE_NORMAL;
-		return $this->listByWhere($cond_row, $order_row, $page, $rows);
+        $data = $this->listByWhere($cond_row, $order_row, $page, $rows);
+        $user_grade = Perm::$row['user_grade'];
+        foreach ($data['items'] as $key=>$common_base){
+            if($user_grade == '2'){
+                $data['items'][$key]['common_price'] = $common_base['common_price_vip'];
+            }else if($user_grade == '3' || $user_grade == '4'){
+                $data['items'][$key]['common_price'] = $common_base['common_price_partner'];
+            }
+        }
+        return $data;
 	}
 
 	public function getCommonOffline($cond_row = array(), $order_row = array(), $page = 1, $rows = 100)
@@ -641,7 +659,7 @@ class Goods_CommonModel extends Goods_Common
 		$cond_row['common_state']    = $this::GOODS_STATE_NORMAL;  //正常上架
 		$cond_row['common_verify']   = self::GOODS_VERIFY_ALLOW;   //审核通过
 		$order_row['common_salenum'] = 'desc';
-		$data                        = $this->listByWhere($cond_row, $order_row, 0, $common_num);
+		$data                        = $this->getCommonList($cond_row, $order_row, 0, $common_num);
 		return $data;
 	}
 
@@ -653,7 +671,7 @@ class Goods_CommonModel extends Goods_Common
 		$cond_row['shop_id']         = $shop_id;  //店铺id
 		$cond_row['common_state']    = $this::GOODS_STATE_NORMAL;  //正常上架
 		$order_row['common_collect'] = 'desc';
-		$data                        = $this->listByWhere($cond_row, $order_row, 0, 5);
+		$data                        = $this->getCommonList($cond_row, $order_row, 0, 5);
 
 		return $data;
 	}

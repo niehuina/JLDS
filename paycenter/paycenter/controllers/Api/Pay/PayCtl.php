@@ -355,7 +355,9 @@ class Api_Pay_PayCtl extends Api_Controller
 
         $finash_row['order_state_id'] = Union_OrderModel::FINISH;
         $finash_row['trade_finish_time'] = get_date_time();
-        $Consume_TradeModel->editTrade($order_id,$finash_row);
+        $flag_trade = $Consume_TradeModel->editTrade($order_id,$finash_row);
+        if($flag_trade === 0) $flag_trade = false;
+        check_rs($flag_trade,$rs_row);
 
         $consume_trade_row = $Consume_TradeModel->getOne($order_id);
 
@@ -633,7 +635,7 @@ class Api_Pay_PayCtl extends Api_Controller
             $record_add_buy_row['order_id']      = $flow_id;
             $record_add_buy_row['user_id']       = $seller_id;
             $record_add_buy_row['user_nickname'] = $seller_name;
-            $record_add_buy_row['record_money']  = $amount;
+            $record_add_buy_row['record_money']  = -1*$amount;
             $record_add_buy_row['record_date']   = date('Y-m-d');
             $record_add_buy_row['record_year']	 = date('Y');
             $record_add_buy_row['record_month']	 = date('m');
@@ -802,7 +804,7 @@ class Api_Pay_PayCtl extends Api_Controller
         $record_add_seller_row['record_title']  = $Trade_TypeModel->trade_type[Trade_TypeModel::REFUND];
         $record_add_seller_row['record_time']   = date('Y-m-d H:i:s');
         $record_add_seller_row['trade_type_id'] = Trade_TypeModel::REFUND;
-        $record_add_seller_row['user_type']     = 2;	//收款方
+        $record_add_seller_row['user_type']     = 2;	//付款方
         $record_add_seller_row['record_status'] = RecordStatusModel::IN_HAND;
 
         $Consume_RecordModel->addRecord($record_add_seller_row);

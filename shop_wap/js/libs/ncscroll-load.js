@@ -1,7 +1,7 @@
 function ncScrollLoad() {
     var page,curpage,hasmore,footer,isloading;
 
-        ncScrollLoad.prototype.loadInit = function(options) {
+    ncScrollLoad.prototype.loadInit = function(options) {
         var defaults = {
                 data:{},
                 callback :function(){},
@@ -16,11 +16,11 @@ function ncScrollLoad() {
             isloading = false;
         }
         ncScrollLoad.prototype.getList(options);
-        $(window).scroll(function(){
+        $(window).unbind('scroll').bind('scroll',function(){
             if (isloading) {//防止scroll重复执行
                 return false;
             }
-            if(($(window).scrollTop() + $(window).height() > $(document).height()-1)){
+            if(($(window).scrollTop() + $(window).height() > $(document).height()-50)){
                 isloading = true;
                 options.iIntervalId = false;
                 ncScrollLoad.prototype.getList(options);
@@ -71,7 +71,7 @@ function ncScrollLoad() {
                 //加载底部
                 if ($('#footer').length > 0) {
                     ncScrollLoad.prototype.getLoadEnding();
-                    if (result.page_total == 0) {
+                    if (result.total == 0) {
                         $('#footer').addClass('posa');
                     }else{
                         $('#footer').removeClass('posa');

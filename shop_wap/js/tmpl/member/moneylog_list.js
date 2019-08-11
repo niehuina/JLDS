@@ -1,3 +1,4 @@
+var log_type = 1;
 $(function () {
     var key = getCookie('key');
     if (!key) {
@@ -11,14 +12,13 @@ $(function () {
 
     //渲染list
     function t() {
-        var type = $("#filtrate_ul").find(".selected").find("a").attr("data-type");
         var load_class = new ncScrollLoad();
         load_class.loadInit({
             'url': ApiUrl + '/index.php?ctl=Buyer_User&met=getRecordListForWap&typ=json',
             'getparam': {
                 k: key,
                 u: getCookie('id'),
-                type: type,
+                type: log_type,
                 user_id:getCookie('id'),
             },
             'tmplid': 'list_model',
@@ -36,6 +36,8 @@ $(function () {
         $("#filtrate_ul").find("li").removeClass("selected");
         $(this).parent().addClass("selected").siblings().removeClass("selected");
         window.scrollTo(0, 0);
+        log_type = $("#filtrate_ul").find(".selected").find("a").attr("data-type");
+        $("#moneyloglist").html('');
         t();
     });
 

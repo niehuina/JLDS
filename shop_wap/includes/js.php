@@ -1,7 +1,7 @@
 <script type="text/javascript">
 	var SiteUrl = "<?php echo $ShopUrl;?>";
 	var ApiUrl = "<?php echo $ShopUrl;?>";
-	var pagesize = 10;
+	var pagesize = 15;
 	var WapSiteUrl = "<?php echo $WapSiteUrl;?>";
 	var UCenterApiUrl = "<?php echo $UCenterApiUrl;?>";
 	var ShopWapUrl = "<?php echo $WapSiteUrl;?>";

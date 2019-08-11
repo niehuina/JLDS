@@ -1126,6 +1126,29 @@ function ucenterLogin()
             //已经登录
             if (200 == data.status)
             {
+                if(data.data.user_state == 4){
+                    var username = getCookie('username');
+                    var key = getCookie('key');
+                    var client = 'wap';
+
+                    delCookie('username');
+                    delCookie('user_account');
+                    delCookie('id');
+                    delCookie('key');
+                    delCookie('location');
+
+                    login_url   = UCenterApiUrl + '?ctl=Login&met=logout&typ=e';
+
+
+                    callback = WapSiteUrl + '?redirect=' + encodeURIComponent(WapSiteUrl);
+
+
+                    login_url = login_url + '&from=wap&callback=' + encodeURIComponent(callback);
+
+                    window.location.href = login_url;
+                    return;
+                }
+
                 var key = getCookie('key');
                 var u = getCookie('id');
                 if (u && key && u==data.data.us)

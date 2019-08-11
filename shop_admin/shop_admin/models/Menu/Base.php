@@ -62,6 +62,9 @@ class Menu_Base extends Yf_Model
 
 		}
 
+        //隐藏供应商
+        unset($top_menu['13100']);
+
 		//暂时隐藏手机端--应用安装，放到下个版本优化
 		unset($top_menu['19000']['next_menus']['19003']);
 		return $top_menu;

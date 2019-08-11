@@ -19,7 +19,7 @@ include __DIR__.'/../../includes/header.php';
     </head>
 
     <body>
-    <header id="header">
+    <header id="header-member">
         <div class="header-wrap">
             <div class="header-l">
                 <a href="member.html"> <i class="back"></i> </a>
@@ -41,10 +41,10 @@ include __DIR__.'/../../includes/header.php';
             </div>
         </div>
         <div class="error-tips"></div>
-        <div class="nctouch-inp-con">
+        <div class="nctouch-inp-con tc">
             <div class="form-btn ok">
-                <button class="btn mt5" id="depositBtn" value="deposit">充值</button>
-                <button class="btn mt10" id="withdrawBtn" value="withdraw">提现</button>
+                <button class="btn mt5 wp50" id="depositBtn" value="deposit">充值</button>
+                <button class="btn mt10 wp50" id="withdrawBtn" value="withdraw">提现</button>
             </div>
         </div>
     </div>

@@ -20,7 +20,7 @@ include __DIR__ . '/../../includes/header.php';
         <link rel="stylesheet" type="text/css" href="../../css/member_profit.css">
     </head>
     <body>
-    <header id="header-member">
+    <header id="header-member" class="fixed write">
         <div class="header-wrap">
             <div class="header-l">
                 <a href="member_profit.html"> <i class="back"></i> </a>
@@ -31,8 +31,6 @@ include __DIR__ . '/../../includes/header.php';
         </div>
         <div class="header-r">
         </div>
-    </header>
-    <div class="nctouch-main-layout">
         <div class="nctouch-asset-info">
             <div class="container pre">
                 <i class="icon"></i>
@@ -49,6 +47,8 @@ include __DIR__ . '/../../includes/header.php';
                 <li><a href="javascript:void(0);" data-status="2">已到账</a></li>
             </ul>
         </div>
+    </header>
+    <div class="nctouch-main-layout mt70">
         <ul id="profit-list" class="nctouch-log-list">
         </ul>
     </div>

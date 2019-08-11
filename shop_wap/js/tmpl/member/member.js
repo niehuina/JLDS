@@ -27,6 +27,9 @@ $(function () {
                 // $('#user_money').html("￥"+result.data.money.user_money);
                 $('#user_money').html("￥125");
                 $('#user_points').html(result.data.points.user_points);
+                if(!result.data.user_logo){
+                    result.data.user_logo = "/tmpl/img/user_avt_default.png";
+                }
                 var html = '<div class="mine-head-bg"><div class="member-info">'
                     + '<div class="user-avatar"> <a href="member_info.html"><img src="' + result.data.user_logo + '"/> </a></div>'
                     + '<div class="user-name"> <span><strong>' + result.data.user_name + '</strong><sup>V' + result.data.user_grade + '</sup></span> </div>';
@@ -89,15 +92,6 @@ $(function () {
                         '</dl>';
                     $(".member-center").append(html);
                 }
-
-                var html = '<dl class="mt5">' +
-                    '<dt>' +
-                    '<a href="views_list.html">' +
-                    '<img src="../../images/goods_browse_b.png" width="20px" height="20px">' +
-                    '</a>' +
-                    '</dt>' +
-                    '</dl>';
-                $(".header-b").append(html);
 
                 $(".header-r").show();
 

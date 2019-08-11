@@ -20,7 +20,7 @@ var THISPAGE = {
     loadGrid: function(){
         var gridWH = Public.setGrid(), _self = this;
         var colModel = [
-            {name:'operating', label:'操作', width:50, fixed:true, formatter:operFmatter, align:"center"},
+            {name:'operating', label:'操作', width:100, fixed:true, formatter:operFmatter, align:"center"},
             {name:'user_id', label:'用户编号', width:120, align:"center"},
             {name:'user_account', label:'用户帐号', width:150,align:'center'},
             {name:'user_realname', label:'用户姓名', width:150,align:'center'},

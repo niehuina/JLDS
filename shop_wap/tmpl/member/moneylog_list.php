@@ -16,19 +16,18 @@ include __DIR__ . '/../../includes/header.php';
         <title>账单明细</title>
         <link rel="stylesheet" type="text/css" href="../../css/base.css">
         <link rel="stylesheet" type="text/css" href="../../css/nctouch_member.css">
+        <link rel="stylesheet" type="text/css" href="../../css/member_profit.css">
 
     </head>
 
     <body>
-    <header id="header" class="fixed">
+    <header id="header-member" class="fixed write">
         <div class="header-wrap">
             <div class="header-l"><a href="javascript:history.go(-1)"><i class="back"></i></a></div>
             <div class="header-title">
                 <h1>账单明细</h1>
             </div>
         </div>
-    </header>
-    <div class="nctouch-main-layout">
         <div class="nctouch-asset-info">
             <div class="container pre">
                 <i class="icon"></i>
@@ -44,6 +43,8 @@ include __DIR__ . '/../../includes/header.php';
                 <li><a href="javascript:void(0);" data-type="2">支出</a></li>
             </ul>
         </div>
+    </header>
+    <div class="nctouch-main-layout mt70">
         <ul id="moneyloglist" class="nctouch-log-list">
         </ul>
     </div>
@@ -56,12 +57,11 @@ include __DIR__ . '/../../includes/header.php';
         %>
         <li data-order-id="<%=v.order_id;%>" <% if(v.trade_type_id == 3 && v.act == "pay"){ %> class="deposit"<%}%>>
             <% if(type_id == 1){%>
-            <img src="../../images/new/member_monelist_add.png">
             <dl>
-                <dt>
-                    <%=v.record_title;%>
+                <dt class="word-ellipsis">
+                    <%=v.order_id;%>
                 </dt>
-                <dd><%=v.record_status_con;%>
+                <dd><%=v.trade_type_con;%>:<%=v.record_status_con;%>
                     <% if(v.trade_type_id == 3 && v.act == "pay"){ %>
                         <a href="<%=url;%>">支付</a>
                     <%}%>
@@ -71,14 +71,13 @@ include __DIR__ . '/../../includes/header.php';
                 <%=v.record_money;%>
             </div>
             <%}else if(type_id == 2){%>
-            <img src="../../images/new/member_monelist_reduce.png">
             <dl>
-                <dt>
-                    <%=v.record_title;%>
+                <dt class="word-ellipsis">
+                    <%=v.order_id;%>
                 </dt>
-                <dd><%=v.record_status_con;%></dd>
+                <dd><%=v.trade_type_con;%>:<%=v.record_status_con;%></dd>
             </dl>
-            <div class="money reduce"><%if(v.record_money > 0){%>-<%}%>
+            <div class="money reduce"><%if(v.trade_type_id < 11){%>-<%}%>
                 <%=v.record_money;%>
             </div>
             <%}%>

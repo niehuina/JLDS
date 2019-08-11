@@ -135,7 +135,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                             <dt></dt>
                             <dd>
                                 <input id="handle_submit" type="button" class="button button_red bbc_seller_submit_btns" value="<?=__('确认提交')?>">
-                                <input id="handle_close" type="button" class="button button_red bbc_seller_submit_btns" value="<?=__('关闭投诉')?>"/>
+<!--                                <input id="handle_close" type="button" class="button button_red bbc_seller_submit_btns" value="--><?//=__('关闭投诉')?><!--"/>-->
                             </dd>
                         </dl>
                     </form>
@@ -144,6 +144,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 { ?>
 
                     <form id="form" action="#" method="post">
+                        <input type="hidden" name="complain_id" id="complain_id" value="<?= $data['complain_id'] ?>">
                         <h3><?=__('申诉详情')?></h3>
                         <dl class="dl">
                             <dt><?=__('申诉内容：')?></dt>
@@ -192,7 +193,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                             { ?>
                                 <dd>
                                     <input id="handle_submit" type="button" class="button button_red" value="<?=__('提交仲裁')?>">
-                                    <input id="handle_close" type="button" class="button button_red" value="<?=__('关闭投诉')?>"/>
+<!--                                    <input id="handle_close" type="button" class="button button_red" value="--><?//=__('关闭投诉')?><!--"/>-->
                                 </dd>
                             <?php } ?>
                         </dl>

@@ -39,6 +39,7 @@ $cond_row['order_receiver_date:<='] = get_date_time();
 $order_list = $Order_BaseModel->getKeyByWhere($cond_row);
 fb($order_list);
 
+$flag= true;
 $order_row = array();
 if($order_list)
 {
@@ -80,18 +81,18 @@ if($order_list)
 
 	//将需要确认的订单号远程发送给Paycenter修改订单状态
 	//远程修改paycenter中的订单状态
-	$key      = Yf_Registry::get('shop_api_key');
-	$url         = Yf_Registry::get('paycenter_api_url');
-	$shop_app_id = Yf_Registry::get('shop_app_id');
-	$formvars = array();
-
-	$formvars['order_id']    = $order_row;
-	$formvars['app_id']        = $shop_app_id;
-	$formvars['type']		= 'row';
-
-	fb($formvars);
-
-	$rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=confirmOrder&typ=json', $url), $formvars);
+//	$key      = Yf_Registry::get('shop_api_key');
+//	$url         = Yf_Registry::get('paycenter_api_url');
+//	$shop_app_id = Yf_Registry::get('shop_app_id');
+//	$formvars = array();
+//
+//	$formvars['order_id']    = $order_row;
+//	$formvars['app_id']        = $shop_app_id;
+//	$formvars['type']		= 'row';
+//
+//	fb($formvars);
+//
+//	$rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=confirmOrder&typ=json', $url), $formvars);
 }
 else
 {

@@ -79,12 +79,15 @@ sub { vertical-align: text-bottom }
 .w33h li { width: 33.33%;}
 .w50h li { width: 50%;}
 .wp100{width:100% !important;}
+.wp50{width:50% !important;}
 .mt3 { margin-top: 0.3rem !important;}
 .mt4 { margin-top: 0.4rem !important;}
 .mt5 { margin-top: 0.5rem !important;}
 .mt10 { margin-top: 1rem !important;}
 .mt20 { margin-top: 2rem !important;}
 .mt40 { margin-top: 4rem !important;}
+.mt50 { margin-top: 5rem !important;}
+.mt70 { margin-top: 7rem !important;}
 .mr2 { margin-right: 0.2rem;}
 .mb5 { margin-bottom: 0.5rem !important;}
 .mb20 { margin-bottom: 2rem !important;}
@@ -109,6 +112,7 @@ sub { vertical-align: text-bottom }
 .pdt3{padding-top:0.3rem;}
 .pdb2{padding-bottom:0.2rem;}
 .pl5 { padding-left: 0.5rem;}
+.pl30p { padding-left: 30%;}
 .pb5 { padding-bottom: 0.5rem;}
 .bgc-t { background-color: transparent !important;}
 .bgf{background:#fff;}
@@ -119,6 +123,7 @@ sub { vertical-align: text-bottom }
 .error-tips a {  color: #fff;text-decoration:underline; }
 .bgf{background-color:#fff !important;}
 .borb1{border-bottom:1px solid #f3f3f3;}
+.borr1{border-right:1px solid #f3f3f3;}
 .borr1{border-right:1px solid #f3f3f3;}
 .fl{float:left;}
 .fr{float:right;}
@@ -132,6 +137,17 @@ sub { vertical-align: text-bottom }
 .bor0{border:none !important;}
 .top0{top:0 !important;}
 .ht2{height:1rem;}
+
+/*通用*/
+.tc{text-align:center;}
+.table{display:table;}
+.fix{position:fixed;left:0;top:0;width:100%;height:100%;}
+.table-cell{display:table-cell;vertical-align:middle;}
+/*.borr1{border-right:1px solid #e3e3e3;}*/
+.bblradius{border-bottom-left-radius:0.2rem;}
+.bbrradius{border-bottom-right-radius:0.2rem;}
+/*.bort1{border-top:1px solid #e3e3e3;}*/
+/*弹框提示*/
 
 /*操作提示弹出层*/
 .s-dialog-mask { position: fixed; z-index: 999; top: 0; right: 0; bottom: 0; left: 0; filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#BF000000', endColorstr='#BF000000');background:rgba(0,0,0,0.75);}
@@ -837,16 +853,6 @@ to {  width: 100%;}
      filter: alpha(opacity=30);
      opacity: .3;
  }
- /*通用*/
- .tc{text-align:center;}
- .table{display:table;}
-.fix{position:fixed;left:0;top:0;left:0;top:0;width:100%;height:100%;}
- .table-cell{display:table-cell;vertical-align:middle;}
- .borr1{border-right:1px solid #e3e3e3;}
- .bblradius{border-bottom-left-radius:0.2rem;}
- .bbrradius{border-bottom-right-radius:0.2rem;}
- .bort1{border-top:1px solid #e3e3e3;}
- /*弹框提示*/
 
  .dialog{position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.1);}
  .dialog .table{width:100%;height:100%;}
@@ -1041,7 +1047,7 @@ to {  width: 100%;}
     line-height: 2rem;
     padding-left: .5rem;
     color: #333;
-    font-size: .6rem;
+    font-size: .7rem;
     border-bottom: 1px solid #f3f3f3;
 }
 
@@ -1052,3 +1058,57 @@ to {  width: 100%;}
     background-size: 100% 100%;
     background-position: 0 0;
 }
+
+
+/*商品top5*/
+.box-div {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+#picContent {
+    position: relative;
+    overflow-x: auto;
+    width: 100%;
+    height: 10rem;
+    margin: 0 0;
+
+}
+
+#picContent ul {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+}
+.top-goods .overhide{height:6rem;overflow:hidden;border: 1px solid #f3f3f3;margin-bottom: 0.5rem;}
+
+#picContent ul {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+}
+.top-goods li{
+    float: left;
+    width: 6rem;
+    min-height: 9rem;
+    margin-top: 10px;
+    text-align: left;
+    list-style: none;
+    margin-right: .4rem;
+    font-size: 0.65rem;
+}
+.top-goods li:first-child{margin-left: .5rem;}
+.top-goods i.icon {width: 1rem;height: 1rem;display: inline-block;}
+.top-goods li div.img-area{position: relative; width: 100%; height: 0; padding-top: 100%;}
+.top-goods li img{width:6rem;height:6rem;position: absolute;top:0;left: 0;}
+.top-goods li a i.icon{background: url(../images/new/icon-cart.png) no-repeat center;background-size: contain;}
+.top-goods li h5,.top-goods li b{font-size:0.65rem;color:#444;}
+.top-goods li b{color:#06c1ae;margin-top:0.1rem;display: inline-block;}
+.top-goods li h5{width:100%;height:1.5rem;overflow:hidden;line-height:0.75rem;}

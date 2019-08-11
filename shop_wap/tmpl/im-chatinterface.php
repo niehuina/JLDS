@@ -17,7 +17,7 @@ include __DIR__.'/../includes/header.php';
     <script type="text/javascript" src="../js/libs/simple-plugin.js"></script>
 
     <script type="text/javascript" src="../js/libs/jquery.js"></script>
-    <script type="text/javascript" src="../js/swiper.min.js"></script>
+    <script type="text/javascript" src="../js/libs/swiper.min.js"></script>
     <script type="text/javascript" src="../js/im/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/im/jquery.toastr.min.js"></script>
     <script type="text/javascript" src="../js/im/mian.js"></script>

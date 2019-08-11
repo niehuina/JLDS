@@ -157,7 +157,38 @@ class IndexCtl extends Controller
 				}
 			}
 
-			//头部滚动条
+            //商品热销Top5
+            $hot_goods = $goods_CommonModel->getHotSalle(Web_ConfigModel::value('self_shop_id'), 5);
+            foreach ($hot_goods['items'] as $common_id=>$common_data){
+                $item          = array();
+                $goods_id = pos($common_data['goods_id']);
+                if ( is_array($goods_id) )
+                {
+                    $goods_id = pos($goods_id);
+                }
+                $item['goods_id'] 			   = $goods_id;
+                $item['goods_name'] 		   = $common_data['common_name'];
+                $item['goods_promotion_price'] = $common_data['common_price'];
+                $item['goods_image'] 		   = sprintf('%s!360x360', $common_data['common_image']);
+                $goods_items[]   = $item;
+            }
+            $top_goods['top_goods']['item'] = $goods_items;
+            array_unshift($data, $top_goods);
+
+            //分类
+            $Goods_CatModel = new Goods_CatModel();
+            $app_shop_cat = $Goods_CatModel->listByWhere(['cat_app_home_is_show'=>1], ['cat_app_home_displayorder'=>'asc'], 0, 2);
+            foreach ($app_shop_cat['items'] as $cat_k=>$cat){
+                $item          = array();
+                $item['cat_name'] = $cat['cat_app_home_name'];
+                $item['image'] = $cat['cat_app_home_pic'];
+                $item['link']  = $cat['cat_app_home_click_url'];
+                $cat_items[]   = $item;
+            }
+            $cat_view['cat_view']['item'] = $cat_items;
+            array_unshift($data, $cat_view);
+
+            //头部滚动条
 			$slide_rows = isset($adv_list['mb_tpl_layout_data']) ? $adv_list['mb_tpl_layout_data'] : array();
 			$slide_items = array();
 
@@ -172,7 +203,8 @@ class IndexCtl extends Controller
 			}
 
 			if (!empty($slide_items)) {
-                $data[0]['slider_list']['item'] = $slide_items;
+                $slider_list['slider_list']['item'] = $slide_items;
+                array_unshift($data, $slider_list);
             }
 
             $result_data = array();

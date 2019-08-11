@@ -1711,7 +1711,7 @@ class Buyer_UserCtl extends Buyer_Controller
         $cond_row['user_parent_id'] = Perm::$userId;
         $cond_row['user_grade'] = $level;
         $order_row['user_statu'] = 'asc';
-        $order_row['user_regtime'] = 'asc';
+        $order_row['user_regtime'] = 'desc';
         $data = $User_InfoModel->getInfoList($cond_row, $order_row, $page, $rows);
 
         $this->data->addBody(-140, $data);
@@ -1738,12 +1738,9 @@ class Buyer_UserCtl extends Buyer_Controller
     //获取返利记录
     public function getProfit()
     {
-        $Yf_Page           = new Yf_Page();
-        $Yf_Page->listRows = request_int('listRows')?request_int('listRows'):10;
-        $rows              = $Yf_Page->listRows;
-        $offset            = request_int('firstRow', 0);
-        $page              = ceil_r($offset / $rows);
-        $status            = request_int('status', '');
+        $page            = request_int('curpage', 1);
+        $rows            = request_int('page', 10);
+        $status          = request_int('status', 1);
 
         $formvars = array();
         $formvars['page'] = $page;

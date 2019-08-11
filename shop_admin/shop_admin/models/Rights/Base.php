@@ -120,6 +120,7 @@ class Rights_Base extends Yf_Model
 
 		foreach ($rows as $k => $item)
 		{
+		    if($item['rights_enable'] == 0) continue;
 			if ($item['rights_parent_id'])
 			{
 				$row              = array();

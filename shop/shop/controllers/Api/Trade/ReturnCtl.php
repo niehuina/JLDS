@@ -279,6 +279,7 @@ class Api_Trade_ReturnCtl extends Api_Controller
 		$Order_StateModel        = new Order_StateModel();
 		$order_return_id         = request_int("order_return_id");
 		$return_platform_message = request_string("return_platform_message");
+        $is_auto_confirm_order   = request_int("is_auto_confirm_order", 0);
 		$return                  = $this->Order_ReturnModel->getOne($order_return_id);
 		fb($return);
 
@@ -490,22 +491,24 @@ class Api_Trade_ReturnCtl extends Api_Controller
                     $ed_flag = $this->Order_GoodsModel->editGoods($order_goods_ids['order_goods_id'], $goods_data);
                     check_rs($ed_flag, $rs_row);
 
-                    //将需要确认的订单号远程发送给Paycenter修改订单状态
-                    //远程修改paycenter中的订单状态
-                    $key = Yf_Registry::get('shop_api_key');
-                    $url = Yf_Registry::get('paycenter_api_url');
-                    $shop_app_id = Yf_Registry::get('shop_app_id');
-                    $formvars = array();
+                    if(!$is_auto_confirm_order) {
+                        //将需要确认的订单号远程发送给Paycenter修改订单状态
+                        //远程修改paycenter中的订单状态
+                        $key = Yf_Registry::get('shop_api_key');
+                        $url = Yf_Registry::get('paycenter_api_url');
+                        $shop_app_id = Yf_Registry::get('shop_app_id');
+                        $formvars = array();
 
-                    $formvars['order_id'] = $return['order_number'];
-                    $formvars['app_id'] = $shop_app_id;
-                    $formvars['from_app_id'] = Yf_Registry::get('shop_app_id');
+                        $formvars['order_id'] = $return['order_number'];
+                        $formvars['app_id'] = $shop_app_id;
+                        $formvars['from_app_id'] = Yf_Registry::get('shop_app_id');
 
-                    $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=confirmOrder&typ=json', $url), $formvars);
+                        $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=confirmOrder&typ=json', $url), $formvars);
 
-                    if ($rs['status'] == 250) {
-                        $rs_flag = false;
-                        check_rs($rs_flag, $rs_row);
+                        if ($rs['status'] == 250) {
+                            $rs_flag = false;
+                            check_rs($rs_flag, $rs_row);
+                        }
                     }
                 }
             }

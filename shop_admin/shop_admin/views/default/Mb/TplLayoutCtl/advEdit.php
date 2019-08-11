@@ -82,7 +82,7 @@ include TPL_PATH . '/' . 'footer.php';
                 parent: parent,
                 data: {
                     image_name: false,
-                    image_spec: '640*250',
+                    image_spec: '640*305',
                     callback: function (img_data) {
                         layout_data.push(img_data);
                         $('[nctype="item_content"]').append(template.render('item_image_template', img_data));
@@ -121,7 +121,7 @@ include TPL_PATH . '/' . 'footer.php';
                 zIndex: 9999,
                 parent: parent,
                 data: {
-                    image_spec: '640*250',
+                    image_spec: '640*305',
                     dialog_type: 'adv',
                     layout_data: layout_data,
                     callback: function (img_data) {

@@ -70,7 +70,7 @@ include __DIR__ . '/../includes/header.php';
     </header>
     <div id="product_detail_html" style="position: relative; z-index: 1;"></div>
 
-    <div id="product_recommendation_html" class="bgf"></div>
+<!--    <div id="product_recommendation_html" class="bgf bort1 mb20"></div>-->
 
     <div id="product_detail_spec_html" class="nctouch-bottom-mask"></div>
 
@@ -126,11 +126,11 @@ include __DIR__ . '/../includes/header.php';
                     <div class="time fnTimeCountDown" data-end="<%=goods_info.groupbuy_endtime%>">
                         <% } %>
                         <span>
-                    <span class="day">00</span><strong>天</strong>
-                    <span class="hour">00</span><strong>小时</strong>
-                    <span class="mini">00</span><strong>分</strong>
-                    <span class="sec">00</span><strong>秒</strong>
-                </span>
+                            <span class="day">00</span><strong>天</strong>
+                            <span class="hour">00</span><strong>小时</strong>
+                            <span class="mini">00</span><strong>分</strong>
+                            <span class="sec">00</span><strong>秒</strong>
+                        </span>
                     </div>
                 </div>
                 <!--团购样式 end-->
@@ -152,11 +152,11 @@ include __DIR__ . '/../includes/header.php';
                         <div class="time fnTimeCountDown" data-end="<%=goods_info.groupbuy_endtime%>">
                             <% } %>
                             <span>
-                    <span class="day">00</span><strong>天</strong>
-                    <span class="hour">00</span><strong>小时</strong>
-                    <span class="mini">00</span><strong>分</strong>
-                    <span class="sec">00</span><strong>秒</strong>
-                </span>
+                                <span class="day">00</span><strong>天</strong>
+                                <span class="hour">00</span><strong>小时</strong>
+                                <span class="mini">00</span><strong>分</strong>
+                                <span class="sec">00</span><strong>秒</strong>
+                            </span>
                         </div>
                     </div>
                     <!--限时折扣 end-->
@@ -213,7 +213,8 @@ include __DIR__ . '/../includes/header.php';
                                data-common_id=<%=goods_info.common_id%>
                                 data-transport_type_id=<%=goods_info.transport_type_id%> >
                                 <dl class="goods-detail-freight">
-                                    <dt><span id="get_area_selected_name"><%=goods_hair_info.area_name%></span><strong
+                                    <dt>
+                                        <span id="get_area_selected_name"><%=goods_hair_info.area_name%></span><strong
                                                 id="get_area_selected_whether"><%=goods_hair_info.if_store_cn%></strong>&nbsp;
                                         <span id="get_area_selected_content">
                                             <%if(typeof(goods_hair_info.if_store)!='undefined' && typeof(goods_hair_info.transport_data)!='undefined' && typeof(goods_hair_info.transport_data.result)!='undefined') {%>
@@ -250,17 +251,17 @@ include __DIR__ . '/../includes/header.php';
                                     <goods_map_spec.length
                                             ;i++){%>
                                     <span>
-							<%=goods_map_spec[i].goods_spec_name%>
-							<%for(var j = 0;j<goods_map_spec[i].goods_spec_value.length;j++){%>
-								<%if (goods_info.goods_spec[goods_map_spec[i].goods_spec_value[j].specs_value_id]){%>
-									<em><%=goods_map_spec[i].goods_spec_value[j].specs_value_name%></em>
-								<%}%>
-							<%}%>
-							</span>
+                                    <%=goods_map_spec[i].goods_spec_name%>
+                                    <%for(var j = 0;j<goods_map_spec[i].goods_spec_value.length;j++){%>
+                                        <%if (goods_info.goods_spec[goods_map_spec[i].goods_spec_value[j].specs_value_id]){%>
+                                            <em><%=goods_map_spec[i].goods_spec_value[j].specs_value_name%></em>
                                         <%}%>
-                                        <%}} else { %>
-                                        <span>默认</span>
-                                        <% } %>
+                                    <%}%>
+                                    </span>
+                                    <%}%>
+                                    <%}} else { %>
+                                    <span>默认</span>
+                                    <% } %>
                                 </dt>
                             </dl>
                         </div>
@@ -288,29 +289,12 @@ include __DIR__ . '/../includes/header.php';
                     <!--商品详情-->
                     <div class="goods-detail-bottom">
 <!--                        <a href="javascript:void(0);" id="goodsBody1">点击查看商品详情</a>-->
-                        <div class="tabPanel">----  商品详情  -----</div>
+                        <div class="tabPanel bgf">----  商品详情  -----</div>
                         <div class="fixed-tab-pannel">
                         </div>
                     </div>
-                    <div class="goods-detail-foot bgf">
-                        <div class="otreh-handle">
-                            <a href="../index.html" class="index wp30"><i></i><p>首页</p></a>
-                            <a href="javascript:void(0);" class="borl1 kefu wp30"><i></i><p>客服</p></a>
-<!--                            <a href="javascript:void(0);"-->
-<!--                               class="borl1 wp30 collect pd-collect <% if (is_favorate) { %>favorate<% } %>"><i></i>-->
-<!--                                <p>收藏</p></a>-->
-                            <a href="../tmpl/cart_list.html" class="cart"><i></i>
-                                <p>购物车</p><span id="cart_count"></span></a>
-                        </div>
-                        <div class="buy-handle <%if(!goods_hair_info.if_store || goods_info.goods_storage == 0){%>no-buy<%}%>">
-                            <% if (goods_info.cart == '1') { %>
-                            <a href="javascript:void(0);"
-                               class="<%if(goods_hair_info.if_store){%>animation-up<%}%> add-cart">加入购物车</a>
-                            <% } %>
-                            <a href="javascript:void(0);"
-                               class="animation-up buy-now <%if(goods_info.cart != '1'){%>wp100<%}%>">立即购买</a>
-                        </div>
-                    </div>
+
+                    <div id="product_recommendation_html" class="bgf bort1 mb20"></div>
     </script>
     <script type="text/html" id="product_detail_sepc">
         <div class="nctouch-bottom-mask-bg"></div>
@@ -565,27 +549,66 @@ include __DIR__ . '/../includes/header.php';
         <% } %>
     </script>
 
-
     <script type="text/html" id="productRecommendation">
         <div class="tabPanel">推荐商品</div>
-        <div class="goods-detail-recom">
-            <ul>
-                <% if(goods_commend_list){ %>
-                <% for (var i = 0; i<goods_commend_list.length ;i++){ %>
-                    <li>
-                        <a href="product_detail.html?goods_id=<%=goods_commend_list[i].goods_id%>">
-                            <div class="pic">
-                                <img src="<%=goods_commend_list[i].common_image%>">
+        <div id="picContent" class="pic-content box-div">
+            <ul class="top-goods">
+                <% for (var i in goods_commend_list) { %>
+                <li>
+                    <a href="tmpl/product_detail.html?goods_id=<%= goods_commend_list[i].goods_id %>">
+                        <div class="overhide">
+                            <div class="img-area">
+                                <img src="<%= goods_commend_list[i].common_image %>" alt="" style="width: 6rem;height: 6rem;">
                             </div>
-                            <dl>
-                                <dt><%=goods_commend_list[i].common_name%></dt>
-                                <dd>￥<em><%=goods_commend_list[i].common_price%></em></dd>
-                            </dl>
-                        </a>
-                    </li>
-                    <% } %>
-                    <% } %>
+                        </div>
+                        <h5><%= goods_commend_list[i].common_name %></h5>
+                        <b>￥<%= goods_commend_list[i].common_price %></b>
+                    </a>
+                </li>
+                <% } %>
             </ul>
+        </div>
+
+<!--        <div class="goods-detail-recom">-->
+<!--            <ul>-->
+<!--                <% if(goods_commend_list){ %>-->
+<!--                <% for (var i = 0; i<goods_commend_list.length ;i++){ %>-->
+<!--                    <li>-->
+<!--                        <a href="product_detail.html?goods_id=<%=goods_commend_list[i].goods_id%>">-->
+<!--                            <div class="pic">-->
+<!--                                <img src="<%=goods_commend_list[i].common_image%>">-->
+<!--                            </div>-->
+<!--                            <dl>-->
+<!--                                <dt><%=goods_commend_list[i].common_name%></dt>-->
+<!--                                <dd>￥<em><%=goods_commend_list[i].common_price%></em></dd>-->
+<!--                            </dl>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <% } %>-->
+<!--                <% } %>-->
+<!--            </ul>-->
+<!--        </div>-->
+    </script>
+
+    <script type="text/html" id="goods_detail_foot">
+        <div class="goods-detail-foot bgf">
+            <div class="otreh-handle">
+                <a href="../index.html" class="index wp30"><i></i><p>首页</p></a>
+                <a href="javascript:void(0);" class="borl1 kefu wp30"><i></i><p>客服</p></a>
+                <!--                            <a href="javascript:void(0);"-->
+                <!--                               class="borl1 wp30 collect pd-collect <% if (is_favorate) { %>favorate<% } %>"><i></i>-->
+                <!--                                <p>收藏</p></a>-->
+                <a href="../tmpl/cart_list.html" class="cart"><i></i>
+                    <p>购物车</p><span id="cart_count"></span></a>
+            </div>
+            <div class="buy-handle <%if(!goods_hair_info.if_store || goods_info.goods_storage == 0){%>no-buy<%}%>">
+                <% if (goods_info.cart == '1') { %>
+                <a href="javascript:void(0);"
+                   class="<%if(goods_hair_info.if_store){%>animation-up<%}%> add-cart">加入购物车</a>
+                <% } %>
+                <a href="javascript:void(0);"
+                   class="animation-up buy-now <%if(goods_info.cart != '1'){%>wp100<%}%>">立即购买</a>
+            </div>
         </div>
     </script>
 
@@ -650,7 +673,7 @@ include __DIR__ . '/../includes/header.php';
                 </div>
                 <% if (goods_review_rows.length > 0) { %>
                 <% for(var i = 0; i < goods_review_rows.length; i++) { %>
-                <div class="mui-tagscloud-comments">
+                <div class="mui-tagscloud-comments borb1">
                     <div class="mui-tagscloud-user">
                         <img class="mui-tagscloud-img" src="<%= goods_review_rows[i].user_logo %>">
                         <span class="mui-tagscloud-name"><%= goods_review_rows[i].user_name %></span>

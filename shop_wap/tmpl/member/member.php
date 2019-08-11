@@ -27,6 +27,7 @@ include __DIR__ . '/../../includes/header.php';
             </div>
             <div class="header-r">
                 <a href="member_setting.html"><img src="../../../images/new/setting.png" width="20px" height="20px"></a>
+                <a href="views_list.html"><img src="../../images/goods_browse_b.png" width="20px" height="20px"></a>
                 <a href="chat_list.html"><img src="../../images/message_b.png" width="20px" height="20px"></a>
             </div>
             <div class="header-b">

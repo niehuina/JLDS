@@ -72,9 +72,9 @@ class Order_Goods extends Yf_Model
 	 * @return bool $update_flag 是否成功
 	 * @access public
 	 */
-	public function editGoods($order_goods_id = null, $field_row)
+	public function editGoods($order_goods_id = null, $field_row, $flag = false)
 	{
-		$update_flag = $this->edit($order_goods_id, $field_row);
+		$update_flag = $this->edit($order_goods_id, $field_row, $flag);
 
 		return $update_flag;
 	}

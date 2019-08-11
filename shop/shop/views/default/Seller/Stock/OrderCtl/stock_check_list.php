@@ -20,6 +20,9 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
     <table class="search-form">
         <tbody>
         <tr>
+            <td class="w100">
+                <a class="button btn_stock_check" style="float: left;" href="index.php?ctl=Seller_Stock_Order&met=stock_check&typ=e"><i class="iconfont icon-querendingdan"></i><?= __('库存盘点') ?></a>
+            </td>
             <td class="w240">
                 <input type="text" class="text w70 hasDatepicker heigh" placeholder="<?=__('起始时间')?>" name="query_start_date" id="query_start_date" value="<?=$_GET['query_start_date']?>" readonly="readonly">
                 <label class="add-on"><i class="iconfont icon-rili"></i></label>

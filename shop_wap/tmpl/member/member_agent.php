@@ -24,7 +24,7 @@ include __DIR__.'/../../includes/header.php';
     </style>
 </head>
 <body>
-<header id="header">
+<header id="header" class="fixed">
     <div class="header-wrap">
         <div class="header-l">
             <a href="member.html"> <i class="back"></i> </a>
@@ -35,8 +35,6 @@ include __DIR__.'/../../includes/header.php';
     </div>
     <div class="header-r">
     </div>
-</header>
-<div class="nctouch-main-layout">
     <div id="fixed_nav" class="nctouch-single-nav">
         <ul id="filtrate_ul" class="w20h">
             <li class="selected"><a href="javascript:void(0);" data-level="1">普通消费者</a></li>
@@ -44,6 +42,8 @@ include __DIR__.'/../../includes/header.php';
             <li><a href="javascript:void(0);" data-level="3">合伙人</a></li>
         </ul>
     </div>
+</header>
+<div class="nctouch-main-layout mt40">
     <ul id="user-list" class="nctouch-log-list">
     </ul>
 </div>
@@ -76,7 +76,7 @@ include __DIR__.'/../../includes/header.php';
     <div class="nctouch-norecord signin" style="top: 50%;">
         <div class="norecord-ico"><i></i></div>
         <dl>
-            <dt>您还没有下线人员</dt>
+            <dt>您还没有当前等级的下线人员</dt>
         </dl>
     </div>
     <%}%>

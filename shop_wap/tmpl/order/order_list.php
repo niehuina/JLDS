@@ -123,7 +123,7 @@ include __DIR__.'/../../includes/header.php';
                     <li class="<%if(orderinfo.order_payment_amount){%>green-order-skin<%}else{%>gray-order-skin<%}%> <%if(i>0){%>mt10<%}%>">
                         <div class="nctouch-order-item">
                             <div class="nctouch-order-item-head">
-                                <a class="store">订单：<%=orderinfo.order_id%></a>
+                                <a class="store word-ellipsis">订单：<%=orderinfo.order_id%></a>
                                 <span class="state">
                                     <%
                                         var stateClass ="ot-finish";
@@ -168,7 +168,7 @@ include __DIR__.'/../../includes/header.php';
                                                 <span class="goods-price">￥<em><%=order_goods.goods_price%></em></span>
                                                 <span class="goods-num">x<%=order_goods.order_goods_num%></span>
                                                 <div>
-                                                   <% if(order_goods.goods_return_status > 0) {%>
+                                                    <% if(order_goods.goods_return_status > 0) {%>
                                                     <a href="<%=WapSiteUrl%>/tmpl/order/member_refund_info.html?refund_id=<%=order_goods.order_return_id%>" class='ml4'><span class="goods-price"><%=order_goods.goods_return_status_con%></span></a>
                                                     <% } %>
                                                     <% if(order_goods.goods_refund_status > 0) {%>

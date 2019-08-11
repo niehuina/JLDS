@@ -37,7 +37,9 @@ include __DIR__ . '/../../includes/header.php';
     </div>
 </header>
 <div class="nctouch-main-layout mb20">
-    <div class="nctouch-order-list" id="order-info-container"></div>
+    <div class="nctouch-order-list" id="order-info-container">
+        <div class="input-box"><h4 class="tc bgf borb1">不能退款/退货</h4></div>
+    </div>
     <form>
         <div class="nctouch-inp-con">
             <ul class="form-box">

@@ -92,8 +92,8 @@ class Order_BaseModel extends Order_Base
     );
 
     public $cancelIdentity = null;
-    public $goodsRefundState = null;
-    public $goodsReturnState = null;
+    public $goodsRefundState = null;//退货状态
+    public $goodsReturnState = null;//退款状态
 
     public function __construct()
     {
@@ -242,26 +242,26 @@ class Order_BaseModel extends Order_Base
                     $order_goods[$okey]['goods_return_status_con'] = $this->goodsReturnState[$oval['goods_return_status']];
 
                     //查找退货id
-                    if ($oval['goods_return_status'] !== Order_StateModel::ORDER_GOODS_RETURN_NO) {
+                    if ($oval['goods_refund_status'] !== Order_StateModel::ORDER_GOODS_RETURN_NO) {
                         $Order_ReturnModel = new Order_ReturnModel();
                         $order_goods_return_id = $Order_ReturnModel->getKeyByWhere(array('order_number' => $val['order_id'],
                                                                                           'order_goods_id' => $oval['order_goods_id'],
                                                                                           'return_type' => 2,
                                                                                    ));
                         $order_goods[$okey]['order_refund_id'] = $order_goods_return_id[0];
-                        if($oval['goods_return_status'] == Order_GoodsModel::REFUND_IN){
+                        if($oval['goods_refund_status'] == Order_GoodsModel::REFUND_IN){
                             $data['items'][$key]['can_confirm_order'] = false;
                         }
                     }
 
                     //查找退款id
-                    if ($oval['goods_refund_status'] !== Order_StateModel::ORDER_REFUND_NO) {
+                    if ($oval['goods_return_status'] !== Order_StateModel::ORDER_REFUND_NO) {
                         $Order_ReturnModel = new Order_ReturnModel();
                         $order_goods_return_id = $Order_ReturnModel->getKeyByWhere(array('order_number' => $val['order_id'],
                                                                                        'order_goods_id' => $oval['order_goods_id'],
                                                                                        'return_type' => 1,));
                         $order_goods[$okey]['order_return_id'] = $order_goods_return_id[0];
-                        if($oval['goods_refund_status'] == Order_GoodsModel::REFUND_IN){
+                        if($oval['goods_return_status'] == Order_GoodsModel::REFUND_IN){
                             $data['items'][$key]['can_confirm_order'] = false;
                         }
                     }
@@ -371,11 +371,11 @@ class Order_BaseModel extends Order_Base
         }*/
 
         //若为退款中订单，则查找退款单id
-        if ($data['order_refund_status'] != Order_StateModel::ORDER_REFUND_NO) {
-            $Order_ReturnModel = new Order_ReturnModel();
-            $order_return_id = $Order_ReturnModel->getKeyByWhere(array('order_number' => $data['order_id'], 'order_goods_id' => '0'));
-            $data['order_return_id'] = $order_return_id[0];
-        }
+//        if ($data['order_return_status'] != Order_StateModel::ORDER_REFUND_NO) {
+//            $Order_ReturnModel = new Order_ReturnModel();
+//            $order_return_id = $Order_ReturnModel->getKeyByWhere(array('order_number' => $data['order_id']));
+//            $data['order_return_id'] = $order_return_id[0];
+//        }
 
         //若是已完成订单，计算交易投诉的有效时间
         $Web_ConfigModel = new Web_ConfigModel();
@@ -451,7 +451,7 @@ class Order_BaseModel extends Order_Base
             if($oval['goods_return_status'] == Order_GoodsModel::REFUND_IN){
                 $data['can_confirm_order'] = false;
             }
-            //若为退款中订单，则查找退货单id
+            //若为退货中订单，则查找退货单id
             if ($oval['goods_refund_status'] !== Order_StateModel::ORDER_REFUND_NO) {
                 $Order_ReturnModel = new Order_ReturnModel();
                 $order_return_id = $Order_ReturnModel->getKeyByWhere(array('order_number' => $data['order_id'],
@@ -1321,13 +1321,11 @@ class Order_BaseModel extends Order_Base
                     //如果退款，商家还未处理，或者商家拒绝。则相当于平台拒绝。否则即已同意
                     $no_reply_return = [Order_ReturnModel::RETURN_WAIT_PASS, Order_ReturnModel::RETURN_SELLER_UNPASS];
                     if(in_array($return['return_state'], $no_reply_return)){
-                        $formvars['order_return_id'] = $return_id;
-                        $formvars['return_platform_message'] = "拒绝退款申请";
-                        $rs = $this->getShopApi('Api_Trade_Return', 'refuse', $formvars, 'json');
+                        $return_platform_message = "拒绝退款申请";
+                        $rs = $this->refuse($return_id, $return,$return_platform_message);
                     }else{
-                        $formvars['order_return_id'] = $return_id;
-                        $formvars['return_platform_message'] = "同意";
-                        $rs = $this->getShopApi('Api_Trade_Return', 'agree', $formvars, 'json');
+                        $return_platform_message = "同意";
+                        $rs = $this->agree($return_id, $return,$return_platform_message);
                     }
                 }else{
                     //如果退货，卖家未退回货之前。则相当于平台拒绝。其他默认同意
@@ -1335,13 +1333,11 @@ class Order_BaseModel extends Order_Base
                         Order_ReturnModel::RETURN_SELLER_PASS,
                         Order_ReturnModel::RETURN_SELLER_UNPASS];
                     if(in_array($return['return_state'], $no_reply_return)){
-                        $formvars['order_return_id'] = $return_id;
-                        $formvars['return_platform_message'] = "拒绝退货申请";
-                        $rs = $this->getShopApi('Api_Trade_Return', 'refuse', $formvars, 'json');
+                        $return_platform_message = "拒绝退货申请";
+                        $rs = $this->refuse($return_id, $return,$return_platform_message);
                     }else{
-                        $formvars['order_return_id'] = $return_id;
-                        $formvars['return_platform_message'] = "同意";
-                        $rs = $this->getShopApi('Api_Trade_Return', 'agree', $formvars, 'json');
+                        $return_platform_message = "同意";
+                        $rs = $this->agree($return_id, $return,$return_platform_message);
                     }
                 }
             }
@@ -1384,6 +1380,294 @@ class Order_BaseModel extends Order_Base
         $User_Stock_Model->editStockFromOrder($order_goods_data, $order_base['buyer_user_id'], $order_base['buyer_user_name']);
 
         $this->confirmOrder_user_log($order_payment_amount, $order_base['buyer_user_id'], $order_base['buyer_user_name']);
+    }
+
+    private function agree($order_return_id, $return, $return_platform_message)
+    {
+        $Order_ReturnModel =  new Order_ReturnModel();
+        $Order_BaseModel         = new Order_BaseModel();
+        $Order_GoodsModel        = new Order_GoodsModel();
+
+        //判断平台是否已经审核过
+        if($return['return_state'] < Order_ReturnModel::RETURN_PLAT_PASS || $return['return_state'] == Order_ReturnModel::RETURN_GOODS) {
+            //判断商家是否同意退款，如果商家不同意，且是退货，则强制修改卖家状态为已同意；
+            //其他就按平台已同意相当于商家已同意来处理
+            if ($return['return_type'] == Order_ReturnModel::RETURN_TYPE_GOODS
+                && $return['return_state'] == Order_ReturnModel::RETURN_SELLER_UNPASS) {
+                //平台同意->将卖家强制改为同意
+                $data = array();
+                $data['return_platform_message'] = $return_platform_message;
+                $data['return_state'] = Order_ReturnModel::RETURN_SELLER_PASS;
+                //$data['return_finish_time']      = get_date_time();
+                $rs_row = array();
+
+                $edit_flag = $Order_ReturnModel->editReturn($order_return_id, $data);
+                check_rs($edit_flag, $rs_row);
+
+            } else {
+                //同意
+                $data = array();
+                if ($return_platform_message) {
+                    $data['return_platform_message'] = $return_platform_message;
+                }
+                $data['return_state'] = Order_ReturnModel::RETURN_PLAT_PASS;
+                $data['return_finish_time'] = get_date_time();
+                $rs_row = array();
+
+                $edit_flag = $Order_ReturnModel->editReturn($order_return_id, $data);
+                check_rs($edit_flag, $rs_row);
+
+                //根据order_id查找订单信息
+                $order_base = $Order_BaseModel->getOne($return['order_number']);
+                $data['return_goods_return'] = $return['return_goods_return'];
+
+//                if ($return['return_goods_return']) {
+//                    $Shop_BaseModel = new Shop_BaseModel();
+//                    $shop_detail = $Shop_BaseModel->getOne($order_base['shop_id']);
+//                    if ($shop_detail['shop_type'] == 2) {//供应商店铺
+//                        $flag = $this->edit_product($return['order_number'], $return['order_goods_num']);
+//
+//                        $data['edit_product'] = $flag;
+//                    }
+//                }
+
+                //如果是分销商的进货单则同时退掉买家订单
+//                fb($order_base);
+//                if ($order_base['order_source_id']) {
+//                    $dist_return = $Order_ReturnModel->getOneByWhere(array('order_number' => $order_base['order_source_id'], 'return_type' => $return['return_type']));
+//                    $this->agreeDist($dist_return['order_return_id'], $data);
+//                }
+
+                if ($return['return_goods_return']) {
+                    //商品退换情况为完成2
+                    $goods_data['goods_refund_status'] = Order_GoodsModel::REFUND_COM;
+                    $edit_flag = $Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+                    check_rs($edit_flag, $rs_row);
+                } else {
+                    $goods_data['goods_return_status'] = Order_GoodsModel::REFUND_COM;
+                    $edit_flag = $Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+                    check_rs($edit_flag, $rs_row);
+                }
+                $ogoods_data = array();
+                $ogoods_data['order_goods_returnnum'] = $return['order_goods_num'];
+                $edit_flag = $Order_GoodsModel->editGoods($return['order_goods_id'], $ogoods_data, true);
+                check_rs($edit_flag, $rs_row);
+
+                //如果是退货，则恢复商品的库存
+                if ($return['return_type'] == Order_ReturnModel::RETURN_TYPE_GOODS) {
+                    $add_stock_num = $return['order_goods_num'];
+                    $order_goods = $Order_GoodsModel->getOne($return['order_goods_id']);
+                    $goods_id = $order_goods['goods_id'];
+                    if ($return['seller_user_id'] == Web_ConfigModel::value('self_shop_id')) {
+                        $Goods_CommonModel = new Goods_CommonModel();
+                        $Goods_BaseModel = new Goods_BaseModel();
+                        $goods_base = $Goods_BaseModel->getOne($goods_id);
+                        $edit_flag11 = $Goods_CommonModel->editCommon($goods_base['common_id'], ['common_stock' => $add_stock_num], true);
+                        $edit_flag12 = $Goods_BaseModel->editBase($goods_id, ['goods_stock' => $add_stock_num], true);
+                        check_rs($edit_flag11, $rs_row);
+                        check_rs($edit_flag12, $rs_row);
+                    } else {
+                        $User_StockModel = new User_StockModel();
+                        $user_stock = $User_StockModel->getOneByWhere(['user_id' => $order_base['seller_user_id'], 'goods_id' => $goods_id]);
+                        $edit_flag12 = $User_StockModel->editUserStock($user_stock['stock_id'], ['goods_stock' => $add_stock_num], true);
+                        check_rs($edit_flag12, $rs_row);
+                    }
+                }
+
+                //判断商品金额是否全都退还，如果全部退还订单状态修改为完成状态(用订单商品数判断)
+                //订单中所有商品数量
+//                $order_goods = $Order_GoodsModel->getByWhere(array('order_id' => $return['order_number'], 'order_goods_amount:>' => 0));
+//                $order_all_goods_num = array_sum(array_column($order_goods, 'order_goods_num'));
+//
+//                //查找该笔订单已经完成的退款，退货
+//                $order_return = $Order_ReturnModel->getByWhere(array(
+//                    'order_number' => $return['order_number'],
+//                    'return_state' => Order_ReturnModel::RETURN_PLAT_PASS
+//                ));
+//                //订单已经退还的商品数量
+//                $order_return_num = array_sum(array_column($order_return, 'order_goods_num'));
+//
+//                if ($order_all_goods_num == $order_return_num && $order_base['order_status'] !== Order_StateModel::ORDER_FINISH) {
+//                    $order_edit_row = array();
+//                    $order_edit_row['order_status'] = Order_StateModel::ORDER_FINISH;
+//                    $condition['order_finished_time'] = get_date_time();
+//
+//                    $edit_flag2 = $Order_BaseModel->editBase($return['order_number'], $order_edit_row);
+//                    check_rs($edit_flag2, $rs_row);
+//                }
+
+                //退款金额，退货数量，交易佣金退款更新到订单表中
+                $order_edit = array();
+                $order_edit['order_refund_amount'] = $return['return_cash'];
+                $order_edit['order_return_num'] = $return['order_goods_num'];
+                $order_edit['order_commission_return_fee'] = $return['return_commision_fee'];
+                $order_edit['order_rpt_return'] = $return['return_rpt_cash'];
+
+                $edit_flag = $Order_BaseModel->editBase($return['order_number'], $order_edit, true);
+                check_rs($edit_flag, $rs_row);
+
+                if ($edit_flag) {
+                    //判断该笔订单是否是主账号支付，如果是主账号支付，则将退款金额退还主账号
+                    if ($order_base['order_sub_pay'] == Order_StateModel::SUB_SELF_PAY) {
+                        $return_user_id = $return['buyer_user_id'];
+                        $return_user_name = $return['buyer_user_account'];
+                    }
+                    if ($order_base['order_sub_pay'] == Order_StateModel::SUB_USER_PAY) {
+                        //查找主管账户用户名
+                        $User_BaseModel = new  User_BaseModel();
+                        $sub_user_base = $User_BaseModel->getOne($order_base['order_sub_user']);
+
+                        $return_user_id = $order_base['order_sub_user'];
+                        $return_user_name = $sub_user_base['user_account'];
+                    }
+
+                    $key = Yf_Registry::get('shop_api_key');
+                    $url = Yf_Registry::get('paycenter_api_url');
+                    $shop_app_id = Yf_Registry::get('shop_app_id');
+
+                    $formvars = array();
+                    $formvars['app_id'] = $shop_app_id;
+                    $formvars['user_id'] = $return_user_id;
+                    $formvars['user_account'] = $return_user_name;
+                    $formvars['seller_id'] = $order_base['seller_user_id'];
+                    $formvars['seller_account'] = $order_base['seller_user_name'];
+                    $formvars['amount'] = $return['return_cash'];
+                    $formvars['return_commision_fee'] = $return['return_commision_fee'];
+                    $formvars['order_id'] = $return['order_number'];
+                    $formvars['goods_id'] = $return['order_goods_id'];
+                    $formvars['payment_id'] = $order_base['payment_id'];
+
+                    //SP分销单没有payment_other_number这个字段值会报错，所以在此做判断
+                    if ($order_base['payment_other_number']) {
+                        $formvars['uorder_id'] = $order_base['payment_other_number'];
+                    } else {
+                        $formvars['uorder_id'] = $order_base['payment_number'];
+                    }
+
+                    //平台同意退款（只增加买家的流水）
+                    $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Pay_Pay&met=refundBuyerTransfer&typ=json', $url), $formvars);
+                    $data['for'] = $formvars;
+                    if ($rs['status'] == 200) {
+                        check_rs(true, $rs_row);
+                    } else {
+                        check_rs(false, $rs_row);
+                    }
+                    $edit_flag = is_ok($rs_row);
+                }
+            }
+
+
+            $data['rs'] = $rs_row;
+
+            $flag = is_ok($rs_row);
+        }
+        else
+        {
+            $flag = false;
+        }
+
+        if ($flag)
+        {
+            /**
+             *  加入统计中心
+             */
+            //如果$return['order_goods_id']为0则为退款
+            if($return['return_goods_return'])
+            {
+                $order_goods_data = $Order_GoodsModel->getOne($return['order_goods_id']);
+                $order_return_goods_id = $order_goods_data['goods_id'];
+                $order_goods_num = $return['order_goods_num'];
+            }
+            else
+            {
+                $order_goods_data = $Order_GoodsModel->getGoodsListByOrderId($return['order_number']);
+                if(count($order_goods_data['items']) == 1)
+                {
+                    $order_return_goods_id = $order_goods_data['items'][0]['goods_id'];
+                }
+                else
+                {
+                    $order_return_goods_id = 0;
+                }
+                $order_goods_num = $order_goods_data['items'][0]['order_goods_num'];
+            }
+
+            $analytics_data = array(
+                'order_id'=>array($return['order_number']),
+                'return_cash'=>$return['return_cash'],
+                'order_goods_num'=>$order_goods_num,
+                'order_goods_id'=>$order_return_goods_id,
+                'status'=>9	//暂时将退款退货统一处理
+            );
+            Yf_Plugin_Manager::getInstance()->trigger('analyticsUpdateOrderStatus',$analytics_data);
+            /******************************************************************/
+        }
+    }
+
+    private function refuse($order_return_id, $return, $return_platform_message)
+    {
+        $Order_GoodsModel = new Order_GoodsModel();
+        $Order_ReturnModel = new Order_ReturnModel();
+
+        $data['return_platform_message'] = $return_platform_message;
+        $data['return_state']            = Order_ReturnModel::RETURN_PLAT_UNPASS;
+        $data['return_finish_time']      = get_date_time();
+        $rs_row                          = array();
+        $edit_flag = $Order_ReturnModel->editReturn($order_return_id, $data);
+        check_rs($edit_flag, $rs_row);
+
+        //不同意
+        if ($return['return_goods_return'])
+        {
+            //商家拒绝退款退货3
+            $goods_data['goods_refund_status'] = Order_GoodsModel::REFUND_REF;
+            $edit_flag                         = $Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+            check_rs($edit_flag, $rs_row);
+        }
+        else
+        {
+            $goods_data['goods_return_status'] = Order_GoodsModel::REFUND_REF;
+            $edit_flag                         = $Order_GoodsModel->editGoods($return['order_goods_id'], $goods_data);
+            check_rs($edit_flag, $rs_row);
+        }
+
+        $data['rs'] = $rs_row;
+        if ($edit_flag)
+        {
+            /**
+             *  加入统计中心
+             */
+            //如果$return['order_goods_id']为0则为退款
+            if($return['order_goods_id'])
+            {
+                $order_goods_data = $Order_GoodsModel->getOne($return['order_goods_id']);
+                $order_return_goods_id = $order_goods_data['goods_id'];
+                $order_goods_num = $return['order_goods_num'];
+            }
+            else
+            {
+                $order_goods_data = $Order_GoodsModel->getGoodsListByOrderId($return['order_number']);
+                if(count($order_goods_data['items']) == 1)
+                {
+                    $order_return_goods_id = $order_goods_data['items'][0]['goods_id'];
+                }
+                else
+                {
+                    $order_return_goods_id = 0;
+                }
+                $order_goods_num = $order_goods_data['items'][0]['order_goods_num'];
+            }
+
+            $analytics_data = array(
+                'order_id'=>array($return['order_number']),
+                'return_cash'=>$return['return_cash'],
+                'order_goods_num'=>$order_goods_num,
+                'order_goods_id'=>$order_return_goods_id,
+                'status'=>9	//暂时将退款退货统一处理
+            );
+            Yf_Plugin_Manager::getInstance()->trigger('analyticsUpdateOrderStatus',$analytics_data);
+            /******************************************************************/
+        }
     }
 
     /**

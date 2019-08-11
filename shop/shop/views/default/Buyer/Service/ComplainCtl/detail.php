@@ -52,7 +52,7 @@ include $this->view->getTplPath() . '/' . 'buyer_header.php';
                         {
                             echo 'class="current1"';
                         } ?>>
-                            <dt><?= __('已完成') ?></dt>
+                            <dt><?= __('已关闭') ?></dt>
                             <dd class="bg"></dd>
                         </dl>
                     </div>

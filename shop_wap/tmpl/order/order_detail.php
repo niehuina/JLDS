@@ -20,7 +20,7 @@ include __DIR__.'/../../includes/header.php';
     <body>
     <header id="header" class="fixed">
         <div class="header-wrap">
-            <div class="header-l"> <a href="javascript:history.go(-1);"> <i class="back"></i> </a> </div>
+            <div class="header-l"> <a href="order_list.html"> <i class="back"></i> </a> </div>
             <div class="header-title">
                 <h1>订单详情</h1>
             </div>
@@ -79,11 +79,11 @@ include __DIR__.'/../../includes/header.php';
 			<span class="time-line">
 				<i></i>
 			</span>
-                <div class="info">
-                    <p id="delivery_content"></p>
-                    <time id="delivery_time"></time>
-                </div>
-                <span class="arrow-r"></span>
+            <div class="info">
+                <p id="delivery_content"><%=order_shipping_message%></p>
+                <time id="delivery_time"><%=order_shipping_time%></time>
+            </div>
+            <span class="arrow-r"></span>
             </a>
         </div>
         <%}%>
@@ -126,6 +126,36 @@ include __DIR__.'/../../includes/header.php';
             </div>
             <div class="nctouch-order-item-con">
                 <%for(i=0; i<goods_list.length; i++){%>
+
+                <%
+                var goods_returns_setting = goods_list[i].goods_returns_setting;
+                var refund_status = goods_list[i].goods_refund_status;//退货
+                var return_status = goods_list[i].goods_return_status;//退货
+                var goods_status = goods_list[i].order_goods_status;//状态
+                var return_url1 = '';
+                var return_status_con1 = '';
+                //退货
+                if((goods_status == 4 && refund_status > 0 && refund_status != 3) || (refund_status > 0 && goods_status == 6)){
+                    return_url1 = WapSiteUrl + '/tmpl/order/member_return_info.html?refund_id='+ goods_list[i].order_refund_id;
+                    return_status_con1 = goods_list[i].goods_refund_status_con;
+                }
+                var return_url2 = '';
+                var return_status_con2 = '';
+                //退款
+                if((return_status > 0 && return_status != 3) || (return_status > 0 && goods_status == 6)){
+                    return_url2 = WapSiteUrl + '/tmpl/order/member_refund_info.html?refund_id='+ goods_list[i].order_return_id;
+                    return_status_con2 = goods_list[i].goods_return_status_con;
+                }
+                var returnClass = '';
+                if(goods_returns_setting != 1 && goods_list[i].goods_price !=0){
+                    if(refund_status == 0 && goods_status == 4){
+                        returnClass = "goods-refund";
+                    }
+                    if(return_status == 0 && goods_status == 2){
+                        returnClass = "goods-refund";
+                    }
+                }
+                %>
                 <div class="goods-block detail">
                     <a href="<%=WapSiteUrl%>/tmpl/product_detail.html?goods_id=<%=goods_list[i].goods_id%>">
                         <div class="goods-pic">
@@ -143,32 +173,21 @@ include __DIR__.'/../../includes/header.php';
                             <dd class="goods-type"><%=order_spec_info%></dd>
                             <%  } %>
                         </dl>
-
-                        <%
-                        var goods_returns_setting = goods_list[i].goods_returns_setting;
-                        var refund_status = goods_list[i].goods_refund_status;
-                        var return_status = goods_list[i].goods_return_status;
-                        %>
                         <div class="goods-subtotal">
                             <span class="goods-price">￥<em><%=goods_list[i].goods_price%></em></span>
                             <span class="goods-num">x<%=goods_list[i].order_goods_num%></span>
                             <div>
-                                <% if(order_status == 4 && return_status > 0 && return_status != 3) {%>
-                                <a href="<%=WapSiteUrl%>/tmpl/order/member_refund_info.html?refund_id=<%=goods_list[i].order_return_id%>" class="ml4"><span class="goods-price"><%=goods_list[i].goods_return_status_con%></span></a>
-                                <% } %>
-                                <% if(refund_status > 0 && refund_status != 3) {%>
-                                <a href="<%=WapSiteUrl%>/tmpl/order/member_return_info.html?refund_id=<%=goods_list[i].order_refund_id%>" class="ml4"><span class="goods-price"><%=goods_list[i].goods_refund_status_con%></span></a>
-                                <% } %>
+                            <% if(return_url1) {%>
+                            <a href="<%=return_url1%>" class="ml4"><span class="goods-price"><%=return_status_con1%></span></a>
+                            <% } %>
+                            <% if(return_url2) {%>
+                            <a href="<%=return_url2%>" class="ml4"><span class="goods-price"><%=return_status_con2%></span></a>
+                            <% } %>
+                            <% if(returnClass) {%>
+                            <a href="javascript:void(0);" order_id="<%=order_id%>" order_goods_id="<%=goods_list[i].order_goods_id%>" class="<%=returnClass%>"><span class="goods-price">退款/退货</span></a>
+                            <%}%>
                             </div>
                         </div>
-                        <% if(goods_returns_setting != 1){%>
-                            <% if((refund_status == 0) && order_status == 4 && goods_list[i].goods_price !=0) {%>
-                            <a href="javascript:void(0)" order_id="<%=order_id%>" order_goods_id="<%=goods_list[i].order_goods_id%>" class="goods-return">退货</a>
-                            <%}%>
-                            <% if((return_status == 0) && order_status == 2 && goods_list[i].goods_price !=0) {%>
-                            <a href="javascript:void(0)" order_id="<%=order_id%>" order_goods_id="<%=goods_list[i].order_goods_id%>" class="goods-return">退款</a>
-                            <%}%>
-                        <%}%>
                     </a>
                 </div>
                 <%}%>
@@ -223,7 +242,7 @@ include __DIR__.'/../../includes/header.php';
             <% if (order_status == 4 && can_confirm_order){ %>
             <a href="javascript:void(0)" order_id="<%=order_id%>" class="btn sure-order">确认收货</a>
             <% } %>
-            <% if (order_status == 6) {%>
+            <% if (order_status == 7) {%>
             <a href="javascript:void(0)" order_id="<%=order_id%>" class="btn delete-order">删除订单</a>
             <% } %>
             <% if (order_status == 6 && order_buyer_evaluation_status == 0) {%>

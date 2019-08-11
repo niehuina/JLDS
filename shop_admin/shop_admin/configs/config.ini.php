@@ -457,6 +457,7 @@ Yf_Registry::set('shop_api_key', $shop_api_key);
 Yf_Registry::set('shop_api_url', $shop_api_url);
 Yf_Registry::set('shop_app_id', $shop_app_id);
 Yf_Registry::set('shop_wap_url', @$shop_wap_url);
+Yf_Registry::set('shop_wap_cat_url', @$shop_wap_cat_url);
 
 
 

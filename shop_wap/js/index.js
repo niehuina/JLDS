@@ -19,7 +19,7 @@ $(function() {
 
    
     if(getCookie('sub_site_id') == '' || getCookie('sub_site_id') == 'undefined' || getCookie('sub_site_id') == null){
-            loadScriptSubsite();
+        loadScriptSubsite();
     }
     var sub_site_id = getCookie('sub_site_id');
     $.ajax({
@@ -40,6 +40,8 @@ $(function() {
                 }
             }
             $(".site_logo").attr('src',data.site_logo);
+
+            // $("#cat_list").html(template.render("cat_view", data.app_shop_cat));
 
             $.each(data.module_data, function(k, v) {
                 $.each(v, function(kk, vv) {

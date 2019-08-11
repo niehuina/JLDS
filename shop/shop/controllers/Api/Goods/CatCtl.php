@@ -166,6 +166,10 @@ class Api_Goods_CatCtl extends Api_Controller
 			$edit_data['cat_show_type'] = $cat_show_type;
 		}
 
+        if(empty($cat_app_home_click_url)) {
+            $cat_app_home_click_url = Yf_Registry::get('shop_wap_cat_url') . $cat_id;
+        }
+
 		$flag = $Goods_CatModel->editCat($cat_id, array(
 			'cat_name' => $cat_name,
 			'cat_is_virtual' => $cat_is_virtual,
@@ -298,6 +302,10 @@ class Api_Goods_CatCtl extends Api_Controller
 			{
 				$edit_cat['cat_name'] = $name_value;
 				$cat_id               = $Goods_CatModel->addCat($edit_cat, true);
+				if($cat_id && empty($cat_app_home_click_url)) {
+                    $edit_cat_url['cat_app_home_click_url'] = Yf_Registry::get('shop_wap_cat_url') . $cat_id;
+                    $flag = $Goods_CatModel->editCat($cat_id, $edit_cat_url);
+                }
 				if ($cat_id && !empty($edit_data))
 				{
 

@@ -97,11 +97,11 @@ $(function () {
     $("#order-list").on("click", ".evaluation-order", l);
     $("#order-list").on("click", ".evaluation-again-order", d);
     $("#order-list").on("click", ".viewdelivery-order", c);
-    $("#order-list").on("click", ".check-payment", function () {
-        var e = $(this).attr("data-paySn");
-        toPay(e, "member_buy", "pay");
-        return false
-    });
+    // $("#order-list").on("click", ".check-payment", function () {
+    //     var e = $(this).attr("data-paySn");
+    //     toPay(e, "member_buy", "pay");
+    //     return false
+    // });
     function r() {
         var e = $(this).attr("order_id");
         $.sDialog({
@@ -131,7 +131,7 @@ $(function () {
     function o() {
         var e = $(this).attr("order_id");
         $.sDialog({
-            content: "是否移除订单？<h6>电脑端订单回收站可找回订单！</h6>", okFn: function () {
+            content: "是否移除订单？", okFn: function () {
                 i(e)
             }
         })
@@ -195,7 +195,7 @@ $(function () {
         var express_id = $(this).attr("express_id");
         var express_name = $(this).attr("express_name");
         var shipping_code = $(this).attr("shipping_code");
-        location.href = WapSiteUrl + "/tmpl/member/order_delivery.html?order_id=" + e + '&express_id=' + express_id + '&express_name=' + express_name + '&shipping_code=' + shipping_code;
+        location.href = WapSiteUrl + "/tmpl/order/order_delivery.html?order_id=" + e + '&express_id=' + express_id + '&express_name=' + express_name + '&shipping_code=' + shipping_code;
     }
 
     $("#filtrate_ul").find("a").click(function () {

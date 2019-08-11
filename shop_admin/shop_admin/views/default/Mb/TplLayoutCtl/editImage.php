@@ -29,7 +29,7 @@ include TPL_PATH . '/' . 'header.php';
                                 <input type="text" name="textfield" id="textfield" class="type-file-text">
                                 <div name="button" id="button" class="">选择上传</div>
                             </span></div>
-                            <p id="dialog_image_desc" class="notic">推荐图片尺寸640*250</p>
+                            <p id="dialog_image_desc" class="notic">推荐图片尺寸640*305</p>
                         </dd>
                     </dl>
                     <dl class="row">

@@ -119,9 +119,9 @@ var handle = {
         {
             $.dialog({
                 title: '确定结算',
-                content: '您确定是否已结算完成？确定后，该会员的资金情况将被清空，请谨慎操作！',
+                content: '您确定是否已结算完成？请谨慎操作！',
                 height: 100,
-                width: 610,
+                width: 500,
                 lock: true,
                 drag: false,
                 ok: function () {
