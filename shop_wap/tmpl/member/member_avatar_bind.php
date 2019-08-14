@@ -76,7 +76,7 @@ include __DIR__ . '/../../includes/header.php';
                 dataType: "json",
                 success: function (result) {
                     if (result.status == 200) {
-                        $('#certificate_logo').attr('src', result.data.user_logo == "" ? "../../images/defulat_user.png" : result.data.user_logo);
+                        $('#certificate_logo').attr('src', result.data.user_logo == "" ? "../img/user_avt_default.png" : result.data.user_logo);
                     }
                 }
             });

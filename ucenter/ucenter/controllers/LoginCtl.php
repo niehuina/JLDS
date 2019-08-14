@@ -5,6 +5,8 @@ header("Access-Control-Allow-Origin:$origin");
 
 class LoginCtl extends Yf_AppController
 {
+    public $userInfo;
+    public $wxId;
 
 	public function callback()
 	{
@@ -359,6 +361,8 @@ class LoginCtl extends Yf_AppController
 
 	public function index()
 	{
+        $this->userInfo = $this->getWxUserInfo();
+
 		$web['site_logo']       = Web_ConfigModel::value("site_logo");//首页logo
 
 		$BaseAppModel = new BaseApp_BaseAppModel();

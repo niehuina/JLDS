@@ -163,7 +163,6 @@ class Buyer_OrderCtl extends Buyer_Controller
             $offset = request_int('firstRow', 0);
             $page = ceil_r($offset / $rows);
 
-
             $status = request_string('status');
             $recycle = request_int('recycle');
             //待付款
@@ -286,6 +285,56 @@ class Buyer_OrderCtl extends Buyer_Controller
                     //确认收货以后将总佣金写入商品订单表
                     $order_directseller_commission = array_sum(array_column($order_goods_data, 'directseller_commission_0')) + array_sum(array_column($order_goods_data, 'directseller_commission_1')) + array_sum(array_column($order_goods_data, 'directseller_commission_2'));
                     $condition['order_directseller_commission'] = $order_directseller_commission;
+
+                    $order_amount = $order_base['order_payment_amount']*1 - $order_base['order_refund_amount']*1;
+
+                    //计算合伙人提成，高级合伙人提成
+                    $User_InfoModel = new User_InfoModel();
+                    $user_g_info = $User_InfoModel->getOne($order_base['directseller_p_id']);
+                    $before_order_total_amount = $user_g_info['children_order_total_amount'] * 1;
+                    $total_children_order_total_amount = $before_order_total_amount + $order_amount;
+
+                    //获取合伙人的返利比例
+                    $User_GradeModel = new User_GradeModel();
+                    $user_grade = $User_GradeModel->getOne(3);
+                    $grade_order_amount = $user_grade['order_amount'] * 1;
+                    $grade_order_rebate1 = $user_grade['order_rebate1'] * 1 / 100;
+                    $grade_order_rebate2 = $user_grade['order_rebate2'] * 1 / 100;
+
+                    //不管超指标还是未超指标，都需要：当前金额*rebate1
+                    $rebate_value1 = $order_amount * $grade_order_rebate1;
+                    $rebate_value2 = 0;
+                    //如果上次累计订单总金额已超指标，则超过指标部分提成为:该次金额*rebate2
+                    if ($before_order_total_amount * 1 >= $grade_order_amount) {
+                        $rebate_value2 = $order_amount * $grade_order_rebate2;
+                    } else if ($total_children_order_total_amount > $grade_order_amount) {
+                        //如果该次累计总金额超过指标，则超过指标部分提成为:（累计总金额-指标部分）*rebate2
+                        $order_amount2 = $total_children_order_total_amount - $grade_order_amount;
+                        if ($order_amount2 > 0) {
+                            $rebate_value2 = $order_amount2 * $grade_order_rebate2;
+                        } else {
+                            $rebate_value2 = 0;
+                        }
+                    } else if ($total_children_order_total_amount <= $grade_order_amount) {
+                        //如果该次累计总金额未超过指标，则超过指标部分提成为:0
+                        $rebate_value2 = 0;
+                    }
+                    $order_rebate_value2 = $rebate_value1 + $rebate_value2;
+                    $condition['order_directseller_commission2'] = $order_rebate_value2;
+
+                    $user_gp_info = $User_InfoModel->getOne($order_base['directseller_gp_id']);
+                    $user_g_grade = $User_GradeModel->getOne(4);
+                    //计算高级合伙人的提成比例
+                    $grade_order_rebate1 = $user_g_grade['order_rebate1'] * 1/100;
+                    $grade_order_rebate2 = $user_g_grade['order_rebate2'] * 1/100;
+                    $grade_order_rebate_top = $user_g_grade['order_rebate_top'] * 1/100;
+                    $partner_count = $user_gp_info['current_year_partner_count'];
+                    $order_rebate = $grade_order_rebate1 * 1 + $grade_order_rebate2 * $partner_count;
+                    if ($order_rebate > $grade_order_rebate_top) {
+                        $order_rebate = $grade_order_rebate_top;
+                    }
+                    $order_rebate_value3 = $order_amount * $order_rebate;
+                    $condition['order_directseller_commission3'] = $order_rebate_value3;
                 }
 
                 $edit_flag = $Order_BaseModel->editBase($order_id, $condition);
@@ -300,7 +349,8 @@ class Buyer_OrderCtl extends Buyer_Controller
 
                 //添加到个人仓库
                 $User_Stock_Model = new User_StockModel();
-                $User_Stock_Model->editStockFromOrder($order_goods_data, $order_base['buyer_user_id'], $order_base['buyer_user_name']);
+                $edit_stock = $User_Stock_Model->editStockFromOrder($order_goods_data, $order_base['buyer_user_id'], $order_base['buyer_user_name']);
+                check_rs($edit_stock, $rs_row);
 
                 //货到付款时修改商品销量
                 if ($order_base['payment_id'] == PaymentChannlModel::PAY_CONFIRM) {
@@ -308,6 +358,7 @@ class Buyer_OrderCtl extends Buyer_Controller
                     $edit_flag2 = $Goods_BaseModel->editGoodsSale($order_goods_id);
                     check_rs($edit_flag2, $rs_row);
                 }
+
                 //将需要确认的订单号远程发送给Paycenter修改订单状态
                 //远程修改paycenter中的订单状态
                 $key = Yf_Registry::get('shop_api_key');
@@ -4579,12 +4630,49 @@ class Buyer_OrderCtl extends Buyer_Controller
         $this->data->addBody(-140, $order_list);
     }
 
+    public function get_order_profit_partner()
+    {
+        $User_InfoModel = new User_InfoModel();
+        $Order_BaseModel = new Order_BaseModel();
+
+        $page = request_int('curpage', 1);
+        $rows = request_int('page', 20);
+        $status = request_int('status', 0);
+        $user_id = request_int('user_id', Perm::$userId);
+
+        $user_info = $User_InfoModel->getOne($user_id);
+
+        $cond_row['directseller_p_id|directseller_gp_id'] = $user_id;
+        $cond_row['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
+        $cond_row['rebate_is_settlement|g_rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
+        $cond_row['order_create_time:>='] = $user_info['user_update_partner_date'];
+        $order_row['order_finished_time'] = 'desc';
+        $user_orders = $Order_BaseModel->listByWhere($cond_row, $order_row, $page, $rows);
+        Yf_Log::log("order_profit-order:" . count($user_orders), Yf_Log::LOG, 'user_settle_search');
+
+        foreach ($user_orders['items'] as $k => $order) {
+            $order_amount = $order['order_payment_amount'] * 1 - $order['order_refund_amount'] * 1;
+
+            $user_orders['items'][$k]['order_create_text'] = '完成时间：' . date('Y-m-d H:i', strtotime($order['order_finished_time']));
+            $user_orders['items'][$k]['order_settlement_text'] = '';
+            $user_orders['items'][$k]['order_payment_amount'] = $order_amount;
+
+            if($order['directseller_p_id'] == $user_id && $order['rebate_is_settlement'] == Order_BaseModel::IS_NOT_SETTLEMENT){
+                $user_orders['items'][$k]['order_commission'] = $order['order_directseller_commission2'];
+            }else if($order['directseller_gp_id'] == $user_id && $order['g_rebate_is_settlement'] == Order_BaseModel::IS_NOT_SETTLEMENT){
+                $user_orders['items'][$k]['order_commission'] = $order['order_directseller_commission3'];
+            }else{
+                unset($user_orders['items'][$k]);
+            }
+        }
+    }
+
     /**
      * 获取订单提成返利
      * @return bool
      * @throws Exception
      */
-    public function get_order_profit_partner()
+    public function get_order_profit_partner1()
     {
         $User_GradeModel = new User_GradeModel();
         $User_InfoModel = new User_InfoModel();
@@ -4608,7 +4696,7 @@ class Buyer_OrderCtl extends Buyer_Controller
             $cond_row['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
             $cond_row['rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
             $cond_row['order_create_time:>='] = $user_info['user_update_partner_date'];
-            $order_row['order_finished_time'] = 'desc';
+            $order_row['order_finished_time'] = 'asc';
             $user_orders = $Order_BaseModel->listByWhere($cond_row, $order_row, $page, $rows);
             Yf_Log::log("partner order:" . count($user_orders), Yf_Log::LOG, 'user_settle_search');
 
@@ -4633,6 +4721,7 @@ class Buyer_OrderCtl extends Buyer_Controller
                         //不管超指标还是未超指标，都需要：当前金额*rebate1
                         $rebate_value1 = $order_amount * $grade_order_rebate1;
 
+                        $rebate_value2 = 0;
                         //如果上次累计订单总金额已超指标，则超过指标部分提成为:该次金额*rebate2
                         if ($before_order_total_amount * 1 >= $grade_order_amount) {
                             $rebate_value2 = $order_amount * $grade_order_rebate2;
@@ -4720,6 +4809,7 @@ class Buyer_OrderCtl extends Buyer_Controller
 
         $this->data->addBody(-140, $user_orders);
     }
+
 }
 
 ?>

@@ -18,8 +18,6 @@ include __DIR__ . '/../includes/header.php';
         <link rel="stylesheet" type="text/css" href="../css/base.css">
         <link rel="stylesheet" type="text/css" href="../css/nctouch_common.css">
         <link rel="stylesheet" type="text/css" href="../css/nctouch_cart.css">
-<!--        <link rel="stylesheet" type="text/css" href="../css/base1.css">-->
-<!--        <link rel="stylesheet" type="text/css" href="../css/them1.css">-->
         <style type="text/css">
             .selected-all {
                 font-size: 0.6rem;

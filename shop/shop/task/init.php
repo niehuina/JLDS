@@ -7,7 +7,7 @@ vi /etc/crontab
 crontab需要加入上面的配置
 
 */
-$dir = dirname(__FILE__).'/../../shop/configs/config.ini.php';
+$dir = dirname(__DIR__).'/configs/config.ini.php';
 if (is_file($dir))
 {
 	require_once $dir;

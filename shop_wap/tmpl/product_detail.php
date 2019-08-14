@@ -55,15 +55,7 @@ include __DIR__ . '/../includes/header.php';
                     <!--<li><a href="../tmpl/cart_list.html"><i class="cart"></i>购物车<sup></sup></a></li>-->
                     <li><a href="../tmpl/member/member.html"><i class="member"></i>我的商城</a></li>
                     <li><a href="javascript:void(0);"><i class="message"></i>消息<sup></sup></a></li>
-                    <?php if ($_COOKIE['is_app_guest']) { ?>
-                        <li>
-
-                            <a href="" id='shareit'>
-                                <i class="share"></i>分享<sup></sup>
-                            </a>
-
-                        </li>
-                    <?php } ?>
+<!--                    <li><a href="javascript:void(0);" id="shareit"><i class="share"></i>分享<sup></sup></a></li>-->
                 </ul>
             </div>
         </div>
@@ -700,6 +692,38 @@ include __DIR__ . '/../includes/header.php';
         </div>
     </script>
     <!--o2o分店地图End-->
+
+    <div class="nctouch-bottom-mask" id="store_voucher_con">
+        <div class="nctouch-bottom-mask-bg"></div>
+        <div class="nctouch-bottom-mask-block">
+            <div class="nctouch-bottom-mask-tip"><i></i>点击此处返回</div>
+            <div class="nctouch-bottom-mask-top store-voucher">
+                <i class="icon-store"></i>分享<a href="javascript:void(0);" class="nctouch-bottom-mask-close"><i></i></a>
+            </div>
+            <div class="nctouch-bottom-mask-rolling">
+                <div class="bdsharebuttonbox">
+                    <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+                    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信朋友圈">微信朋友圈</a>
+                    <a href="#" class="bds_sqq" data-cmd="sqq" title="QQ好友">QQ好友</a>
+                    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+                    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到贴吧">贴吧</a>
+                </div>
+                <script>window._bd_share_config = {
+                        "common": {
+                            "bdSnsKey": {},
+                            "bdText": window.title,
+                            "bdMini": "2",
+                            "bdMiniList": false,
+                            "bdPic": "",
+                            "bdStyle": "0",
+                            "bdSize": "16"
+                        }, "share": {"bdSize": 16}
+                    };
+                    with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+
+            </div>
+        </div>
+    </div>
     </body>
     </html>
 <?php

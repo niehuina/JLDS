@@ -11,7 +11,7 @@ $(function ()
         {
             if (result.status == 200)
             {
-                $('#user_avatar').attr('src',result.data.user_logo==""?"../../images/defulat_user.png":result.data.user_logo);
+                $('#user_avatar').attr('src',result.data.user_logo==""?"../img/user_avt_default.png":result.data.user_logo);
                 $('#user_name').html(result.data.user_nickname);
                 $('#user_birthday').html(result.data.user_birthday);
             }

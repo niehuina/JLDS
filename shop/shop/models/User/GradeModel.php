@@ -143,17 +143,24 @@ class User_GradeModel extends User_Grade
             $formvars = array();
             $formvars['app_id'] = $paycenter_app_id;
             $formvars['user_id'] = $user_id;
-            $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Paycen_PayRecord&met=getDepositAmountByUserId&typ=json', $url), $formvars);
-            $user_deposit_amount = 0;
-            if($rs['status'] == "200"){
-                $user_deposit_amount = $rs['data']['amount']*1;
+
+            //判断该消费者是否已缴纳股金
+            $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=getUserResourceInfo&typ=json', $url), $formvars);
+            if($rs['status'] == "200" && $rs['data']['user_pay_shares_date']){
+                $can_update_grade = true;
+            }else {
+                $rs = get_url_with_encrypt($key, sprintf('%s?ctl=Api_Paycen_PayRecord&met=getDepositAmountByUserId&typ=json', $url), $formvars);
+                $user_deposit_amount = 0;
+                if ($rs['status'] == "200") {
+                    $user_deposit_amount = $rs['data']['amount'] * 1;
+                }
+
+                //获取升级会员需要的金额
+                $user_grade_trade = $Grade[$user_grade]['user_grade_trade'] * 1;
+
+                //判断是否可以升级，用户的消费金额+储值金额 >= 升级所需要的金额
+                $can_update_grade = $order_sum_amount + $user_deposit_amount >= $user_grade_trade;
             }
-
-            //获取升级会员需要的金额
-            $user_grade_trade = $Grade[$user_grade]['user_grade_trade'] * 1;
-
-            //判断是否可以升级，用户的消费金额+储值金额 >= 升级所需要的金额
-            $can_update_grade = $order_sum_amount + $user_deposit_amount >= $user_grade_trade;
         }else if($user_grade == 2){
             $can_update_grade = !$is_need_search;
         }else if($user_grade == 3){

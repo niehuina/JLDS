@@ -203,7 +203,7 @@ class Order_SettlementModel extends Order_Settlement
 			//红包金额
 			$add_settle_row['os_redpacket_amount'] = $settle_row['redpacket_amount'];
 			//分销金额
-			$add_settle_row['os_directseller_amount'] = $settle_row['order_directseller_commission'];
+//			$add_settle_row['os_directseller_amount'] = $settle_row['order_directseller_commission'];
 			//运费
 			$add_settle_row['os_shipping_amount'] = $settle_row['shipping_amount'];
 			//退单金额

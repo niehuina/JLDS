@@ -247,10 +247,10 @@ $seller_menu = array(
                     1200132 => array(
                         'menu_id' => '1200132',
                         'menu_parent_id' => '120013',
-                        'menu_name' => __('商品自用'),
+                        'menu_name' => __('商品自用记录'),
                         'menu_icon' => '',
                         'menu_url_ctl' => 'Seller_Stock_Order',
-                        'menu_url_met' => 'stock_self_use',
+                        'menu_url_met' => 'stock_self_use_list',
                         'menu_url_parem' => '',
                     ),
                     1200133 => array(
@@ -269,6 +269,24 @@ $seller_menu = array(
                         'menu_icon' => '',
                         'menu_url_ctl' => 'Seller_Stock_Order',
                         'menu_url_met' => 'stock_check_detail',
+                        'menu_url_parem' => '',
+                    ),
+                    1200135 => array(
+                        'menu_id' => '1200135',
+                        'menu_parent_id' => '120013',
+                        'menu_name' => __('商品自用'),
+                        'menu_icon' => '',
+                        'menu_url_ctl' => 'Seller_Stock_Order',
+                        'menu_url_met' => 'stock_self_use',
+                        'menu_url_parem' => '',
+                    ),
+                    1200136 => array(
+                        'menu_id' => '1200136',
+                        'menu_parent_id' => '120013',
+                        'menu_name' => __('商品自用明细'),
+                        'menu_icon' => '',
+                        'menu_url_ctl' => 'Seller_Stock_Order',
+                        'menu_url_met' => 'stock_self_use_detail',
                         'menu_url_parem' => '',
                     ),
                 )

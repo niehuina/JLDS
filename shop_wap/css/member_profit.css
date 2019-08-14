@@ -1,8 +1,14 @@
-
+.header-r a.text{
+    width: 3rem;
+}
+h4{
+    color: #333;
+}
 .nctouch-log-list{
     padding: 0;
 }
 .nctouch-log-list li{
+    color: #333;
     padding: 0.5rem 0.8rem
 }
 .nctouch-log-list li dl{

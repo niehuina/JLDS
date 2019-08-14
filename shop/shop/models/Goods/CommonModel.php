@@ -52,9 +52,15 @@ class Goods_CommonModel extends Goods_Common
 	 */
 	public function getCommonList($cond_row = array(), $order_row = array(), $page = 1, $rows = 100)
 	{
+        $user_id = request_int('user_id', '');;
+        if($user_id){
+            $user_info_model = new User_InfoModel();
+            $user_info = $user_info_model->getOne($user_id);
+            $user_grade = $user_info['user_grade'];
+        }
+
 	    $data = $this->listByWhere($cond_row, $order_row, $page, $rows);
 	    foreach ($data['items'] as $key=>$common_base){
-            $user_grade = Perm::$row['user_grade'];
             if($user_grade == '2'){
                 $data['items'][$key]['common_price'] = $common_base['common_price_vip'];
             }else if($user_grade == '3' || $user_grade == '4'){

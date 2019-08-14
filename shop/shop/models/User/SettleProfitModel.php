@@ -151,6 +151,7 @@ class User_SettleProfitModel extends Yf_Model
                 //不管超指标还是未超指标，都需要：当前金额*rebate1
                 $rebate_value1 = $order_amount * $grade_order_rebate1;
 
+                $rebate_value2 = 0;
                 //如果上次累计订单总金额已超指标，则超过指标部分提成为:该次金额*rebate2
                 if ($before_order_total_amount * 1 >= $grade_order_amount) {
                     $rebate_value2 = $order_amount * $grade_order_rebate2;

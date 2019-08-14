@@ -249,7 +249,9 @@ class LoginCtl extends Yf_AppController
                     $Grade_LogModel->addLog($grade_row);
                 }
 
-                $User_GradeModel = new User_GradeModel;
+
+
+                $User_GradeModel = new User_GradeModel();
                 //升级判断
                 $res_flag = $User_GradeModel->upGrade($user_row['user_id'], $resource_row['user_growth']);
 

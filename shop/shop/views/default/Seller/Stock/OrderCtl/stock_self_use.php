@@ -47,7 +47,8 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
     <script type="text/javascript" src="<?=$this->view->js?>/stock_self_use.js" charset="utf-8"></script>
 
     <script>
-        $('.tabmenu > ul').find('li:gt(2)').remove();
+        $('.tabmenu > ul').find('li:lt(5)').remove();
+        $('.tabmenu > ul').find('li:gt(0)').remove();
     </script>
 <?php
 include $this->view->getTplPath() . '/' . 'seller_footer.php';

@@ -1307,6 +1307,7 @@ class Order_BaseModel extends Order_Base
     //确认收货
     public function confirmOrder($order_id)
     {
+        $Order_GoodsModel = new Order_GoodsModel();
         $order_base = $this->getOne($order_id);
         $order_payment_amount = $order_base['order_payment_amount'];
 
@@ -1342,6 +1343,59 @@ class Order_BaseModel extends Order_Base
                 }
             }
         }
+
+        $order_goods_data = $Order_GoodsModel->getByWhere(array('order_id' => $order_id));
+        $order_directseller_commission = array_sum(array_column($order_goods_data, 'directseller_commission_0')) + array_sum(array_column($order_goods_data, 'directseller_commission_1')) + array_sum(array_column($order_goods_data, 'directseller_commission_2'));
+        $condition['order_directseller_commission'] = $order_directseller_commission;
+
+        //计算合伙人提成，高级合伙人提成
+        $order_amount = $order_base['order_payment_amount']*1 - $order_base['order_refund_amount']*1;
+        $User_InfoModel = new User_InfoModel();
+        $user_g_info = $User_InfoModel->getOne($order_base['directseller_p_id']);
+        $before_order_total_amount = $user_g_info['children_order_total_amount'] * 1;
+        $total_children_order_total_amount = $before_order_total_amount + $order_amount;
+
+        //获取合伙人的返利比例
+        $User_GradeModel = new User_GradeModel();
+        $user_grade = $User_GradeModel->getOne(3);
+        $grade_order_amount = $user_grade['order_amount'] * 1;
+        $grade_order_rebate1 = $user_grade['order_rebate1'] * 1 / 100;
+        $grade_order_rebate2 = $user_grade['order_rebate2'] * 1 / 100;
+
+        //不管超指标还是未超指标，都需要：当前金额*rebate1
+        $rebate_value1 = $order_amount * $grade_order_rebate1;
+        $rebate_value2 = 0;
+        //如果上次累计订单总金额已超指标，则超过指标部分提成为:该次金额*rebate2
+        if ($before_order_total_amount * 1 >= $grade_order_amount) {
+            $rebate_value2 = $order_amount * $grade_order_rebate2;
+        } else if ($total_children_order_total_amount > $grade_order_amount) {
+            //如果该次累计总金额超过指标，则超过指标部分提成为:（累计总金额-指标部分）*rebate2
+            $order_amount2 = $total_children_order_total_amount - $grade_order_amount;
+            if ($order_amount2 > 0) {
+                $rebate_value2 = $order_amount2 * $grade_order_rebate2;
+            } else {
+                $rebate_value2 = 0;
+            }
+        } else if ($total_children_order_total_amount <= $grade_order_amount) {
+            //如果该次累计总金额未超过指标，则超过指标部分提成为:0
+            $rebate_value2 = 0;
+        }
+        $order_rebate_value2 = $rebate_value1 + $rebate_value2;
+        $condition['order_directseller_commission2'] = $order_rebate_value2;
+
+        $user_gp_info = $User_InfoModel->getOne($order_base['directseller_gp_id']);
+        $user_g_grade = $User_GradeModel->getOne(4);
+        //计算高级合伙人的提成比例
+        $grade_order_rebate1 = $user_g_grade['order_rebate1'] * 1/100;
+        $grade_order_rebate2 = $user_g_grade['order_rebate2'] * 1/100;
+        $grade_order_rebate_top = $user_g_grade['order_rebate_top'] * 1/100;
+        $partner_count = $user_gp_info['current_year_partner_count'];
+        $order_rebate = $grade_order_rebate1 * 1 + $grade_order_rebate2 * $partner_count;
+        if ($order_rebate > $grade_order_rebate_top) {
+            $order_rebate = $grade_order_rebate_top;
+        }
+        $order_rebate_value3 = $order_amount * $order_rebate;
+        $condition['order_directseller_commission3'] = $order_rebate_value3;
 
         $condition['order_status'] = Order_StateModel::ORDER_FINISH;
         $condition['order_finished_time'] = get_date_time();

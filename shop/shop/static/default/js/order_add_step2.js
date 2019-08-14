@@ -277,18 +277,20 @@ $(function () {
         var flag = selectAllCheck(false);
         var flag2 = getShippingFee();
         if(flag && flag2) {
-            var url = "index.php?ctl=Seller_Stock_Order&met=addOrder&typ=json";
-            var form_ser = $("#form").serialize();
-            $.post(url, form_ser, function (data) {
-                if (data.status == 200) {
-                    Public.tips.success('创建备货订单成功！');
-                    window.location.href = SITE_URL + "?ctl=Seller_Stock_Order&met=physical";
-                    return true;
-                } else {
-                    Public.tips.error('创建备货订单失败！');
-                    return false;
-                }
-            })
+            $.dialog.confirm('确定创建备货订单？', function () {
+                var url = "index.php?ctl=Seller_Stock_Order&met=addOrder&typ=json";
+                var form_ser = $("#form").serialize();
+                $.post(url, form_ser, function (data) {
+                    if (data.status == 200) {
+                        Public.tips.success('创建备货订单成功！');
+                        window.location.href = SITE_URL + "?ctl=Seller_Stock_Order&met=physical";
+                        return true;
+                    } else {
+                        Public.tips.error('创建备货订单失败！');
+                        return false;
+                    }
+                })
+            }, function () {});
         }
     })
 });

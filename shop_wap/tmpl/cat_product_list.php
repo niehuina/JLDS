@@ -199,7 +199,7 @@ if($_GET['qr']){
         {
             location.href = WapSiteUrl + "/tmpl/search.html"
         });
-        $.getJSON(ApiUrl + "/index.php?ctl=Goods_Cat&met=goodsCatRecomendList&typ=json&cat_parent_id=0", function (t)
+        $.getJSON(ApiUrl + "/index.php?ctl=Goods_Cat&met=goodsCatRecomendList&typ=json&user_id="+getCookie('id')+"&cat_parent_id=0", function (t)
         {
             console.info(t);
             var r = t.data;

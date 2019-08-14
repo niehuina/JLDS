@@ -64,7 +64,7 @@ $(function () {
 
                 var html = '<dl class="mt5">'+
                     '<dt>'+
-                    '<a href="member_stock.html">'+
+                    '<a href="../stock/member_stock.html">'+
                     '<h3><i class="mc-08"></i>个人仓储</h3>'+
                     '<h5><i class="arrow-r"></i></h5>'+
                     '</a>'+

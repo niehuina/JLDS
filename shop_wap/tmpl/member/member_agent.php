@@ -55,7 +55,7 @@ include __DIR__.'/../../includes/header.php';
     var user_mobile = getPhoneStr(user.user_mobile);
     %>
     <li data-user-id="<%=user.id;%>">
-        <img src="<%=user.user_logo;%>">
+        <img src="<%=user.user_logo ? user.user_logo : '../img/user_avt_default.png' %>">
         <dl>
             <dt>
                 <%=user.user_name;%>

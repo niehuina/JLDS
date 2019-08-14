@@ -254,7 +254,8 @@ $(function () {
                     parent.Public.tips({
                         content: '自用成功',
                         type: 3
-                    }), window.location.reload();
+                    });
+                    window.location.href = "index.php?ctl=Seller_Stock_Order&met=stock_self_use_list";
                     return true;
                 } else {
                     parent.Public.tips({

@@ -1,3 +1,5 @@
+var cartids = getQueryString("cartids");
+var shop_id=getQueryString("shop_id");
 $(function (){
     template.helper('isEmpty', function(o) {
         for (var i in o) {
@@ -60,7 +62,7 @@ $(function (){
                 sum += parseFloat(data.goods_sum);
             }
         }
-        var rData = {cart_list:cart_list, sum:sum.toFixed(2), cart_count:goodsarr.length, check_out:false};
+        var rData = {cart_list:cart_list, sum:sum.toFixed(2), cart_count:goodsarr.length, check_out:false, cartids: cartids};
         rData.WapSiteUrl = WapSiteUrl;
 
         if (rData.cart_list.length > 0 && key) {
@@ -566,7 +568,10 @@ function get_footer() {
 }
 
 function check_button() {
-    var _has = false
+    var _has = false;
+    var is_all = $('input[name="cart_id"]').length == $('input[name="cart_id"]:checked').length;
+    $('.all_checkbox').prop('checked', is_all);
+
     $('input[name="cart_id"]').each(function(){
         if ($(this).prop('checked')) {
             _has = true;

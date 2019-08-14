@@ -39,7 +39,7 @@ $(function ()
                 dataType: "json",
                 success: function(result){
                     if (result.status == 200) {
-                        window.location.href = WapSiteUrl + '/tmpl/member/member_stock.html';
+                        window.location.href = WapSiteUrl + '/tmpl/stock/member_stock.html';
                         return true;
                     } else {
                         $.sDialog({

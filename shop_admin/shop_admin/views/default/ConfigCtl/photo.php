@@ -96,7 +96,7 @@ $menus = $this->getThisMenus();
                     <p class="notic">默认店铺头像，最佳显示尺寸为180*80像素，请根据背景色选择使用图片色彩</p>
                 </dd>
             </dl>
-			<!-- <dl class="row">
+			<dl class="row">
                 <dt class="tit">
                     <label>默认会员头像</label>
 
@@ -110,7 +110,7 @@ $menus = $this->getThisMenus();
                     <input id="photo_user_logo" name="photo[photo_user_logo]" value="<?=($data['photo_user_logo']['config_value'])?>" class="ui-input w400" type="hidden"/>
                     <p class="notic">默认会员头像，最佳显示尺寸为120*120像素，请根据背景色选择使用图片色彩</p>
                 </dd>
-            </dl> -->
+            </dl>
           <div class="bot"> <a href="javascript:void(0);" class="ui-btn ui-btn-sp submit-btn">确认提交</a></div>
 		  </div>
     </form>

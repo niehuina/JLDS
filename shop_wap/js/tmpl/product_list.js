@@ -150,22 +150,22 @@ function get_list()
     {
         param.price_to = price_to
     }
-    if(own_shop != "")
-    {
-        param.op3 = 'ziying'
-    }
-    if(other_shop != "")
-    {
-        param.op3 = 'ruzhu'
-    }
-    if(actgoods != '')
-    {
-        param.op2 = 'active'
-    }
-    if(virtual != '')
-    {
-        param.isvirtual = virtual
-    }
+    // if(own_shop != "")
+    // {
+    //     param.op3 = 'ziying'
+    // }
+    // if(other_shop != "")
+    // {
+    //     param.op3 = 'ruzhu'
+    // }
+    // if(actgoods != '')
+    // {
+    //     param.op2 = 'active'
+    // }
+    // if(virtual != '')
+    // {
+    //     param.isvirtual = virtual
+    // }
 
     $.getJSON(ApiUrl + "/index.php?ctl=Goods_Goods&met=goodslist&typ=json&ua=wap&sub_site_id="+sub_site_id + window.location.search.replace("?", "&"), param, function (e)
     {
@@ -199,6 +199,7 @@ function search_adv()
     {
         var r = e.data;
         $("#list-items-scroll").html(template.render("search_items", r));
+        $("#list-items-scroll").siblings('.header').show();
         if (area_id)
         {
             $("#area_id").val(area_id)
@@ -211,22 +212,22 @@ function search_adv()
         {
             $("#price_to").val(price_to)
         }
-        if (own_shop)
-        {
-            $("#own_shop").addClass("current")
-        }
-        if (other_shop)
-        {
-            $("#other_shop").addClass("current")
-        }
-        if (actgoods)
-        {
-            $("#actgoods").addClass("current")
-        }
-        if (virtual)
-        {
-            $("#virtual").addClass("current")
-        }
+        // if (own_shop)
+        // {
+        //     $("#own_shop").addClass("current")
+        // }
+        // if (other_shop)
+        // {
+        //     $("#other_shop").addClass("current")
+        // }
+        // if (actgoods)
+        // {
+        //     $("#actgoods").addClass("current")
+        // }
+        // if (virtual)
+        // {
+        //     $("#virtual").addClass("current")
+        // }
         if (ci)
         {
             var i = ci.split("_");
@@ -256,22 +257,22 @@ function search_adv()
             {
                 e += "&price_to=" + $("#price_to").val()
             }
-            if ($("#own_shop")[0].className == "current")
-            {
-                e += "&own_shop=1"
-            }
-            if ($("#other_shop")[0].className == "current")
-            {
-                e += "&other_shop=1"
-            }
-            if ($("#actgoods")[0].className == "current")
-            {
-                e += "&actgoods=1"
-            }
-            if ($("#virtual")[0].className == "current")
-            {
-                e += "&virtual=1"
-            }
+            // if ($("#own_shop")[0].className == "current")
+            // {
+            //     e += "&own_shop=1"
+            // }
+            // if ($("#other_shop")[0].className == "current")
+            // {
+            //     e += "&other_shop=1"
+            // }
+            // if ($("#actgoods")[0].className == "current")
+            // {
+            //     e += "&actgoods=1"
+            // }
+            // if ($("#virtual")[0].className == "current")
+            // {
+            //     e += "&virtual=1"
+            // }
             if (typeof(cat_id) !== 'undefined' && cat_id!=='')
             {
                 e += "&cat_id="+cat_id

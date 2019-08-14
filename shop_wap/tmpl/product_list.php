@@ -30,10 +30,13 @@ include __DIR__ . '/../includes/header.php';
                 top: 0;
             }
             .secreen-layout .bottom {
-                padding: 0.5rem 0;
+                padding: 0.5rem;
             }
             #reset {
                 background: #70696a;
+            }
+            .list .goods-secrch-list .goods-price em{
+                font-size: 0.7rem;
             }
         </style>
     </head>
@@ -87,10 +90,10 @@ include __DIR__ . '/../includes/header.php';
                     <div class="header-title">
                         <h1>商品筛选</h1>
                     </div>
-                    <div class="header-r"><a href="javascript:void(0);" id="reset"  class="text reset">重置</a></div>
+<!--                    <div class="header-r"><a href="javascript:void(0);" id="reset"  class="text reset">重置</a></div>-->
                 </div>
             </div>
-            <div class="nctouch-main-layout-a secreen-layout" id="list-items-scroll">
+            <div class="nctouch-main-layout-a secreen-layout mt20" id="list-items-scroll">
                 <div></div>
             </div>
         </div>
@@ -103,20 +106,6 @@ include __DIR__ . '/../includes/header.php';
     <script type="text/html" id="search_items">
         <div>
             <dl>
-                <dt>店铺类型</dt>
-                <dd>
-                    <a href="javascript:void(0);" nctype="items" id="own_shop" class="">平台自营</a>
-                    <a href="javascript:void(0);" nctype="items" id="other_shop" class="">入驻店铺</a>
-                </dd>
-            </dl>
-            <dl>
-                <dt>商品类型</dt>
-                <dd>
-                    <a href="javascript:void(0);" nctype="items" id="actgoods">促销</a>
-                    <a href="javascript:void(0);" nctype="items" id="virtual">服务</a>
-                </dd>
-            </dl>
-            <dl>
                 <dt>价格区间</dt>
                 <dd>
                     <span class="inp-balck"><input type="text" id="price_from" nctype="price" pattern="[0-9]*" class="inp" placeholder="最低价" /></span>
@@ -125,10 +114,10 @@ include __DIR__ . '/../includes/header.php';
                 </dd>
             </dl>
             <div class="bottom">
-                <a href="javascript:void(0);" class="btn-l reset" id="reset">重置</a>
+                <a href="javascript:void(0);" class="btn-m reset" id="reset">重置</a>
+                <a href="javascript:void(0);" class="btn-m" id="search_submit">筛选</a>
             </div>
             <div class="bottom">
-                <a href="javascript:void(0);" class="btn-l" id="search_submit">筛选</a>
             </div>
         </div>
     </script>
@@ -205,6 +194,7 @@ include __DIR__ . '/../includes/header.php';
     <script type="text/javascript" src="../js/libs/zepto.min.js"></script>
     <script type="text/javascript" src="../js/libs/simple-plugin.js"></script>
     <script type="text/javascript" src="../js/libs/template.js"></script>
+    <script type="text/javascript" src="../js/libs/iscroll.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript" src="../js/tmpl/product_list.js"></script>
 <!--    <script type="text/javascript" src="../js/tmpl/footer.js"></script>-->

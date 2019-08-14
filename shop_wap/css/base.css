@@ -460,7 +460,8 @@ header.posf { animation: headerFixed 0.5s ease-in-out; -webkit-animation: header
 
 /*默认按钮样式*/
 .btn { vertical-align: top; display: inline-block !important;/* height: 1.1rem;*/ padding: 0.15rem 0.5rem; margin: 0 auto; font-size: 0.6rem; color: #555; /*line-height: 1.1rem;*/ text-align: center; background-color: #FFF; border: solid 1px #CCC; border-radius: 0.7rem }
-.btn.key { border-color: #F60; color: #F60 !important; font-weight: 600;}
+.btn.key { border-color: #06c1ae; color: #06c1ae !important; font-weight: 600;}
+.btn-m { display: inline-block; width: 40%; margin: 0 2%; font-size: 0.7rem; line-height: 1.8rem; text-align: center; color: #FFF; background: #06c1ae; border-radius: 0.2rem; }
 .btn-l { display: inline-block; width: 90%; margin: 0 5%; font-size: 0.8rem; line-height: 2rem; text-align: center; color: #FFF; background: #06c1ae; border-radius: 0.9rem; }
 .btn-green { display: inline-block; width: 90%; margin: 0 5%; font-size: 0.8rem; line-height: 2rem; text-align: center; color: #FFF; background: #06c1ae; border-radius: 0.2rem; border: 1px solid #06c1ae;}
 .btn-white { display: inline-block; width: 90%; margin: 0 5%; font-size: 0.8rem; line-height: 2rem; text-align: center; color: #06c1ae; background: #FFF; border-radius: 0.2rem; border: 1px solid #06c1ae;}
@@ -492,7 +493,7 @@ to {  width: 100%;}
 .fix-block-r a { display: block; width: 1.95rem; height: 1.95rem; background: rgba(255,255,255,0.85); border-radius: 100%; }
 .fix-block-r a i { width: 100%; height: 100%; display: block; background-position: 50% 50%; background-repeat: no-repeat; background-size: 100%;}
 .fix-block-r a.gotop-btn { margin-top: 0.25rem;}
-.fix-block-r a.gotop-btn i { background-image: url(../images/new/gotop_b.png);}
+.fix-block-r a.gotop-btn i { background-image: url(../images/gotop_b.png);}
 .fix-block-r a.browse-btn i { background-image: url(../images/new/goods_browse_b.png);}
 
 /*页面整体下拉缓冲*/

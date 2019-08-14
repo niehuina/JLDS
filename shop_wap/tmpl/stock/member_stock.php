@@ -14,7 +14,7 @@ include __DIR__.'/../../includes/header.php';
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1">
-    <title>我的商城</title>
+    <title>个人仓储</title>
     <link rel="stylesheet" type="text/css" href="../../css/base.css">
     <link rel="stylesheet" type="text/css" href="../../css/nctouch_member.css">
 
@@ -28,12 +28,12 @@ include __DIR__.'/../../includes/header.php';
 <header id="header" class="transparent">
     <div class="header-wrap">
         <div class="header-l">
-            <a href="member.html">
+            <a href="../member/member.html">
                 <i class="back back2"></i>
             </a>
         </div>
         <div class="header-title">
-            <h1>我的商城</h1>
+            <h1>个人仓储</h1>
         </div>
         <div class="header-r">
             <a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a>
@@ -64,20 +64,36 @@ include __DIR__.'/../../includes/header.php';
             </ul>
             <ul class="nctouch-default-list mt5">
                 <li>
-                    <a href="member_stock_check.html">
-                        <h4>库存盘点</h4>
+                    <a href="stock_check_list.html">
+                        <h4>库存盘点记录</h4>
                         <span class="arrow-r"></span></a>
                     </a>
                 </li>
             </ul>
             <ul class="nctouch-default-list mt5">
                 <li>
-                    <a href="member_stock_self_use.html">
-                        <h4>商品自用</h4>
+                    <a href="stock_self_use_list.html">
+                        <h4>商品自用记录</h4>
                         <span class="arrow-r"></span></a>
                     </a>
                 </li>
             </ul>
+<!--            <ul class="nctouch-default-list mt5">-->
+<!--                <li>-->
+<!--                    <a href="member_stock_check.html">-->
+<!--                        <h4>库存盘点</h4>-->
+<!--                        <span class="arrow-r"></span></a>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--            <ul class="nctouch-default-list mt5">-->
+<!--                <li>-->
+<!--                    <a href="member_stock_self_use.html">-->
+<!--                        <h4>商品自用</h4>-->
+<!--                        <span class="arrow-r"></span></a>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--            </ul>-->
         </div>
     </div>
 </div>

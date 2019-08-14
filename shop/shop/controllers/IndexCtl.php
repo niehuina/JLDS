@@ -119,9 +119,9 @@ class IndexCtl extends Controller
 						$item = array();
 						$mb_tpl_layout_data = $layout_data_val['mb_tpl_layout_data'];
 
-						$common_list = $goods_CommonModel->getByWhere( array('common_id:IN'=>$mb_tpl_layout_data) );
+						$common_list = $goods_CommonModel->getCommonList( array('common_id:IN'=>$mb_tpl_layout_data) );
 
-						if ( $common_list )
+						if ( $common_list['items'] )
 						{
                             $user_id = request_int('user_id', '');;
 						    if($user_id){
@@ -129,7 +129,7 @@ class IndexCtl extends Controller
                                 $user_info = $user_info_model->getOne($user_id);
                                 $user_grade = $user_info['user_grade'];
                             }
-							foreach($common_list as $common_id => $common_data)
+							foreach($common_list['items'] as $common_id => $common_data)
 							{
 								$goods_id = pos($common_data['goods_id']);
 								if ( is_array($goods_id) )
@@ -991,6 +991,16 @@ class IndexCtl extends Controller
         $Mb_CatImageModel = new Mb_CatImageModel();
         $data = $Mb_CatImageModel->getByWhere();
         $this->data->addBody(-140, $data);
+    }
+
+    /**
+     * 获取平台客服QQ号码
+     * @return string
+     */
+    public function getWebservice_qq()
+    {
+        $data['webservice_qq'] = Web_ConfigModel::value("webservice_qq", 0);
+        return $this->data->addBody(-140, $data);
     }
 }
 

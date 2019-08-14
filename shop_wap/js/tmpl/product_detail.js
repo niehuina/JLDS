@@ -157,7 +157,7 @@ $(function () {
         $.ajax({
             url: ApiUrl + "/index.php?ctl=Goods_Goods&met=goods&typ=json",
             type: "get",
-            data: {goods_id: goods_id, k: key, u: getCookie('id'), cid: cid, lbs_geo: lbs_geo,ua:"wap"},
+            data: {goods_id: goods_id, k: key, u: getCookie('id'), user_id: getCookie('id'), cid: cid, lbs_geo: lbs_geo,ua:"wap"},
             dataType: "json",
             success: function (result) {
                 var data = result.data;
@@ -229,9 +229,9 @@ $(function () {
                         var html = template.render('product_detail', data);
                         $("#product_detail_html").html(html);
 
-                        if(getCookie('is_app_guest')){
-                            $('#shareit').attr("href","/share_toall.html?goods_id="+data.goods_info.goods_id+"&title="+encodeURIComponent(data.goods_info.goods_name)+"&img="+data.goods_image[0]+"&url="+WapSiteUrl+"/tmpl/product_detail.html?goods_id="+data.goods_info.goods_id);
-                        }
+                        // if(getCookie('is_app_guest')){
+                        //     $('#shareit').attr("href","/share_toall.html?goods_id="+data.goods_info.goods_id+"&title="+encodeURIComponent(data.goods_info.goods_name)+"&img="+data.goods_image[0]+"&url="+WapSiteUrl+"/tmpl/product_detail.html?goods_id="+data.goods_info.goods_id);
+                        // }
 
 
                         if (data.goods_info.common_is_virtual == '0') {
@@ -851,6 +851,12 @@ $(function () {
                     }
                 });
 
+                // 从下到上动态显示隐藏内容
+                // $.animationUp({
+                //     valve: '#shareit',            // 动作触发
+                //     wrapper: '#store_voucher_con',                   // 动作块
+                // });
+
                 $.animationUp({
                     valve: '#getVoucher',          // 动作触发
                     wrapper: '#voucher_html',    // 动作块
@@ -877,35 +883,38 @@ $(function () {
                     $(this).add('down');
                 });
 
+                loadKefuQQ();
 
                     // 联系客服
-                    $('.kefu').click(function () {
+                    // $('.kefu').click(function () {
+                    //
+                    //     loadKefuQQ();
                         //判断不是手机号时使用IM
-                        if( $(this).attr('href').indexOf('tel:')==-1){
-                                if (!getCookie('user_account') || getCookie('user_account') == undefined) {
-                                    alert_box('请先登录');
-                                    return false;
-                                }
+                        // if( $(this).attr('href').indexOf('tel:')==-1){
+                        //         if (!getCookie('user_account') || getCookie('user_account') == undefined) {
+                        //             alert_box('请先登录');
+                        //             return false;
+                        //         }
 
-                                if (window.chatTo) {
-                                    chatTo(result.data.store_info.member_name.toString());
+                                // if (window.chatTo) {
+                                //     chatTo(result.data.store_info.member_name.toString());
+                                //
+                                // }
+                                // else if (window.android) {
+                                //     if (window.android.chatTo) {
+                                //         window.android.chatTo(result.data.store_info.member_name.toString(), result.data.store_info.store_name, data.store_info.store_logo);
+                                //     }else{
+                                //         window.location.href = WapSiteUrl + '/tmpl/im-chatinterface.html?contact_type=C&contact_you=' + result.data.store_info.member_name + '&uname=' + getCookie('user_account');
+                                //     }
+                                //
+                                // }
+                                // else {
+                                //     //tmpl/im-chatinterface.html?contact_type=C&contact_you=5522aa&uname=5511aa
+                                //     window.location.href = WapSiteUrl + '/tmpl/im-chatinterface.html?contact_type=C&contact_you=' + result.data.store_info.member_name + '&uname=' + getCookie('user_account');
+                                // }
+                        // }
 
-                                }
-                                else if (window.android) {
-                                    if (window.android.chatTo) {
-                                        window.android.chatTo(result.data.store_info.member_name.toString(), result.data.store_info.store_name, data.store_info.store_logo);
-                                    }else{
-                                        window.location.href = WapSiteUrl + '/tmpl/im-chatinterface.html?contact_type=C&contact_you=' + result.data.store_info.member_name + '&uname=' + getCookie('user_account');
-                                    }
-
-                                }
-                                else {
-                                    //tmpl/im-chatinterface.html?contact_type=C&contact_you=5522aa&uname=5511aa
-                                    window.location.href = WapSiteUrl + '/tmpl/im-chatinterface.html?contact_type=C&contact_you=' + result.data.store_info.member_name + '&uname=' + getCookie('user_account');
-                                }
-                        }
-
-                    })
+                    // })
 
                 getGoodsNewReview();
 
@@ -953,6 +962,11 @@ $(function () {
 
     $('#list-address-scroll').on('click', 'dl > a', map);
     $('#map_all').on('click', map);
+
+    $.animationUp({
+        valve: '#shareit',            // 动作触发
+        wrapper: '#store_voucher_con',                   // 动作块
+    })
 });
 
 
@@ -1073,3 +1087,27 @@ $('#voucher_html').on('click', '.new-btn', function () {
     $('#voucher_html').removeClass('up');
     $('#voucher_html').addClass('down');
 });
+
+function loadKefuQQ() {
+    $.ajax({
+        type: 'get',
+        url: ApiUrl + '/index.php?ctl=Index&met=getWebservice_qq&typ=json',
+        data: {k: getCookie('key'), u: getCookie('id')},
+        dataType: 'json',
+        success: function (result) {
+            var webservice_qq = result.data['webservice_qq'];
+            var u = navigator.userAgent;
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+
+            var url = 'http://wpa.qq.com/msgrd?v=3&uin=' + webservice_qq + '&site=qq&menu=yes';
+            if(isiOS){
+                if(u.toLowerCase().match(/MicroMessenger/i) == "micromessenger"){
+                    url = 'http://wpa.qq.com/msgrd?v=3&uin=' + webservice_qq + '&site=qq&menu=yes';
+                }else{
+                    url = 'mqqwpa://im/chat?chat_type=wpa&uin=' + webservice_qq + '&version=1&src_type=web&web_src=oicqzone.com';
+                }
+            }
+            $('a.kefu').attr('href', url);
+        }
+    });
+}

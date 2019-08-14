@@ -1914,6 +1914,100 @@ class Buyer_UserCtl extends Buyer_Controller
     /**
      * 个人仓库管理
      */
+    public function stock_goods()
+    {
+        $page    = request_int('curpage', 1);
+        $rows    = request_int('rows', 20);
+        $goods_key = request_string('goods_key', '');
+
+        $user_id = request_int('user_id');
+        if($user_id != Web_ConfigModel::value('self_user_id')) {
+            $User_Stock_Model = new User_StockModel();
+            $cond_row['user_id'] = $user_id;
+            if (!empty($goods_key)) {
+                $cond_row['goods_name:like'] = '%' . $goods_key . '%';
+            }
+            $order_row['CONVERT(goods_name USING gbk)'] = 'asc';
+            $goods = $User_Stock_Model->getUserStockList($cond_row, $order_row, $page, $rows);
+
+            $this->data->addBody(-140, $goods);
+        }else{
+            $cront_row = array(
+                'shop_id' => Web_ConfigModel::value('self_shop_id'),
+                'common_state' => Goods_CommonModel::GOODS_STATE_NORMAL,
+                'common_verify' => Goods_CommonModel::GOODS_VERIFY_ALLOW
+            );
+            if (!empty($goods_key) && isset($goods_key)) {
+                $cront_row['common_name:like'] = '%' . $goods_key . '%';
+            }
+            $order_row['CONVERT(common_name USING gbk)'] = 'asc';
+            $Goods_CommonModel = new Goods_CommonModel();
+            $Goods_BaseModel = new Goods_BaseModel();
+            $goods_common_list = $Goods_CommonModel->listByWhere($cront_row, $order_row, $page, $rows, true);
+            foreach($goods_common_list['items'] as $key=>$common){
+                $goods_base = $Goods_BaseModel->getOneByWhere(['common_id'=>$common['common_id']]);
+
+                $goods_common_list['items'][$key]['stock_id'] = $goods_base['goods_id'];
+                $goods_common_list['items'][$key]['goods_id'] = $goods_base['goods_id'];
+                $goods_common_list['items'][$key]['goods_name'] = $goods_base['goods_name'];
+                $goods_common_list['items'][$key]['goods_stock'] = $goods_base['goods_stock'];
+            }
+
+            $this->data->addBody(-140, $goods_common_list);
+        }
+
+    }
+
+    public function stock_check_log()
+    {
+        $page    = request_int('curpage', 1);
+        $rows    = request_int('rows', 20);
+        $user_id = request_int('user_id');
+
+        $query_start_date = request_string('query_start_date');
+        $query_end_date = request_string('query_end_date');
+        if (!empty($query_start_date)) {
+            $cond_row['check_date_time:>='] = $query_start_date;
+        }
+
+        if (!empty($query_end_date)) {
+            $cond_row['check_date_time:<='] = date('Y-m-d 23:59:59',strtotime($query_end_date));
+        }
+        $Stock_CheckModel = new Stock_CheckModel();
+        $cond_row['user_id'] = $user_id;
+        $order_row['check_date_time'] = 'desc';
+        $data = $Stock_CheckModel->listByWhere($cond_row, $order_row, $page, $rows);
+
+        $Stock_CheckGoodsModel = new Stock_CheckGoodsModel();
+        foreach($data['items'] as $key=>$check){
+            $goods_cond_row = array();
+            $goods_cond_row['check_id'] = $check['check_id'];
+            $goods_count = $Stock_CheckGoodsModel->get_count($goods_cond_row);
+            $data['items'][$key]['good_count'] = $goods_count;
+        }
+
+        $this->data->addBody(-140, $data);
+    }
+
+    public function check_details_goods()
+    {
+        $check_id = request_int('check_id');
+
+        $page    = request_int('curpage', 1);
+        $rows    = request_int('rows', 20);
+        $goods_key = request_string('goods_key');
+        if(!empty($goods_key)){
+            $cond_row['goods_name:like'] = '%' . $goods_key . '%';
+        }
+        $cond_row['check_id'] = $check_id;
+        $order_row['CONVERT(goods_name USING gbk)'] = 'desc';
+        $Stock_CheckGoodsModel = new Stock_CheckGoodsModel();
+        $data = $Stock_CheckGoodsModel->listByWhere($cond_row, $order_row, $page, $rows);
+        $data['goods_count'] = $Stock_CheckGoodsModel->get_count($cond_row);
+
+        $this->data->addBody(-140, $data);
+    }
+
     public function stock_check()
     {
         $typ = request_string('typ');
@@ -2019,50 +2113,6 @@ class Buyer_UserCtl extends Buyer_Controller
         }
     }
 
-    public function stock_goods()
-    {
-        $page    = request_int('page', 1);
-        $rows    = request_int('rows', 20);
-        $goods_key = request_string('goods_key', '');
-
-        $user_id = request_int('user_id');
-        if($user_id != Web_ConfigModel::value('self_user_id')) {
-            $User_Stock_Model = new User_StockModel();
-            $cond_row['user_id'] = $user_id;
-            if (!empty($goods_key)) {
-                $cond_row['goods_name:like'] = '%' . $goods_key . '%';
-            }
-            $order_row['CONVERT(goods_name USING gbk)'] = 'asc';
-            $goods = $User_Stock_Model->getUserStockList($cond_row, $order_row, $page, $rows);
-
-            $this->data->addBody(-140, $goods);
-        }else{
-            $cront_row = array(
-                'shop_id' => Web_ConfigModel::value('self_shop_id'),
-                'common_state' => Goods_CommonModel::GOODS_STATE_NORMAL,
-                'common_verify' => Goods_CommonModel::GOODS_VERIFY_ALLOW
-            );
-            if (!empty($goods_key) && isset($goods_key)) {
-                $cront_row['common_name:like'] = '%' . $goods_key . '%';
-            }
-            $order_row['CONVERT(common_name USING gbk)'] = 'asc';
-            $Goods_CommonModel = new Goods_CommonModel();
-            $Goods_BaseModel = new Goods_BaseModel();
-            $goods_common_list = $Goods_CommonModel->listByWhere($cront_row, $order_row, $page, $rows, true);
-            foreach($goods_common_list['items'] as $key=>$common){
-                $goods_base = $Goods_BaseModel->getOneByWhere(['common_id'=>$common['common_id']]);
-
-                $goods_common_list['items'][$key]['stock_id'] = $goods_base['goods_id'];
-                $goods_common_list['items'][$key]['goods_id'] = $goods_base['goods_id'];
-                $goods_common_list['items'][$key]['goods_name'] = $goods_base['goods_name'];
-                $goods_common_list['items'][$key]['goods_stock'] = $goods_base['goods_stock'];
-            }
-
-            $this->data->addBody(-140, $goods_common_list);
-        }
-
-    }
-
     public function stock_self_use()
     {
         $typ = request_string('typ');
@@ -2090,7 +2140,7 @@ class Buyer_UserCtl extends Buyer_Controller
                 $goods_stock_list = $Goods_BaseModel->getByWhere($cond_row);
             }
 
-            $prefix = sprintf('%s-%s-%s', Yf_Registry::get('shop_app_id'), date('Ymd'), $user_id);
+            $prefix = sprintf('%s-%s', date('Ymd'), $user_id);
             $Number_SeqModel = new Number_SeqModel();
             $order_number = $Number_SeqModel->createSeq($prefix);
             $order_id = sprintf('%s-%s', 'ZY', $order_number);
@@ -2153,6 +2203,55 @@ class Buyer_UserCtl extends Buyer_Controller
 
             $this->data->addBody(-140, array(), $msg, $status);
         }
+    }
+
+    public function stock_self_user_list()
+    {
+        $page    = request_int('curpage', 1);
+        $rows    = request_int('rows', 20);
+        $user_id = request_int('user_id');
+
+        $query_start_date = request_string('query_start_date');
+        $query_end_date = request_string('query_end_date');
+        if (!empty($query_start_date)) {
+            $cond_row['out_time:>='] = $query_start_date;
+        }
+
+        if (!empty($query_end_date)) {
+            $cond_row['out_time:<='] = date('Y-m-d 23:59:59',strtotime($query_end_date));
+        }
+        $User_StockOutModel = new User_StockOutModel();
+        $cond_row['user_id'] = $user_id;
+        $order_row['out_time'] = 'desc';
+        $data = $User_StockOutModel->listByWhere($cond_row, $order_row, $page, $rows, true, 'out_order_id');
+
+        foreach($data['items'] as $key=>$out){
+            $goods_cond_row = array();
+            $goods_cond_row['out_order_id'] = $out['out_order_id'];
+            $goods_count = $User_StockOutModel->get_sum_count($out['out_order_id']);
+            $data['items'][$key]['good_count'] = $goods_count;
+        }
+
+        $this->data->addBody(-140, $data);
+    }
+
+    public function self_use_details()
+    {
+        $out_order_id = request_string('out_order_id');
+
+        $page    = request_int('curpage', 1);
+        $rows    = request_int('rows', 20);
+        $goods_key = request_string('goods_key');
+        if(!empty($goods_key)){
+            $cond_row['goods_name:like'] = '%' . $goods_key . '%';
+        }
+        $cond_row['out_order_id'] = $out_order_id;
+        $order_row['CONVERT(goods_name USING gbk)'] = 'desc';
+        $User_StockOutModel = new User_StockOutModel();
+        $data = $User_StockOutModel->listByWhere($cond_row, $order_row, $page, $rows);
+        $data['goods_count'] = $User_StockOutModel->get_sum_count($out_order_id);
+
+        $this->data->addBody(-140, $data);
     }
 }
 

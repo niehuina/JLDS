@@ -1416,4 +1416,12 @@ function curl_request_text(&$error, $url, $param = array(), $method = 'GET', $ti
     return $response;
 }
 
+
+function redirect($url,$e301 = false){
+    if($e301 === true){
+        header( "HTTP/1.1 301 Moved Permanently" );
+    }
+    header("location:$url");
+    exit;
+}
 ?>

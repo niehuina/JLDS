@@ -206,5 +206,68 @@ class Yf_AppController extends Yf_Controller
 
 		return false;
 	}
+
+    /**
+     * 确保当前用户是在微信中打开，并且获取用户信息
+     *
+     * @param string $url 获取到微信授权临时票据（code）回调页面的URL
+     */
+    public function getWxUserInfo($url = '') {
+
+        $WxModel = new WxModel();
+
+        //微信标记（自己创建的）
+        $wxSign = $_COOKIE['wxSign'];
+        //先看看本地cookie里是否存在微信唯一标记，
+        //假如存在，可以通过$wxSign到cookie里取出微信个人信息（因为在第一次取到微信个人信息，我会将其保存一份到redis服务器里缓存着）
+        if (!empty($wxSign)) {
+            //如果存在，则从cookie里取出缓存了的数据
+            $userInfo = $_COOKIE("weixin:sign_{$wxSign}");
+            if (!empty($userInfo)) {
+                //获取用户的openid
+                $this->wxId = $userInfo['openid'];
+                //将其存在cookie里
+                setcookie('wxId', $this->wxId, 60*60*24*7);
+                return $userInfo;
+            }
+        }
+
+        //获取授权临时票据（code）
+        $code = $_GET['code'];
+        if (empty($code)) {
+            if (empty($url)) {
+                $url = rtrim($_SERVER['QUERY_STRING'], '/');
+                //到WxModel.php里获取到微信授权请求URL,然后redirect请求url
+                redirect($WxModel->getOAuthUrl(baseUrl($url)));
+            }
+        }
+        /***************这里开始第二步：通过code获取access_token****************/
+        $result = $WxModel->getOauthAccessToken($code);
+
+        //如果发生错误
+        if (isset($result['errcode'])) {
+            return array('msg'=>'授权失败,请联系客服','result'=>$result);
+        }
+
+        //到这一步就说明已经取到了access_token
+        $this->wxId = $result['openid'];
+        $accessToken = $result['access_token'];
+        $openId = $result['openid'];
+
+        //将openid和accesstoken存入cookie中
+        setcookie('wx_id', $this->wxId, 60*60*24*7);
+        setcookie('access_token', $accessToken);
+
+        /*******************这里开始第三步：通过access_token调用接口，取出用户信息***********************/
+        $this->userInfo = $WxModel->getUserInfo($openId, $accessToken);
+
+        //自定义微信唯一标识符
+        $wxSign =substr(md5($this->wxId.'k2m5i3'), 8, 16);
+        //将其存到cookie里
+        setcookie('wxSign', $wxSign, 60*60*24*7);
+        //将个人信息缓存到cookie里
+        setcookie("weixin:sign_{$wxSign}", $userInfo, 60*60*24*7);
+        return $userInfo;
+    }
 }
 ?>

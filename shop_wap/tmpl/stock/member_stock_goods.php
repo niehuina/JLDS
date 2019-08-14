@@ -23,13 +23,16 @@ include __DIR__ . '/../../includes/header.php';
             .secreen-layout .bottom {
                 padding: 0.5rem 0;
             }
-            .list .goods-secrch-list .goods-sold{
-                width: 33%;
-            }
             .list .goods-secrch-list .goods-name{
                 height: 2rem;
                 max-height: 2.0rem;
                 line-height: 1rem;
+            }
+            .list .goods-secrch-list .goods-sale{
+                padding: 0;
+            }
+            .list .goods-secrch-list .goods-assist{
+                padding: 0;
             }
         </style>
     </head>
@@ -87,24 +90,28 @@ include __DIR__ . '/../../includes/header.php';
         %>
         <li class="goods-item" goods_id="<%=goods.goods_id;%>">
             <span class="goods-pic">
-                <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
+                <a href="../product_detail.html?goods_id=<%=goods.goods_id;%>">
                     <img src="<%=goods.common_image;%>"/>
                 </a>
             </span>
             <dl class="goods-info">
                 <dt class="goods-name">
-                    <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
+                    <a href="../product_detail.html?goods_id=<%=goods.goods_id;%>">
                         <h4><%=goods.common_name;%></h4>
                     </a>
                 </dt>
+                <dd class="goods-sale">
+                    <span class="goods-price"></span>
+                </dd>
                 <dd class="goods-assist">
-                    <a href="product_detail.html?goods_id=<%=goods.goods_id;%>">
+                    <a href="../product_detail.html?goods_id=<%=goods.goods_id;%>">
 <!--                        <span class="goods-sold">销量-->
 <!--                            <em><%=goods.common_salenum;%></em>-->
 <!--                        </span>-->
 <!--                        <span class="goods-sold">评论-->
 <!--                            <em><%=goods.common_evaluate;%></em>-->
 <!--                        </span>-->
+                        <span></span>
                         <span class="goods-sold">库存
                             <em><%=goods.goods_stock;%></em>
                         </span>
