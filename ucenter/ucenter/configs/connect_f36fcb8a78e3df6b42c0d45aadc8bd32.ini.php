@@ -18,12 +18,12 @@ $connect_rows=array (
     'app_id' => '1',
     'app_key' => '1',
   ),
-  'weixin' => 
-  array (
-    'status' => '0',
-    'app_id' => '1',
-    'app_key' => '1',
-  ),
+  'weixin' =>
+      array (
+          'status' => '1',
+          'app_id' => 'wx782ef8612ed4e8d1',
+          'app_key' => '9d7e6226b87c73615cb41b671af3aebc',
+      ),
 );
 
 return $connect_rows;

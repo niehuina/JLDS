@@ -16,10 +16,10 @@
  * @var string
  */
 $wx_config = array();
-$wx_config['APPID'] = 'paycenter';
-$wx_config['MCHID'] = '1225312702';
-$wx_config['KEY'] = 'e10adc3949ba59abbe56e057f20f883e';
-$wx_config['APPSECRET'] = '01c6d59a3f9024db6336662ac95c8e74';
+$wx_config['APPID'] = 'wx782ef8612ed4e8d1';
+$wx_config['MCHID'] = '1557390621';
+$wx_config['KEY'] = '127ac7ba157a4d98989224ec1741a920';
+$wx_config['APPSECRET'] = '720acddfdbffda6c57f094b5eef80934';
 
 
 //=======【证书路径设置】=====================================

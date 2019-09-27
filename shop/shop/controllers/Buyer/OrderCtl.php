@@ -4642,29 +4642,101 @@ class Buyer_OrderCtl extends Buyer_Controller
 
         $user_info = $User_InfoModel->getOne($user_id);
 
-        $cond_row['directseller_p_id|directseller_gp_id'] = $user_id;
-        $cond_row['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
-        $cond_row['rebate_is_settlement|g_rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
-        $cond_row['order_create_time:>='] = $user_info['user_update_partner_date'];
-        $order_row['order_finished_time'] = 'desc';
-        $user_orders = $Order_BaseModel->listByWhere($cond_row, $order_row, $page, $rows);
-        Yf_Log::log("order_profit-order:" . count($user_orders), Yf_Log::LOG, 'user_settle_search');
 
-        foreach ($user_orders['items'] as $k => $order) {
-            $order_amount = $order['order_payment_amount'] * 1 - $order['order_refund_amount'] * 1;
-
-            $user_orders['items'][$k]['order_create_text'] = '完成时间：' . date('Y-m-d H:i', strtotime($order['order_finished_time']));
-            $user_orders['items'][$k]['order_settlement_text'] = '';
-            $user_orders['items'][$k]['order_payment_amount'] = $order_amount;
-
-            if($order['directseller_p_id'] == $user_id && $order['rebate_is_settlement'] == Order_BaseModel::IS_NOT_SETTLEMENT){
-                $user_orders['items'][$k]['order_commission'] = $order['order_directseller_commission2'];
-            }else if($order['directseller_gp_id'] == $user_id && $order['g_rebate_is_settlement'] == Order_BaseModel::IS_NOT_SETTLEMENT){
-                $user_orders['items'][$k]['order_commission'] = $order['order_directseller_commission3'];
-            }else{
-                unset($user_orders['items'][$k]);
+        if($user_info['user_grade'] == 4) {
+            $cond_row['directseller_gp_id'] = $user_id;
+            $cond_row['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
+            $cond_row['g_rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
+            if($user_info['user_update_partner_date']) {
+                $cond_row['order_create_time:>='] = $user_info['user_update_partner_date'];
             }
+            $order_row['order_finished_time'] = 'desc';
+            $user_orders = $Order_BaseModel->listByWhere($cond_row, $order_row, $page, $rows);
+            Yf_Log::log("order_profit-order:" . count($user_orders), Yf_Log::LOG, 'user_settle_search');
+
+            foreach ($user_orders['items'] as $k => $order) {
+                $order_amount = $order['order_payment_amount'] * 1 - $order['order_refund_amount'] * 1;
+
+                $user_orders['items'][$k]['order_create_text'] = '完成时间：' . date('Y-m-d H:i', strtotime($order['order_finished_time']));
+                $user_orders['items'][$k]['order_settlement_text'] = '';
+                $user_orders['items'][$k]['order_payment_amount'] = $order_amount;
+
+                if ($order['directseller_p_id'] == $user_id && $order['rebate_is_settlement'] == Order_BaseModel::IS_NOT_SETTLEMENT) {
+                    $user_orders['items'][$k]['order_commission'] = $order['order_directseller_commission2'];
+                } else if ($order['directseller_gp_id'] == $user_id && $order['g_rebate_is_settlement'] == Order_BaseModel::IS_NOT_SETTLEMENT) {
+                    $user_orders['items'][$k]['order_commission'] = $order['order_directseller_commission3'];
+                } else {
+                    unset($user_orders['items'][$k]);
+                }
+            }
+
+            if ($user_orders['hasmore'] == false) {
+                $cond_row2['directseller_p_id'] = $user_id;
+                $cond_row2['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
+                $cond_row2['rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
+                if($user_info['user_update_partner_date']) {
+                    $cond_row2['order_create_time:>='] = $user_info['user_update_partner_date'];
+                }
+                $order_row['order_finished_time'] = 'desc';
+                $user_orders2 = $Order_BaseModel->listByWhere($cond_row2, $order_row, $page, $rows);
+                Yf_Log::log("order_profit-order:" . count($user_orders2), Yf_Log::LOG, 'user_settle_search');
+
+                foreach ($user_orders2['items'] as $k => $order) {
+                    $order_amount = $order['order_payment_amount'] * 1 - $order['order_refund_amount'] * 1;
+
+                    $user_orders2['items'][$k]['order_create_text'] = '完成时间：' . date('Y-m-d H:i', strtotime($order['order_finished_time']));
+                    $user_orders2['items'][$k]['order_settlement_text'] = '';
+                    $user_orders2['items'][$k]['order_payment_amount'] = $order_amount;
+
+                    if ($order['directseller_p_id'] == $user_id && $order['rebate_is_settlement'] == Order_BaseModel::IS_NOT_SETTLEMENT) {
+                        $user_orders2['items'][$k]['order_commission'] = $order['order_directseller_commission2'];
+                    } else if ($order['directseller_gp_id'] == $user_id && $order['g_rebate_is_settlement'] == Order_BaseModel::IS_NOT_SETTLEMENT) {
+                        $user_orders2['items'][$k]['order_commission'] = $order['order_directseller_commission3'];
+                    } else {
+                        unset($user_orders2['items'][$k]);
+                    }
+                }
+
+                $user_orders['items'] = array_merge($user_orders['items'], $user_orders2['items']);
+            }
+        }else{
+            $cond_row2['directseller_p_id'] = $user_id;
+            $cond_row2['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
+            $cond_row2['rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
+            $cond_row2['order_create_time:>='] = $user_info['user_update_partner_date'];
+            $order_row['order_finished_time'] = 'desc';
+            $user_orders2 = $Order_BaseModel->listByWhere($cond_row2, $order_row, $page, $rows);
+            Yf_Log::log("order_profit-order:" . count($user_orders2), Yf_Log::LOG, 'user_settle_search');
+
+            foreach ($user_orders2['items'] as $k => $order) {
+                $order_amount = $order['order_payment_amount'] * 1 - $order['order_refund_amount'] * 1;
+
+                $user_orders2['items'][$k]['order_create_text'] = '完成时间：' . date('Y-m-d H:i', strtotime($order['order_finished_time']));
+                $user_orders2['items'][$k]['order_settlement_text'] = '';
+                $user_orders2['items'][$k]['order_payment_amount'] = $order_amount;
+
+                if ($order['directseller_p_id'] == $user_id && $order['rebate_is_settlement'] == Order_BaseModel::IS_NOT_SETTLEMENT) {
+                    $user_orders2['items'][$k]['order_commission'] = $order['order_directseller_commission2'];
+                } else if ($order['directseller_gp_id'] == $user_id && $order['g_rebate_is_settlement'] == Order_BaseModel::IS_NOT_SETTLEMENT) {
+                    $user_orders2['items'][$k]['order_commission'] = $order['order_directseller_commission3'];
+                } else {
+                    unset($user_orders2['items'][$k]);
+                }
+            }
+            $user_orders = $user_orders2;
         }
+
+        $formvars = array();
+        $formvars['user_id'] = $user_id;
+        $formvars['trade_type_id'] = 15;
+        $formvars['user_type'] = 1;
+        $formvars['status'] = 2;
+        $rs = $this->getPaycenterApi($formvars, 'Api_Paycen_PayRecord', 'getRecordAmountByUserId');
+        if ($rs['data']) {
+            $user_orders['amount'] = $rs['data']['amount'];
+        }
+
+        $this->data->addBody(-140, $user_orders);
     }
 
     /**

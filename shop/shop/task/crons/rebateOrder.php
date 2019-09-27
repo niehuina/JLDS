@@ -66,6 +66,7 @@ if ($flag !== false && $Order_BaseModel->sql->commitDb()) {
     $status = 250;
 }
 
+$flag = true;
 //开启事物
 $Order_BaseModel->sql->startTransactionDb();
 
@@ -75,10 +76,11 @@ $user_g_grade = $User_GradeModel->getOne(4);
 Yf_Log::log("g_partner:".count($g_partner_list), Yf_Log::LOG, 'user_settle');
 foreach ($g_partner_list as $key => $user_info) {
     $user_id = $user_info['user_id'];
-    $flag = $User_SettleProfitModel->rebateOrderForGPartner($user_id, $user_info);
+    $flag = $User_SettleProfitModel->rebateOrderForPartner($user_id, $user_info);
+    $flag1 = $User_SettleProfitModel->rebateOrderForGPartner($user_id, $user_info);
 }
 
-if ($flag !== false && $Order_BaseModel->sql->commitDb()) {
+if ($flag !== false && $flag1 !== false && $Order_BaseModel->sql->commitDb()) {
     $status = 200;
     $msg = __('success');
 } else {

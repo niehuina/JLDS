@@ -120,7 +120,7 @@ include $this->view->getTplPath() . '/' . 'seller_header.php';
                 <tr>
                     <th class="w10">&nbsp;</th>
                     <th colspan="2"><?=__('商品')?></th>
-                    <th class="w120"><?=__('商品VIP价格')?><!--(<?/*=Web_ConfigModel::value('monetary_unit')*/?>)--></th>
+                    <th class="w120"><?=__('商品会员价格')?><!--(<?/*=Web_ConfigModel::value('monetary_unit')*/?>)--></th>
                     <th class="w60"><?=__('数量')?></th>
                     <th class="w150"><strong><?=__('应返还差价')?>(<?=Web_ConfigModel::value('monetary_unit')?>)</strong></th>
 <!--                    <th class="w100">--><?//=__('优惠活动')?><!--</th>-->

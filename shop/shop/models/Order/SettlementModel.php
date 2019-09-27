@@ -217,11 +217,13 @@ class Order_SettlementModel extends Order_Settlement
 			//店铺促销活动费用
 			$add_settle_row['os_shop_cost_amount'] = $settle_row['shop_cost'];
 			//应结金额（订单金额（含运费）+红包金额-佣金金额-退单金额-退还红包金额+退还佣金-店铺费用+定金订单中的未退定金+下单时使用的平台红包-全部退款时应扣除的平台红包）
-			$add_settle_row['os_amount'] = $settle_row['order_amount'] + $settle_row['redpacket_amount'] - $settle_row['commission_amount'] - $settle_row['return_amount'] - $settle_row['redpacket_return_amount'] + $settle_row['commission_return_amount'] - $settle_row['shop_cost'] - $settle_row['order_directseller_commission'];
-			//生成结算单时间
+//			$add_settle_row['os_amount'] = $settle_row['order_amount'] + $settle_row['redpacket_amount'] - $settle_row['commission_amount'] - $settle_row['return_amount'] - $settle_row['redpacket_return_amount'] + $settle_row['commission_return_amount'] - $settle_row['shop_cost'] - $settle_row['order_directseller_commission'];
+            // 2019/9/17 修改不结算佣金 应结金额（订单金额（含运费）+红包金额-佣金金额-退单金额-退还红包金额+退还佣金-店铺费用+定金订单中的未退定金+下单时使用的平台红包-全部退款时应扣除的平台红包）
+            $add_settle_row['os_amount'] = $settle_row['order_amount'] + $settle_row['redpacket_amount'] - $settle_row['commission_amount'] - $settle_row['return_amount'] - $settle_row['redpacket_return_amount'] + $settle_row['commission_return_amount'] - $settle_row['shop_cost'];
+            //生成结算单时间
 			$add_settle_row['os_datetime'] = get_date_time();
 			//结算单年月
-			$add_settle_row['os_date'] = date('Y-m');
+			$add_settle_row['os_date'] = date('Y-m-d');
 			//状态
 			$add_settle_row['os_state'] = Order_SettlementModel::SETTLEMENT_WAIT_OPERATE;
 			//店铺id

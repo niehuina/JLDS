@@ -18,7 +18,7 @@
 <body>
 <div id="content" align="center">
     <div style="margin-left: 10px;margin-top:100px;color:#556B2F;font-size:20px;font-weight: bolder;">等待返回支付结果</div><br/>
-    <A href="http://localhost:8008/tmpl/member/order_list.html" style="margin-left: 10px;margin-top:100px;color:#556B2F;font-size:20px;font-weight: bolder;">返回全部订单</><br/>
+    <A href="http://localhost:8008/tmpl/member/order/order_list.html" style="margin-left: 10px;margin-top:100px;color:#556B2F;font-size:20px;font-weight: bolder;">返回全部订单</><br/>
 </div>
 <script>
         $(function(){

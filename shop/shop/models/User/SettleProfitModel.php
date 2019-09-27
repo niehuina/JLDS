@@ -109,11 +109,6 @@ class User_SettleProfitModel extends Yf_Model
         $user_grade = $User_GradeModel->getOne(3);
 
         //合伙人只计算其直属下级用户的所有订单
-//        $user_children_ids = $User_InfoModel->getUserDirectChildrenNoPartner($user_id);
-//        Yf_Log::log($user_children_ids, Yf_Log::LOG, 'user_settle');
-//        if(count($user_children_ids) == 0) return true;
-//        $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
-
         $cond_row['directseller_p_id'] = $user_id;
         $cond_row['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
         $cond_row['rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
@@ -148,28 +143,29 @@ class User_SettleProfitModel extends Yf_Model
                 $order_amount = $order['order_payment_amount'] * 1 - $order['order_refund_amount'] * 1;
                 $total_children_order_total_amount = $before_order_total_amount + $order_amount;
 
-                //不管超指标还是未超指标，都需要：当前金额*rebate1
-                $rebate_value1 = $order_amount * $grade_order_rebate1;
-
-                $rebate_value2 = 0;
-                //如果上次累计订单总金额已超指标，则超过指标部分提成为:该次金额*rebate2
-                if ($before_order_total_amount * 1 >= $grade_order_amount) {
-                    $rebate_value2 = $order_amount * $grade_order_rebate2;
-                } else if ($total_children_order_total_amount > $grade_order_amount) {
-                    //如果该次累计总金额超过指标，则超过指标部分提成为:（累计总金额-指标部分）*rebate2
-                    $order_amount2 = $total_children_order_total_amount - $grade_order_amount;
-                    if ($order_amount2 > 0) {
-                        $rebate_value2 = $order_amount2 * $grade_order_rebate2;
-                    } else {
-                        $rebate_value2 = 0;
-                    }
-                } else if ($total_children_order_total_amount <= $grade_order_amount) {
-                    //如果该次累计总金额未超过指标，则超过指标部分提成为:0
-                    $rebate_value2 = 0;
-                }
-                $order_rebate_value_temp = $rebate_value1 + $rebate_value2;
+//                //不管超指标还是未超指标，都需要：当前金额*rebate1
+//                $rebate_value1 = $order_amount * $grade_order_rebate1;
+//
+//                $rebate_value2 = 0;
+//                //如果上次累计订单总金额已超指标，则超过指标部分提成为:该次金额*rebate2
+//                if ($before_order_total_amount * 1 >= $grade_order_amount) {
+//                    $rebate_value2 = $order_amount * $grade_order_rebate2;
+//                } else if ($total_children_order_total_amount > $grade_order_amount) {
+//                    //如果该次累计总金额超过指标，则超过指标部分提成为:（累计总金额-指标部分）*rebate2
+//                    $order_amount2 = $total_children_order_total_amount - $grade_order_amount;
+//                    if ($order_amount2 > 0) {
+//                        $rebate_value2 = $order_amount2 * $grade_order_rebate2;
+//                    } else {
+//                        $rebate_value2 = 0;
+//                    }
+//                } else if ($total_children_order_total_amount <= $grade_order_amount) {
+//                    //如果该次累计总金额未超过指标，则超过指标部分提成为:0
+//                    $rebate_value2 = 0;
+//                }
+//                $order_rebate_value_temp = $rebate_value1 + $rebate_value2;
                 $before_order_total_amount = $before_order_total_amount + $order_amount;
 
+                $order_rebate_value_temp = $order['order_directseller_commission2'];
                 if ($order_rebate_value_temp == 0) continue;
                 $order_rebate_value_temp = round($order_rebate_value_temp, 2);
 
@@ -217,9 +213,6 @@ class User_SettleProfitModel extends Yf_Model
         $user_g_grade = $User_GradeModel->getOne(4);
 
         //获取高级合伙人所有线下的未结算订单
-//        $user_children_ids = $User_InfoModel->getUserChildren($user_id, 0);
-//        if(!$user_children_ids) return true;
-//        $cond_row['buyer_user_id:in'] = explode(',', $user_children_ids);
         $cond_row['directseller_gp_id'] = $user_id;
         $cond_row['order_status'] = Order_StateModel::ORDER_FINISH; //已完成
         $cond_row['g_rebate_is_settlement'] = Order_BaseModel::IS_NOT_SETTLEMENT; //未结算
@@ -241,19 +234,22 @@ class User_SettleProfitModel extends Yf_Model
             $flag = $Order_BaseModel->editBase($user_order_ids, $order_edit_row);
 
             //计算高级合伙人的提成比例
-            $grade_order_rebate1 = $user_g_grade['order_rebate1'] * 1/100;
-            $grade_order_rebate2 = $user_g_grade['order_rebate2'] * 1/100;
-            $grade_order_rebate_top = $user_g_grade['order_rebate_top'] * 1/100;
-            $partner_count = $user_info['current_year_partner_count'];
-            $order_rebate = $grade_order_rebate1 * 1 + $grade_order_rebate2 * $partner_count;
-            if ($order_rebate > $grade_order_rebate_top) {
-                $order_rebate = $grade_order_rebate_top;
-            }
-            if ($order_rebate == 0) return true;
+//            $grade_order_rebate1 = $user_g_grade['order_rebate1'] * 1/100;
+//            $grade_order_rebate2 = $user_g_grade['order_rebate2'] * 1/100;
+//            $grade_order_rebate_top = $user_g_grade['order_rebate_top'] * 1/100;
+//            $partner_count = $user_info['current_year_partner_count'];
+//            $order_rebate = $grade_order_rebate1 * 1 + $grade_order_rebate2 * $partner_count;
+//            if ($order_rebate > $grade_order_rebate_top) {
+//                $order_rebate = $grade_order_rebate_top;
+//            }
+//            if ($order_rebate == 0) return true;
 
             foreach ($user_orders as $k=>$order){
                 $order_amount = $order['order_payment_amount'] * 1 - $order['order_refund_amount'] * 1;
-                $order_rebate_value_temp = $order_amount * $order_rebate;
+//                $order_rebate_value_temp = $order_amount * $order_rebate;
+//                $order_rebate_temp = $order_rebate*100;
+                $order_rebate_value_temp = $order['order_directseller_commission3'];
+                $order_rebate_temp = $order_amount/$order_rebate_value_temp*100;
                 Yf_Log::log($order_rebate_value_temp, Yf_Log::LOG, 'user_settle');
 
                 if($order_rebate_value_temp == 0) continue;
@@ -270,7 +266,6 @@ class User_SettleProfitModel extends Yf_Model
                 $formvars['order_id'] = $order['order_id'];
                 $formvars['user_money'] = $order_rebate_value_temp;
                 $formvars['reason'] = '高级合伙人订单提成结算';
-                $order_rebate_temp = $order_rebate*100;
                 $formvars['desc'] = "订单金额{$order_amount},订单结算时提成比例为{$order_rebate_temp}%";
                 $formvars['app_id'] = $paycenter_app_id;
                 $formvars['trade_type'] = 15;

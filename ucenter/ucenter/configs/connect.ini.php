@@ -14,15 +14,15 @@ $connect_rows=array (
   ),
   'weibo' => 
   array (
-    'status' => '1',
+    'status' => '2',
     'app_id' => '2701922623',
     'app_key' => '4b0d9076418be716223e1c81f87ce2c8',
   ),
   'weixin' => 
   array (
-    'status' => '2',
-    'app_id' => 'wx85d296b7d745526c',
-    'app_key' => '6622e98d8d7d9a86bb4bb85c99957fd6',
+    'status' => '1',
+    'app_id' => 'wx782ef8612ed4e8d1',
+    'app_key' => '9d7e6226b87c73615cb41b671af3aebc',
   ),
 );
 

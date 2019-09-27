@@ -645,6 +645,10 @@ class Api_User_InfoCtl extends Yf_AppController
 
         //一般高级合伙人
         if($user_grade == "4"){
+            //高级合伙人作为合伙人时的订单提成返利
+            $flag_p = $User_SettleProfitModel->rebateOrderForPartner($user_id, $user_info);
+            check_rs($flag_p, $rs_row);
+
             //高级合伙人-订单提成返利
             $flag_gp1 = $User_SettleProfitModel->rebateOrderForGPartner($user_id, $user_info);
             check_rs($flag_gp1, $rs_row);

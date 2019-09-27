@@ -90,7 +90,7 @@ function computeTotalAmountMinus(goods_id, goods_amount) {
 }
 
 function initGrid() {
-    var a = ['',"商品名称", "商品价格", "商品VIP价格", "商品股东价格","商品库存","发货数量","发货总价"]
+    var a = ['',"商品名称", "商品价格", "商品会员价格", "商品股东价格","商品库存","发货数量","发货总价"]
         , b = [{
         name: "common_id",
         index: "common_id",
