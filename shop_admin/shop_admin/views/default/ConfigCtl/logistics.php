@@ -53,12 +53,12 @@ $menus = $this->getThisMenus();
                 <dt class="tit">是否启用</dt>
                 <dd class="opt">
                     <div>
-                        <!--<input id="kuaidi100" name="logistics[logistics_channel]"  value="kuaidi100" type="radio" <?/*=($data['logistics_channel']['config_value']=='kuaidi100' ? 'checked' : '')*/?>>
-						<label title="开启"  for="kuaidi100">快递100</label>-->
+                        <input id="kuaidi100" name="logistics[logistics_channel]"  value="kuaidi100" type="radio" <?=($data['logistics_channel']['config_value']=='kuaidi100' ? 'checked' : '')?>>
+						<label title="开启"  for="kuaidi100">快递100</label>
 
 						&nbsp;&nbsp;&nbsp;
-                        <input id="kuaidiniao" name="logistics[logistics_channel]"  value="kuaidiniao" type="radio" <?=($data['logistics_channel']['config_value']=='kuaidiniao' ? 'checked' : '')?>>
-						<label title="开启"  for="kuaidiniao">快递鸟</label>
+<!--                        <input id="kuaidiniao" name="logistics[logistics_channel]"  value="kuaidiniao" type="radio" --><?//=($data['logistics_channel']['config_value']=='kuaidiniao' ? 'checked' : '')?><!--
+						<label title="开启"  for="kuaidiniao">快递鸟</label>-->
                     </div>
                    <p class="notic"></p>
                 </dd>

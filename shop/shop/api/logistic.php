@@ -15,9 +15,8 @@ $express_row = $ExpressModel->getOne($express_id);
 
 if ('kuaidi100' == $channel)
 {
-	$api_id = Web_ConfigModel::value('kuaidi100_app_id');
-	$api_sceret = Web_ConfigModel::value('kuaidi100_app_key');
-
+	$cus_id = Web_ConfigModel::value('kuaidi100_app_id');
+	$key = Web_ConfigModel::value('kuaidi100_app_key');
 
 	if($express_id && $nu)
 	{
@@ -26,10 +25,10 @@ if ('kuaidi100' == $channel)
 		if ($express_row)
 		{
 			$express_pinyin = $express_row['express_pinyin'];
+            Yf_Log::log($express_pinyin, Yf_Log::LOG, 'kuaidi');
+            Yf_Log::log($nu, Yf_Log::LOG, 'kuaidi');
 
-			$str = lookorder($express_pinyin, $nu, $api_id, $api_sceret);
-
-			fb($str);
+			$str = lookorder($express_pinyin, $nu, $key, $cus_id);
 
 			if(isset($str['status']) && $str['status'] == 200)
 			{
@@ -160,48 +159,63 @@ if($_GET['typ'] == 'json'){
  
 
 
-//http://api.ickd.cn/?id=[]&secret=[]&com=[]&nu=[]&type=[]&encode=[]&ord=[]&lang=[]
+//http://poll.kuaidi100.com/poll/query.do/?customer=[]&sign=[]&param=[]
 /*com	必须	快递公司代码（英文），所支持快递公司见如下列表
 nu	必须	快递单号，长度必须大于5位
-id	必须	授权KEY，申请请点击快递查询API申请方式
+key	必须	授权KEY，申请请点击快递查询API申请方式,客户授权key
 在新版中ID为一个纯数字型，此时必须添加参数secret（secret为一个小写的字符串）
-secret	必选(新增)	该参数为新增加，老用户可以使用申请时填写的邮箱和接收到的KEY值登录http://api.ickd.cn/users/查看对应secret值
+customer	必填	客户编号
 type	可选	返回结果类型，值分别为 html | json（默认） | text | xml
 encode	可选	gbk（默认）| utf8
 ord	可选	asc（默认）|desc，返回结果排序
 lang	可选	en返回英文结果，目前仅支持部分快递（EMS、顺丰、DHL）*/
-function lookorder($com, $nu, $api_id, $api_sceret)
+function lookorder($com, $nu, $key, $customer)
 {
-	//爱查快递
-	$url2="http://api.ickd.cn/?com=".$com."&nu=".$nu."&id=".$api_id."&secret=".$api_sceret."&type=html&encode=utf8";
+//    $com = 'shentong';
+//    $nu = '773005190382886';
 
-	//快递100  show=[0|1|2|3]
-	/*$url2="http://api.kuaidi100.com/api?id=$api_id&com=$com&nu=$nu&valicode=[]&show=2&muti=1&order=desc";
-	$con = file_get_contents($url2);*/
+//    $com = 'yunda';
+//    $nu = '4301122069022';
+//    $key = 'gHdFStiB5931';
+//    $customer = '333180D6BCAFF0EFB9BFC64A4424A211';
 
-	$post_data = array();
-	$post_data["customer"] = "$api_id";
-	$key= "$api_sceret" ;
-	$post_data["param"] = '{"com":"'.$com.'","num":"'.$nu.'"}';
+    //参数设置
+    $param = array (
+        'com' => $com,			    //快递公司编码
+        'num' => $nu,	            //快递单号
+        'phone' => '',				//手机号
+        'from' => '',				//出发地城市
+        'to' => '',					//目的地城市
+        'resultv2' => '1'			//开启行政区域解析
+    );
 
-	$url='http://poll.kuaidi100.com/poll/query.do';
-	$post_data["sign"] = md5($post_data["param"].$key.$post_data["customer"]);
-	$post_data["sign"] = strtoupper($post_data["sign"]);
-	$o="";
-	foreach ($post_data as $k=>$v)
-	{
-		$o.= "$k=".urlencode($v)."&";		//默认UTF-8编码格式
-	}
-	$post_data=substr($o,0,-1);
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_POST, 1);
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	curl_setopt($ch, CURLOPT_URL,$url);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	$result = curl_exec($ch);
-	$data = str_replace("\&quot;",'"',$result );
-	$data = json_decode($data,true);
+    //请求参数
+    $post_data = array();
+    $post_data["customer"] = $customer;
+    $post_data["param"] = json_encode($param);
+    $sign = md5($post_data["param"].$key.$post_data["customer"]);
+    $post_data["sign"] = strtoupper($sign);
+
+    $url = 'http://poll.kuaidi100.com/poll/query.do';	//实时查询请求地址
+
+    $params = "";
+    foreach ($post_data as $k=>$v) {
+        $params .= "$k=".urlencode($v)."&";		//默认UTF-8编码格式
+    }
+    $post_data = substr($params, 0, -1);
+    Yf_Log::log($post_data, Yf_Log::LOG, 'kuaidi');
+
+    //发送post请求
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    $data = str_replace("\"", '"', $result );
+    $data = json_decode($data,true);
+
 	return $data;
 }
 ?>

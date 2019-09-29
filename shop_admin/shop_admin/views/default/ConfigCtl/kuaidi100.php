@@ -54,22 +54,22 @@ $menus = $this->getThisMenus();
         <div class="ncap-form-default">
             <dl class="row">
                 <dt class="tit">
-                    <label for="site_name">App Id</label>
+                    <label for="site_name">Customer Id</label>
                 </dt>
                 <dd class="opt">
                     <input id="kuaidi100_app_id" name="kuaidi100[kuaidi100_app_id]" value="<?=$data['kuaidi100_app_id']['config_value']?>" class="w400 ui-input " type="text"/>
 
-                    <p class="notic">尚无App Id,<a href="https://www.kuaidi100.com/openapi/applypoll.shtml" target="_blank">申请</a></p>
+                    <p class="notic">填入申请账号的快递100的客户号</a></p>
                 </dd>
             </dl>
 
             <dl class="row">
                 <dt class="tit">
-                    <label for="site_name">APP Key</label>
+                    <label for="site_name">授权 Key</label>
                 </dt>
                 <dd class="opt">
                     <input id="kuaidi100_app_key" name="kuaidi100[kuaidi100_app_key]" value="<?=$data['kuaidi100_app_key']['config_value']?>" class="w400 ui-input " type="text"/>
-                    <p class="notic">APP Key</p>
+                    <p class="notic">填入申请账号的快递100的授权key</p>
                 </dd>
             </dl>
 
