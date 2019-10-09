@@ -85,11 +85,11 @@ class Connect_BindCtl extends Yf_AppController implements Connect_Interface
 
 			if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false)
 			{
-				$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$this->appid&redirect_uri=$redirect_url&response_type=code&scope=snsapi_login&state=123&connect_redirect=1#wechat_redirect";
+				$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$this->appid&redirect_uri=$redirect_url&response_type=code&scope=snsapi_userinfo&state=123&connect_redirect=1#wechat_redirect";
 			}
 			else
 			{
-				$url = "https://open.weixin.qq.com/connect/qrconnect?appid=$this->appid&redirect_uri=$redirect_url&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect";
+				$url = "https://open.weixin.qq.com/connect/qrconnect?appid=$this->appid&redirect_uri=$redirect_url&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 			}
 		}
 

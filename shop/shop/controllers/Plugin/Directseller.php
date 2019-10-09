@@ -38,7 +38,7 @@ class Plugin_Directseller implements Yf_Plugin_Interface
 		$Distribution_ShopDirectsellerGoodsCommonModel = new Distribution_ShopDirectsellerGoodsCommonModel();
 		$recImages = $Distribution_ShopDirectsellerGoodsCommonModel->getOne($cond_row);
  
-		setcookie('recserialize',$rec,time()+60*60*24*3,'/');
+		setcookie('recserialize',$rec,time()+60*60*24*3,'/', 'qqycf.com');
 		
 		if(!empty($recImages['directseller_images_image']))
 		{
@@ -55,8 +55,8 @@ class Plugin_Directseller implements Yf_Plugin_Interface
 	public function regDone($user_id, $parent_id)
 	{
 		$rec = $_COOKIE['recserialize'];
-        Yf_Log::log($rec, Yf_Log::LOG, 'debug');
-        Yf_Log::log($parent_id, Yf_Log::LOG, 'debug');
+        Yf_Log::log($rec, Yf_Log::LOG, 'register_user');
+        Yf_Log::log("parent_id:".$parent_id, Yf_Log::LOG, 'register_user');
         if($rec){
             $b = (strpos($rec, "u"));
             $e = (strpos($rec, "s"));
@@ -75,14 +75,14 @@ class Plugin_Directseller implements Yf_Plugin_Interface
         }
 
 
-        Yf_Log::log($data, Yf_Log::LOG, 'debug');
+        Yf_Log::log($data, Yf_Log::LOG, 'register_user');
 		/* $User_BaseModel = new User_BaseModel();
 		$User_BaseModel->editBase($userid,$data); */
 		
 		$User_InfoModel = new User_InfoModel();
 		$User_InfoModel->editInfo($user_id,$data);
 
-        setcookie('recserialize', "",time()+60*60*2,'/');
+        setcookie('recserialize', "",time()+60*60*2,'/', 'qqycf.com');
 		
 		return true;
 	}

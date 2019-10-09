@@ -31,10 +31,13 @@ $open_user = [
 		display: none;
 	}
     #yzm{
-        width:110px;
+        width:130px;
     }
     #phonecode{
         width:80px;
+    }
+    #intro_keys{
+        width: 157px;
     }
 </style>
 </head>
@@ -177,6 +180,23 @@ $open_user = [
 
 					</dd>
 				</dl>
+                <dl class="clearfix">
+                    <dt>推荐人：</dt>
+                    <dd class="clearfix">
+                        <input type="hidden" id="parent_id" name="parent_id" class="field">
+                        <input type="text" id="intro_keys" class="fl" placeholder="请输入推荐人姓名/手机号">
+                        <a href="javascript:;" class="btn-code-get fr " id="btn-phonecode" onclick="getIntroducer(this)"> 查    询 </a>
+                        <p class="input-tip">
+                            <span class="error"></span>
+                        </p>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>&nbsp;</dt>
+                    <dd class="clearfix hidden">
+                        <p class="name-tips" id="intro_list"></p>
+                    </dd>
+                </dl>
 				<p class="agree"><input type="checkbox" id="xieyi" checked><span>我已阅读并同意<a href="javascript:;" onclick="registalert()">《用户注册协议》</a></span></p>
 				<a href="javascript:;" class="btn bind-go" onclick="registclick()">立即绑定</a>
 			</div>
@@ -585,6 +605,49 @@ $open_user = [
 		}
 	}
 
+    function getIntroducer(obj) {
+        if ($(obj).html() == "清除") {
+            $("#parent_id").val("");
+            $("#intro_keys").val("");
+            $("#intro_list").html("");
+            $($("#intro_list").parent()).addClass("hidden");
+            $(obj).html("查询");
+            return;
+        }
+
+        var intro_keys = $("#intro_keys").val();
+        if (!intro_keys) return;
+        var ajaxurl = './index.php?ctl=Login&met=getIntroducer&typ=json&intro_keys=' + $("#intro_keys").val();
+        $.ajax({
+            type: "POST",
+            url: ajaxurl,
+            dataType: "json",
+            async: false,
+            success: function (respone) {
+                if (respone.status == 200) {
+                    var data = respone.data;
+                    var html = '';
+                    $.each(data, function (i, item) {
+                        if (i == 0) {
+                            $("#parent_id").val(item.user_id);
+                            html += '<p>' + item.user_truename + '/' + item.user_mobile + '</p>';
+                        }
+                    });
+
+                    if (html == "") {
+                        html = icons.error + '请准确填写推荐人姓名或手机号';
+                        $("#intro_list").addClass("error").removeClass("intro_list");
+                    } else {
+                        $("#intro_list").removeClass("error").addClass("intro_list");
+                    }
+                    $("#intro_list").html(html);
+                    $($("#intro_list").parent()).removeClass("hidden");
+                    $(obj).html("清除");
+                }
+            }
+        });
+    }
+
 	//立即绑定按钮
 	function registclick()
 	{
@@ -597,6 +660,7 @@ $open_user = [
 		var mobile = $("#re_user_mobile").val();
 		var user_code = $("#phonecode").val();
 		var user_password = $("#re_user_password").val();
+        var parent_id = $("#parent_id").val();
 
 		if(!mobile)
 		{
@@ -623,7 +687,9 @@ $open_user = [
 			return;
 		}
 
-		data = {"mobile":mobile,"code":user_code,"password":user_password,"token":token};
+
+
+		data = {"mobile":mobile,"code":user_code,"password":user_password,"token":token, "parent_id":parent_id};
 
 		$.post("./index.php?ctl=Login&met=bindRegist&typ=json", data, function(data) {
 			console.info(data);

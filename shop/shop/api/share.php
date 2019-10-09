@@ -7,7 +7,7 @@ $shopurl =  Yf_Registry::get('url');
 $agent   = $_SERVER['HTTP_USER_AGENT'];  //浏览器代理
 
 $rec = request_string('rec');
-setcookie('recserialize',$rec,time()+60*60*24*3,'/');
+setcookie('recserialize',$rec,time()+60*60*24*3,'/', 'qqycf.com');
 
 if(strpos($agent,"comFront") || strpos($agent,"iPhone") || strpos($agent,"MIDP-2.0") || strpos($agent,"Opera Mini") || strpos($agent,"UCWEB") || strpos($agent,"Android") || strpos($agent,"Windows CE") || strpos($agent,"SymbianOS"))
 {

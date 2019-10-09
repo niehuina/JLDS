@@ -1,12 +1,19 @@
 <?php if (!defined('ROOT_PATH')){exit('No Permission');}
 
 include $this->view->getTplPath() . '/' . 'header.php';
+
+$connect_rows = Yf_Registry::get('connect_rows');
+
+$qq = $connect_rows['qq']['status'];
+$wx = $connect_rows['weixin']['status'];
+$wb = $connect_rows['weibo']['status'];
 ?>
 <link rel="stylesheet" href="<?= $this->view->css ?>/security.css">
 <div>
 
 <div class="bind-account">
 	<ul>
+        <?php if($qq == 1) {?> <!-- 1-开启 2-关闭 -->
 		<li>
 			<div class="clearfix">
 				<div class="fl"><i class="icon qq"></i><span>QQ</span></div>
@@ -41,6 +48,9 @@ include $this->view->getTplPath() . '/' . 'header.php';
 				<?php }?>
 
 		</li>
+        <?php }?>
+
+        <?php if($wx == 1){ ?>
 		<li>
 			<div class="clearfix">
 				<div class="fl"><i class="icon wechat"></i><span>微信</span></div>
@@ -74,6 +84,8 @@ include $this->view->getTplPath() . '/' . 'header.php';
 				<?php }?>
 
 		</li>
+        <?php }
+        if($wb == 1){ ?>
 		<li>
 			<div class="clearfix">
 				<div class="fl"><i class="icon wb"></i><span>微博</span></div>
@@ -106,6 +118,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
 				</div>
 				<?php }?>
 		</li>
+        <?php }?>
 	</ul>
 	<script>
 		$(function(){

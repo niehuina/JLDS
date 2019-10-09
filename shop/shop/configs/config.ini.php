@@ -637,7 +637,7 @@ if (request_string('typ') != 'json' && !request_string('redirect') && Yf_Utils_D
 	if(request_string('type')=='goods') 
 	{ 
 		$rec = request_string('rec');
-		setcookie('recserialize',$rec,time()+60*60*24*3,'/');
+		setcookie('recserialize',$rec,time()+60*60*24*3,'/', 'qqycf.com');
 		$url = $shop_wap_url.'/tmpl/product_detail.html?goods_id=' . request_int('gid').'&rec='.request_string('rec'); 
 		location_to($url); 
 	}

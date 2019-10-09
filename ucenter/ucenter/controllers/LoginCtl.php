@@ -88,8 +88,16 @@ class LoginCtl extends Yf_AppController
 		$token = request_string('token');
 		$user_code = request_string('code');
 		$mobile    = request_string('mobile');
-		$password    = request_string('password');
-		$server_id = 0;
+		$password  = request_string('password');
+        $parent_id = request_string('parent_id');
+
+        //设置推荐人Id
+        if($parent_id){
+            $rec = 'u'.$parent_id.'s';
+            setcookie('recserialize',$rec,time()+60*60*5,'/', 'qqycf.com');
+        }
+
+        $server_id = 0;
 
 		if (!$user_code)
 		{
@@ -147,6 +155,14 @@ class LoginCtl extends Yf_AppController
 			return false;
 		}
 
+		$bind_mobile_id = "mobile_".$mobile;
+        $bind_mobile_info = $User_BindConnectModel->getBindConnect($bind_mobile_id);
+        if($bind_mobile_info)
+        {
+            $this->data->setError('注册手机号已存在');
+            return false;
+        }
+
 		//判断该账号名是否已经存在
 		$User_InfoModel  = new User_InfoModel();
 		$User_InfoDetail = new User_InfoDetailModel();
@@ -170,7 +186,7 @@ class LoginCtl extends Yf_AppController
 		$arr_field_user_info                = array();
 		$arr_field_user_info['user_id']     = $user_id;
 		$arr_field_user_info['user_name']   = $bind_info['bind_nickname'];
-		$arr_field_user_info['password']    = $password;
+		$arr_field_user_info['password']    = md5($password);
 		$arr_field_user_info['action_time'] = $now_time;
 		$arr_field_user_info['action_ip']   = $ip;
 		$arr_field_user_info['session_id']  = $session_id;
@@ -186,6 +202,16 @@ class LoginCtl extends Yf_AppController
 		$bind_user_row['bind_token'] = $token;
 		$bind_edit_flag = $User_BindConnectModel->editBindConnect($bind_info['bind_id'],$bind_user_row);
 		check_rs($rs_row, $bind_edit_flag);
+
+        //插入绑定表-手机号绑定
+        $bind_array = array(
+            'bind_id'=>$bind_mobile_id,
+            'user_id'=>$user_id,
+            'bind_type'=> $User_BindConnectModel::MOBILE,
+            'bind_time'=>$time
+        );
+        $bind_add_mobile_flag = $User_BindConnectModel->addBindConnect($bind_array);
+        check_rs($rs_row, $bind_add_mobile_flag);
 
 		//在user_info_detail表中插入用户信息
 		$arr_field_user_info_detail                        = array();
@@ -227,7 +253,8 @@ class LoginCtl extends Yf_AppController
 				"user_name" => $bind_info['bind_nickname'],
 				"server_id" => $server_id,
 				"k" => $encrypt_str,
-				"user_id" => $user_id
+				"user_id" => $user_id,
+                "parent_id" => $parent_id
 			);
 
 			$this->data->addBody(100, $arr_body);
@@ -309,7 +336,7 @@ class LoginCtl extends Yf_AppController
 			return false;
 		}
 
-		$info_row = $User_InfoDetail->getOne($user_name);
+		$info_row = $User_InfoDetail->getOne($user_info_row['user_id']);
 
 		if(!$info_row['user_mobile'])
 		{
@@ -361,7 +388,7 @@ class LoginCtl extends Yf_AppController
 
 	public function index()
 	{
-        $this->userInfo = $this->getWxUserInfo();
+        //$this->userInfo = $this->getWxUserInfo();
 
 		$web['site_logo']       = Web_ConfigModel::value("site_logo");//首页logo
 
@@ -854,7 +881,7 @@ class LoginCtl extends Yf_AppController
 	public function register()
 	{
         $option_value_row = request_row('option');
-        $Reg_OptionModel = new Reg_OptionModel();
+//        $Reg_OptionModel = new Reg_OptionModel();
 //        $reg_opt_rows = $Reg_OptionModel->getByWhere(array('reg_option_active'=>1));
         $reg_opt_rows = array();
         
@@ -886,7 +913,7 @@ class LoginCtl extends Yf_AppController
         //设置推荐人Id
         if($parent_id){
             $rec = 'u'.$parent_id.'s';
-            setcookie('recserialize',$rec,time()+60*60*5,'/');
+            setcookie('recserialize',$rec,time()+60*60*5,'/', 'qqycf.com');
         }
 
 		$server_id = 0;
@@ -1015,29 +1042,29 @@ class LoginCtl extends Yf_AppController
 				array_push($rs_row, $flag);
 
 
-                $User_OptionModel = new User_OptionModel();
-
-
-                foreach ($reg_opt_rows as $reg_option_id=>$reg_opt_row)
-                {
-                    if (isset($option_value_row[$reg_option_id]))
-                    {
-                        $reg_option_value_row = explode(',', $reg_opt_row['reg_option_value']);
-
-                        $user_option_row = array();
-                        $user_option_row['reg_option_id'] = $reg_option_id;
-                        $user_option_row['reg_option_value_id'] = $option_value_row[$reg_option_id];
-                        $user_option_row['user_id'] = $user_id;
-                        $user_option_row['user_option_value'] = isset($reg_option_value_row[$option_value_row[$reg_option_id]]) ? $reg_option_value_row[$option_value_row[$reg_option_id]] : $option_value_row[$reg_option_id];
-
-
-
-                        $flag = $User_OptionModel->addOption($user_option_row);
-
-                        array_push($rs_row, $flag);
-
-                    }
-                }
+//                $User_OptionModel = new User_OptionModel();
+//
+//
+//                foreach ($reg_opt_rows as $reg_option_id=>$reg_opt_row)
+//                {
+//                    if (isset($option_value_row[$reg_option_id]))
+//                    {
+//                        $reg_option_value_row = explode(',', $reg_opt_row['reg_option_value']);
+//
+//                        $user_option_row = array();
+//                        $user_option_row['reg_option_id'] = $reg_option_id;
+//                        $user_option_row['reg_option_value_id'] = $option_value_row[$reg_option_id];
+//                        $user_option_row['user_id'] = $user_id;
+//                        $user_option_row['user_option_value'] = isset($reg_option_value_row[$option_value_row[$reg_option_id]]) ? $reg_option_value_row[$option_value_row[$reg_option_id]] : $option_value_row[$reg_option_id];
+//
+//
+//
+//                        $flag = $User_OptionModel->addOption($user_option_row);
+//
+//                        array_push($rs_row, $flag);
+//
+//                    }
+//                }
 			}
 
 
