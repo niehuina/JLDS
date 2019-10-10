@@ -60,7 +60,7 @@ function ncScrollLoad() {
                 data = $.extend({}, options.data, data);
             }
             var html = template.render(options.tmplid, data);
-            if(options.iIntervalId === false){
+            if(options.iIntervalId === false && param.curpage > 1){
                 $(options.containerobj).append(html);
             }else{
                 $(options.containerobj).html(html);

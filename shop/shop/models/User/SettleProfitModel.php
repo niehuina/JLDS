@@ -249,7 +249,7 @@ class User_SettleProfitModel extends Yf_Model
 //                $order_rebate_value_temp = $order_amount * $order_rebate;
 //                $order_rebate_temp = $order_rebate*100;
                 $order_rebate_value_temp = $order['order_directseller_commission3'];
-                $order_rebate_temp = $order_amount/$order_rebate_value_temp*100;
+                $order_rebate_temp = $order_rebate_value_temp/$order_amount*100;
                 Yf_Log::log($order_rebate_value_temp, Yf_Log::LOG, 'user_settle');
 
                 if($order_rebate_value_temp == 0) continue;

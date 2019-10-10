@@ -84,8 +84,9 @@ $wb = $connect_rows['weibo']['status'];
 				<?php }?>
 
 		</li>
-        <?php }
-        if($wb == 1){ ?>
+        <?php } ?>
+
+        <?php if($wb == 1){ ?>
 		<li>
 			<div class="clearfix">
 				<div class="fl"><i class="icon wb"></i><span>微博</span></div>

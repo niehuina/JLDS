@@ -36,7 +36,7 @@ $('.btn-sure').click(function(){ $(".tip").hide(); });
 
 if (typeof(window.title) == 'undefined')
 {
-    window.title = '临沂保税商城';
+    window.title = '一次方商城';
 }
 
 if (typeof(window.paySiteName) == 'undefined')
@@ -1237,7 +1237,6 @@ $(function() {
     {
         $('title').html(title + ' - ' + $('title').html())
     }
-
 });
 
 

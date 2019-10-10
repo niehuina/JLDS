@@ -4,6 +4,8 @@
 <?php
 include $this->view->getTplPath() . '/' . 'header.php';
 
+$static_url = Yf_Registry::get('static_url');
+
 ?>
 <?php if ($uorder_base) { ?>
 
@@ -11,7 +13,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
         <div class="recharge2-content-top content-public clearfix">
             <div class="header">
                 <div class="title">
-                    <a href="<?=Yf_Registry::get('shop_wap_url')?>tmpl/order/order_detail.html?order_id=<?=$uorder_base['inorder']?>"><</a>
+                    <a class="arrow-box" href="<?=Yf_Registry::get('shop_wap_url')?>tmpl/order/order_detail.html?order_id=<?=$uorder_base['inorder']?>"></a>
                     一次方商城收银台
                 </div>
                 <?php if (!empty($banner)) { ?>
@@ -229,7 +231,7 @@ include $this->view->getTplPath() . '/' . 'header.php';
                 height: 40px;
                 line-height: 40px;
                 border-bottom: 1px solid #ddd;
-                background: #f3f3f3;
+                background: #06c1ae;
                 position: relative;
                 text-align: center;
             }
@@ -295,6 +297,20 @@ include $this->view->getTplPath() . '/' . 'header.php';
 
             .btn_big {
                 width: 90% !important;
+            }
+
+            .header .title a.arrow-box{
+                left: 14px;
+                top: 13px;
+                content: "";
+                display: inline-block;
+                height: 11px;
+                width: 11px;
+                border-width: 0 0 2px 2px;
+                border-color: #bbeee9;
+                border-style: solid;
+                transform: matrix(0.71, 0.71, -.71, 0.71, 0, 0);
+                -webkit-transform: matrix(0.71, 0.71, -.71, 0.71, 0, 0);
             }
         }
 

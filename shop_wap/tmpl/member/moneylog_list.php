@@ -77,7 +77,7 @@ include __DIR__ . '/../../includes/header.php';
                 </dt>
                 <dd><%=v.trade_type_con;%>:<%=v.record_status_con;%></dd>
             </dl>
-            <div class="money reduce"><%if(v.trade_type_id < 11){%>-<%}%>
+            <div class="money reduce"><%if(v.trade_type_id < 11 && v.record_money > 0){%>-<%}%>
                 <%=v.record_money;%>
             </div>
             <%}%>

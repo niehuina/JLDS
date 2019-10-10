@@ -152,7 +152,7 @@ class Api_Paycen_PayBaseCtl extends Api_Controller
                     $user_grade = $rs['data'];
                     $user_grade_shares = $user_grade['user_grade_shares'] * 1;
                     if ($user_total_shares >= $user_grade_shares) {
-                        $user_pay_shares_date = date("Y-m-d");
+                        $user_pay_shares_date = get_date_time();
 
                         $rs1 = get_url_with_encrypt($key, sprintf('%s?ctl=Api_User_Info&met=updateUserToVIP&typ=json', $url), $formvars);
 

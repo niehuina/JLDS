@@ -67,6 +67,7 @@ class Payment_WxJsModel extends Payment_WxNativeModel {
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($openId);
         $result = WxPayApi::unifiedOrder($input);
+        Yf_Log::log('GetPayUrl RES:=' . encode_json($input), Yf_Log::INFO, 'pay_wxjs_info');
         
         if ($result && 'SUCCESS' == $result['result_code'])
         {
