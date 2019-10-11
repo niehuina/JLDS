@@ -57,7 +57,7 @@ class Buyer_Service_CustomCtl extends Buyer_Controller
 			$page                = ceil_r($offset / $rows);
 			$custom_state        = request_int("state");
 			$cond_row['user_id'] = Perm::$userId;         //店铺ID
-			$cond_row['status'] = 0;
+            $cond_row['status'] = 0;
 
 
 			if ($custom_state)
@@ -65,7 +65,7 @@ class Buyer_Service_CustomCtl extends Buyer_Controller
 				$cond_row['custom_service_status'] = $custom_state;
 			}
 
-			$data               = $this->customService->getCustomServiceList($cond_row, array(
+			$data = $this->customService->getCustomServiceList($cond_row, array(
 				"custom_service_answer_time" => "DESC",
 				"custom_service_question_time" => "DESC"
 			), $page, $rows);

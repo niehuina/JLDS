@@ -23,6 +23,9 @@ $(function ()
                     $('#face_logo_url').val(result.data.user_identity_face_logo);
                     $('#font_logo_url').val(result.data.user_identity_font_logo);
                 }
+                if(result.data.user_identity_statu == 2){
+                    $("#submit_btn").addClass("disabled");
+                }
             }
         }
     });
@@ -49,6 +52,7 @@ $(function ()
     });
     $("#submit_btn").click(function ()
     {
+        if($(this).hasClass("disabled")) return;
         if ($.sValid())
         {
             //身份证照片字段没有加进来

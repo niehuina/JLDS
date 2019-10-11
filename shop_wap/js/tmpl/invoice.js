@@ -23,6 +23,7 @@ $(function() {
                 $("#invoice_area_info").val(a.area_info).attr({"data-areaid1": a.area_id_1, "data-areaid2": a.area_id_2, "data-areaid3": a.area_id_3, "data-areaid": a.area_id, "data-areaid2": a.area_id_2 == 0 ? a.area_id_1 : a.area_id_2})
             }
         });
+        document.getElementById("areaSelected").addEventListener('touchmove',function(e){e.preventDefault();}, { passive: false });
     });
     
     
@@ -47,7 +48,7 @@ $(function() {
             success:function(result){
                 checkLogin(result.login);
                 var html = template.render('invoice-list-script', result.data);
-                $('#invoice-list').html(html)
+                $('#invoice-list').html(html);
             }
         });
     })
@@ -90,6 +91,7 @@ $(function() {
             $('#invoice-wrapper').find('.header-l > a').click();
         }
     });
+
 });
 
 function CompanyTaxNumShow(type,ele)
@@ -126,7 +128,7 @@ function add_invoice(invoice_type){
         var title = obj.find('.checked').find("input[name='inv_ele_title_type']").val() == 'company'  ? obj.find('.checked').find("input[name='inv_ele_title']").val() : '个人';
         var cont  = obj.find("#inc_normal_content").val();
         var invContent = '普通发票'+' '+obj.find('.checked').find("input[name='inv_ele_title']").val()+' '+ cont;
-       
+        var invoice_code = obj.find('#company_tax_num').val();
     }
     if(invoice_type == 'electronics'){
         var obj = $("#electron");
@@ -136,6 +138,7 @@ function add_invoice(invoice_type){
         var cont  = obj.find("#inc_content").val();
         var title = obj.find('.checked').find("input[name='inv_ele_title_type']").val() == 'company'  ?obj.find('.checked').find("input[name='inv_ele_title']").val() : '个人';
         var invContent = '电子发票'+' '+obj.find('.checked').find("input[name='inv_ele_title']").val()+' '+ cont;
+        var invoice_code = obj.find('#company_tax_num').val();
     }
     if(invoice_type == 'increment'){
          //将增值税发票保存到数库中
@@ -175,8 +178,6 @@ function add_invoice(invoice_type){
         };
         var result = add_invoice_ajax(data);
     }else{
-        var invoice_code = $('#company_tax_num').val() ;
-        
         var data = {
             invoice_state:invoice_state,
             invoice_title:title,

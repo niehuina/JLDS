@@ -39,7 +39,7 @@ if($_GET['qr']){
                 <li><a href="../index.html"><i class="home"></i>首页</a></li>
                 <li><a href="../tmpl/cart_list.html"><i class="cart"></i>购物车<sup></sup></a></li>
                 <li><a href="../tmpl/member/member.html"><i class="member"></i>我的商城</a></li>
-                <li><a href="javascript:void(0);"><i class="message"></i>消息<sup></sup></a></li>
+                <li><a href="javascript:void(0);"><i class="msg"></i>消息<sup></sup></a></li>
             </ul>
         </div>
     </div>

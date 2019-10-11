@@ -21,7 +21,7 @@ include __DIR__.'/../../includes/header.php';
     </head>
 
     <body>
-    <header id="header">
+    <header id="header" class="fixed">
         <div class="header-wrap">
             <div class="header-l">
                 <a href="javascript:history.go(-1);"> <i class="back"></i></a>
@@ -32,7 +32,7 @@ include __DIR__.'/../../includes/header.php';
             <div class="header-r"></div>
         </div>
     </header>
-    <div class="nctouch-main-layout">
+    <div class="nctouch-main-layout mb5">
         <form>
             <div class="nctouch-inp-con">
                 <ul class="form-box">

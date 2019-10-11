@@ -351,7 +351,7 @@ header.fixed { position: fixed; /*background: rgba(248,248,248,0.95);*/ z-index:
 .nctouch-nav-menu li a i.home { background-image: url(../images/new/icon-in.png);}
 .nctouch-nav-menu li a i.search { background-image: url(../images/new/icon-ser.png);}
 .nctouch-nav-menu li a i.mall { background-image: url(../images/new/icon-mall.png);}
-.nctouch-nav-menu li a i.message { background-image: url(../images/new/icon-news.png); }
+.nctouch-nav-menu li a i.msg { background-image: url(../images/new/icon-news.png); }
 .nctouch-nav-menu li a i.share { background-image: url(../images/new/icon-share.png); }
 .nctouch-nav-menu li sup { display: none !important; position: absolute; z-index: 1; top: 0.5rem; right: 0.5rem; width: 0.36rem; height: 0.36rem; background-color: #F60; border-radius: 100%; }
 /*头部透明*/
@@ -1041,6 +1041,9 @@ to {  width: 100%;}
     color: #FFF !important;
     background-color: #06c1ae !important;
     border: 1px solid #06c1ae;
+}
+a.disabled, a.disabled{
+    background-color: #EEE !important;
 }
 
 .tabPanel{

@@ -102,6 +102,8 @@ $(function() {
                 $('#varea_info').val(data.area_info);
             }
         });
+
+        document.getElementById("areaSelected").addEventListener('touchmove',function(e){e.preventDefault();}, { passive: false });
     });
 
 
@@ -592,7 +594,7 @@ $(function() {
         });
 
     });
-    
+
 });
 
 //初始化加价购和代金券弹框

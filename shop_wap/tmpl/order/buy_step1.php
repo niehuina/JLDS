@@ -33,6 +33,15 @@ include __DIR__.'/../../includes/header.php';
             top: unset;
             right: unset;
         }
+        .nctouch-inp-con ul li .input-box.btn-style{
+            padding: 0.4rem 0;
+        }
+
+        .nctouch-inp-con ul li .input-box .inp,
+        .nctouch-sel-list label .inp_input,
+        .nctouch-inp-con ul li .input-box .select{
+            margin-top: 3px;
+        }
     </style>
 </head>
 <body>
@@ -132,7 +141,7 @@ include __DIR__.'/../../includes/header.php';
                         <div class="tic-tab"> <a href="javascript:void(0);" id="invoice-need">需要开发票</a></div>
                     </div>
                 </div>
-                <div id="invoice-div" class="">
+                <div id="invoice-div">
                     <div class="nctouch-inp-con" id="invoice_add" style="display:none">
                         <ul class="form-box">
                             <li class="form-item mrl0 bgf5">
@@ -154,7 +163,7 @@ include __DIR__.'/../../includes/header.php';
                         </ul>
                     </div>
 
-                    <a href="javascript:void(0);" class="btn-l mt10">确定</a>
+                    <a href="javascript:void(0);" class="btn-l mt5">确定</a>
                     <div style="width:100%; height: 50px;"></div>
                 </div>
 
@@ -694,9 +703,9 @@ include __DIR__.'/../../includes/header.php';
                 </div>
             </li>
             <li class="form-item">
-                <h4>收票人省份</h4>
+                <h4>收票人地区</h4>
                 <div class="input-box">
-                    <input type="text" id="invoice_area_info" class="inp" name="invoice_tax_rec_province" <% if (addtax.length > 0) {%>value="<%=addtax[0].invoice_rec_province%>" data-areaid1="<%=addtax[0].invoice_province_id%>" data-areaid2="<%=addtax[0].invoice_city_id%>" data-areaid3="<%=addtax[0].invoice_area_id%>" data-areaid="<%=addtax[0].invoice_province_id%>" <% } %> placeholder="输入收票人省份">
+                    <input type="text" id="invoice_area_info" class="inp" name="invoice_tax_rec_province" <% if (addtax.length > 0) {%>value="<%=addtax[0].invoice_rec_province%>" data-areaid1="<%=addtax[0].invoice_province_id%>" data-areaid2="<%=addtax[0].invoice_city_id%>" data-areaid3="<%=addtax[0].invoice_area_id%>" data-areaid="<%=addtax[0].invoice_province_id%>" <% } %> placeholder="输入收票人地区">
                 </div>
             </li>
             <li class="form-item">
