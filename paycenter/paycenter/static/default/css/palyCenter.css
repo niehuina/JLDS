@@ -2014,7 +2014,7 @@ a.pc_btn {
 @media screen and (max-width: 413px) {
     /*          充值2*/
     .text-1 {
-        width: 150px !important;
+        width: 180px !important;
     }
     /*                                  会员保障*/
     .memberguarantee-bottom .content-center .content .boxs-public {
@@ -2053,6 +2053,7 @@ a.pc_btn {
     }
     /* 转账end*/
 }
+
 
 /*首页*/
 .index{width: 80%;

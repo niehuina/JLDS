@@ -93,8 +93,8 @@ $static_url = Yf_Registry::get('static_url');
                         <?php } ?>
                         <div id="pay_password" style="display: none;">
                             <span class="spanmt"><?= _('支付密码') ?> :&nbsp;</span>
-                            <input type="password" name="password" class="text text-1"/>
-                            <span class="msg-box red"></span>
+                            <input type="password" name="password" class="text text-1"/><br/>
+                            <span class="msg-box pwd-msg-box red"></span>
                         </div>
 
                     </div>
@@ -177,6 +177,12 @@ $static_url = Yf_Registry::get('static_url');
     </div>
 
     <style>
+        .pwd-msg-box{
+            display: block;
+            margin-top: 5px;
+            margin-left: 72px;
+        }
+
         @media screen and (max-width: 768px) {
             .hd_content, .recharge2-content-bottom, .footer {
                 display: none;
@@ -321,6 +327,7 @@ $static_url = Yf_Registry::get('static_url');
         }
     </style>
     <script>
+        var isWap = $(window).height() <= '768';
         $(function () {
             $(".box0").click();
         });
@@ -375,6 +382,10 @@ $static_url = Yf_Registry::get('static_url');
 
         function checkPassword() {
             if (!checkMoney()) {
+                if(isWap){
+                    $(".msg-box").html('账户余额不足');
+                    return;
+                }
                 Public.tips.error('账户余额不足');
                 return false;
             }

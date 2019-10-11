@@ -29,271 +29,271 @@ class Buyer_MessageCtl extends Buyer_Controller
 		$this->articleBaseModel     = new Article_BaseModel();
 	}
 
-	/**
-	 * 系统消息页面
-	 *
-	 * @access public
-	 */
-	public function message()
-	{
-		$remind_cat = array(
-			"1" => __('订单信息'),
-			"3" => __('账户信息'),
-			"4" => __('其他')
-		);
-		
-		$type = request_int('type');
-		$op   = request_string('op');
-		
-		if ($op == 'receive')//收到消息
-		{
-			
-			$Yf_Page           = new Yf_Page();
-			$Yf_Page->listRows = request_int('listRows')?request_int('listRows'):10;
-			$rows              = $Yf_Page->listRows;
-			$offset            = request_int('firstRow', 0);
-			$page              = ceil_r($offset / $rows);
+    /**
+     * 系统消息页面
+     *
+     * @access public
+     */
+    public function message()
+    {
+        $remind_cat = array(
+            "1" => __('订单信息'),
+            "3" => __('账户信息'),
+            "4" => __('其他')
+        );
 
-			$order_row                            = array();
-			$order_row['user_message_receive_id'] = Perm::$userId;
+        $type = request_int('type');
+        $op   = request_string('op');
 
-			$data = $this->userMessageModel->getMessageList($order_row, array(
-				'message_islook' => 'ASC',
-				'user_message_time' => 'DESC'
-			), $page, $rows);
+        if ($op == 'receive')//收到消息
+        {
 
-			foreach ($data['items'] as $k => $v)
-			{
-				$order_row                            = array();
-				$order_row['user_message_pid']        = $v['user_message_id'];
-				$order_row['user_message_receive_id'] = Perm::$userId;
-				$order_row['message_islook']          = 0;
+            $Yf_Page           = new Yf_Page();
+            $Yf_Page->listRows = request_int('listRows')?request_int('listRows'):10;
+            $rows              = $Yf_Page->listRows;
+            $offset            = request_int('firstRow', 0);
+            $page              = ceil_r($offset / $rows);
 
-				$this->Message                = $this->userMessageModel->getCount($order_row);
-				$data['items'][$k]['receive'] = $this->Message;
-			}
+            $order_row                            = array();
+            $order_row['user_message_receive_id'] = Perm::$userId;
 
-			$Yf_Page->totalRows = $data['totalsize'];
-			$page_nav           = $Yf_Page->prompt();
+            $data = $this->userMessageModel->getMessageList($order_row, array(
+                'message_islook' => 'ASC',
+                'user_message_time' => 'DESC'
+            ), $page, $rows);
 
-			$this->view->setMet('userMessage');
-		}
-		elseif ($op == 'send')//发送的消息
-		{
-			$Yf_Page           = new Yf_Page();
-			$Yf_Page->listRows = request_int('listRows')?request_int('listRows'):10;
-			$rows              = $Yf_Page->listRows;
-			$offset            = request_int('firstRow', 0);
-			$page              = ceil_r($offset / $rows);
-			
-			$order_row                         = array();
-			$order_row['user_message_send_id'] = Perm::$userId;
-			
-			$data = $this->userMessageModel->getMessageList($order_row, array('user_message_time' => 'DESC'), $page, $rows);
-			
-			$Yf_Page->totalRows = $data['totalsize'];
-			$page_nav           = $Yf_Page->prompt();
-			
-			$this->view->setMet('userMessage');
-			
-		}
-		elseif ($op == 'detail')//查看消息
-		{
-			$order_row = array();
-			
-			$order_row['user_message_id'] = request_int("id");
-			
-			$de = $this->userMessageModel->getMessageDetail($order_row);
-			if ($de['user_message_pid'] != 0)
-			{
-				$order_row                    = array();
-				$user_message_id              = $de['user_message_pid'];
-				$order_row['user_message_id'] = $user_message_id;
-			}
-			
-			$data = $this->detail($order_row);
+            foreach ($data['items'] as $k => $v)
+            {
+                $order_row                            = array();
+                $order_row['user_message_pid']        = $v['user_message_id'];
+                $order_row['user_message_receive_id'] = Perm::$userId;
+                $order_row['message_islook']          = 0;
 
-			$this->view->setMet('detail');
-			
-		}
-		elseif ($op == 'messageAnnouncement')//系统公告
-		{
-			$Yf_Page           = new Yf_Page();
-			$Yf_Page->listRows = request_int('listRows')?request_int('listRows'):10;
-			$rows              = $Yf_Page->listRows;
-			$offset            = request_int('firstRow', 0);
-			$page              = ceil_r($offset / $rows);
-			
-			$user_id           = Perm::$userId;
-			
-			$user = $this->userInfoModel->getOne($user_id);
-			
-			$user_am = $user['user_am'];
-			$am_row = array();
-			if($user_am){
-				$am_row	= explode(",",$user_am);
-			}
+                $this->Message                = $this->userMessageModel->getCount($order_row);
+                $data['items'][$k]['receive'] = $this->Message;
+            }
 
-			$order_row                   = array();
-			$order_row['article_type']   = 1;
-			$order_row['article_status'] = 1;
-			
-			$data = $this->articleBaseModel->getBaseAllList($order_row, array('article_add_time' => 'DESC'), $page, $rows);
-			if($data['items'])
-			{
-				foreach($data['items'] as $k=>$v)
-				{
-					if(in_array($v['article_id'],$am_row))
-					{
-						$data['items'][$k]['article_islook'] = 1;
-					}
-				}
-			}
-			$Yf_Page->totalRows = $data['totalsize'];
-			$page_nav           = $Yf_Page->prompt();
+            $Yf_Page->totalRows = $data['totalsize'];
+            $page_nav           = $Yf_Page->prompt();
+
+            $this->view->setMet('userMessage');
+        }
+        elseif ($op == 'send')//发送的消息
+        {
+            $Yf_Page           = new Yf_Page();
+            $Yf_Page->listRows = request_int('listRows')?request_int('listRows'):10;
+            $rows              = $Yf_Page->listRows;
+            $offset            = request_int('firstRow', 0);
+            $page              = ceil_r($offset / $rows);
+
+            $order_row                         = array();
+            $order_row['user_message_send_id'] = Perm::$userId;
+
+            $data = $this->userMessageModel->getMessageList($order_row, array('user_message_time' => 'DESC'), $page, $rows);
+
+            $Yf_Page->totalRows = $data['totalsize'];
+            $page_nav           = $Yf_Page->prompt();
+
+            $this->view->setMet('userMessage');
+
+        }
+        elseif ($op == 'detail')//查看消息
+        {
+            $order_row = array();
+
+            $order_row['user_message_id'] = request_int("id");
+
+            $de = $this->userMessageModel->getMessageDetail($order_row);
+            if ($de['user_message_pid'] != 0)
+            {
+                $order_row                    = array();
+                $user_message_id              = $de['user_message_pid'];
+                $order_row['user_message_id'] = $user_message_id;
+            }
+
+            $data = $this->detail($order_row);
+
+            $this->view->setMet('detail');
+
+        }
+        elseif ($op == 'messageAnnouncement')//系统公告
+        {
+            $Yf_Page           = new Yf_Page();
+            $Yf_Page->listRows = request_int('listRows')?request_int('listRows'):10;
+            $rows              = $Yf_Page->listRows;
+            $offset            = request_int('firstRow', 0);
+            $page              = ceil_r($offset / $rows);
+
+            $user_id           = Perm::$userId;
+
+            $user = $this->userInfoModel->getOne($user_id);
+
+            $user_am = $user['user_am'];
+            $am_row = array();
+            if($user_am){
+                $am_row	= explode(",",$user_am);
+            }
+
+            $order_row                   = array();
+            $order_row['article_type']   = 1;
+            $order_row['article_status'] = 1;
+
+            $data = $this->articleBaseModel->getBaseAllList($order_row, array('article_add_time' => 'DESC'), $page, $rows);
+            if($data['items'])
+            {
+                foreach($data['items'] as $k=>$v)
+                {
+                    if(in_array($v['article_id'],$am_row))
+                    {
+                        $data['items'][$k]['article_islook'] = 1;
+                    }
+                }
+            }
+            $Yf_Page->totalRows = $data['totalsize'];
+            $page_nav           = $Yf_Page->prompt();
             fb(12);
             fb($this->countMessage['article']);
-			$this->view->setMet('messageAnnouncement');
-		}
-		elseif ($op == 'messageManage')//接收设置
-		{
-			$user_id             = Perm::$userId;
-			$cond_row            = array();
-			$cond_row['user_id'] = $user_id;
+            $this->view->setMet('messageAnnouncement');
+        }
+        elseif ($op == 'messageManage')//接收设置
+        {
+            $user_id             = Perm::$userId;
+            $cond_row            = array();
+            $cond_row['user_id'] = $user_id;
 
-			$re  = $this->messageSettingModel->getSettingDetail($cond_row);
-			$all = array();
-			if ($re)
-			{
-				$all = explode(',', $re['message_template_all']);
-			}
-			$order_row         = array();
-			$order_row['type'] = 1;
-			$name = ['预定订单尾款支付提醒'];
-			$order_row['name:NOT IN'] = $name;
-			$data = $this->messageTemplateModel->getTemplateList($order_row);
-			
-			$this->view->setMet('messageManage');
-		}
-		elseif ($op == 'sendMessage')//发送站内信
-		{
-			$userid = request_int('id');
-			$user   = array();
-			if ($userid)
-			{
-				$user_row['user_id'] = $userid;
-				$user                = $this->userInfoModel->getUserInfo($user_row);
-			}
+            $re  = $this->messageSettingModel->getSettingDetail($cond_row);
+            $all = array();
+            if ($re)
+            {
+                $all = explode(',', $re['message_template_all']);
+            }
+            $order_row         = array();
+            $order_row['type'] = 1;
+            $name = ['预定订单尾款支付提醒'];
+            $order_row['name:NOT IN'] = $name;
+            $data = $this->messageTemplateModel->getTemplateList($order_row);
 
-			$user_id           = Perm::$userId;
-			$Yf_Page           = new Yf_Page();
-			$Yf_Page->listRows = request_int('listRows')?request_int('listRows'):30;
-			$rows              = $Yf_Page->listRows;
-			$offset            = request_int('firstRow', 0);
-			$page              = ceil_r($offset / $rows);
-			
-			$cond_row            = array();
-			$cond_row['user_id'] = $user_id;
-			
-			$data = $this->userFriendModel->getFriendList($cond_row, array('friend_addtime' => 'DESC'), $page, $rows);
+            $this->view->setMet('messageManage');
+        }
+        elseif ($op == 'sendMessage')//发送站内信
+        {
+            $userid = request_int('id');
+            $user   = array();
+            if ($userid)
+            {
+                $user_row['user_id'] = $userid;
+                $user                = $this->userInfoModel->getUserInfo($user_row);
+            }
 
-			$Yf_Page->totalRows = $data['totalsize'];
-			$page_nav           = $Yf_Page->prompt();
+            $user_id           = Perm::$userId;
+            $Yf_Page           = new Yf_Page();
+            $Yf_Page->listRows = request_int('listRows')?request_int('listRows'):30;
+            $rows              = $Yf_Page->listRows;
+            $offset            = request_int('firstRow', 0);
+            $page              = ceil_r($offset / $rows);
 
-			$this->view->setMet('sendMessage');
-		}
-		elseif ($op == 'get_user_list')//
-		{
-			//临时测试, 获取用户列表
-			$order_row                            = array();
-			$order_row['user_message_receive_id'] = Perm::$userId;
+            $cond_row            = array();
+            $cond_row['user_id'] = $user_id;
 
-			$data = $this->userMessageModel->getMessageList($order_row, array(
-				'message_islook' => 'ASC',
-				'user_message_time' => 'DESC'
-			));
+            $data = $this->userFriendModel->getFriendList($cond_row, array('friend_addtime' => 'DESC'), $page, $rows);
 
-			$user_message_send_id_row = array_column($data['items'], 'user_message_send_id');
+            $Yf_Page->totalRows = $data['totalsize'];
+            $page_nav           = $Yf_Page->prompt();
 
-			$User_InfoModel = new User_InfoModel();
-			$user_info_rows = $User_InfoModel->getInfo($user_message_send_id_row);
+            $this->view->setMet('sendMessage');
+        }
+        elseif ($op == 'get_user_list')//
+        {
+            //临时测试, 获取用户列表
+            $order_row                            = array();
+            $order_row['user_message_receive_id'] = Perm::$userId;
 
-			foreach ($data['items'] as $item)
-			{
-				if (!isset($user_info_rows[$item['user_message_send_id']]['msg']))
-				{
-					$user_info_rows[$item['user_message_send_id']]['msg'] = array(
-						'message_islook'=> $item['message_islook'],
-						'message_title'=>$item['user_message_content'],
-						'message_create_time'=>$item['user_message_time']
-					);
-				}
-			}
+            $data = $this->userMessageModel->getMessageList($order_row, array(
+                'message_islook' => 'ASC',
+                'user_message_time' => 'DESC'
+            ));
 
-			$data['user'] = $user_info_rows;
+            $user_message_send_id_row = array_column($data['items'], 'user_message_send_id');
 
-		}
-		elseif ($op == 'get_chat_msg')//
-		{
-			$chat_user_id   = request_string('user_id');
+            $User_InfoModel = new User_InfoModel();
+            $user_info_rows = $User_InfoModel->getInfo($user_message_send_id_row);
 
-			$order_row                            = array();
-			$order_row['user_message_receive_id'] = Perm::$userId;
-			$order_row['user_message_send_id'] = $chat_user_id;
+            foreach ($data['items'] as $item)
+            {
+                if (!isset($user_info_rows[$item['user_message_send_id']]['msg']))
+                {
+                    $user_info_rows[$item['user_message_send_id']]['msg'] = array(
+                        'message_islook'=> $item['message_islook'],
+                        'message_title'=>$item['user_message_content'],
+                        'message_create_time'=>$item['user_message_time']
+                    );
+                }
+            }
 
-			$data = $this->userMessageModel->getMessageList($order_row, array(
-				'message_islook' => 'ASC',
-				'user_message_time' => 'DESC'
-			));
+            $data['user'] = $user_info_rows;
 
-			$User_InfoModel = new User_InfoModel();
-			$user_info_rows = $User_InfoModel->getInfo($chat_user_id);
+        }
+        elseif ($op == 'get_chat_msg')//
+        {
+            $chat_user_id   = request_string('user_id');
 
-			$data['user'] = $user_info_rows;
+            $order_row                            = array();
+            $order_row['user_message_receive_id'] = Perm::$userId;
+            $order_row['user_message_send_id'] = $chat_user_id;
 
-		}
-		else//系统消息
-		{
-			$Yf_Page           = new Yf_Page();
-			$Yf_Page->listRows = request_int('listRows')?request_int('listRows'):8;
-			$rows              = $Yf_Page->listRows;
-			$offset            = request_int('firstRow', 0);
-			$page              = ceil_r($offset / $rows);
-			
-			$cond_row                    = array();
-			$cond_row['message_user_id'] = Perm::$userId;
-			$cond_row['message_mold']    = 0;
-			
-			if ($type)
-			{
-				$cond_row['message_type'] = $type;
-			}
+            $data = $this->userMessageModel->getMessageList($order_row, array(
+                'message_islook' => 'ASC',
+                'user_message_time' => 'DESC'
+            ));
 
-			$data = $this->messageModel->getMessageList($cond_row, array(
-				'message_islook' => 'ASC',
-				'message_create_time' => 'DESC'
-			), $page, $rows);
-			
-			$Yf_Page->totalRows = $data['totalsize'];
-			$page_nav           = $Yf_Page->prompt();
-			
-			
-		}
+            $User_InfoModel = new User_InfoModel();
+            $user_info_rows = $User_InfoModel->getInfo($chat_user_id);
 
-		if ('json' == $this->typ)
-		{
-			//发送小心用户信息
-			if ('wap' == $op)
-			{
+            $data['user'] = $user_info_rows;
 
-			}
+        }
+        else//系统消息
+        {
+            $Yf_Page           = new Yf_Page();
+            $Yf_Page->listRows = request_int('listRows')?request_int('listRows'):8;
+            $rows              = $Yf_Page->listRows;
+            $offset            = request_int('firstRow', 0);
+            $page              = ceil_r($offset / $rows);
 
-			$this->data->addBody(-140, $data);
-		}
-		else
-		{
-			include $this->view->getView();
-		}
+            $cond_row                    = array();
+            $cond_row['message_user_id'] = Perm::$userId;
+            $cond_row['message_mold']    = 0;
+
+            if ($type)
+            {
+                $cond_row['message_type'] = $type;
+            }
+
+            $data = $this->messageModel->getMessageList($cond_row, array(
+                'message_islook' => 'ASC',
+                'message_create_time' => 'DESC'
+            ), $page, $rows);
+
+            $Yf_Page->totalRows = $data['totalsize'];
+            $page_nav           = $Yf_Page->prompt();
+
+
+        }
+
+        if ('json' == $this->typ)
+        {
+            //发送小心用户信息
+            if ('wap' == $op)
+            {
+
+            }
+
+            $this->data->addBody(-140, $data);
+        }
+        else
+        {
+            include $this->view->getView();
+        }
 	}
 
 	/**
@@ -785,6 +785,18 @@ class Buyer_MessageCtl extends Buyer_Controller
 
 		$this->data->addBody(-140, $data);
 	}
+
+    public function getMessage()
+    {
+        //会员未读消息
+        $message_id=request_string('id');
+
+        $data = $this->messageModel->getOne($message_id);
+        $status = 200;
+        $msg    = __('success');
+
+        $this->data->addBody(-140, $data,$msg,$status);
+    }
 }
 
 ?>

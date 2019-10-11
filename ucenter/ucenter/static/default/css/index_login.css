@@ -876,7 +876,7 @@ input:-webkit-autofill {
 	}
 	.form .itxt {
 		height: 50px;
-		width: 200px;
+		width: 85%;
 		padding: 10px 0 10px 50px;
 	}
 	.form .item .login-label{

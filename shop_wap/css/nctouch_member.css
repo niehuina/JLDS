@@ -213,14 +213,14 @@ i.cc-10 { background-image: url(../images/bbc-bg23.png); background-size: cover 
 /*订单搜索*/
 .nctouch-order-search { height: 1.95rem; background-color: #FAFAFA; border-bottom: solid #EEE 0.05rem;text-align:center;}
 .nctouch-order-search form { position: relative; z-index: 1;}
-.nctouch-order-search .input-del { position: absolute; z-index: 1; top: 0.26rem; left: 75%; display:none; width: 0.975rem; height: 0.975rem; background-image: url(../images/cancel_b.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 60%; opacity: 0.4;}
+.nctouch-order-search .input-del { position: absolute; z-index: 1; top: 0.26rem; right: 0.5rem; display:none; width: 0.975rem; height: 0.975rem; background-image: url(../images/cancel_b.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 60%; opacity: 0.4;}
 .nctouch-order-search .write .input-del { display: block;}
-.nctouch-order-search input[type="text"] { display: inline-block; width: 65%; height: 1rem; padding:0.1rem 0.25rem 0.1rem 1.6rem; margin: 0.25rem auto auto 0.75rem; border: none; border-radius:1rem; font-size: 0.6rem; background-color:#f2f2f2; line-height: 1rem;border:1px solid #e3e3e3;}
+.nctouch-order-search input[type="text"] { display: inline-block; width: 65%; height: 1rem; padding:0.1rem 1rem 0.1rem 1.6rem; margin: 0.25rem auto auto 0.25rem; border: none; border-radius:1rem; font-size: 0.6rem; background-color:#f2f2f2; line-height: 1rem;border:1px solid #e3e3e3;}
 /*.nctouch-order-search input[type="button"] { display: inline-block; width: 1rem; height: 1rem; margin-left: 0.5rem; background-color: transparent; background-image: url(../images/bbc-bg30.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 100%; opacity: 0.5; border: none;}
 */
 .nctouch-order-search input[type="button"]{background: none;border: none;line-height: 1.95rem;font-size:0.65rem;color:#888;}
 .nctouch-order-search .ser-area{position:relative;}
-.nctouch-order-search .ser-area i{ display: inline-block; width: 0.6rem; height: 1.6rem; margin-left: 0.5rem; background-color: transparent; background-image: url(../images/bbc-bg30.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 100%; opacity: 0.4; border: none;position:absolute;left:1rem;top:0;}
+.nctouch-order-search .ser-area i{ display: inline-block; width: 0.6rem; height: 1.4rem; margin-left: 0.5rem; background-color: transparent; background-image: url(../images/bbc-bg30.png); background-repeat: no-repeat; background-position: 50% 50%; background-size: 100%; opacity: 0.4; border: none;position:absolute;left:0.3rem;top:0;}
 /*订单列表*/
 .nctouch-order-list { display: block; clear: both; width: 100%;}
 .nctouch-order-list ul {}

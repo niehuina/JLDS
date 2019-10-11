@@ -46,38 +46,35 @@ include __DIR__.'/../../includes/header.php';
         </ul>
     </div>
     <script type="text/html" id="messageListScript">
-        <% if (data.length > 0) { %>
-        <% for (var i=0;i< data.length;i++) { %>
-                <li>
-                    <a class="to_chat" receiver_name="<%=data[i].receiver%>" send_name="<%=data[i].sender_name%>"
-                    href=""
-                    >
-                        <div class="avatar">
-                            <img src="<%=data[i].sender_logo%>" />
-
-                        </div>
-                        <dl>
-                            <dt><%=data[i].sender_name%></dt>
-                            <dd>
-                                <%=data[i].content%>
-                            </dd>
-                        </dl>
-                        <time>
-                            <%=data[i].created%>
-                        </time>
-                    </a>
-                    <a href="javascript:void(0)" t_id="<%=data[i].id%>" class="msg-list-del"></a>
-                </li>
-                <% } %>
-                    <% } else { %>
-                        <div class="nctouch-norecord talk">
-                            <div class="norecord-ico"><i></i></div>
-                            <dl>
-                                <dt>您还没有和任何人联系过</dt>
-                                <dd>对话后可在此找到最近联系的客服</dd>
-                            </dl>
-                        </div>
-                        <% } %>
+        <% if (data.items.length > 0) { %>
+        <% for (var i=0;i< data.items.length;i++) { %>
+        <li>
+            <a class="to_chat" t_id="<%=data.items[i].message_id%>" >
+                <div class="avatar">
+                    <img src="../../images/message_b.png" width="120" height="120" />
+                </div>
+                <dl>
+                    <dt><%=data.items[i].message_title%></dt>
+                    <dd>
+                        <%=data.items[i].message_content%>
+                    </dd>
+                </dl>
+                <time>
+                    <%=data.items[i].message_create_time%>
+                </time>
+            </a>
+            <a href="javascript:void(0)" t_id="<%=data.items[i].message_id%>" class="msg-list-del"></a>
+        </li>
+        <% } %>
+        <% } else { %>
+        <div class="nctouch-norecord talk">
+            <div class="norecord-ico"><i></i></div>
+            <dl>
+                <dt>没有系统消息</dt>
+                <!--                                <dd>对话后可在此找到最近联系的客服</dd>-->
+            </dl>
+        </div>
+        <% } %>
     </script>
     <script type="text/javascript" src="../../js/libs/zepto.min.js"></script>
     

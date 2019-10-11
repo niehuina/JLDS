@@ -75,7 +75,7 @@ extract($_GET);
 
 								<input type="text" id="re_user_mobile"  class="field re_user_mobile" placeholder="建议使用常用手机" maxlength="11" default="<i class=&quot;i-def&quot;></i>完成验证后，可以使用该手机登录和找回密码" onblur="checkMobile()" onfocus="showTip(this)" autocomplete="off">
 								
-								<span class="clear-btn JS-account js_clear_btn clear-icon" style="top:17px;right:110px;"></span>
+								<span class="clear-btn JS-account js_clear_btn clear-icon" style="top:17px;right:40px;"></span>
                                 <i class="i-status"></i>
 							</div>
 							<div class="input-tip">
@@ -128,7 +128,7 @@ extract($_GET);
 
 				<div id="form-item-password" class="form-item" style="z-index: 12;">
 					<label>重 置 密 码：</label>
-					<input type="password" id="re_user_password" class="field re_user_password" autocomplete="off" maxlength="20" placeholder="建议至少使用两种字符组合" default="<i class=i-def></i><?=$pwd_str?>" onfocus="checkPwd()" onblur="pwdCallback()">
+					<input type="password" id="re_user_password" class="field re_user_password" autocomplete="off" maxlength="20" placeholder="建议使用多种字符组合" default="<i class=i-def></i><?=$pwd_str?>" onfocus="checkPwd()" onblur="pwdCallback()">
 					<span class="clear-btn eye-icon"></span>
                     <i class="i-status"></i>
 					

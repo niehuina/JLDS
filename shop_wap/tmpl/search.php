@@ -16,6 +16,12 @@ include __DIR__.'/../includes/header.php';
     <title>商品搜索</title>
     <link rel="stylesheet" type="text/css" href="../css/base.css">
     <link rel="stylesheet" type="text/css" href="../css/nctouch_common.css">
+
+    <style>
+        .header-inp .search-input{
+            margin-left: 2px;
+        }
+    </style>
 </head>
 <body class="bgf">
 <header id="header">

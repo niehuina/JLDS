@@ -547,7 +547,7 @@ include __DIR__ . '/../includes/header.php';
             <ul class="top-goods">
                 <% for (var i in goods_commend_list) { %>
                 <li>
-                    <a href="tmpl/product_detail.html?goods_id=<%= goods_commend_list[i].goods_id %>">
+                    <a href="product_detail.html?goods_id=<%= goods_commend_list[i].goods_id %>">
                         <div class="overhide">
                             <div class="img-area">
                                 <img src="<%= goods_commend_list[i].common_image %>" alt="" style="width: 6rem;height: 6rem;">
