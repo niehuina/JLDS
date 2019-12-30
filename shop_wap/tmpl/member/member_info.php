@@ -35,7 +35,7 @@ include __DIR__ . '/../../includes/header.php';
                 <ul>
                     <li><a href="../../index.html"><i class="home"></i>首页</a></li>
                     <li><a href="../search.html"><i class="search"></i>搜索</a></li>
-                    <li><a href="javascript:void(0);"><i class="message"></i>消息<sup></sup></a></li>
+                    <li><a href="javascript:void(0);"><i class="msg"></i>消息<sup></sup></a></li>
                 </ul>
             </div>
         </div>
@@ -43,10 +43,10 @@ include __DIR__ . '/../../includes/header.php';
     <div class="nctouch-main-layout">
         <ul class="nctouch-default-list mt5">
             <li>
-                <a href="member_avatar_bind.html" id="mobile_link">
+                <a href="member_avatar_upload.html?avatar_link=" id="mobile_link">
                     <h4>头像</h4>
                     <span style="float: right; margin-right: 50px">
-                        <img id="user_avatar" src="" width="50px" height="50px" style="border-radius: 50%"/></span>
+                        <img id="user_avatar" src="../img/user_avt_default.png" width="50px" height="50px" style="border-radius: 50%"/></span>
                     <span class="arrow-r"></span>
                 </a>
             </li>
